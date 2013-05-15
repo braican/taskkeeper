@@ -12,6 +12,13 @@ form{
 	margin:0 auto;
 }
 
+.success-text,
+.success-payed-text{
+	opacity: 0;
+}
+
+/* project list
+---------------------------------- */
 .project-list a{
 	padding: 10px;
 	display: block;
@@ -19,20 +26,11 @@ form{
 	text-decoration: none;
 	cursor: auto;
 }
-.project-list a:hover{
-	color:#333;
-}
-.project-list a:nth-of-type(even){
-	background-color: #ededed;
-}
+.project-list a:hover{color:#333;}
+.project-list a:nth-of-type(even){background-color: #ededed;}
 
 
-.success-text,
-.success-payed-text{
-	opacity: 0;
-}
-
-/* INDIVIDUAL PROJECT
+/* individual projects
 ------------------------ */
 .hours{
 	width: 100%;
@@ -58,8 +56,10 @@ form{
 	text-align: right;
 	color:#000;
 	font-weight: bold;
-
 }
+.dulled{opacity: 0.2;}
+.paid{background-color: #4DBD33;}
+.not-paid{background-color: #c00;}
 
 
 input[name=description]{
