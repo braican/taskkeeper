@@ -1,0 +1,77 @@
+body{
+	font-family: 'Lato', sans-serif;
+}
+
+form{
+	margin-top:10px;
+}
+
+#container{
+	max-width:800px;
+	width: 100%;
+	margin:0 auto;
+}
+
+.project-list a{
+	padding: 10px;
+	display: block;
+	color:#666;
+	text-decoration: none;
+	cursor: auto;
+}
+.project-list a:hover{
+	color:#333;
+}
+.project-list a:nth-of-type(even){
+	background-color: #ededed;
+}
+
+
+.success-text,
+.success-payed-text{
+	opacity: 0;
+}
+
+/* INDIVIDUAL PROJECT
+------------------------ */
+.hours{
+	width: 100%;
+	font-weight: 400;
+}
+.hours thead{
+	background-color: #aaa;
+	font-weight: 700;
+}
+.hours td{
+	padding: 5px;
+}
+
+.total_hours{background-color: #FFECCA;}
+.rate{background-color: #FFECCA;}
+.total_due{background-color: #4DBD33;}
+
+.hours tbody tr:nth-of-type(even){
+	background-color: #ededed;
+}
+
+.hours tfoot{
+	text-align: right;
+	color:#000;
+	font-weight: bold;
+
+}
+
+
+input[name=description]{
+	width:70%;
+}
+
+#get_paid{
+	color:#fff;
+	padding: 10px;
+	border-radius: 5px;
+	background-color:#4DBD33;
+	font-weight: 700;
+	display: inline-block;
+	cursor: pointer;
+}
