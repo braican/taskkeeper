@@ -42,7 +42,7 @@
 	        }
 	    });
 
-			$('form input[type=text]').val('');
+		$('form input[type=text]').val('');
 	});
 </script>
 

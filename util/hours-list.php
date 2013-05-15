@@ -24,10 +24,12 @@
 		</thead>
 		<tbody>
 			<?php while($row = $result->fetch_assoc()) : ?>
-				<tr>
+				<?php $dulled = $row['paid'] == 1 ? 'class="dulled"' : ''; ?>
+				<?php $paid = $row['paid'] == 1 ? 'paid' : 'not-paid'; ?>
+				<tr <?php echo $dulled ?>>
 					<td><?php echo $row['description'] ?></td>
 					<td><?php echo $row['hrs'] ?></td>
-					<td><?php echo $row['paid'] ?></td>
+                    <td class="<?php echo $paid; ?>"></td>
 				</tr>
 			<?php endwhile; ?>
 		</tbody>	

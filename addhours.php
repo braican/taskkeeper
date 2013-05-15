@@ -27,16 +27,13 @@
 	</form>
 
 	<div class="success-text"></div>
-
-	<div class="hours_rate">
-		
-	</div>
 	
 	<div id="get_paid">GET PAID!</div>
 	<div class="success-payed-text"></div>
 
 </div>
 <script type="text/javascript">
+
 	$('form').on('submit', function(e){
 	    e.preventDefault();
 	    $.ajax({
@@ -52,9 +49,10 @@
 	            	$(".success-text").animate({opacity:0});
 	            }, 5000);
 	            $(".hours-list").load("util/hours-list.php?val=<?php echo $project ?>");
+
+	            $('input').val('');
 	        }
 	    });
-
 	});
 
 	$('#get_paid').on('click', function(e){
@@ -74,11 +72,7 @@
 
 	$('tr').on('click', function(e){
 		e.preventDefault();
-		if($(this).hasClass('dulled')){
-			$(this).css('opacity', '1').removeClass('dulled');
-		} else {
-			$(this).css('opacity', '0.2').addClass('dulled');
-		}
+		$(this).toggleClass('dulled');
 	});
 </script>
 
