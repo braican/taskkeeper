@@ -1,4 +1,4 @@
-taskkeeper
+Taskkeeper
 ==========
 
-simple web app for keeping track of time and money owed on projects
+A simple web app that allows the recording of project hours and prices via a MySQL database.
