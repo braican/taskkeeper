@@ -9,11 +9,26 @@
 <body>
 <div id="container">
 	<?php
-		$project = $_GET["val"];
-		$proj_display = str_replace('_', ' ', $project);
-		$proj_display = ucwords($proj_display);
+		require_once("util/db_util.php");
+		$db = dbconnect();
+		$db_name = $_GET['val'];
+		$sql = "SELECT `name` FROM `projects` WHERE `project` = '" . $db_name . "'";
+		if(!$result = $db->query($sql)){
+			die('There was an error running the query [' . $db->error . ']');
+		}
+
+		while($row = $result->fetch_assoc()){
+			$name = $row['name'];
 	?>
-	<h1><?php echo $proj_display ?></h1>
+	
+	<h1><?php echo $name ?></h1>
+
+	<?php
+		}
+		
+		dbclose($result, $db);
+	?>
+	
 	<p>back to <a href="index.php" title="">project list</a></p>
 	<div class="hours-list">
 		<?php include("util/hours-list.php"); ?>

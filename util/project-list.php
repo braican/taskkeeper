@@ -9,9 +9,10 @@
 	}
 
 	while($row = $result->fetch_assoc()){
-		$row = $row['project'];
+		$name = $row['name'];
+		$db_name = $row['project'];
 ?>
-	<a href="addhours.php?val=<?php echo $row ?>"><?php echo $row ?></a>
+	<a href="addhours.php?val=<?php echo $db_name ?>"><?php echo $name ?></a>
 
 <?php
 	} 

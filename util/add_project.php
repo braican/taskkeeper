@@ -1,8 +1,8 @@
 <?php 
 	require_once("db_util.php");
-	$new_project = htmlspecialchars($_POST["new_project"]);
-	$new_project = str_replace(' ', '_', $new_project);
-	$new_project = str_replace('.', '_', $new_project);
+	$proj_name = htmlspecialchars($_POST["new_project"]);
+	$new_project = str_replace(array(' ', '_'), '_', $proj_name);
+	$new_project = strtolower($new_project);
 	
 	$rate = $_POST["rate"];
 
@@ -23,7 +23,9 @@
 		}
 
 		// add the new project to the project database
-		$sql = "INSERT INTO `projects`(`project`, `rate`) VALUES ('" . $new_project . "', '" . $rate . "')";
+		$sql = "INSERT INTO `projects`(`project`, `name` , `rate`) VALUES ('" . $new_project . "', '" . $proj_name . "', '" . $rate . "')";
+
+		echo $sql;
 		if(!$result = $db->query($sql)){
 			die('There was an error running the query in add_project [' . $db->error . ']');
 		}
