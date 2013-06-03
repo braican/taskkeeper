@@ -1,4 +1,0 @@
-AuthType Basic
-AuthName "taskkeeper"
-AuthUserFile "/home4/braican1/.htpasswds/public_html/taskkeeper/passwd"
-require valid-user
