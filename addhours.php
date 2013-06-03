@@ -34,7 +34,8 @@
 		<?php include("util/hours-list.php"); ?>
 	</div>
 	
-	<form action="util/add_hours.php" method="post">
+	<form action="util/add_hours.php" method="post" class="addhours-form">
+		
 		<input type="text" name="description" placeholder="description"></input>
 		<input type="text" name="hours" placeholder="number of hours"></input>
 		<input type="hidden" name="project" value="<?php echo $project; ?>">

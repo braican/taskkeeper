@@ -17,7 +17,7 @@
 
 		<form action="util/add_project.php" method="post">
 			<input type="text" name="new_project" maxlength="70" placeholder="add project"></input>
-			<input type="text" name="rate" placeholder="$"></input>
+			<input type="text" name="rate" placeholder="$" size="5"></input>
 			<input type="submit" value="Submit"></input>
 		</form>
 
