@@ -8,7 +8,7 @@
 </head>
 <body>
 
-<div id="container">
+<div class="container">
 	
 	<h1>Projects</h1>
 	<div class="project-list">

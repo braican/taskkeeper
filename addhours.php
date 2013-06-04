@@ -7,7 +7,7 @@
 	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 </head>
 <body>
-<div id="container">
+<div class="container">
 	<?php
 		require_once("util/db_util.php");
 		$db = dbconnect();
@@ -29,7 +29,7 @@
 		dbclose($result, $db);
 	?>
 	
-	<p>back to <a href="index.php" title="">project list</a></p>
+	<p>back to <a href="index.php" class="link" title="">project list</a></p>
 	<div class="hours-list">
 		<?php include("util/hours-list.php"); ?>
 	</div>
@@ -44,7 +44,7 @@
 
 	<div class="success-text"></div>
 	
-	<div id="get_paid">GET PAID!</div>
+	<div class="get-paid">GET PAID!</div>
 	<div class="success-payed-text"></div>
 
 </div>
@@ -71,7 +71,7 @@
 	    });
 	});
 
-	$('#get_paid').on('click', function(e){
+	$('.get-paid').on('click', function(e){
 		e.preventDefault();
 		$.ajax({
 			type	: "POST",

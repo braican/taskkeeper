@@ -44,7 +44,7 @@
 		<tfoot>
 			<tr>
 				<td>TOTAL BILLABLE HOURS</td>
-				<td class="total_hours"><?php echo $total_hours; ?></td>
+				<td class="total-hours"><?php echo $total_hours; ?></td>
 				<td></td>
 			</tr>
 		
@@ -69,7 +69,7 @@
 		</tr>
 		<tr>
 			<td>TOTAL DUE</td>
-			<td class="total_due">$ <?php echo $total_hours * $row; ?></td>
+			<td class="total-due">$ <?php echo $total_hours * $row; ?></td>
 			<td></td>
 		</tr>
 <?php endif; ?>
