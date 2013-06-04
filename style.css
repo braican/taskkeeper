@@ -2,13 +2,31 @@ body{
 	font-family: 'Lato', sans-serif;
 }
 
+.link{
+	text-decoration: none;
+	color:#4DBD33;
+	-webkit-transition: all .2s linear;
+	-o-transition: all .2s linear;
+	-moz-transition: all .2s linear;
+	transition: all .2s linear;
+	padding: 4px;
+}
+.link:hover{
+	background-color: #4DBD33;
+	color: #fff;
+	-webkit-transition: all .2s linear;
+	-o-transition: all .2s linear;
+	-moz-transition: all .2s linear;
+	transition: all .2s linear;
+}
+
 form{
 	margin-top:10px;
 }
 
-#container{
+.container{
 	max-width:800px;
-	width: 100%;
+	width: 96%;
 	margin:0 auto;
 }
 
@@ -39,6 +57,20 @@ input[type=submit]{
 	border-radius: 5px;
 	font-size: 16px;
 	color:#fff;
+	cursor: pointer;
+
+	-webkit-transition: all .2s linear;
+	-o-transition: all .2s linear;
+	-moz-transition: all .2s linear;
+	transition: all .2s linear;
+}
+input[type=submit]:hover{
+	background-color: #919191;
+
+	-webkit-transition: all .2s linear;
+	-o-transition: all .2s linear;
+	-moz-transition: all .2s linear;
+	transition: all .2s linear;
 }
 
 /* project list
@@ -46,12 +78,27 @@ input[type=submit]{
 .project-list div{padding: 10px;}
 .project-list div:nth-of-type(even){background-color: #ededed;}
 .project-list div a{
-	color:#666;
+	color:#999;
+	position: relative;
 	text-decoration: none;
+	-webkit-transition: all .2s linear;
+	-o-transition: all .2s linear;
+	-moz-transition: all .2s linear;
+	transition: all .2s linear;
 }
-.project-list a:hover{color:#333;}
+.project-list a:hover{
+	color:#000;
+	left: 3px;
+	
+	-webkit-transition: all .2s linear;
+	-o-transition: all .2s linear;
+	-moz-transition: all .2s linear;
+	transition: all .2s linear;
+}
 
-.owed{
+.project-list div .owed{
+	color: #333;
+	font-weight: bold;
 	padding-right: 10px;
 	border-right: 15px solid #4DBD33;
 }
@@ -71,9 +118,9 @@ input[type=submit]{
 	padding: 5px;
 }
 
-.total_hours{background-color: #FFECCA;}
+.total-hours{background-color: #FFECCA;}
 .rate{background-color: #FFECCA;}
-.total_due{background-color: #4DBD33;}
+.total-due{background-color: #4DBD33;}
 
 .hours tbody tr:nth-of-type(even){
 	background-color: #ededed;
@@ -118,7 +165,7 @@ input[name=hours]{
 	width: 66px;
 }
 
-#get_paid{
+.get-paid{
 	color:#fff;
 	padding: 10px;
 	border-radius: 5px;
@@ -126,5 +173,16 @@ input[name=hours]{
 	font-weight: 700;
 	display: inline-block;
 	cursor: pointer;
+	-webkit-transition: all .2s linear;
+	-o-transition: all .2s linear;
+	-moz-transition: all .2s linear;
+	transition: all .2s linear;
+}
+.get-paid:hover{
+	background-color: #34A41A;
+	-webkit-transition: all .2s linear;
+	-o-transition: all .2s linear;
+	-moz-transition: all .2s linear;
+	transition: all .2s linear;
 }
 
