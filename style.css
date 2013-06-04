@@ -44,8 +44,9 @@ input[type=text]{
 	border-radius: 5px;
 	border: 1px solid #ccc;
 	background-color: #efefef;
-	font-size: 16px;
+	font-size: 14px;
 	margin: 0;
+	height: 36px;
 }
 input[type=submit]{
 	background-color: #aaa;
