@@ -1,0 +1,189 @@
+body{
+	font-family: 'Lato', sans-serif;
+}
+
+.link{
+	text-decoration: none;
+	color:#4DBD33;
+	-webkit-transition: all .2s linear;
+	-o-transition: all .2s linear;
+	-moz-transition: all .2s linear;
+	transition: all .2s linear;
+	padding: 4px;
+}
+.link:hover{
+	background-color: #4DBD33;
+	color: #fff;
+	-webkit-transition: all .2s linear;
+	-o-transition: all .2s linear;
+	-moz-transition: all .2s linear;
+	transition: all .2s linear;
+}
+
+form{
+	margin-top:10px;
+}
+
+.container{
+	max-width:800px;
+	width: 96%;
+	margin:0 auto;
+}
+
+.success-text,
+.success-payed-text{
+	opacity: 0;
+}
+
+/* General
+---------------------------------- */
+input[type=text]{
+	padding: 8px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	background-color: #efefef;
+	font-size: 14px;
+	margin: 0;
+	height: 36px;
+}
+input[type=submit]{
+	background-color: #aaa;
+	border: 0;
+	height: 36px;
+	margin: 0;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	font-size: 16px;
+	color:#fff;
+	cursor: pointer;
+
+	-webkit-transition: all .2s linear;
+	-o-transition: all .2s linear;
+	-moz-transition: all .2s linear;
+	transition: all .2s linear;
+}
+input[type=submit]:hover{
+	background-color: #919191;
+
+	-webkit-transition: all .2s linear;
+	-o-transition: all .2s linear;
+	-moz-transition: all .2s linear;
+	transition: all .2s linear;
+}
+
+/* project list
+---------------------------------- */
+.project-list div{padding: 10px;}
+.project-list div:nth-of-type(even){background-color: #ededed;}
+.project-list div a{
+	color:#999;
+	position: relative;
+	text-decoration: none;
+	-webkit-transition: all .2s linear;
+	-o-transition: all .2s linear;
+	-moz-transition: all .2s linear;
+	transition: all .2s linear;
+}
+.project-list a:hover{
+	color:#000;
+	left: 3px;
+	
+	-webkit-transition: all .2s linear;
+	-o-transition: all .2s linear;
+	-moz-transition: all .2s linear;
+	transition: all .2s linear;
+}
+
+.project-list div .owed{
+	color: #333;
+	font-weight: bold;
+	padding-right: 10px;
+	border-right: 15px solid #4DBD33;
+}
+
+/* individual projects
+------------------------ */
+.hours{
+	width: 100%;
+	font-weight: 400;
+}
+.hours thead{
+	background-color: #aaa;
+	font-weight: 700;
+	color: #fff;
+}
+.hours td{
+	padding: 5px;
+}
+
+.total-hours{background-color: #FFECCA;}
+.rate{background-color: #FFECCA;}
+.total-due{background-color: #4DBD33;}
+
+.hours tbody tr:nth-of-type(even){
+	background-color: #ededed;
+}
+
+.hours tfoot{
+	text-align: right;
+	color:#000;
+	font-weight: bold;
+}
+.dulled{opacity: 0.2;}
+.not-paid{background-color: #4DBD33;}
+
+.addhours-form{
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+}
+
+input[name=description]{
+	-webkit-box-flex: 4;      /* OLD - iOS 6-, Safari 3.1-6 */
+	-moz-box-flex: 4;         /* OLD - Firefox 19- */
+	width: 20%;               /* For old syntax, otherwise collapses. */
+	-webkit-flex: 4;          /* Chrome */
+	-ms-flex: 4;              /* IE 10 */
+	flex: 4;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */
+	margin-right: 5px;
+}
+input[name=hours]{
+	-webkit-box-flex: 1;      /* OLD - iOS 6-, Safari 3.1-6 */
+	-moz-box-flex: 1;         /* OLD - Firefox 19- */
+	width: 20%;               /* For old syntax, otherwise collapses. */
+	-webkit-flex: 1;          /* Chrome */
+	-ms-flex: 1;              /* IE 10 */
+	flex: 1;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */
+	margin-right: 5px;
+}
+
+.addhours-form input[type="submit"]{
+	width: 66px;
+}
+
+.get-paid{
+	color:#fff;
+	padding: 10px;
+	border-radius: 5px;
+	background-color:#4DBD33;
+	font-weight: 700;
+	display: inline-block;
+	cursor: pointer;
+	-webkit-transition: all .2s linear;
+	-o-transition: all .2s linear;
+	-moz-transition: all .2s linear;
+	transition: all .2s linear;
+}
+.get-paid:hover{
+	background-color: #34A41A;
+	-webkit-transition: all .2s linear;
+	-o-transition: all .2s linear;
+	-moz-transition: all .2s linear;
+	transition: all .2s linear;
+}
+
