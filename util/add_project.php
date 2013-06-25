@@ -25,7 +25,6 @@
 		// add the new project to the project database
 		$sql = "INSERT INTO projects(project, name , rate) VALUES ('$new_project', '$proj_name', '$rate')";
 
-		echo $sql;
 		if(!$result = $db->query($sql)){
 			die('There was an error running the query in add_project [' . $db->error . ']');
 		}

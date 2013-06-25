@@ -86,7 +86,7 @@ input[type=submit]:hover{
 
 /* project list
 ---------------------------------- */
-.project-list div{padding: 10px;}
+.project-list > div{padding: 10px;}
 .project-list div:nth-of-type(even){background-color: #ededed;}
 .project-list div a{
 	color:#999;
@@ -111,9 +111,98 @@ input[type=submit]:hover{
 	color: #333;
 	font-weight: bold;
 	padding-right: 10px;
-	border-right: 15px solid #4DBD33;
+	border-color: #4DBD33;
+	border-style: solid;
+	border-width: 0;
+}
+.project-list div a{
+	float: left;
 }
 
+.util{
+	float: right;
+	font-size: 12px;
+}
+.util span{
+	cursor: pointer;
+	color: #ccc;
+}
+.util span:hover{
+	color: #999;
+}
+.util .rename{
+	margin-right: 10px;
+}
+
+.overlay{
+	background: rgba(0,0,0,0.4);
+	position: fixed;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+}
+.overlay-container{
+	width: 80%;
+	max-width: 360px;
+	margin: 0 auto;
+	position: relative;
+	top: 100px;
+	background: #fff;
+	padding: 20px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+}
+.overlay input[type=text]{
+	display: block;
+	width: 100%;
+}
+.overlay input[type=submit]{
+	background: #4DBD33;
+	margin-top: -1px;
+	min-width: 46px;
+}
+.overlay input[type=submit]:hover{
+	background: #34A41A;
+}
+.overlay .cancel{
+	display: inline-block;
+	background-color: #aaa;
+	border: 0;
+	height: 36px;
+	margin: 0;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	font-size: 16px;
+	color:#fff;
+	cursor: pointer;
+	margin:5px 0 0 10px;
+	position: relative;
+	top: 1px;
+	padding: 8px;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+
+	-webkit-transition: all .2s linear;
+	-o-transition: all .2s linear;
+	-moz-transition: all .2s linear;
+	transition: all .2s linear;
+}
+.overlay .cancel:hover{
+	background-color: #919191;
+
+	-webkit-transition: all .2s linear;
+	-o-transition: all .2s linear;
+	-moz-transition: all .2s linear;
+	transition: all .2s linear;
+}
+
+#delete-project input[type=submit]{
+	background: #c00;
+}
 /* individual projects
 ------------------------ */
 

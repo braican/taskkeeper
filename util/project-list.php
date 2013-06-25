@@ -19,11 +19,16 @@
 
 		while($paid_row = $paid_result->fetch_row()){
 			$paid_num = $paid_row[0];
+			$paid_num = $paid_num * $paid_num * $paid_num;
 			$paid_class = $paid_num > 0 ? 'owed' : 'no-money';
 		
 ?>
-	<div>
-		<a class="<?php echo $paid_class; ?>" href="addhours.php?val=<?php echo $db_name ?>"><?php echo $name ?></a>
+	<div class="clearfix project" id="<?php echo $db_name; ?>">
+		<a class="<?php echo $paid_class; ?>" style="border-right-width:<?php echo $paid_num;?>px;" href="addhours.php?val=<?php echo $db_name ?>"><?php echo $name ?></a>
+		<div class="util">
+			<span class="rename">rename</span>
+			<span class="delete">delete</span>
+		</div>
 	</div>
 	
 
