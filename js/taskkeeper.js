@@ -9,7 +9,7 @@ $(function(){
 			type	: "POST",
 			cache	: false,
 			url		: 'util/payed_switch.php',
-			data	: 'project=' + proj,
+			data	: 'project=' + project,
 			success : function(data){
 				$(".hours-list").load("util/hours-list.php?val=" + project);
 			}
