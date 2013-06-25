@@ -4,8 +4,8 @@
 	<?php
 		require_once("util/db_util.php");
 		$db = dbconnect();
-		$db_name = $_GET['val'];
-		$sql = "SELECT `name` FROM `projects` WHERE `project` = '" . $db_name . "'";
+		$project = $_GET['val'];
+		$sql = "SELECT name FROM projects WHERE project = '$project'";
 		if(!$result = $db->query($sql)){
 			die('There was an error running the query [' . $db->error . ']');
 		}
@@ -22,22 +22,19 @@
 		dbclose($result, $db);
 	?>
 	
-	<p>back to <a href="index.php" class="link" title="">project list</a></p>
-	<div class="hours-list">
-		<?php include("util/hours-list.php"); ?>
-	</div>
-	
+	<p>Back to the<a href="index.php" class="link" title="">list of projects</a></p>
+	<div class="form-header">Add some hours:</div>
 	<form action="util/add_hours.php" method="post" class="addhours-form" id="add-hours">
-		
 		<input type="text" name="description" placeholder="description"></input>
 		<input type="text" name="hours" placeholder="number of hours"></input>
 		<input type="hidden" name="project" value="<?php echo $project; ?>">
 		<input type="submit" value="Submit"></input>
 	</form>
-
-	<div class="success-text"></div>
 	
 	<div class="get-paid" data-project="<?php echo $project; ?>">GET PAID!</div>
-	<div class="success-payed-text"></div>
+
+	<div class="hours-list">
+		<?php include("util/hours-list.php"); ?>
+	</div>
 
 <?php include('includes/footer.html'); ?>

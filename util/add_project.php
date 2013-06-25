@@ -14,7 +14,7 @@
 	 	$new_project = $db->real_escape_string($new_project);
 
 	 	// check if the potential project exists in the database
-	 	$sql = "SELECT COUNT( * ) FROM  `projects` WHERE  `project` =  '" . $new_project . "'";
+	 	$sql = "SELECT COUNT( * ) FROM projects WHERE project = '$new_project'";
 	 	//$sql = "SELECT * FROM  `projects`";
 	 	$result = $db->query($sql);
 		$row = $result->fetch_row();
@@ -23,7 +23,7 @@
 		}
 
 		// add the new project to the project database
-		$sql = "INSERT INTO `projects`(`project`, `name` , `rate`) VALUES ('" . $new_project . "', '" . $proj_name . "', '" . $rate . "')";
+		$sql = "INSERT INTO projects(project, name , rate) VALUES ('$new_project', '$proj_name', '$rate')";
 
 		echo $sql;
 		if(!$result = $db->query($sql)){
@@ -32,7 +32,7 @@
 		echo "<p>project $new_project added to the projects table</p>";
 
 		// create the table
-		$sql = "CREATE TABLE " . $new_project . " (description TEXT, hrs DECIMAL(5,1), paid INT)";
+		$sql = "CREATE TABLE " . $new_project . " (id BIGINT( 20 ) NOT NULL AUTO_INCREMENT PRIMARY KEY,description TEXT, hrs DECIMAL(5,1), paid INT)";
 		if(!$result = $db->query($sql)){
 			die('There was an error running the query in add_project [' . $db->error . ']');
 		}

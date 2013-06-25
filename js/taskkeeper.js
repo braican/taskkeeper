@@ -11,8 +11,6 @@ $(function(){
 			url		: 'util/payed_switch.php',
 			data	: 'project=' + proj,
 			success : function(data){
-				console.log(data);
-				$(".success-payed-text").empty().html("PAYED").animate({opacity:1});
 				$(".hours-list").load("util/hours-list.php?val=" + proj);
 			}
 		});
@@ -47,12 +45,13 @@ $(function(){
 	        }
 	    });
 
-		$('form input[type=text]').val('');
+		$('input[type=text]').val('');
 	});
 
 	// add hours form
 	$('#add-hours').on('submit', function(e){
 	    e.preventDefault();
+	    var proj = $(this).find('input[name=project]').attr('value');
 	    $.ajax({
 	        type     : "POST",
 	        cache    : false,
@@ -65,9 +64,9 @@ $(function(){
 	            setTimeout(function(){
 	            	$(".success-text").animate({opacity:0});
 	            }, 5000);
-	            $(".hours-list").load("util/hours-list.php?val=<?php echo $project ?>");
+	            $(".hours-list").load("util/hours-list.php?val=" + proj);
 
-	            $('input').val('');
+	            $('input[type=text]').val('');
 	        }
 	    });
 	});
