@@ -5,14 +5,46 @@
 	
 	$project = $_GET["val"];
 
-	$sql = "SELECT * FROM `" . $project . "`";
+	$sql = "SELECT SUM(hrs) FROM $project WHERE paid = 0";
+	if(!$result = $db->query($sql)){
+		die('There was an error running the query in hours-list.php [' . $db->error . ']');
+	}
+	$row = $result->fetch_row();
+	$total_hours = $row[0];
+?>
+	<div class="totals clearfix">
+		<div class="row clearfix">
+			<div class="title">TOTAL BILLABLE HOURS</div>
+			<div class="value total-hours"><?php echo $total_hours + '&nbsp;'; ?></div>
+		</div>
+		<?php
+			$sql = "SELECT rate FROM projects WHERE project = '$project'";
+			if(!$result = $db->query($sql)){
+				die('There was an error running the query in hours-list.php [' . $db->error . ']');
+			}
+		?>
+		<?php $row = $result->fetch_assoc(); ?>
+		<?php $row = $row['rate']; ?>
+		<div class="row clearfix">
+			<div class="title">RATE</div>
+			<div class="value rate">$ <?php echo $row; ?></div>
+			
+		</div>
+		<div class="row clearfix">
+			<div class="title">TOTAL DUE</div>
+			<div class="value total-due">$ <?php echo $total_hours * $row; ?></div>
+			
+		</div>
+	</div><!-- .totals -->
+
+
+<?php
+	$sql = "SELECT * FROM $project ORDER BY id DESC";
 
 	if(!$result = $db->query($sql)){
 		die('There was an error running the query in hours-list.php [' . $db->error . ']');
 	}
 ?>
-
-<?php if($result) : ?>
 
 	<table class="hours" cellpadding="0">
 		<thead>
@@ -32,51 +64,7 @@
                     <td class="<?php echo $paid; ?>"></td>
 				</tr>
 			<?php endwhile; ?>
-		</tbody>	
-			<?php
-				$sql = "SELECT SUM(hrs) FROM `" . $project . "` WHERE paid = 0";
-				if(!$result = $db->query($sql)){
-					die('There was an error running the query in hours-list.php [' . $db->error . ']');
-				}
-				$row = $result->fetch_row();
-				$total_hours = $row[0];
-			?>
-		<tfoot>
-			<tr>
-				<td>TOTAL BILLABLE HOURS</td>
-				<td class="total-hours"><?php echo $total_hours; ?></td>
-				<td></td>
-			</tr>
-		
-
-<?php endif; ?>
-
-
-<?php 
-	
-	$sql = "SELECT `rate` FROM `projects` WHERE `project` = '$project'";
-	if(!$result = $db->query($sql)){
-		die('There was an error running the query in hours-list.php [' . $db->error . ']');
-	}
-?>
-<?php if($result) : ?>
-	<?php $row = $result->fetch_assoc(); ?>
-	<?php $row = $row['rate']; ?>
-		<tr>
-			<td>RATE</td>
-			<td class="rate">$ <?php echo $row; ?></td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>TOTAL DUE</td>
-			<td class="total-due">$ <?php echo $total_hours * $row; ?></td>
-			<td></td>
-		</tr>
-<?php endif; ?>
-	</tfoot>
-</table>
-			
-
-
+		</tbody>
+	</table>
 	
 <?php dbclose($result, $db); ?>

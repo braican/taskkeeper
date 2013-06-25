@@ -37,6 +37,10 @@ form{
 	opacity: 0;
 }
 
+.form-header{
+	margin-bottom: 0;
+}
+
 input{
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
@@ -112,6 +116,34 @@ input[type=submit]:hover{
 
 /* individual projects
 ------------------------ */
+
+.totals{
+	margin-bottom: 20px;
+	top: 0;
+}
+
+.totals .row > div{
+	float: left;
+	margin-top: 1px;
+	margin-bottom: 1px;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	font-weight: bold;
+	padding: 5px;
+}
+.totals .title{
+	width: 69%;
+	margin-right: 1%;
+	text-align: right;
+}
+.totals .value{
+	width: 25%;
+}
+.total-hours{background-color: #FFECCA;}
+.rate{background-color: #FFECCA;}
+.total-due{background-color: #4DBD33;}
+
 .hours{
 	width: 100%;
 	font-weight: 400;
@@ -125,19 +157,10 @@ input[type=submit]:hover{
 	padding: 5px;
 }
 
-.total-hours{background-color: #FFECCA;}
-.rate{background-color: #FFECCA;}
-.total-due{background-color: #4DBD33;}
-
 .hours tbody tr:nth-of-type(even){
 	background-color: #ededed;
 }
 
-.hours tfoot{
-	text-align: right;
-	color:#000;
-	font-weight: bold;
-}
 .dulled{opacity: 0.2;}
 .not-paid{background-color: #4DBD33;}
 
@@ -184,7 +207,7 @@ input[name=hours]{
 	-o-transition: all .2s linear;
 	-moz-transition: all .2s linear;
 	transition: all .2s linear;
-	margin-top: 20px;
+	margin: 20px 0;
 }
 .get-paid:hover{
 	background-color: #34A41A;
@@ -194,3 +217,14 @@ input[name=hours]{
 	transition: all .2s linear;
 }
 
+
+/* utility
+---------------------------------- */
+.clearfix:after {
+	visibility: hidden;
+	display: block;
+	content: "";
+	clear: both;
+	height: 0;
+}
+*:first-child+html .clearfix { zoom: 1; } /* IE7 */
