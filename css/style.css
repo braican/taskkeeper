@@ -237,7 +237,8 @@ input[type=submit]:hover{
 	width: 100%;
 	font-weight: 400;
 }
-.hours thead{
+
+.title-row td{
 	background-color: #aaa;
 	font-weight: 700;
 	color: #fff;
@@ -271,6 +272,15 @@ input[name=description]{
 	margin-right: 5px;
 }
 input[name=hours]{
+	-webkit-box-flex: 1;      /* OLD - iOS 6-, Safari 3.1-6 */
+	-moz-box-flex: 1;         /* OLD - Firefox 19- */
+	width: 20%;               /* For old syntax, otherwise collapses. */
+	-webkit-flex: 1;          /* Chrome */
+	-ms-flex: 1;              /* IE 10 */
+	flex: 1;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */
+	margin-right: 5px;
+}
+input[name=price]{
 	-webkit-box-flex: 1;      /* OLD - iOS 6-, Safari 3.1-6 */
 	-moz-box-flex: 1;         /* OLD - Firefox 19- */
 	width: 20%;               /* For old syntax, otherwise collapses. */

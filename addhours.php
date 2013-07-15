@@ -25,10 +25,11 @@
 	<p>Back to the<a href="index.php" class="link" title="">list of projects</a></p>
 	<div class="form-header">Add some hours:</div>
 	<form action="util/add_hours.php" method="post" class="addhours-form" id="add-hours">
-		<input type="text" name="description" placeholder="description"></input>
-		<input type="text" name="hours" placeholder="number of hours"></input>
+		<input type="text" name="description" placeholder="description">
+		<input type="text" name="hours" placeholder="number of hours">
+		<input type="text" name="price" placeholder="price">
 		<input type="hidden" name="project" value="<?php echo $project; ?>">
-		<input type="submit" value="Submit"></input>
+		<input type="submit" value="Submit">
 	</form>
 	
 	<div class="get-paid" data-project="<?php echo $project; ?>">GET PAID!</div>
