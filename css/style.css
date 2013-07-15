@@ -242,9 +242,15 @@ input[type=submit]:hover{
 	background-color: #aaa;
 	font-weight: 700;
 	color: #fff;
-}
-.hours td{
 	padding: 5px;
+}
+.hours table td{
+	padding:5px;
+}
+
+.scrollable{
+	max-height: 400px;
+	overflow: scroll;
 }
 
 .hours tbody tr:nth-of-type(even){
