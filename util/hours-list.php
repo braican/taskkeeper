@@ -90,7 +90,7 @@
 				</tr>
 			
 			<?php
-				$sql = "SELECT description, price, paid FROM $project WHERE hrs = 1.0 ORDER BY id DESC";
+				$sql = "SELECT description, price, paid FROM $project WHERE hrs = 1.0 and price <> 0.00 ORDER BY id DESC";
 
 				if(!$result = $db->query($sql)){
 					die('There was an error running the query in hours-list.php [' . $db->error . ']');
