@@ -10,7 +10,7 @@
 		die('There was an error running the query in hours-list.php [' . $db->error . ']');
 	}
 	$row = $result->fetch_row();
-	$total_hours = $row[0];
+	$total_hours = $row[0] != NULL ? $row[0] : 0;
 ?>
 	<div class="totals clearfix">
 		<div class="row clearfix">
@@ -65,46 +65,63 @@
 	}
 ?>
 
-	<table class="hours" cellpadding="0">
+	<table class="hours" cellpadding="0" cellspacing="0">
 		<thead>
 			<tr class="title-row">
 				<td width="68%">Description</td>
 				<td width="15%">Hours</td>
 				<td width="15%">Subtotal</td>
+				<td></td>
 			</tr>
 		</thead>
-		<tbody>
-			<?php while($row = $result->fetch_assoc()) : ?>
-				<?php $dulled = $row['paid'] == 1 ? 'class="dulled"' : ''; ?>
-				<?php $paid = $row['paid'] == 1 ? 'paid' : 'not-paid'; ?>
-				<tr <?php echo $dulled ?>>
-					<td><?php echo $row['description'] ?></td>
-					<td><?php echo $row['hrs'] ?></td>
-					<td>$<?php echo $row['hrs'] * $rate; ?></td>
-                    <td class="<?php echo $paid; ?>"></td>
-				</tr>
-			<?php endwhile; ?>
-				<tr class="title-row">
-					<td colspan="2">Fixed Price Items</td>
-					<td>Subtotal</td>
-				</tr>
-			
-			<?php
-				$sql = "SELECT description, price, paid FROM $project WHERE hrs = 1.0 and price <> 0.00 ORDER BY id DESC";
+		<tr>
+			<td colspan="4">
+				<div class="scrollable">
+					<table width="100%" cellpadding="0" cellspacing="0">
+					<?php while($row = $result->fetch_assoc()) : ?>
+						<?php $dulled = $row['paid'] == 1 ? 'class="dulled"' : ''; ?>
+						<?php $paid = $row['paid'] == 1 ? 'paid' : 'not-paid'; ?>
+						<tr <?php echo $dulled ?>>
+							<td width="68%"><?php echo $row['description'] ?></td>
+							<td width="15%"><?php echo $row['hrs'] ?></td>
+							<td width="15%">$<?php echo $row['hrs'] * $rate; ?></td>
+			                <td width="2%" class="<?php echo $paid; ?>"></td>
+						</tr>
 
-				if(!$result = $db->query($sql)){
-					die('There was an error running the query in hours-list.php [' . $db->error . ']');
-				}
-			?>
-			<?php while($row = $result->fetch_assoc()) : ?>
-				<?php $dulled = $row['paid'] == 1 ? 'class="dulled"' : ''; ?>
-				<?php $paid = $row['paid'] == 1 ? 'paid' : 'not-paid'; ?>
-				<tr <?php echo $dulled ?>>
-					<td colspan="2"><?php echo $row['description'] ?></td>
-					<td>$<?php echo $row['price']; ?></td>
-                    <td class="<?php echo $paid; ?>"></td>
-				</tr>
-			<?php endwhile; ?>
-		</tbody>
+					<?php endwhile; ?>
+					</table>	
+				</div>
+			</td>
+		</tr>
+		
+		<tr class="title-row">
+			<td colspan="2">Fixed Price Items</td>
+			<td colspan="2">Subtotal</td>
+		</tr>
+		
+		<?php
+			$sql = "SELECT description, price, paid FROM $project WHERE hrs = 1.0 and price <> 0.00 ORDER BY id DESC";
+
+			if(!$result = $db->query($sql)){
+				die('There was an error running the query in hours-list.php [' . $db->error . ']');
+			}
+		?>
+		<tr>
+			<td colspan="4">
+				<div class="scrollable">
+					<table width="100%" cellpadding="0" cellspacing="0">
+					<?php while($row = $result->fetch_assoc()) : ?>
+						<?php $dulled = $row['paid'] == 1 ? 'class="dulled"' : ''; ?>
+						<?php $paid = $row['paid'] == 1 ? 'paid' : 'not-paid'; ?>
+						<tr <?php echo $dulled ?>>
+							<td width="83%"><?php echo $row['description'] ?></td>
+							<td width="15%">$<?php echo $row['price']; ?></td>
+			                <td width="2%" class="<?php echo $paid; ?>"></td>
+						</tr>
+					<?php endwhile; ?>
+					</table>
+				</div>
+			</td>
+		</tr>
 	</table>
 <?php dbclose($result, $db); ?>
