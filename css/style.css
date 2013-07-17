@@ -84,12 +84,18 @@ input[type=submit]:hover{
 	transition: all .2s linear;
 }
 
-/* project list
----------------------------------- */
-.project-list > div{padding: 10px;}
+/* ================================================
+   --project list
+   ================================================ */
+
+.project-list > div{
+	padding: 14px;
+}
 .project-list div:nth-of-type(even){background-color: #ededed;}
+
 .project-list div a{
 	color:#999;
+	float: left;
 	position: relative;
 	text-decoration: none;
 	-webkit-transition: all .2s linear;
@@ -107,6 +113,16 @@ input[type=submit]:hover{
 	transition: all .2s linear;
 }
 
+.project-list a span.invoice{
+	background: #c00;
+	color: #fff;
+	font-weight: normal;
+	padding: 6px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	margin-left: 10px;
+}
 .project-list div .owed{
 	color: #333;
 	font-weight: bold;
@@ -114,9 +130,6 @@ input[type=submit]:hover{
 	border-color: #4DBD33;
 	border-style: solid;
 	border-width: 0;
-}
-.project-list div a{
-	float: left;
 }
 
 .util{
@@ -126,12 +139,15 @@ input[type=submit]:hover{
 .util span{
 	cursor: pointer;
 	color: #ccc;
+	margin-right: 10px;
 }
 .util span:hover{
 	color: #999;
 }
-.util .rename{
-	margin-right: 10px;
+
+.util .rate-amt{
+	font-size: 14px;
+	color: #999;
 }
 
 .overlay{
@@ -203,8 +219,10 @@ input[type=submit]:hover{
 #delete-project input[type=submit]{
 	background: #c00;
 }
-/* individual projects
------------------------- */
+
+/* ======================
+   --individual project 
+   ====================== */
 
 .totals{
 	margin-bottom: 20px;
@@ -251,6 +269,9 @@ input[type=submit]:hover{
 .scrollable{
 	max-height: 400px;
 	overflow: scroll;
+}
+.scrollable tr{
+	cursor: pointer;
 }
 
 .hours tbody tr:nth-of-type(even){
@@ -301,12 +322,12 @@ input[name=price]{
 }
 
 .get-paid{
+	display: inline-block;
 	color:#fff;
 	padding: 10px;
 	border-radius: 5px;
 	background-color:#4DBD33;
 	font-weight: 700;
-	display: inline-block;
 	cursor: pointer;
 	-webkit-transition: all .2s linear;
 	-o-transition: all .2s linear;
@@ -322,6 +343,41 @@ input[name=price]{
 	transition: all .2s linear;
 }
 
+
+.outbound-invoice{
+	color:#fff;
+	padding: 10px;
+	border-radius: 5px;
+	background-color:#c00;
+	font-weight: 700;
+	display: inline-block;
+	cursor: pointer;
+	-webkit-transition: all .2s linear;
+	-o-transition: all .2s linear;
+	-moz-transition: all .2s linear;
+	transition: all .2s linear;
+	margin: 20px 0;
+}
+.outbound-invoice:hover{
+	background-color: #900;
+	-webkit-transition: all .2s linear;
+	-o-transition: all .2s linear;
+	-moz-transition: all .2s linear;
+	transition: all .2s linear;
+}
+.waiting-on-invoice{
+	color:#fff;
+	padding: 10px;
+	border-radius: 5px;
+	background-color:#c00;
+	font-weight: 700;
+	margin: 20px 0 20px 40px;
+	font-size: 16px;
+}
+
+.hide{
+	display: none;
+}
 
 /* utility
 ---------------------------------- */

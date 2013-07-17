@@ -4,21 +4,43 @@ $(function(){
 	// get paid button
 	$('.get-paid').on('click', function(e){
 		e.preventDefault();
+		$('.waiting-on-invoice, .get-paid').addClass('hide');
+		$('.outbound-invoice').removeClass('hide');
 		var project = $(this).attr('data-project');
 		$.ajax({
 			type	: "POST",
 			cache	: false,
-			url		: 'util/payed_switch.php',
+			url		: 'util/payed_switch.php?get-paid',
 			data	: 'project=' + project,
 			success : function(data){
 				$(".hours-list").load("util/hours-list.php?val=" + project);
+				console.log(data);
 			}
 		});
 	});
 
+	// waiting on invoice button
+	$('.outbound-invoice').on('click', function(event) {
+		event.preventDefault();
+		var project = $(this).attr('data-project');
+		$('.waiting-on-invoice, .get-paid').removeClass('hide');
+		$('.outbound-invoice').addClass('hide');
+		$.ajax({
+			type	: "POST",
+			cache	: false,
+			url		: 'util/payed_switch.php',
+			data 	: 'project=' + project,
+			success : function(data){
+				$(".hours-list").load("util/hours-list.php?val=" + project);
+				console.log(data);
+			}
+		})
+	});
+
 	// when a row is clicked, dull it out a bit
-	$('tr').on('click', function(e){
+	$('.scrollable tr').on('click', function(e){
 		e.preventDefault();
+		console.log("scrollable");
 		$(this).toggleClass('dulled');
 	});
 

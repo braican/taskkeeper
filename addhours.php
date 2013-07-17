@@ -5,16 +5,17 @@
 		require_once("util/db_util.php");
 		$db = dbconnect();
 		$project = $_GET['val'];
-		$sql = "SELECT name FROM projects WHERE project = '$project'";
+		$sql = "SELECT name, outbound_invoice FROM projects WHERE project = '$project'";
 		if(!$result = $db->query($sql)){
 			die('There was an error running the query [' . $db->error . ']');
 		}
 
 		while($row = $result->fetch_assoc()) :
 			$name = $row['name'];
+			$invoice = $row['outbound_invoice'];
 	?>
 	
-	<h1><?php echo $name ?></h1>
+	<h1><?php echo $name ?> <span class="waiting-on-invoice <?php if($invoice == 0) echo 'hide'; ?>">invoice inbound</span></h1>
 
 	<?php
 		endwhile;
@@ -32,7 +33,8 @@
 		<input type="submit" value="Submit">
 	</form>
 	
-	<div class="get-paid" data-project="<?php echo $project; ?>">GET PAID!</div>
+	<div class="get-paid <?php if($invoice == 0) echo 'hide';?>" data-project="<?php echo $project; ?>">GET PAID!</div>
+	<div class="outbound-invoice <?php if($invoice == 1) echo 'hide';?>" data-project="<?php echo $project; ?>">Waiting on invoice?</div>
 
 	<div class="hours-list">
 		<?php include("util/hours-list.php"); ?>
