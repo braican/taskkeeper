@@ -11,6 +11,8 @@
 	while($row = $result->fetch_assoc()){
 		$name = $row['name'];
 		$db_name = $row['project'];
+		$rate = $row['rate'];
+		$invoice = $row['outbound_invoice'];
 
 		$paid_sql = "SELECT SUM(hrs) FROM  $db_name WHERE  paid = 0";
 		if(!$paid_result = $db->query($paid_sql)){
@@ -23,8 +25,9 @@
 		
 ?>
 	<div class="clearfix project" id="<?php echo $db_name; ?>">
-		<a class="<?php echo $paid_class; ?>" style="border-right-width:<?php echo $paid_num;?>px;" href="addhours.php?val=<?php echo $db_name ?>"><?php echo $name ?></a>
+		<a class="<?php echo $paid_class; ?>" style="border-right-width:<?php echo $paid_num;?>px;" href="addhours.php?val=<?php echo $db_name ?>"><?php echo $name ?> <?php if($invoice == 1) : ?><span class="invoice">invoice on its way</span><?php endif; ?></a>
 		<div class="util">
+			<span class="rate-amt">$ <?php echo $rate; ?></span>
 			<span class="rename">rename</span>
 			<span class="delete">delete</span>
 		</div>
