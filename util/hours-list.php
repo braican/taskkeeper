@@ -30,7 +30,7 @@
 			<div class="value rate">$ <?php echo $rate; ?></div>
 			
 		</div>
-		
+
 		<?php 
 			$total_due = 0;
 
@@ -46,9 +46,7 @@
 					$total_due += $row['hrs'] * $row['price'];
 				}
 			}
-
 		?>
-
 		<div class="row clearfix">
 			<div class="title">TOTAL DUE</div>
 			<div class="value total-due">$ <?php echo $total_due; ?></div>
@@ -57,71 +55,60 @@
 	</div><!-- .totals -->
 
 
-<?php
-	$sql = "SELECT description, hrs, paid FROM $project WHERE price = 0.00 ORDER BY id DESC";
+	<div class="description-list hours">
+		<div class="row title-row clearfix">
+			<div class="description">Description</div>
+			<div class="num-hours">Hours</div>
+			<div class="subtotal">Subtotal</div>
+		</div>
+		<div class="descriptions">
+			<?php
+				$sql = "SELECT id, description, hrs FROM $project WHERE price = 0.00 and paid = 0 ORDER BY id DESC";
 
-	if(!$result = $db->query($sql)){
-		die('There was an error running the query in hours-list.php [' . $db->error . ']');
-	}
-?>
-
-	<table class="hours" cellpadding="0" cellspacing="0">
-		<thead>
-			<tr class="title-row">
-				<td width="68%">Description</td>
-				<td width="15%">Hours</td>
-				<td width="15%">Subtotal</td>
-				<td></td>
-			</tr>
-		</thead>
-		<tr>
-			<td colspan="4">
-				<div class="scrollable">
-					<table width="100%" cellpadding="0" cellspacing="0">
-					<?php while($row = $result->fetch_assoc()) : ?>
-						<?php $dulled = $row['paid'] == 1 ? 'class="dulled"' : ''; ?>
-						<?php $paid = $row['paid'] == 1 ? 'paid' : 'not-paid'; ?>
-						<tr <?php echo $dulled ?>>
-							<td width="68%"><?php echo $row['description'] ?></td>
-							<td width="15%"><?php echo $row['hrs'] ?></td>
-							<td width="15%">$<?php echo $row['hrs'] * $rate; ?></td>
-			                <td width="2%" class="<?php echo $paid; ?>"></td>
-						</tr>
-
-					<?php endwhile; ?>
-					</table>	
+				if(!$result = $db->query($sql)){
+					die('There was an error running the query in hours-list.php [' . $db->error . ']');
+				}
+			?>
+			<?php while($row = $result->fetch_assoc()) : ?>
+				<div class="row clearfix" data-id="<?php echo $row['id']; ?>">
+					<div class="hidden-util">
+						<span class="hold">hold</span>
+						<span class="dull">dull</span>
+					</div>
+					<div class="description"><?php echo $row['description'] ?></div>
+					<div class="num-hours"><?php echo $row['hrs'] ?></div>
+					<div class="subtotal">$<?php echo $row['hrs'] * $rate; ?></div>
 				</div>
-			</td>
-		</tr>
-		
-		<tr class="title-row">
-			<td colspan="2">Fixed Price Items</td>
-			<td colspan="2">Subtotal</td>
-		</tr>
-		
-		<?php
-			$sql = "SELECT description, price, paid FROM $project WHERE hrs = 1.0 and price <> 0.00 ORDER BY id DESC";
 
-			if(!$result = $db->query($sql)){
-				die('There was an error running the query in hours-list.php [' . $db->error . ']');
-			}
-		?>
-		<tr>
-			<td colspan="4">
-				<div class="scrollable">
-					<table width="100%" cellpadding="0" cellspacing="0">
-					<?php while($row = $result->fetch_assoc()) : ?>
-						<?php $dulled = $row['paid'] == 1 ? 'class="dulled"' : ''; ?>
-						<?php $paid = $row['paid'] == 1 ? 'paid' : 'not-paid'; ?>
-						<tr <?php echo $dulled ?>>
-							<td width="83%"><?php echo $row['description'] ?></td>
-							<td width="15%">$<?php echo $row['price']; ?></td>
-			                <td width="2%" class="<?php echo $paid; ?>"></td>
-						</tr>
-					<?php endwhile; ?>
-					</table>
+			<?php endwhile; ?>
+		</div><!-- .descriptions -->
+	</div><!-- /.description-list /.hours -->
+
+	<div class="description-list fixed-price">
+		<div class="row title-row clearfix">
+			<div class="description">Fixed Price Item</div>
+			<div class="subtotal">Subtotal</div>
+		</div>
+		
+		<div class="descriptions">
+			<?php
+				$sql = "SELECT id, description, price FROM $project WHERE hrs = 1.0 and price <> 0.00 and paid = 0 ORDER BY id DESC";
+
+				if(!$result = $db->query($sql)){
+					die('There was an error running the query in hours-list.php [' . $db->error . ']');
+				}
+			?>
+			<?php while($row = $result->fetch_assoc()) : ?>
+				<div class="row clearfix" data-id="<?php echo $row['id']; ?>">
+					<div class="hidden-util">
+						<span class="hold">hold</span>
+						<span class="dull">dull</span>
+					</div>
+					<div class="description"><?php echo $row['description'] ?></div>
+					<div class="subtotal">$<?php echo $row['price']; ?></div>
 				</div>
-			</td>
-		</tr>
-	</table>
+			<?php endwhile; ?>
+		</div><!-- .descripions -->
+	</div><!-- /.description-list0 /.fixed-price -->
+
 <?php dbclose($result, $db); ?>

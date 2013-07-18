@@ -6,12 +6,19 @@ $(function(){
 		e.preventDefault();
 		$('.waiting-on-invoice, .get-paid').addClass('hide');
 		$('.outbound-invoice').removeClass('hide');
-		var project = $(this).attr('data-project');
+		var project = $(this).attr('data-project'),
+			ids = [];
+
+		$('.description-list .row.hold-row').each(function(i, e) {
+			var id = $(e).attr('data-id');
+			ids.push(id);
+		});
+
 		$.ajax({
 			type	: "POST",
 			cache	: false,
 			url		: 'util/payed_switch.php?get-paid',
-			data	: 'project=' + project,
+			data	: 'project=' + project + '&hold=' + ids,
 			success : function(data){
 				$(".hours-list").load("util/hours-list.php?val=" + project);
 				console.log(data);
@@ -37,12 +44,39 @@ $(function(){
 		})
 	});
 
-	// when a row is clicked, dull it out a bit
-	$('.scrollable tr').on('click', function(e){
+
+	// when a row is clicked, show the description util
+	$(document).on('click', '.descriptions .row', function(e){
 		e.preventDefault();
-		console.log("scrollable");
-		$(this).toggleClass('dulled');
+		var width = $(this).find('.hidden-util').width() + 20;
+
+		if($(this).hasClass('show-hidden-util')){
+			$(this).removeClass('show-hidden-util').find('.hidden-util').animate({
+				'left' : '-50px',
+				'opacity': '0'
+			});	
+		} else {
+			$(this).addClass('show-hidden-util').find('.hidden-util').animate({
+				'left' : '-' + width + 'px',
+				'opacity': '1'
+			});	
+		}
 	});
+
+	// the hidden utility
+	$(document).on('click', '.hidden-util span', function(event) {
+		event.preventDefault();
+		if($(this).hasClass('hold')){
+			$(this).removeClass('hold').addClass('unhold').text('unhold').parents('.row').addClass('hold-row');
+		} else if($(this).hasClass('unhold')){
+			$(this).removeClass('unhold').addClass('hold').text('hold').parents('.row').removeClass('hold-row');;
+		} else if($(this).hasClass('dull')){
+			$(this).removeClass('dull').addClass('undull').text('un-dull').parents('.row').addClass('dulled');
+		} else if($(this).hasClass('undull')){
+			$(this).removeClass('undull').addClass('dull').text('dull').parents('.row').removeClass('dulled');
+		}
+	});
+
 
 	// -------------------------------
 	// project utility
