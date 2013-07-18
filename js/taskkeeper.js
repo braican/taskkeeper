@@ -68,8 +68,20 @@ $(function(){
 		event.preventDefault();
 		if($(this).hasClass('hold')){
 			$(this).removeClass('hold').addClass('unhold').text('unhold').parents('.row').addClass('hold-row');
+			var due = $('.total-due').text(),
+				thisAmt = $(this).parent().siblings('.subtotal').text();
+			dueInt = stripAndInt(due);
+			thisAmtInt = stripAndInt(thisAmt);
+			var newDue = dueInt - thisAmtInt
+			$('.total-due').text('$' + newDue);
 		} else if($(this).hasClass('unhold')){
-			$(this).removeClass('unhold').addClass('hold').text('hold').parents('.row').removeClass('hold-row');;
+			$(this).removeClass('unhold').addClass('hold').text('hold').parents('.row').removeClass('hold-row');
+			var due = $('.total-due').text(),
+				thisAmt = $(this).parent().siblings('.subtotal').text();
+			dueInt = stripAndInt(due);
+			thisAmtInt = stripAndInt(thisAmt);
+			var newDue = dueInt + thisAmtInt
+			$('.total-due').text('$' + newDue);
 		} else if($(this).hasClass('dull')){
 			$(this).removeClass('dull').addClass('undull').text('un-dull').parents('.row').addClass('dulled');
 		} else if($(this).hasClass('undull')){
@@ -208,3 +220,10 @@ $(function(){
 	    });
 	});
 });
+
+// strips out whitespace and dollar signs, and returns an int
+function stripAndInt(string){
+	string = string.replace(/ /g, '').replace(/\$/g, '');
+	newInt = parseInt(string);
+	return newInt;
+}
