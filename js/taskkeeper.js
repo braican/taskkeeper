@@ -44,24 +44,25 @@ $(function(){
 		})
 	});
 
-
 	// when a row is clicked, show the description util
-	$(document).on('click', '.descriptions .row', function(e){
+	$(document).on('click', '.descriptions .row .description', function(e){
 		e.preventDefault();
-		var width = $(this).find('.hidden-util').width() + 20;
+		var width = $(this).parent().find('.hidden-util').width() + 20;
 
-		if($(this).hasClass('show-hidden-util')){
-			$(this).removeClass('show-hidden-util').find('.hidden-util').animate({
+		if($(this).parent().hasClass('show-hidden-util')){
+			$(this).parent().removeClass('show-hidden-util').find('.hidden-util').animate({
 				'left' : '-50px',
 				'opacity': '0'
 			});	
 		} else {
-			$(this).addClass('show-hidden-util').find('.hidden-util').animate({
+			$(this).parent().addClass('show-hidden-util').find('.hidden-util').animate({
 				'left' : '-' + width + 'px',
 				'opacity': '1'
 			});	
 		}
 	});
+
+
 
 	// the hidden utility
 	$(document).on('click', '.hidden-util span', function(event) {
@@ -91,7 +92,7 @@ $(function(){
 
 
 	// -------------------------------
-	// project utility
+	// project utilities
 	//
 
 	// cancel
@@ -100,7 +101,7 @@ $(function(){
 		$('.overlay').remove();
 	});
 
-	// rename
+	// rename project
 	$(document).on('click', '.rename', function(e){
 		e.preventDefault();
 		var project = $(this).parents('.project').attr('id');
@@ -108,7 +109,7 @@ $(function(){
 		var overlay = 	'<div class="overlay">' + 
 							'<div class="overlay-container">' +
 								'<form id="rename-project">' +
-									'<p>Rename project ' + name + '</p>' +
+									'<h3>Rename project ' + name + '</h3>' +
 									'<input type="text" id="new_name" name="new_name">' +
 									'<input type="hidden" name="old_name" value="' + project + '">' +
 									'<input type="submit" value="Go">' +
@@ -136,7 +137,7 @@ $(function(){
 		});
 	});
 
-	// delete
+	// delete project
 	$(document).on('click', '.delete', function(e){
 		e.preventDefault();
 		var project = $(this).parents('.project').attr('id');
@@ -144,7 +145,7 @@ $(function(){
 		var overlay = 	'<div class="overlay">' + 
 							'<div class="overlay-container">' +
 								'<form id="delete-project">' +
-									'<p>You sure you want to delete project ' + name + '?</p>' +
+									'<h3>You sure you want to delete project ' + name + '?</h3>' +
 									'<input type="hidden" name="old_name" value="' + project + '">' +
 									'<input type="submit" value="DELETE">' +
 									'<div class="cancel">NEVERMIND</div>' +
@@ -170,6 +171,45 @@ $(function(){
 			}
 		});
 	});
+
+
+	// update hours on project
+	$(document).on('click', '.descriptions .row .num-hours', function(event) {
+		event.preventDefault();
+		var project = $('h1.page-title').attr('id'),
+			id = $(this).parent().attr('data-id');
+		var overlay = 	'<div class="overlay">' + 
+							'<div class="overlay-container">' +
+								'<form id="update-hours">' +
+									'<h3>Update Hours</h3>' +
+									'<input type="text" id="new_hours" name="new_hours">' +
+									'<input type="hidden" name="project_name" value="' + project + '">' +
+									'<input type="hidden" name="description_id" value="' + id + '">' +
+									'<input type="submit" value="Go">' +
+									'<div class="cancel">Cancel</div>' +
+								'</form>' +
+							'</div>' + 
+						'</div>';
+		$('body').append(overlay);
+	});
+	$(document).on('submit', '#update-hours', function(e){
+		e.preventDefault();
+		var project = $(this).find('input[name=project_name]').val();
+		$.ajax({
+			type	: "POST",
+			url		: 'util/update-hours.php',
+			data 	: $(this).serialize(),
+			success : function(data){
+				if(data != 0){
+					console.log(data);
+					$('.overlay-container').append('<p>something went wrong</p>');
+				} else {
+					$('.overlay').remove();
+					$(".hours-list").load("util/hours-list.php?val=" + project);
+				}
+			}
+		});
+	})
 
 	// -------------------------------
 	// forms

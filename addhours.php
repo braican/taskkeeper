@@ -15,7 +15,7 @@
 			$invoice = $row['outbound_invoice'];
 	?>
 	
-	<h1><?php echo $name ?> <span class="waiting-on-invoice <?php if($invoice == 0) echo 'hide'; ?>">invoice inbound</span></h1>
+	<h1 class="page-title" id="<?php echo $project; ?>"><?php echo $name ?> <span class="waiting-on-invoice <?php if($invoice == 0) echo 'hide'; ?>">invoice inbound</span></h1>
 
 	<?php
 		endwhile;

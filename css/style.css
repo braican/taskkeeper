@@ -1,9 +1,23 @@
+
+/* ================================================
+   --general
+   ================================================ */
+
 body{
 	font-family: 'Lato', sans-serif;
 }
 
-/* General
----------------------------------- */
+
+
+/* ======================
+   --typography 
+   ====================== */
+
+h3{
+	margin: 0 0 1em 0;
+	line-height: 1.6em;
+}
+
 .link{
 	text-decoration: none;
 	color:#4DBD33;
@@ -22,23 +36,12 @@ body{
 	transition: all .2s linear;
 }
 
-form{
-	margin-top:10px;
-}
-
-.container{
-	max-width:800px;
-	width: 96%;
-	margin:0 auto;
-}
-
-.success-text,
-.success-payed-text{
-	opacity: 0;
-}
+/* ======================
+   --forms 
+   ====================== */
 
 .form-header{
-	margin-bottom: 0;
+	margin: 0 0 10px;
 }
 
 input{
@@ -84,10 +87,29 @@ input[type=submit]:hover{
 	transition: all .2s linear;
 }
 
+/* ======================
+   --layout 
+   ====================== */
+
+.container{
+	max-width:800px;
+	width: 96%;
+	margin:0 auto;
+}
+
+.success-text,
+.success-payed-text{
+	opacity: 0;
+}
+
+
 /* ================================================
    --project list
    ================================================ */
 
+.project-list{
+	margin-bottom: 10px;
+}
 .project-list > div{
 	padding: 14px;
 }
@@ -282,7 +304,8 @@ input[type=submit]:hover{
 }
 
 
-.descriptions .description{
+.descriptions .description,
+.descriptions .num-hours{
 	cursor: pointer;
 }
 .descriptions .hold-row .description{
@@ -436,8 +459,10 @@ input[name=price]{
 	display: none;
 }
 
-/* utility
----------------------------------- */
+/* ================================================
+   --utility
+   ================================================ */
+
 .clearfix:after {
 	visibility: hidden;
 	display: block;
