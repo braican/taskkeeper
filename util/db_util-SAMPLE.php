@@ -1,7 +1,8 @@
 <?php 
 
 function dbconnect () {
-	$db = new mysqli("localhost", "braican1_braican", "wonton820", "braican1_taskkeeper");
+    // ENTER YOUR DATABASE CREDENTIALS HERE
+	$db = new mysqli("localhost", "DATABASE_USERNAME", "DATABASE_PASSWORD", "DATABASE_NAME");
 	if ($db->connect_errno) {
 	    echo "Failed to connect to MySQL: (" . $db->connect_errno . ") " . $db->connect_error;
 	}
