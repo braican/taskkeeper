@@ -273,26 +273,9 @@
 				newDue;
 			
 			if($t.hasClass('hold')){
-				var due = $('.total-due').text(),
-					thisAmt = $(this).parent().siblings('.subtotal').text();
-				
-				$t.removeClass('hold').addClass('unhold').text('unhold').parents('.row').addClass('hold-row');
-				
-				dueInt = stripAndInt(due);
-				thisAmtInt = stripAndInt(thisAmt);
-				newDue = dueInt - thisAmtInt;
-				$('.total-due').text('$' + newDue);
+				$('.hours-list').load('util/hours-list.php?holdrow=' + id + '&val=' + project);
 			} else if($t.hasClass('unhold')){
-				var due = $('.total-due').text(),
-					thisAmt = $t.parent().siblings('.subtotal').text();
-				
-				$t.removeClass('unhold').addClass('hold').text('hold').parents('.row').removeClass('hold-row');
-				
-				dueInt = stripAndInt(due);
-				thisAmtInt = stripAndInt(thisAmt);
-				newDue = dueInt + thisAmtInt
-				
-				$('.total-due').text('$' + newDue);
+				$('.hours-list').load('util/hours-list.php?unholdrow=' + id + '&val=' + project);
 			} else if($t.hasClass('dull')){
 				$t.removeClass('dull').addClass('undull').text('un-dull').parents('.row').addClass('dulled');
 			} else if($t.hasClass('undull')){

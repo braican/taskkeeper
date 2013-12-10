@@ -12,7 +12,21 @@
 		}
 	}
 
-	$sql = "SELECT SUM(hrs) FROM $project WHERE paid = 0 AND price = 0.00";
+	if(isset($_GET["holdrow"])){
+		$sql = "UPDATE $project SET hold = 1 WHERE id = " . $_GET['holdrow'];
+		if(!$result = $db->query($sql)){
+			die('There was an error running the query in hours-list.php [' . $db->error . ']');
+		}
+	}
+
+	if(isset($_GET["unholdrow"])){
+		$sql = "UPDATE $project SET hold = 0 WHERE id = " . $_GET['unholdrow'];
+		if(!$result = $db->query($sql)){
+			die('There was an error running the query in hours-list.php [' . $db->error . ']');
+		}
+	}
+
+	$sql = "SELECT SUM(hrs) FROM $project WHERE paid = 0 AND price = 0.00 AND hold = 0";
 	if(!$result = $db->query($sql)){
 		die('There was an error running the query in hours-list.php [' . $db->error . ']');
 	}
@@ -34,14 +48,14 @@
 		<?php $rate = $row['rate']; ?>
 		<div class="row clearfix">
 			<div class="title">RATE</div>
-			<div class="value rate">$ <?php echo $rate; ?></div>
+			<div class="value rate">$ <?php echo money_format('%i', $rate); ?></div>
 			
 		</div>
 
 		<?php 
 			$total_due = 0;
 
-			$sql = "SELECT hrs, price FROM $project WHERE paid = 0";
+			$sql = "SELECT hrs, price FROM $project WHERE paid = 0 AND hold = 0";
 			if(!$result = $db->query($sql)){
 				die('There was an error running the query in hours-list.php [' . $db->error . ']');
 			}
@@ -56,7 +70,7 @@
 		?>
 		<div class="row clearfix">
 			<div class="title">TOTAL DUE</div>
-			<div class="value total-due">$ <?php echo $total_due; ?></div>
+			<div class="value total-due">$ <?php echo money_format('%i', $total_due); ?></div>
 			
 		</div>
 	</div><!-- .totals -->
@@ -70,16 +84,17 @@
 		</div>
 		<div class="descriptions">
 			<?php
-				$sql = "SELECT id, description, hrs FROM $project WHERE price = 0.00 and paid = 0 ORDER BY id DESC";
+				$sql = "SELECT id, description, hrs, hold FROM $project WHERE price = 0.00 and paid = 0 ORDER BY id DESC";
 
 				if(!$result = $db->query($sql)){
 					die('There was an error running the query in hours-list.php [' . $db->error . ']');
 				}
 			?>
 			<?php while($row = $result->fetch_assoc()) : ?>
-				<div class="row clearfix" data-id="<?php echo $row['id']; ?>">
+				<?php $hold = $row['hold'] ? 'unhold' : 'hold'; ?>
+				<div class="row clearfix<?php if($row['hold']) echo ' hold-row'; ?>" data-id="<?php echo $row['id']; ?>">
 					<div class="hidden-util">
-						<span class="hold">hold</span>
+						<span class="<?php echo $hold; ?>"><?php echo $hold; ?></span>
 						<span class="dull">dull</span>
 						<span class="delete-row">delete</span>
 					</div>
@@ -107,9 +122,10 @@
 				}
 			?>
 			<?php while($row = $result->fetch_assoc()) : ?>
-				<div class="row clearfix" data-id="<?php echo $row['id']; ?>">
+				<?php $hold = $row['hold'] ? 'unhold' : 'hold'; ?>
+				<div class="row clearfix<?php if($row['hold']) echo ' hold-row'; ?>" data-id="<?php echo $row['id']; ?>">
 					<div class="hidden-util">
-						<span class="hold">hold</span>
+						<span class="<?php echo $hold; ?>"><?php echo $hold; ?></span>
 						<span class="dull">dull</span>
 						<span class="delete-row">delete</span>
 					</div>

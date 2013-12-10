@@ -18,7 +18,8 @@
 	 		$price = 0;
 	 	}
 		// add the new project to the project database
-		$sql = "INSERT INTO $project (description, hrs, price, paid) VALUES ('$description', '$hours', '$price', '0')";
+		$sql = "INSERT INTO $project (description, hrs, price, paid, hold)
+				VALUES ('$description', '$hours', '$price', '0', '0')";
 		if(!$result = $db->query($sql)){
 			die('There was an error running the query [' . $db->error . ']');
 		}
