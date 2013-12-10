@@ -115,7 +115,7 @@
 		
 		<div class="descriptions">
 			<?php
-				$sql = "SELECT id, description, price FROM $project WHERE hrs = 1.0 and price <> 0.00 and paid = 0 ORDER BY id DESC";
+				$sql = "SELECT id, description, price, hold FROM $project WHERE hrs = 1.0 and price <> 0.00 and paid = 0 ORDER BY id DESC";
 
 				if(!$result = $db->query($sql)){
 					die('There was an error running the query in hours-list.php [' . $db->error . ']');
