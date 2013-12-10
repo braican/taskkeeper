@@ -5,6 +5,13 @@
 	
 	$project = $_GET["val"];
 
+	if(isset($_GET["deleterow"])){
+		$sql = "DELETE FROM $project WHERE id = " . $_GET['deleterow'];
+		if(!$result = $db->query($sql)){
+			die('There was an error running the query in hours-list.php [' . $db->error . ']');
+		}
+	}
+
 	$sql = "SELECT SUM(hrs) FROM $project WHERE paid = 0 AND price = 0.00";
 	if(!$result = $db->query($sql)){
 		die('There was an error running the query in hours-list.php [' . $db->error . ']');
@@ -74,6 +81,7 @@
 					<div class="hidden-util">
 						<span class="hold">hold</span>
 						<span class="dull">dull</span>
+						<span class="delete-row">delete</span>
 					</div>
 					<div class="description"><?php echo $row['description'] ?></div>
 					<div class="num-hours"><?php echo $row['hrs'] ?></div>
@@ -103,6 +111,7 @@
 					<div class="hidden-util">
 						<span class="hold">hold</span>
 						<span class="dull">dull</span>
+						<span class="delete-row">delete</span>
 					</div>
 					<div class="description"><?php echo $row['description'] ?></div>
 					<div class="subtotal">$<?php echo $row['price']; ?></div>

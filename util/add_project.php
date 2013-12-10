@@ -31,7 +31,13 @@
 		echo "<p>project $new_project added to the projects table</p>";
 
 		// create the table
-		$sql = "CREATE TABLE " . $new_project . " (id BIGINT( 20 ) NOT NULL AUTO_INCREMENT PRIMARY KEY,description TEXT, hrs DECIMAL(5,1), price DECIMAL(5,2), paid INT)";
+		$sql = "CREATE TABLE " . $new_project .
+				" (id BIGINT( 20 ) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+					description TEXT,
+					hrs DECIMAL(5,1),
+					price DECIMAL(5,2),
+					paid TINYINT,
+					hold TINYINT)";
 		if(!$result = $db->query($sql)){
 			die('There was an error running the query in add_project [' . $db->error . ']');
 		}
