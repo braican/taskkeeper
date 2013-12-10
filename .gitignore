@@ -1,4 +1,6 @@
 .htaccess
+error_log
+*/error_log
 
 # ignore the db connect util - to hide personal un/pwds
 util/db_util.php
