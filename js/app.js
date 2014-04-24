@@ -7,17 +7,20 @@ var data = [{
     waiting: false,
     line_items: {
         fixed: [{
+            id:"1",
             description: "buying Futura",
             cost: 25,
             paid: false
         }],
         hourly: [{
+            id:"2",
             description: "mobilizing the adam jensen website",
-            hours: 4,
+            hours: "4",
             paid: false
         }, {
+            id:"3",
             description: "new splash page",
-            hours: 1,
+            hours: "1",
             paid: false
         }]
     }
@@ -28,10 +31,12 @@ var data = [{
     waiting: true,
     line_items: {
         fixed: [{
+            id:"1",
             description: "invoice at first half",
             cost: 925,
             paid: false
         },{
+            id:"2",
             description: "purchasing the ACF Repeater plugin",
             cost: 25,
             paid: false
@@ -75,3 +80,29 @@ App.ClientController = Ember.ObjectController.extend({
     }
 });
 
+
+Ember.Handlebars.helper('hourlySubtotal', function(hrs){
+    var rate = 30;
+    // console.log($('#the-rate'));
+    // console.log(hrs);
+    // console.log(this);
+    return hrs * rate;
+});
+
+Ember.Handlebars.helper('totalDue', function(){
+    var rate = this.content.rate,
+        totalDue = 0;
+
+    $.each(this.content.line_items.hourly, function(index, val) {
+        totalDue += (val.hours * rate);
+    });
+
+    $.each(this.content.line_items.fixed, function(index, val) {
+        totalDue += val.cost;
+    });
+
+    console.log(totalDue);
+    // console.log(hrs);
+    // console.log(this);
+    return totalDue;
+});
