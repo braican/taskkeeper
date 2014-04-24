@@ -1,28 +1,66 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <title>Ember Starter Kit</title>
-  <link rel="stylesheet" href="css/style.css">
+    <meta charset="utf-8">
+    <title>Ember Starter Kit</title>
+    <link href='http://fonts.googleapis.com/css?family=Lato|Roboto:100' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <script type="text/x-handlebars">
-    <h2>Welcome to Ember.js</h2>
 
-    {{outlet}}
-  </script>
 
-  <script type="text/x-handlebars" id="index">
-    <ul>
-    {{#each item in model}}
-      <li>{{item}}</li>
-    {{/each}}
-    </ul>
-  </script>
+    <script type="text/x-handlebars">
+        <div id="taskkeeper">
+            <h1>Taskkeeper</h1>
 
-  <script src="js/libs/jquery-1.10.2.js"></script>
-  <script src="js/libs/handlebars-1.1.2.js"></script>
-  <script src="js/libs/ember-1.5.0.js"></script>
-  <script src="js/app.js"></script>
+            {{outlet}}
+        </div>
+    </script>
+
+    <script type="text/x-handlebars" id="about">
+        <div class="about">
+            <p>This is the about content</p>
+        </div>
+    </script>
+
+    <script type="text/x-handlebars" id="clients">
+        <div class="client-list">
+            {{#each}}
+                <div class="row">
+                    {{#link-to 'client' this}}
+                        {{name}}
+                    {{/link-to}}
+                </div>
+            {{/each}}
+        </div>
+
+        <div class="client-view">{{outlet}}</div>
+    </script>
+    
+    <script type="text/x-handlebars" id="client">
+        <div class="client">
+            {{#if isEditingClient}}
+                {{partial 'client/edit'}}
+                <button {{action 'doneEditing'}}>Save</button>
+            {{else}}
+                <button {{action 'edit'}}>Edit</button>
+            {{/if}}
+
+            <h2>{{name}}</h2>
+            <p class="rate">{{rate}}</p>
+
+        </div>
+    </script>
+
+    <script type="text/x-handlebars" id="client/_edit">
+        <p>{{input type="text" value=name}}</p>
+        <p>{{input type="text" value=rate}}</p>
+    </script>
+
+<script src="js/libs/jquery-1.10.2.js"></script>
+<script src="js/libs/handlebars-1.1.2.js"></script>
+<script src="js/libs/ember-1.5.0.js"></script>
+<script src="js/app.js"></script>
+
 </body>
 </html>
