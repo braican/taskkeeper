@@ -89,20 +89,21 @@ Ember.Handlebars.helper('hourlySubtotal', function(hrs){
     return hrs * rate;
 });
 
-Ember.Handlebars.helper('totalDue', function(){
-    var rate = this.content.rate,
-        totalDue = 0;
+Ember.Handlebars.helper('totalDue', function(hrs, rate){
+    // var rate = this.content.rate,
+    //     totalDue = 0;
 
-    $.each(this.content.line_items.hourly, function(index, val) {
-        totalDue += (val.hours * rate);
-    });
+    // $.each(this.content.line_items.hourly, function(index, val) {
+    //     totalDue += (val.hours * rate);
+    // });
 
-    $.each(this.content.line_items.fixed, function(index, val) {
-        totalDue += val.cost;
-    });
+    // $.each(this.content.line_items.fixed, function(index, val) {
+    //     totalDue += val.cost;
+    // });
 
-    console.log(totalDue);
+    console.log(hrs);
+    console.log(rate);
     // console.log(hrs);
     // console.log(this);
-    return totalDue;
+    return hrs * rate;
 });

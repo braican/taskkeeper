@@ -22,14 +22,16 @@
     </script>
 
     <script type="text/x-handlebars" id="clients">
-        <div class="client-list taskkeeper-padding">
+        <div class="client-list taskkeeper-padding grid">
             {{#each}}
                 <div class="row">
-                    <div class="name">
-                        {{#link-to 'client' this}}{{name}}{{/link-to}}
+                    <div class="name grid-80">
+                        <div class="gridpad">
+                            {{#link-to 'client' this}}{{name}}{{/link-to}}
+                        </div>
                     </div>
 
-                    <div class="rate">${{rate}}</div>
+                    <div class="rate grid-20">${{rate}}</div>
                     <div class="utility"></div>
                 </div>
             {{/each}}
@@ -50,56 +52,59 @@
                 {{/if}}
             </div>
 
-            <header class="client-header clearfix">
-                <h2>{{name}}</h2>
-                
-                <div class="rate">
-                    <span class="label">Hourly rate</span>
-                    <span class="dollars">$<span id="the-rate">{{rate}}</span></span>
+            <header class="client-header grid">
+                <div class="row">
+
+                    <h2 class="grid-60">{{name}}</h2>
+
+                    <div class="rate grid-20">
+                        <span class="label">Total due</span>
+                        <span class="dollars">$<span id="the-rate">{{totalDue rate 20}}</span></span>
+                    </div>
+
+                    <div class="rate grid-20">
+                        <span class="label">Hourly rate</span>
+                        <span class="dollars">$<span id="the-rate">{{rate}}</span></span>
+                    </div>
+
                 </div>
-
-
             </header>
-    
-            <div class="total-due">{{totalDue}}</div>
 
 
-            <div class="line-items">
+            <div class="line-items grid">
                 <div class="hourly">
                     
                     <div class="row">
-                        <div class="description"><h4>Hourly</h4></div>
-                        <div class="hours"><h4>hours</h4></div>
-                        <div class="subtotal"><h4>Subtotal</h4></div>
+                        <div class="description grid-60"><h4>Hourly</h4></div>
+                        <div class="hours grid-20"><h4>hours</h4></div>
+                        <div class="subtotal grid-20"><h4>Subtotal</h4></div>
                     </div>
 
 
                     {{#each line_items.hourly}}
                         <div class="row highlight-hover">
-                            <div class="description">{{description}}</div>
-                            <div class="hours">{{hours}}</div>
+                            <div class="description grid-60">{{description}}</div>
+                            <div class="hours grid-20">{{hours}}</div>
                             
-                            <div class="subtotal">{{hourlySubtotal hours}}</div>
-
-
+                            <div class="subtotal grid-20">{{hourlySubtotal hours}}</div>
                         </div>
 
                         <div>
-                            <h4>actions</h4>
-                            {{input type="text" value=hours}}
+                            {{!-- <h4>actions</h4> --}}
+                            {{!-- {{input type="text" value=hours}} --}}
                         </div>
                         
                     {{/each}}
                 </div>
                 <div class="fixed">
                     <div class="row">
-                        <div class="description"><h4>Fixed</h4></div>
-                        <div class="cost"><h4>Cost</h4></div>
+                        <div class="description grid-80"><h4>Fixed</h4></div>
+                        <div class="cost grid-20"><h4>Cost</h4></div>
                     </div>
                     {{#each line_items.fixed}}
                         <div class="row highlight-hover">
-                            <div class="description">{{description}}</div>
-                            <div class="cost">${{cost}}</div>
+                            <div class="description grid-80">{{description}}</div>
+                            <div class="cost grid-20">${{cost}}</div>
                         </div>
                     {{/each}}
                 </div>

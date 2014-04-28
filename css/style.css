@@ -28,7 +28,7 @@ h1{
 }
 h2{
     font-weight: 300;
-    margin: 0 10px 0 0;
+    margin: 0;
     display: inline-block;
     vertical-align: middle;
 }
@@ -91,6 +91,14 @@ input[type="text"]{
 }
 
 /* -----------------------------------
+ * --general style
+ * ----------------------------------- */
+ .row.highlight-hover:hover{
+     background: #f6f6f6;
+ }
+
+
+/* -----------------------------------
  * --layout
  * ----------------------------------- */
 
@@ -104,6 +112,28 @@ input[type="text"]{
     padding: 20px;
 }
 
+.grid .row{
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+}
+
+.grid .row .grid-80{
+    flex: 4;
+}
+.grid .row .grid-60{
+    flex: 3;
+}
+.grid .row .grid-40{
+    flex: 2;
+}
+.grid .row .grid-20{
+    flex: 1;
+}
+
+
 /* -----------------------------------
  * --header
  * ----------------------------------- */
@@ -116,24 +146,9 @@ input[type="text"]{
 /* -----------------------------------
  * --client-list
  * ----------------------------------- */
-.client-list .row{
-    display: -webkit-box;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: -webkit-flex;
-    display: flex;
-}
+
 .client-list .row:nth-child(even){
     background: #efefef;
-}
-.client-list .row > div{
-    padding: 8px;
-}
-.client-list .row .name{
-    flex: 3;
-}
-.client-list .row .rate{
-    flex: 1;
 }
 .client-list .row .name a{
     color: #404040;
@@ -147,16 +162,11 @@ input[type="text"]{
     margin-top: 40px;
     border-top: 1px solid #efefef;
 }
-#client .rate{
-    float: right;
-    text-align: center;
-}
 #client .rate .dollars{
     font-size: 2em;
     font-weight: 300;
     display: block;
 }
-
 .edit-client-container{
     margin-bottom: 20px;    
 }
@@ -166,31 +176,7 @@ input[type="text"]{
 }
 
 .line-items > div{
-    margin-top: 40px;
-}
-.line-items .row{
-    padding: 6px;
-    margin-left: -6px;
-    margin-right: -6px;
-    display: -webkit-box;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: -webkit-flex;
-    display: flex;
-}
-.line-items .row.highlight-hover:hover{
-    background: #f6f6f6;
-}
-
-.line-items .description{
-    flex: 6 0px;
-}
-.line-items .hours,
-.line-items .subtotal{
-    flex:1 0px;
-}
-.line-items .cost{
-    flex: 2 0px;
+    margin: 40px 0 0;
 }
 
 /* -----------------------------------
