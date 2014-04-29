@@ -109,7 +109,7 @@ input[type="text"]{
 }
 
 .taskkeeper-padding{
-    padding: 20px;
+    padding: 14px;
 }
 
 .grid .row{
@@ -133,6 +133,9 @@ input[type="text"]{
     flex: 1;
 }
 
+.gridpad{
+    padding: 6px;
+}
 
 /* -----------------------------------
  * --header
@@ -158,7 +161,7 @@ input[type="text"]{
 /* -----------------------------------
  * --client view
  * ----------------------------------- */
-#client{
+.client-view{
     margin-top: 40px;
     border-top: 1px solid #efefef;
 }

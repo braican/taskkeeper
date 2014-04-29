@@ -31,7 +31,10 @@
                         </div>
                     </div>
 
-                    <div class="rate grid-20">${{rate}}</div>
+                    <div class="rate grid-20">
+                        <div class="gridpad">${{rate}}</div>
+                    </div>
+
                     <div class="utility"></div>
                 </div>
             {{/each}}
@@ -42,7 +45,7 @@
     
     <script type="text/x-handlebars" id="client">
         <div id="client" class="taskkeeper-padding">
-            <div class="edit-client-container">
+            <div class="edit-client-container gridpad">
                 {{#if isEditingClient}}
                     <button {{action 'doneEditing'}}>Save</button>
                     {{partial 'client/edit'}}
@@ -54,19 +57,23 @@
 
             <header class="client-header grid">
                 <div class="row">
-
-                    <h2 class="grid-60">{{name}}</h2>
-
-                    <div class="rate grid-20">
-                        <span class="label">Total due</span>
-                        <span class="dollars">$<span id="the-rate">{{totalDue rate 20}}</span></span>
+                    <div class="grid-60">
+                        <h2 class="gridpad">{{name}}</h2>
                     </div>
 
                     <div class="rate grid-20">
-                        <span class="label">Hourly rate</span>
-                        <span class="dollars">$<span id="the-rate">{{rate}}</span></span>
+                        <div class="gridpad">
+                            <span class="label">Total due</span>
+                            <span class="dollars">$<span id="the-rate">{{totalDue rate 20}}</span></span>
+                        </div>
                     </div>
 
+                    <div class="rate grid-20">
+                        <div class="gridpad">
+                            <span class="label">Hourly rate</span>
+                            <span class="dollars">$<span id="the-rate">{{rate}}</span></span>
+                        </div>                            
+                    </div>
                 </div>
             </header>
 
@@ -75,18 +82,24 @@
                 <div class="hourly">
                     
                     <div class="row">
-                        <div class="description grid-60"><h4>Hourly</h4></div>
-                        <div class="hours grid-20"><h4>hours</h4></div>
-                        <div class="subtotal grid-20"><h4>Subtotal</h4></div>
+                        <div class="description grid-60"><h4 class="gridpad">Hourly</h4></div>
+                        <div class="hours grid-20"><h4 class="gridpad">hours</h4></div>
+                        <div class="subtotal grid-20"><h4 class="gridpad">Subtotal</h4></div>
                     </div>
 
 
                     {{#each line_items.hourly}}
                         <div class="row highlight-hover">
-                            <div class="description grid-60">{{description}}</div>
-                            <div class="hours grid-20">{{hours}}</div>
+                            <div class="description grid-60">
+                                <div class="gridpad">{{description}}</div>
+                            </div>
+                            <div class="hours grid-20">
+                                <div class="gridpad">{{hours}}</div>
+                            </div>
                             
-                            <div class="subtotal grid-20">{{hourlySubtotal hours}}</div>
+                            <div class="subtotal grid-20">
+                                <div class="gridpad">{{hourlySubtotal hours}}</div>
+                            </div>
                         </div>
 
                         <div>
@@ -98,13 +111,18 @@
                 </div>
                 <div class="fixed">
                     <div class="row">
-                        <div class="description grid-80"><h4>Fixed</h4></div>
-                        <div class="cost grid-20"><h4>Cost</h4></div>
+                        <div class="description grid-80"><h4 class="gridpad">Fixed</h4></div>
+                        <div class="cost grid-20"><h4 class="gridpad">Cost</h4></div>
                     </div>
                     {{#each line_items.fixed}}
                         <div class="row highlight-hover">
-                            <div class="description grid-80">{{description}}</div>
-                            <div class="cost grid-20">${{cost}}</div>
+                            <div class="description grid-80">
+                                <div class="gridpad">{{description}}</div>
+                            </div>
+
+                            <div class="cost grid-20">
+                                <div class="gridpad">${{cost}}</div>
+                            </div>
                         </div>
                     {{/each}}
                 </div>
