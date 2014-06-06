@@ -9,80 +9,76 @@
 <body>
 
 <div id="taskkeeper">
-    
+    <header class="app-header">
+        <h1>Taskkeeper</h1>
+    </header>
 
     <script type="text/x-handlebars">
-        <header class="app-header">
-            <h1>Taskkeeper</h1>
-        </header>
+    
         <div class="taskkeeper-container">
             {{outlet}}
         </div>
         
     </script>
 
-    <script type="text/x-handlebars" data-template-name="clients">
-        <div class="client-list taskkeeper-padding grid striped-rows">
-            {{#each itemController="client"}}
-                <div {{bind-attr class="invoiced:owed"}}>
-                    <div class="name grid-60"><div class="gridpad">
-                        {{#link-to 'client' this}}{{name}}{{/link-to}}
-                    </div></div>
+    <script type="text/x-handlebars" id="clients">
+        <div class="client-list taskkeeper-padding grid">
+            {{#each}}
+                <div class="row">
+                    <div class="name grid-80">
+                        <div class="gridpad">
+                            {{#link-to 'client' this}}{{name}}{{/link-to}}
+                        </div>
+                    </div>
 
-                    <div class="rate grid-20"><div class="gridpad">
-                        ${{moneyDue}}
-                    </div></div>
+                    <div class="rate grid-20">
+                        <div class="gridpad">${{rate}}</div>
+                    </div>
 
-                    <div class="rate grid-20"><div class="gridpad">
-                        {{parseDate dueDate}}
-                    </div></div>
+                    <div class="utility"></div>
                 </div>
             {{/each}}
         </div>
 
-        {{input type="text" id="new-client" placeholder="Add a new client" value=newClient action="createClient"}}
-
         <div class="client-view">{{outlet}}</div>
     </script>
     
-    <script type="text/x-handlebars" data-template-name="client">
+    <script type="text/x-handlebars" id="client">
         <div id="client" class="taskkeeper-padding">
+            <div class="edit-client-container gridpad">
+                {{#if isEditingClient}}
+                    <button {{action 'doneEditing'}}>Save</button>
+                    {{partial 'client/edit'}}
+                    
+                {{else}}
+                    <button {{action 'edit'}}>Edit</button>
+                {{/if}}
+            </div>
 
             <header class="client-header grid">
                 <div class="row">
-                    <div class="grid-60"><div class="gridpad">
-                        <div {{bind-attr class="invoiced:owed"}}>
-                            {{#if isEditing}}
-                                {{edit-name class="edit" value=name focus-out="acceptChanges" insert-newline="acceptChanges"}}
-                            {{else}}
-                                <h2 {{action "editName" on="doubleClick"}}>{{name}}</h2>
-                            {{/if}}
+                    <div class="grid-60">
+                        <h2 class="gridpad">{{name}}</h2>
+                    </div>
+
+                    <div class="rate grid-20">
+                        <div class="gridpad">
+                            <span class="label">Total due</span>
+                            <span class="dollars">$<span id="the-rate">{{totalDue rate 20}}</span></span>
                         </div>
-                    </div></div>
+                    </div>
 
-                    <div class="rate grid-20"><div class="gridpad">
-                        <span class="label">Total due</span>
-                        <span class="dollars">$<span id="the-rate">{{moneyDue}}</span></span>
-                    </div></div>
-
-                    
-                    <div class="rate grid-20"><div class="gridpad">
-                        {{#if hourlyRate}}
+                    <div class="rate grid-20">
+                        <div class="gridpad">
                             <span class="label">Hourly rate</span>
-                            <span class="dollars">$<span id="the-rate">{{hourlyRate}}</span></span>
-                        {{/if}}
-                    </div></div>
-                </div>
-                
-                <div class="row">
-                    <div class="grid-60"><div class="gridpad">
-                        {{input type="checkbox" checked=invoiced class="toggle"}}
-                    </div></div>
+                            <span class="dollars">$<span id="the-rate">{{rate}}</span></span>
+                        </div>                            
+                    </div>
                 </div>
             </header>
 
 
-            <div class="line-items grid striped-rows">
+            <div class="line-items grid">
                 <div class="hourly">
                     
                     <div class="row">
@@ -104,6 +100,11 @@
                             <div class="subtotal grid-20">
                                 <div class="gridpad">{{hourlySubtotal hours}}</div>
                             </div>
+                        </div>
+
+                        <div>
+                            {{!-- <h4>actions</h4> --}}
+                            {{!-- {{input type="text" value=hours}} --}}
                         </div>
                         
                     {{/each}}
@@ -129,13 +130,19 @@
         </div>
     </script>
 
+    <script type="text/x-handlebars" id="client/_edit">
+        <div class="edit-client">
+            <div class="form-item"><label>Client Name</label>{{input type="text" value=name}}</div>
+            <div class="form-item"><label>Hourly Rate</label>{{input type="text" value=rate}}</div>
+        </div>
+    </script>
+
 </div><!-- #taskkeeper -->
 
 
 <script src="js/libs/jquery-1.10.2.js"></script>
 <script src="js/libs/handlebars-1.1.2.js"></script>
 <script src="js/libs/ember-1.5.0.js"></script>
-<script src="js/libs/ember-data.js"></script>
 <script src="js/app.js"></script>
 
 </body>
