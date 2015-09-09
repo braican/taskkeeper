@@ -1,0 +1,13 @@
+
+/* --------------------------------------------
+ * --global
+ * -------------------------------------------- */
+
+
+*,*:after,*:before{
+    box-sizing: inherit;
+}
+html{
+    box-sizing: border-box;
+    font-family: $font-stack;
+}
