@@ -13,6 +13,15 @@
         <header class="tk-header">
             <h1>Taskkeeper</h1>
         </header>
+
+        <div class="tk-clients" ng-controller="ClientController as clientList">
+            <ul ng-repeat="client in clientList.clients">
+                <li>
+                    <strong>Name: </strong>{{client.name}} <br>
+                    <strong>Rate: </strong>{{client.hourlyRate}}
+                </li>
+            </ul>
+        </div>
     </div>
     
 </body>
