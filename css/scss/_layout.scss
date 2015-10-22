@@ -2,9 +2,22 @@
  * --layout
  * -------------------------------------------- */
 
-.tk-app{
-    width: 100%;
-    max-width: 800px;
-    padding-left: 20px;
-    padding-right: 20px;
+html, body, .tk-app{
+    height: 100%;
 }
+.tk-app{
+    @include flexbox();
+    width: 100%;
+
+    .tk-sidebar{
+        @include flex(0 0 300px);
+        padding: 20px;
+    }
+
+    .tk-content{
+        @include flex(1 0 auto);
+        padding: 20px;
+        background: #eee;
+    }
+}
+

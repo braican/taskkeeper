@@ -1,10 +1,10 @@
 (function(){
     var app = angular.module('taskkeeper', []);
 
-    Parse.initialize("eqWRtTyxO7URAQU5ExyWkbg2D3VAeyN05O59xYAY", "xPAmUBGaDB5mkC876RW39gG4WDTeTfVC5oc4iwzU");
+    // Parse.initialize("eqWRtTyxO7URAQU5ExyWkbg2D3VAeyN05O59xYAY", "xPAmUBGaDB5mkC876RW39gG4WDTeTfVC5oc4iwzU");
 
-    var Clients = Parse.Object.extend("Client");
-    var query = new Parse.Query(Clients);
+    // var Clients = Parse.Object.extend("Client");
+    // var query = new Parse.Query(Clients);
 
     // query.find({
     //     success: function(results){
@@ -16,11 +16,23 @@
     // });
 
     var clientsData = [{
-        name: "Christa Bianchi",
-        hourlyRate: 52
+        name               : "Christa Bianchi",
+        hourlyRate         : 52,
+        outstandingInvoice : true,
+        tasks              : [{
+            description : "Adding mobile navigation",
+            hours       : 4
+        },{
+            description : "Active state for main navigation",
+            hours       : 2
+        },{
+            description : "Thumbnails fade in",
+            hours       : 3.5
+        }]
     },{
-        name: "EDF",
-        hourlyRate: 45
+        name       : "EDF",
+        hourlyRate : 45,
+        tasks      : []
     }];
 
     app.controller("ClientController", function(){

@@ -9,18 +9,40 @@
     <script src="js/taskkeeper.js"></script>
 </head>
 <body>
-    <div class="tk-app">
-        <header class="tk-header">
-            <h1>Taskkeeper</h1>
-        </header>
+    <div class="tk-app" ng-controller="ClientController as clientList">
+        <div class="tk-sidebar">
+            <header class="tk-header">
+                <h1>Taskkeeper</h1>
+            </header>
 
-        <div class="tk-clients" ng-controller="ClientController as clientList">
-            <ul>
-                <li ng-repeat="client in clientList.clients">
-                    <strong>Name: </strong>{{client.name}} <br>
-                    <strong>Rate: </strong>{{client.hourlyRate}}
-                </li>
-            </ul>
+            <div class="tk-clients">
+                <ul>
+                    <li ng-repeat="client in clientList.clients | orderBy:'hourlyRate'" ng-click="$parent.tab = client.name">
+                        <strong>Name: </strong>{{client.name}} <br>
+                        <strong>Rate: </strong>{{client.hourlyRate | currency}} <br>
+                        <strong ng-show="client.outstandingInvoice">Outstanding Invoice</strong>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+
+        <div class="tk-content">
+            <div class="tk-client-detail" ng-repeat="client in clientList.clients" ng-show="$parent.tab === client.name">
+                <h2 class="client-name">{{client.name}}</h2>
+                <span class="client-rate">{{client.hourlyRate | currency}}</span>
+
+                <span class="total-due"></span>
+
+                <ul class="client-tasks">
+                    <li ng-repeat="task in client.tasks">
+                        {{task.description}} <br>
+                        {{task.hours}}
+                        <a href="#">Edit</a>
+                        <a href="#">Remove</a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
     
