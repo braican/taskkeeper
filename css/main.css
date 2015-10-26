@@ -21,6 +21,9 @@ body {
   margin: 0;
   padding: 0; }
 
+h1, h2, h3, h4, h5, h6 {
+  margin: 0; }
+
 /* --------------------------------------------
  * --layout
  * -------------------------------------------- */
@@ -39,8 +42,7 @@ html, body, .tk-app {
     -moz-box-flex: 0 0 300px;
     -webkit-flex: 0 0 300px;
     -ms-flex: 0 0 300px;
-    flex: 0 0 300px;
-    padding: 20px; }
+    flex: 0 0 300px; }
   .tk-app .tk-content {
     -webkit-box-flex: 1 0 auto;
     -moz-box-flex: 1 0 auto;
@@ -49,3 +51,55 @@ html, body, .tk-app {
     flex: 1 0 auto;
     padding: 20px;
     background: #eee; }
+
+/* ==============================================================
+   * --components
+   ============================================================== */
+/* --------------------------------------------
+ * --sidebar
+ * -------------------------------------------- */
+.tk-sidebar .tk-header {
+  padding: 20px; }
+
+.tk-clients ul {
+  padding: 0;
+  margin: 0;
+  list-style: none; }
+  .tk-clients ul li {
+    display: block;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-bottom: 1px solid #ccc; }
+    .tk-clients ul li.active {
+      background: #ccc; }
+
+/* --------------------------------------------
+ * --client view
+ * -------------------------------------------- */
+.client-tasks .task-list {
+  padding: 0;
+  margin: 0;
+  list-style: none; }
+  .client-tasks .task-list li {
+    border-bottom: 1px solid #ccc;
+    padding: 10px; }
+    .client-tasks .task-list li:nth-child(even) {
+      background: #eee; }
+  .client-tasks .task-list .task-data {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex; }
+    .client-tasks .task-list .task-data .description {
+      -webkit-box-flex: 1 0 auto;
+      -moz-box-flex: 1 0 auto;
+      -webkit-flex: 1 0 auto;
+      -ms-flex: 1 0 auto;
+      flex: 1 0 auto; }
+    .client-tasks .task-list .task-data .hours {
+      -webkit-box-flex: 0 0 100px;
+      -moz-box-flex: 0 0 100px;
+      -webkit-flex: 0 0 100px;
+      -ms-flex: 0 0 100px;
+      flex: 0 0 100px; }

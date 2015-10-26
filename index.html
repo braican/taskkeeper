@@ -17,7 +17,7 @@
 
             <div class="tk-clients">
                 <ul>
-                    <li ng-repeat="client in clientList.clients | orderBy:'hourlyRate'" ng-click="$parent.tab = client.name">
+                    <li ng-repeat="client in clientList.clients | orderBy:'hourlyRate'" ng-click="clientList.selectClient(client.name)" ng-class="{active: clientList.isSelected(client.name)}">
                         <strong>Name: </strong>{{client.name}} <br>
                         <strong>Rate: </strong>{{client.hourlyRate | currency}} <br>
                         <strong ng-show="client.outstandingInvoice">Outstanding Invoice</strong>
@@ -28,20 +28,36 @@
         
 
         <div class="tk-content">
-            <div class="tk-client-detail" ng-repeat="client in clientList.clients" ng-show="$parent.tab === client.name">
+            <div class="tk-client-detail" ng-repeat="client in clientList.clients" ng-show="clientList.isSelected(client.name)">
                 <h2 class="client-name">{{client.name}}</h2>
                 <span class="client-rate">{{client.hourlyRate | currency}}</span>
 
                 <span class="total-due"></span>
 
-                <ul class="client-tasks">
-                    <li ng-repeat="task in client.tasks">
-                        {{task.description}} <br>
-                        {{task.hours}}
-                        <a href="#">Edit</a>
-                        <a href="#">Remove</a>
-                    </li>
-                </ul>
+                <div class="client-tasks">
+
+                    <span class="task--add">Add Task</span>
+
+                    <form name="add-new-task">
+                        <input type="text" placeholder="Task description" ng-model="task.description">
+                        <input type="number" placeholder="Hours" ng-model="task.hours">
+                        <button type="submit">Add</button>
+                    </form>
+
+                    <ul class="task-list">
+                        <li ng-repeat="task in client.tasks">
+                            <div class="task-data">
+                                <span class="description">{{task.description}}</span>
+                                <span class="hours">{{task.hours}}</span>
+                            </div>
+
+                            <div class="actionable">
+                                <a href="#">Edit</a>
+                                <a href="#">Remove</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>

@@ -1,0 +1,61 @@
+/* ==============================================================
+   * --components
+   ============================================================== */
+
+
+/* --------------------------------------------
+ * --sidebar
+ * -------------------------------------------- */
+
+.tk-sidebar .tk-header{
+    padding: 20px;
+}
+
+.tk-clients ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    li{
+        display: block;
+        padding: 10px 20px;
+        cursor: pointer;
+        border-bottom: 1px solid #ccc;
+
+        &.active{
+            background: #ccc;
+        }
+    }
+}
+
+
+/* --------------------------------------------
+ * --client view
+ * -------------------------------------------- */
+
+.client-tasks{
+    .task-list{
+        padding: 0;
+        margin: 0;
+        list-style: none;
+
+        li{
+            border-bottom: 1px solid #ccc;
+            padding: 10px;
+
+            &:nth-child(even){
+                background: #eee;
+            }
+        }
+
+        .task-data{
+            @include flexbox();
+
+            .description{
+                @include flex(1 0 auto);
+            }
+            .hours{
+                @include flex(0 0 100px);
+            }
+        }
+    }
+}

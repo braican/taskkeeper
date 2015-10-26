@@ -37,6 +37,16 @@
 
     app.controller("ClientController", function(){
         this.clients = clientsData;
+
+        this.tab;
+
+        this.selectClient = function(clientName){
+            this.tab = clientName;
+        };
+
+        this.isSelected = function( clientName ){
+            return this.tab === clientName;
+        }
     });
 
 })();
