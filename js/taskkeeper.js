@@ -1,58 +1,82 @@
 (function(){
-    var app = angular.module('taskkeeper', []);
+    var app = angular.module('taskkeeper', ["firebase"]);
 
-    // Parse.initialize("eqWRtTyxO7URAQU5ExyWkbg2D3VAeyN05O59xYAY", "xPAmUBGaDB5mkC876RW39gG4WDTeTfVC5oc4iwzU");
-
-    // var Clients = Parse.Object.extend("Client");
-    // var query = new Parse.Query(Clients);
-
-    // query.find({
-    //     success: function(results){
-    //         angular.forEach(results, function(result, key){
-    //             var clientName = result.get('name'),
-    //                 hourlyRate = result.get('hourlyRate');
-    //         });
-    //     }
-    // });
+    var ref = new Firebase("https://taskkeeper.firebaseio.com/Clients");
 
     /**
      * ClientController
      */
-    app.controller("ClientController", ['$http', function($http){
+    app.controller("ClientController", ["$firebaseObject", function( $firebaseObject ){
         var self = this;
 
-        self.clients = {};
+        // download the data into a local object
+        self.clients = $firebaseObject(ref);
+
         self.tab = 'EDF';
 
-        $http.get('data/clients.json').success(function(data){
-            self.clients = data;
-        });
+        self.task = {};
 
-        this.selectClient = function(clientName){
-            this.tab = clientName;
+        self.selectClient = function(clientName){
+            self.tab = clientName;
         };
 
-        this.isSelected = function( clientName ){
-            return this.tab === clientName;
+        self.isSelected = function( clientName ){
+            return self.tab === clientName;
+        }
+
+        self.addTask = function( clientName ){
+
+            if( ! self.clients[ clientName ].tasks ){
+                self.clients[ clientName ].tasks = [self.task];
+            } else {
+               self.clients[ clientName ].tasks.push( self.task ); 
+            }
+
+            saveData();
+
+            self.task = {};
+        }
+
+        self.totalHours = function( client ){
+
+            var tasks = client.tasks,
+                total = 0;
+
+            if( ! tasks ){
+                return total;
+            }
+
+            angular.forEach( tasks, function(task, index){
+                total += task.hours;
+            });
+
+            return total;
+        }
+
+        self.totalDue = function( client ){
+            var hours = self.totalHours( client );
+            return hours * client.hourlyRate;
+        }
+
+        self.editTask = function(clientName, taskId){
+            console.log(taskId);
+        }
+        self.removeTask = function(clientName, taskId){
+            
+            var removed = self.clients[clientName].tasks.splice(taskId, 1);
+
+            saveData();
+        }
+
+
+        function saveData( ){
+            self.clients.$save().then(function(r){
+                r.key() === self.clients.$id;
+            }, function(error){
+                console.log("Error: " + error);
+            });
         }
     } ]);
 
-
-    /**
-     * TaskController
-     *
-     *  - the form for adding/editing tasks for a client
-     */
-    app.controller("TaskController", function(){
-        this.task = {};
-
-        this.addTask = function( client ){
-
-            client.tasks.push( this.task );
-
-            this.task = {};
-        }
-
-    });
 
 })();

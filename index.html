@@ -5,11 +5,13 @@
     <title>Taskkeeper</title>
     <link rel="stylesheet" href="css/main.css">
     <script src="js/vendor/angular.min.js"></script>
-    <script src="//www.parsecdn.com/js/parse-1.6.0.min.js"></script>
+    <script src="https://cdn.firebase.com/js/client/2.2.4/firebase.js"></script>
+    <script src="https://cdn.firebase.com/libs/angularfire/1.1.3/angularfire.min.js"></script>
     <script src="js/taskkeeper.js"></script>
 </head>
 <body>
     <div class="tk-app" ng-controller="ClientController as clientList">
+
         <div class="tk-sidebar">
             <header class="tk-header">
                 <h1 class="app-name">Taskkeeper</h1>
@@ -17,43 +19,46 @@
 
             <div class="tk-clients">
                 <ul>
-                    <li ng-repeat="client in clientList.clients | orderBy:'hourlyRate'" ng-click="clientList.selectClient(client.name)" ng-class="{active: clientList.isSelected(client.name)}">
-                        <strong>Name: </strong>{{client.name}} <br>
+                    <li ng-repeat="(clientName, client) in clientList.clients | orderBy:'hourlyRate'" ng-click="clientList.selectClient(clientName)" ng-class="{active: clientList.isSelected(clientName)}">
+                        <strong>Name: </strong>{{clientName}} <br>
                         <strong>Rate: </strong>{{client.hourlyRate | currency}} <br>
                         <strong ng-show="client.outstandingInvoice">Outstanding Invoice</strong>
                     </li>
+                    <li class="tk-add-client">+</li>
                 </ul>
             </div>
         </div>
         
 
         <div class="tk-content">
-            <div class="tk-client-detail" ng-repeat="client in clientList.clients" ng-show="clientList.isSelected(client.name)">
-                <h2 class="client-name">{{client.name}}</h2>
+            <div class="tk-client-detail" ng-repeat="(clientName, client) in clientList.clients" ng-show="clientList.isSelected(clientName)">
+                <h2 class="client-name">{{clientName}}</h2>
                 <span class="client-rate">{{client.hourlyRate | currency}}</span>
-
-                <span class="total-due"></span>
+                <br>
+                <span class="total-hours">{{ clientList.totalHours( client ) }}</span>
+                <br>
+                <span class="total-due">{{ clientList.totalDue( client ) | currency }}</span>
 
                 <div class="client-tasks">
 
-                    <form ng-controller="TaskController as taskCtrl" ng-submit="taskCtrl.addTask(client)">
-                        
+                    <form ng-submit="clientList.addTask( clientName )">
                         <label for="">Add Task</label>
-                        <input type="text" placeholder="Task description" ng-model="taskCtrl.task.description">
-                        <input type="number" placeholder="Hours" ng-model="taskCtrl.task.hours">
+                        <input type="text" placeholder="Task description" ng-model="clientList.task.description">
+                        <input type="number" placeholder="Hours" ng-model="clientList.task.hours">
                         <button type="submit">Add</button>
                     </form>
 
                     <ul class="task-list">
-                        <li ng-repeat="task in client.tasks">
+                        <li ng-repeat="(taskId, task) in client.tasks">
                             <div class="task-data">
+                                <span>{{taskId}}</span>
                                 <span class="description">{{task.description}}</span>
                                 <span class="hours">{{task.hours}}</span>
                             </div>
 
                             <div class="actionable">
-                                <a href="#">Edit</a>
-                                <a href="#">Remove</a>
+                                <a href="#" ng-click="clientList.editTask(clientName, taskId)">Edit</a>
+                                <a href="#" ng-click="clientList.removeTask(clientName, taskId)">Remove</a>
                             </div>
                         </li>
                     </ul>
