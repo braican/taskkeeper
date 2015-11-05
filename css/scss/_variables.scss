@@ -17,8 +17,10 @@ $font-stack: 'Roboto', sans-serif;
  * --colors
  * -------------------------------------------- */
 
-$light-blue: #dff4e5;
-$light-gray: #eee;
+$light-accent: #c8edd7;
+$darken-light-accent: darken($light-accent, 10%);
+
+$light-gray: #ddd;
 
 
 /* --------------------------------------------

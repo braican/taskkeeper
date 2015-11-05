@@ -18,6 +18,7 @@
         // a localized task object to use as the blank task template
         self.task = {};
 
+
         /**
          * select this client, and display all their info
          *
@@ -27,6 +28,7 @@
         self.selectClient = function(clientName){
             self.tab = clientName;
         };
+
 
         /**
          * check to see if the given clientName is the active one
@@ -38,6 +40,7 @@
             return self.tab === clientName;
         }
 
+
         /**
          * add a new task
          *
@@ -45,6 +48,10 @@
          *   - the client to add the new task to
          */
         self.addTask = function( clientName ){
+
+            if( !self.task.hours ){
+                self.task.hours = 0;
+            }
 
             if( ! self.clients[ clientName ].tasks ){
                 self.clients[ clientName ].tasks = [self.task];
@@ -56,6 +63,7 @@
 
             self.task = {};
         }
+
 
         /**
          * gets the total number of hours worked
@@ -79,6 +87,7 @@
             return total;
         }
 
+
         /**
          * gets the total amount due
          *
@@ -89,6 +98,7 @@
             var hours = self.totalHours( client );
             return hours * client.hourlyRate;
         }
+
 
         /**
          * edit the clicked task
@@ -102,6 +112,7 @@
         self.editTask = function(clientName, taskId){
             console.log(taskId);
         }
+
 
         /**
          * remove the clicked task
@@ -118,6 +129,11 @@
 
             saveData();
         }
+
+
+        /* --------------------------------------------
+         * --util
+         * -------------------------------------------- */
 
 
         /**

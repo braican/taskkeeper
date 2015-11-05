@@ -50,10 +50,10 @@
 
                 <div class="client-tasks">
 
-                    <form class="add-new-task" ng-submit="clientList.addTask( clientName )">
-                        <input type="text" placeholder="Add new task" ng-model="clientList.task.description">
+                    <form class="add-new-task" name="newTask" ng-submit="clientList.addTask( clientName )" novalidate>
+                        <input type="text" placeholder="Add new task" ng-model="clientList.task.description" required>
                         <input type="number" step="any" placeholder="hours" ng-model="clientList.task.hours">
-                        <button type="submit">Add</button>
+                        <button type="submit" ng-disabled="newTask.$invalid">+</button>
                     </form>
 
                     <ul class="task-list">

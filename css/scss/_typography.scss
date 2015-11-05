@@ -41,13 +41,12 @@ button:focus{
 button{
     appearance: none;
     border-radius: 0;
-    background-color: $light-blue;
     border: 0;
     cursor: pointer;
-    padding: 10px;
-    @include uppercase();
+    background-color: #fff;
+    font-weight: 700;
 }
-button:hover,
-button:focus{
-    background: darken( $light-blue, 10% );
+button[disabled]{
+    cursor: default;
+    opacity: .2;
 }

@@ -22,8 +22,8 @@
         border-bottom: 1px solid $light-gray;
 
         &.active{
-            background-color: $light-blue;
-            border-bottom-color: $light-blue;
+            background-color: $light-accent;
+            border-bottom-color: $light-accent;
         }
     }
 
@@ -60,6 +60,9 @@
     .add-new-task{
         input + input{
             margin-left: 10px;
+        }
+        button{
+            font-size: 2em;
         }
     }
 
