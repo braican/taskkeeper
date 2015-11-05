@@ -17,7 +17,7 @@
     list-style: none;
     li{
         display: block;
-        padding: 10px 20px;
+        padding: 10px;
         cursor: pointer;
         border-bottom: 1px solid $light-gray;
 
@@ -27,7 +27,7 @@
         }
     }
 
-    .tk-add-client{
+    .add-new-client{
         text-align: center;
         font-size: 2em;
         font-weight: 700;
@@ -39,19 +39,37 @@
  * --client view
  * -------------------------------------------- */
 
+.client-hours{
+    padding: 1em 0;
+    text-align: right;
+    
+    span{
+        display: inline-block;
+        vertical-align: middle;
+    }
+    .key{
+        text-align: right;
+    }
+    .value{
+        width: 4em;
+    }
+}
+
 .client-tasks{
+
+    .add-new-task{
+        input + input{
+            margin-left: 10px;
+        }
+    }
+
+
     .task-list{
-        padding: 0;
-        margin: 0;
-        list-style: none;
+        padding-top: 1em;
 
         li{
-            border-bottom: 1px solid $light-gray;
-            padding: 10px;
-
-            &:nth-child(even){
-                background-color: $light-gray;
-            }
+            border-top: 1px solid $light-gray;
+            padding: 1em 0;
         }
 
         .task-data{
@@ -61,6 +79,7 @@
                 @include flex(1 0 auto);
             }
             .hours{
+                text-align: right;
                 @include flex(0 0 100px);
             }
         }

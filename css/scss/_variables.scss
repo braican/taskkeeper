@@ -7,6 +7,10 @@
 
 $font-stack: 'Roboto', sans-serif;
 
+@mixin uppercase(){
+  text-transform: uppercase;
+  letter-spacing: .1em;
+}
 
 
 /* --------------------------------------------

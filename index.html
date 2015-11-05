@@ -24,7 +24,7 @@
                         <strong>Rate: </strong>{{client.hourlyRate | currency}} <br>
                         <strong ng-show="client.outstandingInvoice">Outstanding Invoice</strong>
                     </li>
-                    <li class="tk-add-client">+</li>
+                    <li class="add-new-client">+</li>
                 </ul>
             </div>
         </div>
@@ -32,26 +32,33 @@
 
         <div class="tk-content">
             <div class="tk-client-detail" ng-repeat="(clientName, client) in clientList.clients" ng-show="clientList.isSelected(clientName)">
-                <h2 class="client-name">{{clientName}}</h2>
-                <span class="client-rate">{{client.hourlyRate | currency}}</span>
-                <br>
-                <span class="total-hours">{{ clientList.totalHours( client ) }}</span>
-                <br>
-                <span class="total-due">{{ clientList.totalDue( client ) | currency }}</span>
+                <header>
+                    <h2 class="client-name">{{clientName}}</h2>
+                    <span class="client-rate">{{client.hourlyRate | currency}}</span>
+                </header>
+
+                <ul class="client-hours">
+                    <li>
+                        <span class="key">Billable Hours</span>
+                        <span class="value">{{ clientList.totalHours( client ) }}</span>
+                    </li>
+                    <li>
+                        <span class="key">Total Due</span>
+                        <span class="value">{{ clientList.totalDue( client ) }}</span>
+                    </li>
+                </ul>
 
                 <div class="client-tasks">
 
-                    <form ng-submit="clientList.addTask( clientName )">
-                        <label for="">Add Task</label>
-                        <input type="text" placeholder="Task description" ng-model="clientList.task.description">
-                        <input type="number" placeholder="Hours" ng-model="clientList.task.hours">
+                    <form class="add-new-task" ng-submit="clientList.addTask( clientName )">
+                        <input type="text" placeholder="Add new task" ng-model="clientList.task.description">
+                        <input type="number" step="any" placeholder="hours" ng-model="clientList.task.hours">
                         <button type="submit">Add</button>
                     </form>
 
                     <ul class="task-list">
                         <li ng-repeat="(taskId, task) in client.tasks">
                             <div class="task-data">
-                                <span>{{taskId}}</span>
                                 <span class="description">{{task.description}}</span>
                                 <span class="hours">{{task.hours}}</span>
                             </div>
