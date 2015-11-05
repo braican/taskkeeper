@@ -11,12 +11,12 @@ html, body, .tk-app{
 
     .tk-sidebar{
         @include flex(0 0 300px);
+        border-right: 1px solid $light-gray;
     }
 
     .tk-content{
         @include flex(1 0 auto);
         padding: 20px;
-        background: #eee;
     }
 }
 

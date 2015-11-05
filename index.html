@@ -12,7 +12,7 @@
     <div class="tk-app" ng-controller="ClientController as clientList">
         <div class="tk-sidebar">
             <header class="tk-header">
-                <h1>Taskkeeper</h1>
+                <h1 class="app-name">Taskkeeper</h1>
             </header>
 
             <div class="tk-clients">
@@ -36,11 +36,11 @@
 
                 <div class="client-tasks">
 
-                    <span class="task--add">Add Task</span>
-
-                    <form name="add-new-task">
-                        <input type="text" placeholder="Task description" ng-model="task.description">
-                        <input type="number" placeholder="Hours" ng-model="task.hours">
+                    <form ng-controller="TaskController as taskCtrl" ng-submit="taskCtrl.addTask(client)">
+                        
+                        <label for="">Add Task</label>
+                        <input type="text" placeholder="Task description" ng-model="taskCtrl.task.description">
+                        <input type="number" placeholder="Hours" ng-model="taskCtrl.task.hours">
                         <button type="submit">Add</button>
                     </form>
 

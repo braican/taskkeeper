@@ -15,30 +15,18 @@
     //     }
     // });
 
-    var clientsData = [{
-        name               : "Christa Bianchi",
-        hourlyRate         : 52,
-        outstandingInvoice : true,
-        tasks              : [{
-            description : "Adding mobile navigation",
-            hours       : 4
-        },{
-            description : "Active state for main navigation",
-            hours       : 2
-        },{
-            description : "Thumbnails fade in",
-            hours       : 3.5
-        }]
-    },{
-        name       : "EDF",
-        hourlyRate : 45,
-        tasks      : []
-    }];
+    /**
+     * ClientController
+     */
+    app.controller("ClientController", ['$http', function($http){
+        var self = this;
 
-    app.controller("ClientController", function(){
-        this.clients = clientsData;
+        self.clients = {};
+        self.tab = 'EDF';
 
-        this.tab;
+        $http.get('data/clients.json').success(function(data){
+            self.clients = data;
+        });
 
         this.selectClient = function(clientName){
             this.tab = clientName;
@@ -47,6 +35,24 @@
         this.isSelected = function( clientName ){
             return this.tab === clientName;
         }
+    } ]);
+
+
+    /**
+     * TaskController
+     *
+     *  - the form for adding/editing tasks for a client
+     */
+    app.controller("TaskController", function(){
+        this.task = {};
+
+        this.addTask = function( client ){
+
+            client.tasks.push( this.task );
+
+            this.task = {};
+        }
+
     });
 
 })();

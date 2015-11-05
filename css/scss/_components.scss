@@ -19,10 +19,11 @@
         display: block;
         padding: 10px 20px;
         cursor: pointer;
-        border-bottom: 1px solid #ccc;
+        border-bottom: 1px solid $light-gray;
 
         &.active{
-            background: #ccc;
+            background-color: $light-blue;
+            border-bottom-color: $light-blue;
         }
     }
 }
@@ -39,11 +40,11 @@
         list-style: none;
 
         li{
-            border-bottom: 1px solid #ccc;
+            border-bottom: 1px solid $light-gray;
             padding: 10px;
 
             &:nth-child(even){
-                background: #eee;
+                background-color: $light-gray;
             }
         }
 

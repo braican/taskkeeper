@@ -3,9 +3,18 @@
  * --variables
  * -------------------------------------------- */
 
-$font-stack: sans-serif;
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,300,700);
+
+$font-stack: 'Roboto', sans-serif;
 
 
+
+/* --------------------------------------------
+ * --colors
+ * -------------------------------------------- */
+
+$light-blue: #edf9fc;
+$light-gray: #f7f9f9;
 
 
 /* --------------------------------------------
