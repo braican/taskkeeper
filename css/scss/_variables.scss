@@ -17,15 +17,42 @@ $font-stack: 'Roboto', sans-serif;
  * --colors
  * -------------------------------------------- */
 
-$light-accent: #c8edd7;
-$darken-light-accent: darken($light-accent, 10%);
+$accent: #268472;
+$accent-hover: darken($accent, 10%);
 
 $light-gray: #ddd;
+
+$red: #c00;
 
 
 /* --------------------------------------------
  * --mixins
  * -------------------------------------------- */
+
+
+/**
+ * --transforms
+ */
+@mixin transform($transforms) {
+    -webkit-transform: $transforms;
+       -moz-transform: $transforms;
+        -ms-transform: $transforms;
+         -o-transform: $transforms;
+            transform: $transforms;
+}
+
+
+/**
+ * --transitions
+ */
+@mixin transition($args...) {
+  -webkit-transition: $args;
+     -moz-transition: $args;
+      -ms-transition: $args;
+       -o-transition: $args;
+          transition: $args;
+}
+
 
 /**
  * --flexbox
@@ -44,4 +71,21 @@ $light-gray: #ddd;
       -webkit-flex: $values;
           -ms-flex: $values;
               flex: $values;
+}
+
+
+
+/* --------------------------------------------
+ * --media queries
+ * -------------------------------------------- */
+
+$breakpoint-large: 840px;
+
+// Media Query (Min-Width)
+@mixin break-min( $breakpoint: $breakpoint-large ) {
+    @media (min-width: $breakpoint ) { @content; }
+}
+// Media Query (Man-Width)
+@mixin break-max( $breakpoint: $breakpoint-large - 1 ) {
+    @media (max-width: $breakpoint ) { @content; }
 }

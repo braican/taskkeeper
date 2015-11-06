@@ -10,13 +10,20 @@
     <script src="js/taskkeeper.js"></script>
 </head>
 <body>
-    <div class="tk-app" ng-controller="ClientController as clientList">
+    <div id="tk-svg-sprite" style="height: 0; width: 0; position: absolute; visibility: hidden"></div>
+
+    <div class="tk-app" ng-controller="ClientController as clientList" ng-class="{ drawerActive: clientList.drawerActive }">
+
+        <header class="tk-header">
+            <span class="icon icon--arrow tk-activate-drawer" ng-click="clientList.drawerActive = !clientList.drawerActive"><svg><use xlink:href="#icon--arrow"></use></svg></span>
+            <h1 class="app-name">Taskkeeper</h1>
+        </header>
 
         <div class="tk-sidebar">
-            <header class="tk-header">
-                <h1 class="app-name">Taskkeeper</h1>
+            <header>
+                <span class="icon icon--arrow tk-activate-drawer" ng-click="clientList.drawerActive = !clientList.drawerActive"><svg><use xlink:href="#icon--arrow"></use></svg></span>
+                <h3>Clients</h3>
             </header>
-
             <div class="tk-clients">
                 <ul>
                     <li ng-repeat="(clientName, client) in clientList.clients | orderBy:'hourlyRate'" ng-click="clientList.selectClient(clientName)" ng-class="{active: clientList.isSelected(clientName)}">
@@ -44,15 +51,15 @@
                     </li>
                     <li>
                         <span class="key">Total Due</span>
-                        <span class="value">{{ clientList.totalDue( client ) }}</span>
+                        <span class="value">{{ clientList.totalDue( client ) | currency }}</span>
                     </li>
                 </ul>
 
                 <div class="client-tasks">
 
                     <form class="add-new-task" name="newTask" ng-submit="clientList.addTask( clientName )" novalidate>
-                        <input type="text" placeholder="Add new task" ng-model="clientList.task.description" required>
-                        <input type="number" step="any" placeholder="hours" ng-model="clientList.task.hours">
+                        <input type="text" name="taskName" placeholder="Add new task" ng-model="clientList.task.description" required>
+                        <input type="number" name="taskHours" step="any" placeholder="hours" ng-model="clientList.task.hours">
                         <button type="submit" ng-disabled="newTask.$invalid">+</button>
                     </form>
 
@@ -64,8 +71,8 @@
                             </div>
 
                             <div class="actionable">
-                                <a href="#" ng-click="clientList.editTask(clientName, taskId)">Edit</a>
-                                <a href="#" ng-click="clientList.removeTask(clientName, taskId)">Remove</a>
+                                <a href="#" class="task--edit" ng-click="clientList.editTask(clientName, taskId)">Edit</a>
+                                <a href="#" class="task--remove" ng-click="clientList.removeTask(clientName, taskId)">Remove</a>
                             </div>
                         </li>
                     </ul>

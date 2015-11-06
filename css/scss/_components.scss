@@ -4,26 +4,61 @@
 
 
 /* --------------------------------------------
+ * --header
+ * -------------------------------------------- */
+
+.tk-header{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    padding: 1em;
+    background: #fff;
+    border-bottom: 1px solid $light-gray;
+    line-height: 1em;
+
+    .icon{
+        cursor: pointer;
+        position: absolute;
+        top: 50%;
+        margin-top: -9px;
+        left: 10px;
+    }
+}
+
+/* --------------------------------------------
  * --sidebar
  * -------------------------------------------- */
 
-.tk-sidebar .tk-header{
+.tk-sidebar header{
     padding: 20px;
+    position: relative;
+
+    .icon{
+        cursor: pointer;
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        margin-top: -9px;
+    }
 }
 
 .tk-clients ul {
     padding: 0;
     margin: 0;
     list-style: none;
+    border-top: 1px solid $light-gray;
+
     li{
         display: block;
-        padding: 10px;
+        padding: 20px;
         cursor: pointer;
         border-bottom: 1px solid $light-gray;
 
         &.active{
-            background-color: $light-accent;
-            border-bottom-color: $light-accent;
+            background-color: $accent;
+            color: #fff;
         }
     }
 
@@ -31,7 +66,10 @@
         text-align: center;
         font-size: 2em;
         font-weight: 700;
+        padding: 5px 20px;
     }
+
+
 }
 
 
@@ -43,35 +81,77 @@
     padding: 1em 0;
     text-align: right;
     
+    li + li{
+        margin-top: 2px;
+    }
+    
     span{
         display: inline-block;
         vertical-align: middle;
+        padding: 10px;
     }
     .key{
         text-align: right;
     }
     .value{
-        width: 4em;
+        width: 160px;
+        background-color: $accent;
+        color: #fff;
+        font-weight: 700;
+        font-size: 1.2em;
     }
 }
 
 .client-tasks{
 
+    padding-top: 1em;
+    border-top: 2px solid $accent;
+
     .add-new-task{
-        input + input{
-            margin-left: 10px;
+
+        button[type="submit"]{
+            font-size: 3em;
+            line-height: .5;
         }
-        button{
-            font-size: 2em;
+
+        @include break-min(520px){
+            @include flexbox();
+
+            input[name="taskName"]{
+                @include flex(1 0 auto);
+            }
+            input[name="taskHours"]{
+                @include flex(0 0 auto);
+            }
+
+            input + input{
+                margin-left: 10px;
+            }
+
+            button[type="submit"]{
+                @include flex(0 0 auto);
+            }
+        }
+
+        @include break-max(519px){
+            input,
+            button{
+                display: block;
+                width: 100%;
+            }
+
+            button{
+                margin-top: 10px;
+            }
         }
     }
 
 
     .task-list{
-        padding-top: 1em;
+        margin-top: 1em;
 
         li{
-            border-top: 1px solid $light-gray;
+            border-bottom: 1px solid $light-gray;
             padding: 1em 0;
         }
 
@@ -79,11 +159,27 @@
             @include flexbox();
 
             .description{
-                @include flex(1 0 auto);
+                @include flex(1 1 auto);
             }
             .hours{
                 text-align: right;
-                @include flex(0 0 100px);
+                font-weight: 700;
+                @include flex(0 0 60px);
+            }
+        }
+
+        .actionable{
+            @include uppercase();
+            font-size: .8em;
+            margin-top: 1em;
+
+            a + a{
+                margin-left: 10px;
+            }
+
+
+            .task--remove{
+                color: $red;
             }
         }
     }

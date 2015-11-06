@@ -1,4 +1,7 @@
-(function(){
+//
+// - angular codes
+//
+(function( TASKKEEPER ){
     var app = angular.module('taskkeeper', ["firebase"]);
 
     var ref = new Firebase("https://taskkeeper.firebaseio.com/Clients");
@@ -14,6 +17,9 @@
 
         // the tab to start on
         self.tab = 'EDF';
+
+        // is the drawer active
+        self.drawerActive = false;
 
         // a localized task object to use as the blank task template
         self.task = {};
@@ -149,4 +155,46 @@
     } ]);
 
 
-})();
+})( window.TASKKEEPER = window.TASKKEEPER || {});
+
+
+
+//
+// --load the svg sprites
+//
+(function( TASKKEEPER ){
+
+    /**
+     * load the svg sprite into the top of the page
+     */
+    function loadSvgSprite(){
+        var request = new XMLHttpRequest();
+        var spriteDiv = document.getElementById("tk-svg-sprite");
+
+        request.open('GET', 'svg/build/icons.svg', true);
+
+        request.onload = function() {
+            if (this.status >= 200 && this.status < 400) {
+                var resp = this.response;
+                spriteDiv.innerHTML = resp;
+            } else {
+                console.error("There was an error getting the icons");
+            }
+        };
+
+        request.onerror = function() {
+            console.error("There was an error getting the icons");
+        };
+
+        request.send();
+    }
+
+    
+    //
+    // --DOM READY
+    //
+    document.addEventListener("DOMContentLoaded", function(event) { 
+        loadSvgSprite();
+    });
+
+})( window.TASKKEEPER = window.TASKKEEPER || {} );

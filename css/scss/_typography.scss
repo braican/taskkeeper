@@ -19,6 +19,17 @@ h1, h2, h3, h4, h5, h6{
     @include uppercase();
 }
 
+// "clients"
+h3{
+    @include uppercase();
+    font-size: .8em;
+    font-weight: 700;
+}
+
+a{
+    color: $accent;
+    text-decoration: none;
+}
 
 
 
@@ -28,7 +39,7 @@ h1, h2, h3, h4, h5, h6{
 
 input[type="text"],
 input[type="number"]{
-    padding: 10px;
+    padding: 10px 0;
     margin: 0;
     border: 0;
     border-bottom: 1px solid $light-gray;
@@ -49,4 +60,26 @@ button{
 button[disabled]{
     cursor: default;
     opacity: .2;
+}
+
+
+
+/* --------------------------------------------
+ * --icons
+ * -------------------------------------------- */
+
+.icon svg{
+    max-height: 100%;
+    max-width: 100%;
+}
+
+.icon--arrow{
+    width: 20px;
+    height: 18px;
+}
+
+@include break-min(){
+    .tk-activate-drawer{
+        display: none;
+    }
 }
