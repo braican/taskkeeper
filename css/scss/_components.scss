@@ -62,11 +62,30 @@
         }
     }
 
-    .add-new-client{
-        text-align: center;
-        font-size: 2em;
-        font-weight: 700;
-        padding: 5px 20px;
+    .add-new-client {
+        .add-new-client-form{
+            height: 0;
+            overflow: hidden;
+            @include transition(all .4s);
+
+            &.newClientActive{
+                height: auto;
+            }
+        }
+
+        input,
+        button{
+            display: block;
+            width: 100%;
+        }
+        .trigger{
+            padding: 0;
+            display: block;
+            text-align: center;
+            font-size: 2em;
+            font-weight: 700;
+            line-height: 1;
+        }
     }
 
 

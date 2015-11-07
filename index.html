@@ -26,13 +26,22 @@
             </header>
             <div class="tk-clients">
                 <ul>
-                    <li ng-repeat="(clientName, client) in clientList.clients | orderBy:'hourlyRate'" ng-click="clientList.selectClient(clientName)" ng-class="{active: clientList.isSelected(clientName)}">
-                        <strong>Name: </strong>{{clientName}} <br>
-                        <strong>Rate: </strong>{{client.hourlyRate | currency}} <br>
+                    <li ng-repeat="(clientName, client) in clientList.clients" ng-click="clientList.selectClient(clientName)" ng-class="{active: clientList.isSelected(clientName)}">
+                        <strong>{{clientName}}</strong><br>
+                        <span class="hourly-rate">{{client.hourlyRate | currency}} / hr</span> <br>
                         <strong ng-show="client.outstandingInvoice">Outstanding Invoice</strong>
                     </li>
-                    <li class="add-new-client">+</li>
+                    <li class="add-new-client">
+                        <form name="newClient" class="add-new-client-form" ng-submit="clientList.addClient()" ng-class="{newClientActive: clientList.newClientActive}" novalidate>
+                            <input type="text" name="clientName" placeholder="Client name" ng-model="clientList.newClient.clientName" required>
+                            <input type="number" name="clientRate" placeholder="Hourly rate" ng-model="clientList.newClient.hourlyRate">
+                            <button class="trigger" type="submit" ng-disabled="newClient.$invalid">+</button>
+                        </form>
+                        <span ng-hide="clientList.newClientActive" class="trigger" ng-click="clientList.newClientActive = true">+</span>
+                    </li>
                 </ul>
+
+                
             </div>
         </div>
         

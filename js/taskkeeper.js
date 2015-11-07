@@ -21,8 +21,13 @@
         // is the drawer active
         self.drawerActive = false;
 
+        // is the new client form active
+        self.newClientActive = false;
+
         // a localized task object to use as the blank task template
         self.task = {};
+
+        self.newClient = {};
 
 
         /**
@@ -44,6 +49,26 @@
          */
         self.isSelected = function( clientName ){
             return self.tab === clientName;
+        }
+
+
+        /**
+         * add a new client
+         */
+        self.addClient = function(){
+
+            if( !self.newClient.hourlyRate ){
+                self.newClient.hourlyRate = 0;
+            }
+
+            self.clients[ self.newClient.clientName ] = {
+                hourlyRate: self.newClient.hourlyRate
+            };
+
+            saveData();
+
+            self.newClient = {};
+            self.newClientActive = false;
         }
 
 
