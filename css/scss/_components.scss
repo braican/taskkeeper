@@ -179,23 +179,43 @@
 
             .description{
                 @include flex(1 1 auto);
+                padding-right: 10px;
             }
             .hours{
-                text-align: right;
-                font-weight: 700;
-                @include flex(0 0 60px);
+                @include flex(0 0 80px);
+
+                input{
+                    text-align: right;
+                    font-weight: 700;
+                }
+            }
+
+            span input{
+                display: block;
+                padding: 10px;
+                width: 100%;
+                border: 1px solid $accent;
+
+                &[disabled]{
+                    border-width:0;
+                    padding-left: 0;
+                    padding-right: 0;
+                }
             }
         }
 
         .actionable{
             @include uppercase();
             font-size: .8em;
-            margin-top: 1em;
+            margin-top: .5em;
+    
+            a{
+                margin-right: 10px;
 
-            a + a{
-                margin-left: 10px;
+                &:last-child{
+                    margin-right: 0;
+                }
             }
-
 
             .task--remove{
                 color: $red;

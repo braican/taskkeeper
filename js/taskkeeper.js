@@ -24,6 +24,9 @@
         // is the new client form active
         self.newClientActive = false;
 
+        // are we editing a given task?
+        self.editingTask = false;
+
         // a localized task object to use as the blank task template
         self.task = {};
 
@@ -141,7 +144,7 @@
          *   - the ID (from firebase) of the task we're editing
          */
         self.editTask = function(clientName, taskId){
-            console.log(taskId);
+            self.editingTask = taskId;
         }
 
 
@@ -160,6 +163,17 @@
 
             saveData();
         }
+
+
+        /**
+         * save the currently edited task
+         */
+        self.saveTask = function(){
+            saveData();
+            self.editingTask = false;
+
+        }
+
 
 
         /* --------------------------------------------

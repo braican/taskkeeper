@@ -40,7 +40,6 @@
                         <span ng-hide="clientList.newClientActive" class="trigger" ng-click="clientList.newClientActive = true">+</span>
                     </li>
                 </ul>
-
                 
             </div>
         </div>
@@ -75,13 +74,14 @@
                     <ul class="task-list">
                         <li ng-repeat="(taskId, task) in client.tasks">
                             <div class="task-data">
-                                <span class="description">{{task.description}}</span>
-                                <span class="hours">{{task.hours}}</span>
+                                <span class="description"><input ng-model="task.description" type="text" value="{{task.description}}" ng-disabled="clientList.editingTask !== taskId"></span>
+                                <span class="hours"><input ng-model="task.hours" type="number" step="any" value="{{task.hours}}" ng-disabled="clientList.editingTask !== taskId"></span>
                             </div>
 
                             <div class="actionable">
-                                <a href="#" class="task--edit" ng-click="clientList.editTask(clientName, taskId)">Edit</a>
-                                <a href="#" class="task--remove" ng-click="clientList.removeTask(clientName, taskId)">Remove</a>
+                                <a ng-hide="clientList.editingTask === taskId" href="#" class="task--edit" ng-click="clientList.editTask(clientName, taskId)">Edit</a>
+                                <a ng-hide="clientList.editingTask === taskId" href="#" class="task--remove" ng-click="clientList.removeTask(clientName, taskId)">Remove</a>
+                                <a ng-show="clientList.editingTask === taskId" href="#" class="task--save" ng-click="clientList.saveTask()">Save</a>
                             </div>
                         </li>
                     </ul>
