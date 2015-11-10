@@ -227,28 +227,27 @@
          */
         self.paidInvoice = function( clientName ){
 
-            if( ! self.clients[clientName].invoicedTasks ){
-                return;
-            }
-
-            var today       = new Date(),
-                dd          = today.getDate(),
-                mm          = today.getMonth() + 1,
-                yy          = today.getFullYear(),
-                tasks       = self.clients[clientName].invoicedTasks,
-                archiveTask = {
-                    invoiceDate : mm + '/' + dd + '/' + yy,
-                    tasks       : tasks
-                }
-                
-
-            if( self.clients[clientName].taskArchive ){
-                self.clients[clientName].taskArchive.push(archiveTask);
-            } else {
-                self.clients[clientName].taskArchive = [archiveTask];
-            }
-            delete self.clients[clientName].invoicedTasks;
             self.clients[clientName].outstandingInvoice = false;
+
+            if( self.clients[clientName].invoicedTasks ){
+                var today       = new Date(),
+                    dd          = today.getDate(),
+                    mm          = today.getMonth() + 1,
+                    yy          = today.getFullYear(),
+                    tasks       = self.clients[clientName].invoicedTasks,
+                    archiveTask = {
+                        invoiceDate : mm + '/' + dd + '/' + yy,
+                        tasks       : tasks
+                    };   
+
+                if( self.clients[clientName].taskArchive ){
+                    self.clients[clientName].taskArchive.push(archiveTask);
+                } else {
+                    self.clients[clientName].taskArchive = [archiveTask];
+                }
+                delete self.clients[clientName].invoicedTasks;
+            }
+            
             saveData();
         }
 
