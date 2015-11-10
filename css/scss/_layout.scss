@@ -8,6 +8,7 @@ html, body, .tk-app{
 .tk-app{
     width: 100%;
     padding-top: 3em;
+    position: relative;
 
     @include break-min(){
         @include flexbox();

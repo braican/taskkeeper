@@ -9,14 +9,22 @@
     /**
      * ClientController
      */
-    app.controller("ClientController", ["$firebaseObject", function( $firebaseObject ){
+    app.controller("TaskkeeperController", ["$firebaseObject", function( $firebaseObject ){
         var self = this;
+
+        self.loaded = false;
 
         // download the data into a local object
         self.clients = $firebaseObject(ref);
 
+        self.clients.$loaded().then(function(){
+            self.loaded = true;
+        }).catch(function(err){
+            console.error("Error: " + err);
+        });
+
         // the tab to start on
-        self.tab = 'EDF';
+        self.tab = localStorage.getItem('activeClient') ? localStorage.getItem('activeClient') : '';
 
         // is the drawer active
         self.drawerActive = false;
@@ -41,6 +49,7 @@
          */
         self.selectClient = function(clientName){
             self.tab = clientName;
+            localStorage.setItem('activeClient', clientName);
         };
 
 
@@ -171,7 +180,76 @@
         self.saveTask = function(){
             saveData();
             self.editingTask = false;
+        }
 
+
+        /**
+         * indicate that we're waiting on an invoice from a client
+         *
+         * @param clientName (string)
+         *   - the client we're waiting on
+         */
+        self.waitingOnInvoice = function( clientName ){
+
+            if( !self.clients[clientName].tasks ){
+                return;
+            }
+
+            var invoicedTasks = [],
+                heldTasks     = [];
+
+            for(var i = 0; i < self.clients[clientName].tasks.length; i++){
+                console.log("test");
+            }
+
+            angular.forEach( self.clients[clientName].tasks, function( task, index ){
+                if(! task.hold){
+                    invoicedTasks.push( task );
+                } else {
+                    heldTasks.push(task);
+                }
+            } );
+            
+            self.clients[clientName].tasks = heldTasks;
+            self.clients[clientName].invoicedTasks = invoicedTasks;
+            self.clients[clientName].outstandingInvoice = true;
+
+            saveData();
+        }
+
+
+        /**
+         * check off that an invoice has been paid, so archive the
+         *  paid tasks and reset the invoice thing
+         *
+         * @param clientName (string)
+         *   - the client that just paid
+         */
+        self.paidInvoice = function( clientName ){
+
+            if( ! self.clients[clientName].invoicedTasks ){
+                return;
+            }
+
+            var today       = new Date(),
+                dd          = today.getDate(),
+                mm          = today.getMonth() + 1,
+                yy          = today.getFullYear(),
+                tasks       = self.clients[clientName].invoicedTasks,
+                archiveTask = {
+                    invoiceDate : mm + '/' + dd + '/' + yy,
+                    tasks       : tasks
+                }
+                
+
+            if( self.clients[clientName].taskArchive ){
+                self.clients[clientName].taskArchive.push(archiveTask);
+            } else {
+                self.clients[clientName].taskArchive = [archiveTask];
+            }
+            delete self.clients[clientName].invoicedTasks;
+            self.clients[clientName].outstandingInvoice = false;
+            saveData();
         }
 
 
@@ -192,6 +270,30 @@
             });
         }
     } ]);
+
+
+    app.filter('activeProject', function(){
+        return function( items ){
+            var result = {};
+            angular.forEach(items, function(value, key) {
+                if( value.tasks && value.tasks.length > 0 ){
+                    result[key] = value;
+                };
+            });
+            return result;
+        };
+    });
+    app.filter('inactiveProject', function(){
+        return function( items ){
+            var result = {};
+            angular.forEach(items, function(value, key) {
+                if( value.tasks === undefined || value.tasks.length === 0 ){
+                    result[key] = value;
+                };
+            });
+            return result;
+        };
+    });
 
 
 })( window.TASKKEEPER = window.TASKKEEPER || {});

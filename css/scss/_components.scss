@@ -4,6 +4,39 @@
 
 
 /* --------------------------------------------
+ * --loading
+ * -------------------------------------------- */
+
+.tk-loading{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #fff;
+    @include transition(all .4s);
+
+    .app-name{
+        text-align: center;
+        position: absolute;
+        left: 0;
+        right: 0;
+        padding-left: 20px;
+        padding-right: 20px;
+        top: 50%;
+        @include transform(translateY(-50%));
+    }
+
+    .tkLoaded &{
+        opacity: 0;
+        visibility: hidden;
+    }
+}
+
+
+
+
+/* --------------------------------------------
  * --header
  * -------------------------------------------- */
 
@@ -62,29 +95,50 @@
         }
     }
 
-    .add-new-client {
+    &.clients--inactive{
+        color: #999;
+    }
+}
+
+.add-new-client {
+    padding-top: 10px;
+    padding-bottom: 10px;
+
+    .add-new-client-form{
+        height: 0;
+        overflow: hidden;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    input,
+    button{
+        display: block;
+        width: 100%;
+    }
+    .trigger{
+        padding: 0;
+        display: block;
+        text-align: center;
+        font-size: 2em;
+        font-weight: 700;
+        line-height: 1;
+        cursor: pointer;
+
+        &[type="submit"]{
+            margin-top: .5em;
+        }
+    }
+
+    .cancel-new-client{
+        margin-top: 1em;
+        display: block;
+        text-align: center;
+    }
+
+    &.newClientActive {
         .add-new-client-form{
-            height: 0;
-            overflow: hidden;
-            @include transition(all .4s);
-
-            &.newClientActive{
-                height: auto;
-            }
-        }
-
-        input,
-        button{
-            display: block;
-            width: 100%;
-        }
-        .trigger{
-            padding: 0;
-            display: block;
-            text-align: center;
-            font-size: 2em;
-            font-weight: 700;
-            line-height: 1;
+            height: auto;
         }
     }
 
@@ -96,9 +150,24 @@
  * --client view
  * -------------------------------------------- */
 
+.client-header{
+    @include flexbox();
+    align-items: center;
+    justify-content: center;
+
+    .client-data{
+        @include flex(0 0 auto);
+        padding-right: 20px;
+    }
+    .actionable{
+        @include flex(1 1 auto);
+        text-align: right;
+    }
+}
+
+
 .client-hours{
     padding: 1em 0;
-    text-align: right;
     
     li + li{
         margin-top: 2px;
@@ -108,9 +177,6 @@
         display: inline-block;
         vertical-align: middle;
         padding: 10px;
-    }
-    .key{
-        text-align: right;
     }
     .value{
         width: 160px;
@@ -124,13 +190,20 @@
 .client-tasks{
 
     padding-top: 1em;
-    border-top: 2px solid $accent;
 
     .add-new-task{
-
+        input{
+            border: 1px solid $accent;
+            padding: 10px;
+        }
         button[type="submit"]{
             font-size: 3em;
             line-height: .5;
+
+            &:not([disabled]):hover,
+            &:not([disabled]):focus{
+                background: $accent;
+            }
         }
 
         @include break-min(520px){
@@ -159,9 +232,10 @@
                 width: 100%;
             }
 
-            button{
-                margin-top: 10px;
+            input{
+                margin-bottom: .5em;
             }
+
         }
     }
 
@@ -169,56 +243,39 @@
     .task-list{
         margin-top: 1em;
 
-        li{
+        .task{
             border-bottom: 1px solid $light-gray;
             padding: 1em 0;
-        }
+        
 
-        .task-data{
-            @include flexbox();
+            .task-data{
+                @include flexbox();
 
-            .description{
-                @include flex(1 1 auto);
-                padding-right: 10px;
-            }
-            .hours{
-                @include flex(0 0 80px);
-
-                input{
-                    text-align: right;
-                    font-weight: 700;
+                .description{
+                    @include flex(1 1 auto);
+                    padding-right: 10px;
                 }
-            }
+                .hours{
+                    @include flex(0 0 80px);
 
-            span input{
-                display: block;
-                padding: 10px;
-                width: 100%;
-                border: 1px solid $accent;
-
-                &[disabled]{
-                    border-width:0;
-                    padding-left: 0;
-                    padding-right: 0;
+                    input{
+                        text-align: right;
+                        font-weight: 700;
+                    }
                 }
-            }
-        }
 
-        .actionable{
-            @include uppercase();
-            font-size: .8em;
-            margin-top: .5em;
-    
-            a{
-                margin-right: 10px;
+                span input{
+                    display: block;
+                    width: 100%;
+                    padding-top: 0;
+                    border-bottom: 1px solid $accent;
 
-                &:last-child{
-                    margin-right: 0;
+                    &[disabled]{
+                        border-color:#fff;
+                        padding-left: 0;
+                        padding-right: 0;
+                    }
                 }
-            }
-
-            .task--remove{
-                color: $red;
             }
         }
     }

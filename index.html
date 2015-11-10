@@ -12,83 +12,118 @@
 <body>
     <div id="tk-svg-sprite" style="height: 0; width: 0; position: absolute; visibility: hidden"></div>
 
-    <div class="tk-app" ng-controller="ClientController as clientList" ng-class="{ drawerActive: clientList.drawerActive }">
-
+    <div class="tk-app" ng-controller="TaskkeeperController as tk" ng-class="{ drawerActive: tk.drawerActive, tkLoaded: tk.loaded }">
         <header class="tk-header">
-            <span class="icon icon--arrow tk-activate-drawer" ng-click="clientList.drawerActive = !clientList.drawerActive"><svg><use xlink:href="#icon--arrow"></use></svg></span>
+            <svg class="icon icon--arrow tk-activate-drawer" ng-click="tk.drawerActive = !tk.drawerActive"><use xlink:href="#icon--arrow"></use></svg>
             <h1 class="app-name">Taskkeeper</h1>
         </header>
-
+        
+        <!--
+        * SIDEBAR
+        -->
         <div class="tk-sidebar">
             <header>
-                <span class="icon icon--arrow tk-activate-drawer" ng-click="clientList.drawerActive = !clientList.drawerActive"><svg><use xlink:href="#icon--arrow"></use></svg></span>
+                <svg class="icon icon--arrow tk-activate-drawer" ng-click="tk.drawerActive = !tk.drawerActive"><use xlink:href="#icon--arrow"></use></svg>
                 <h3>Clients</h3>
             </header>
             <div class="tk-clients">
-                <ul>
-                    <li ng-repeat="(clientName, client) in clientList.clients" ng-click="clientList.selectClient(clientName)" ng-class="{active: clientList.isSelected(clientName)}">
+                <ul class="clients--active">
+                    <li ng-repeat="(clientName, client) in tk.clients" ng-click="tk.selectClient(clientName)" ng-class="{active: tk.isSelected(clientName)}">
                         <strong>{{clientName}}</strong><br>
                         <span class="hourly-rate">{{client.hourlyRate | currency}} / hr</span> <br>
-                        <strong ng-show="client.outstandingInvoice">Outstanding Invoice</strong>
-                    </li>
-                    <li class="add-new-client">
-                        <form name="newClient" class="add-new-client-form" ng-submit="clientList.addClient()" ng-class="{newClientActive: clientList.newClientActive}" novalidate>
-                            <input type="text" name="clientName" placeholder="Client name" ng-model="clientList.newClient.clientName" required>
-                            <input type="number" name="clientRate" placeholder="Hourly rate" ng-model="clientList.newClient.hourlyRate">
-                            <button class="trigger" type="submit" ng-disabled="newClient.$invalid">+</button>
-                        </form>
-                        <span ng-hide="clientList.newClientActive" class="trigger" ng-click="clientList.newClientActive = true">+</span>
+                        <strong ng-show="client.outstandingInvoice">Invoice Inbound</strong>
                     </li>
                 </ul>
+
+                <div class="add-new-client" ng-class="{newClientActive: tk.newClientActive}">
+                    <form name="newClient" class="add-new-client-form" ng-submit="tk.addClient()" novalidate>
+                        <input type="text" name="clientName" placeholder="Client name" ng-model="tk.newClient.clientName" required>
+                        <input type="number" name="clientRate" placeholder="Hourly rate" ng-model="tk.newClient.hourlyRate">
+                        <button class="trigger" type="submit" ng-disabled="newClient.$invalid">+</button>
+                        <a href="#" class="cancel-new-client" ng-click="tk.newClientActive = false">Cancel</a>
+                    </form>
+                    <span ng-hide="tk.newClientActive" class="trigger" ng-click="tk.newClientActive = true">+</span>
+                </div>
                 
             </div>
-        </div>
+        </div><!-- .tk-sidebar -->
         
-
+    
+        <!-- 
+        * MAIN CONTENT PANE
+        -->
         <div class="tk-content">
-            <div class="tk-client-detail" ng-repeat="(clientName, client) in clientList.clients" ng-show="clientList.isSelected(clientName)">
-                <header>
-                    <h2 class="client-name">{{clientName}}</h2>
-                    <span class="client-rate">{{client.hourlyRate | currency}}</span>
+            <div class="tk-client-detail" ng-repeat="(clientName, client) in tk.clients" ng-show="tk.isSelected(clientName)">
+                <header class="client-header">
+                    <div class="client-data">
+                        <h2 class="client-name">{{clientName}}</h2>
+                        <span class="client-rate"><strong>Hourly Rate: </strong>{{client.hourlyRate | currency}}</span>
+                    </div>
+                    <ul class="actionable">
+                        <li><a href="#">Edit Client</a></li>
+                        <li ng-hide="client.outstandingInvoice"><a href="#" ng-click="tk.waitingOnInvoice( clientName )">Waiting on Invoice</a></li>
+                        <li ng-show="client.outstandingInvoice"><a href="#" ng-click="tk.paidInvoice( clientName )">Invoice paid</a></li>
+                    </ul>
                 </header>
 
                 <ul class="client-hours">
                     <li>
+                        <span class="value">{{ tk.totalHours( client ) }}</span>
                         <span class="key">Billable Hours</span>
-                        <span class="value">{{ clientList.totalHours( client ) }}</span>
                     </li>
                     <li>
+                        <span class="value">{{ tk.totalDue( client ) | currency }}</span>
                         <span class="key">Total Due</span>
-                        <span class="value">{{ clientList.totalDue( client ) | currency }}</span>
                     </li>
                 </ul>
-
-                <div class="client-tasks">
-
-                    <form class="add-new-task" name="newTask" ng-submit="clientList.addTask( clientName )" novalidate>
-                        <input type="text" name="taskName" placeholder="Add new task" ng-model="clientList.task.description" required>
-                        <input type="number" name="taskHours" step="any" placeholder="hours" ng-model="clientList.task.hours">
+                
+                <!-- tasks -->
+                <div class="client-tasks tasks--active">
+                    <h4>Active Tasks</h4>
+                    <form class="add-new-task" name="newTask" ng-submit="tk.addTask( clientName )" novalidate>
+                        <input type="text" name="taskName" placeholder="Add new task" ng-model="tk.task.description" required>
+                        <input type="number" name="taskHours" step="any" placeholder="hours" ng-model="tk.task.hours">
                         <button type="submit" ng-disabled="newTask.$invalid">+</button>
                     </form>
 
                     <ul class="task-list">
-                        <li ng-repeat="(taskId, task) in client.tasks">
+                        <li ng-repeat="(taskId, task) in client.tasks" class="task">
                             <div class="task-data">
-                                <span class="description"><input ng-model="task.description" type="text" value="{{task.description}}" ng-disabled="clientList.editingTask !== taskId"></span>
-                                <span class="hours"><input ng-model="task.hours" type="number" step="any" value="{{task.hours}}" ng-disabled="clientList.editingTask !== taskId"></span>
+                                <span class="description">
+                                    <input ng-model="task.description" type="text" value="{{task.description}}" ng-show="tk.editingTask === taskId">
+                                    <span ng-hide="tk.editingTask === taskId">{{task.description}}</span>
+                                </span>
+                                <span class="hours"><input ng-model="task.hours" type="number" step="any" value="{{task.hours}}" ng-disabled="tk.editingTask !== taskId"></span>
                             </div>
 
-                            <div class="actionable">
-                                <a ng-hide="clientList.editingTask === taskId" href="#" class="task--edit" ng-click="clientList.editTask(clientName, taskId)">Edit</a>
-                                <a ng-hide="clientList.editingTask === taskId" href="#" class="task--remove" ng-click="clientList.removeTask(clientName, taskId)">Remove</a>
-                                <a ng-show="clientList.editingTask === taskId" href="#" class="task--save" ng-click="clientList.saveTask()">Save</a>
+                            <ul class="actionable">
+                                <li ng-hide="tk.editingTask === taskId"><a href="#" ng-click="tk.editTask(clientName, taskId)"><svg class="icon icon--edit"><use xlink:href="#icon--edit"></use></svg></a></li>
+                                <li ng-hide="tk.editingTask === taskId"><a href="#" ng-click="tk.removeTask(clientName, taskId)"><svg class="icon icon--remove"><use xlink:href="#icon--remove"></use></svg></a></li>
+                                <li ng-show="tk.editingTask === taskId"><a href="#" ng-click="tk.saveTask()"><svg class="icon icon--save"><use xlink:href="#icon--save"></use></svg></a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div><!-- .client-tasks -->
+
+                <div class="client-tasks tasks--invoiced">
+                    <h4>Invoiced Tasks</h4>
+                    <ul class="task-list">
+                        <li ng-repeat="(taskId, task) in client.invoicedTasks" class="task">
+                            <div class="task-data">
+                                <span class="description">{{task.description}}</span>
+                                <span class="hours">{{task.hours}}</span>
                             </div>
                         </li>
                     </ul>
                 </div>
+
             </div>
         </div>
-    </div>
+
+        <div class="tk-loading">
+            <h2 class="app-name">Taskkeeper</h2>
+        </div>
+    </div><!-- .tk-app -->
     
 </body>
 </html>

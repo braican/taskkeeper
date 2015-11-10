@@ -17,6 +17,7 @@ gulp.task('sass', function () {
  
 gulp.task('watch', function () {
     gulp.watch('./css/scss/*.scss', ['sass']);
+    gulp.watch('svg/**/*.svg', ['svgstore']);
 });
 
 // svg store

@@ -68,18 +68,58 @@ button[disabled]{
  * --icons
  * -------------------------------------------- */
 
-.icon svg{
-    max-height: 100%;
-    max-width: 100%;
+.icon{
+    display: inline-block;
+    vertical-align: middle;
 }
 
 .icon--arrow{
     width: 20px;
     height: 18px;
+    stroke: #000;
+    fill:#000;
+}
+
+.icon--edit,
+.icon--remove,
+.icon--save{
+    width: 20px;
+    height: 20px;
+}
+
+.icon--edit{
+    fill: #666;
+}
+.icon--save{
+    stroke: $accent;
+    fill: $accent;
+}
+.icon--remove{
+    stroke: $red;
+    fill: $red;
 }
 
 @include break-min(){
     .tk-activate-drawer{
         display: none;
+    }
+}
+
+
+/* --------------------------------------------
+ * --misc
+ * -------------------------------------------- */
+
+.actionable{
+    @include uppercase();
+    font-size: .8em;
+    margin-top: .5em;
+
+    li{
+        display: inline-block;
+
+        & + li{
+            margin-left: 6px;
+        }
     }
 }
