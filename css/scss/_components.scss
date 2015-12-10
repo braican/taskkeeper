@@ -52,10 +52,9 @@
     line-height: 1em;
 
     .icon{
-        cursor: pointer;
         position: absolute;
         top: 50%;
-        margin-top: -9px;
+        margin-top: -20px;
         left: 10px;
     }
 }
@@ -65,16 +64,12 @@
  * -------------------------------------------- */
 
 .tk-sidebar header{
-    padding: 20px;
+    padding: 10px 20px;
     position: relative;
+}
 
-    .icon{
-        cursor: pointer;
-        position: absolute;
-        right: 10px;
-        top: 50%;
-        margin-top: -9px;
-    }
+.clients--inactive{
+    margin-top: 20px;
 }
 
 .tk-clients ul {
@@ -93,22 +88,30 @@
             background-color: $accent;
             color: #fff;
         }
-    }
 
-    &.clients--inactive{
-        color: #999;
+        &:not(.active){
+            .client--current-due{
+                color: $accent;
+            }
+        }
+
+        .client--invoice{
+            color: $red;
+        }
     }
 }
 
+/**
+ * --add new client
+ */
+
 .add-new-client {
-    padding-top: 10px;
-    padding-bottom: 10px;
 
     .add-new-client-form{
         height: 0;
         overflow: hidden;
-        padding-left: 10px;
-        padding-right: 10px;
+        padding-left: 20px;
+        padding-right: 20px;
     }
 
     input,
@@ -116,22 +119,9 @@
         display: block;
         width: 100%;
     }
-    .trigger{
-        padding: 0;
-        display: block;
-        text-align: center;
-        font-size: 2em;
-        font-weight: 700;
-        line-height: 1;
-        cursor: pointer;
-
-        &[type="submit"]{
-            margin-top: .5em;
-        }
-    }
 
     .cancel-new-client{
-        margin-top: 1em;
+        padding: .5em 0;
         display: block;
         text-align: center;
     }
@@ -158,6 +148,10 @@
     .client-data{
         @include flex(0 0 auto);
         padding-right: 20px;
+
+        div{
+            padding-top: .5em;
+        }
     }
     .actionable{
         @include flex(1 1 auto);
@@ -278,5 +272,12 @@
                 }
             }
         }
+    }
+
+
+    // archive
+    &.tasks--archive{
+        border-top: 2px solid rgba($accent, .5);
+        margin-top: 4em;
     }
 }

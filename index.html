@@ -22,30 +22,51 @@
         * SIDEBAR
         -->
         <div class="tk-sidebar">
-            <header>
-                <svg class="icon icon--arrow tk-activate-drawer" ng-click="tk.drawerActive = !tk.drawerActive"><use xlink:href="#icon--arrow"></use></svg>
-                <h3>Clients</h3>
-            </header>
-            <div class="tk-clients">
-                <ul class="clients--active">
-                    <li ng-repeat="(clientName, client) in tk.clients" ng-click="tk.selectClient(clientName)" ng-class="{active: tk.isSelected(clientName)}">
-                        <strong>{{clientName}}</strong><br>
-                        <span class="hourly-rate">{{client.hourlyRate | currency}} / hr</span> <br>
-                        <strong ng-show="client.outstandingInvoice">Invoice Inbound</strong>
-                    </li>
-                </ul>
-
-                <div class="add-new-client" ng-class="{newClientActive: tk.newClientActive}">
-                    <form name="newClient" class="add-new-client-form" ng-submit="tk.addClient()" novalidate>
-                        <input type="text" name="clientName" placeholder="Client name" ng-model="tk.newClient.clientName" required>
-                        <input type="number" name="clientRate" placeholder="Hourly rate" ng-model="tk.newClient.hourlyRate">
-                        <button class="trigger" type="submit" ng-disabled="newClient.$invalid">+</button>
-                        <a href="#" class="cancel-new-client" ng-click="tk.newClientActive = false">Cancel</a>
-                    </form>
-                    <span ng-hide="tk.newClientActive" class="trigger" ng-click="tk.newClientActive = true">+</span>
-                </div>
+            <svg class="icon icon--arrow tk-activate-drawer" ng-click="tk.drawerActive = !tk.drawerActive"><use xlink:href="#icon--arrow"></use></svg>
+            <section class="clients--main">
                 
-            </div>
+                <header class="layout--actions-right">
+                    <h3 class="action-main">Clients</h3>
+                    <div class="action-container">
+                        <span ng-class="{ hideAction: tk.newClientActive}" class="icon--plus" ng-click="tk.newClientActive = true">+</span>
+                    </div>
+                </header>
+
+                <div class="tk-clients">
+                    <div class="add-new-client" ng-class="{newClientActive: tk.newClientActive}">
+                        <form name="newClient" class="add-new-client-form" ng-submit="tk.addClient()" novalidate>
+                            <input type="text" name="clientName" placeholder="Client name" ng-model="tk.newClient.clientName" required>
+                            <input type="number" name="clientRate" placeholder="Hourly rate" ng-model="tk.newClient.hourlyRate">
+                            <button class="icon--plus" type="submit" ng-disabled="newClient.$invalid">+</button>
+                            <a href="#" class="cancel-new-client" ng-click="tk.newClientActive = false">Cancel</a>
+                        </form>
+                    </div>
+                    <ul class="clients--active">
+                        <li ng-repeat="(clientName, client) in tk.clients | activeProject" ng-click="tk.selectClient(clientName)" ng-class="{active: tk.isSelected(clientName)}">
+                            <div><strong>{{clientName}}</strong></div>
+                            <div class="hourly-rate">{{client.hourlyRate | currency}} / hr</div>
+                            <div class="client--invoice" ng-show="client.outstandingInvoice">Invoice Inbound</div>
+                            <div class="client--current-due">Current Due: {{ tk.totalDue( client ) | currency }}</div>
+                        </li>
+                    </ul>                    
+                </div>
+            </section>
+        
+        
+            <section class="clients--inactive">
+                <header>
+                    <h3>Inactive Clients</h3>
+                </header>
+                <div class="tk-clients">
+                    <ul class="clients--active">
+                        <li ng-repeat="(clientName, client) in tk.clients | inactiveProject" ng-click="tk.selectClient(clientName)" ng-class="{active: tk.isSelected(clientName)}">
+                            <div><strong>{{clientName}}</strong></div>
+                            <div class="hourly-rate">{{client.hourlyRate | currency}} / hr</div>
+                        </li>
+                    </ul>                    
+                </div>
+            </section>
+            
         </div><!-- .tk-sidebar -->
         
     
@@ -57,12 +78,15 @@
                 <header class="client-header">
                     <div class="client-data">
                         <h2 class="client-name">{{clientName}}</h2>
-                        <span class="client-rate"><strong>Hourly Rate: </strong>{{client.hourlyRate | currency}}</span>
+                        <div class="client-rate"><strong>Hourly Rate: </strong>{{client.hourlyRate | currency}}</div>
+                        <div><a href="#">Edit Client</a></div>
+
                     </div>
                     <ul class="actionable">
-                        <li><a href="#">Edit Client</a></li>
                         <li ng-hide="client.outstandingInvoice"><a href="#" ng-click="tk.waitingOnInvoice( clientName )">Waiting on Invoice</a></li>
+                        
                         <li ng-show="client.outstandingInvoice"><a href="#" ng-click="tk.paidInvoice( clientName )">Invoice paid</a></li>
+                        <li ng-show="client.outstandingInvoice"><a href="#" ng-click="tk.cancelInvoice( clientName )">Cancel Invoice</a></li>
                     </ul>
                 </header>
 
@@ -105,7 +129,7 @@
                     </ul>
                 </div><!-- .client-tasks -->
 
-                <div class="client-tasks tasks--invoiced">
+                <div class="client-tasks tasks--invoiced" ng-show="client.invoicedTasks">
                     <h4>Invoiced Tasks</h4>
                     <ul class="task-list">
                         <li ng-repeat="(taskId, task) in client.invoicedTasks" class="task">
@@ -113,6 +137,20 @@
                                 <span class="description">{{task.description}}</span>
                                 <span class="hours">{{task.hours}}</span>
                             </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="client-tasks tasks--archive" ng-show="client.taskArchive">
+                    <h4>Invoice Archive</h4>
+                    <ul class="task-list">
+                        <li ng-repeat="(archiveId, archive) in client.taskArchive" class="task">
+                            <div class="date">{{archive.invoiceDate}}</div>
+                            <ul>
+                                <li ng-repeat="(taskId, task) in archive.tasks">
+                                    {{task.description}} - {{task.hours}} hrs
+                                </li>
+                            </ul>
                         </li>
                     </ul>
                 </div>

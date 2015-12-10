@@ -70,3 +70,22 @@ html, body, .tk-app{
 }
 
 
+
+.layout--actions-right{
+    @include flexbox();
+         
+    -webkit-align-items: center;
+         -ms-flex-align: center;
+            align-items: center;
+
+    .action-main{
+        @include flex(1 1 auto);
+    }
+    .action-container{
+        @include flex(0 1 auto);
+
+        .hideAction{
+            visibility: hidden;
+        }
+    }
+}

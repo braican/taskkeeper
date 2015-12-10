@@ -252,6 +252,33 @@
         }
 
 
+        /**
+         * cancel the given invoices
+         *
+         * @param clientName (string)
+         *   - the client that just paid
+         */
+        self.cancelInvoice = function(clientName){
+            
+            self.clients[clientName].outstandingInvoice = false;
+
+            if( self.clients[clientName].invoicedTasks ){
+                var tasks = self.clients[clientName].invoicedTasks;
+
+                if( self.clients[clientName].tasks ){
+                    var newTasks = self.clients[clientName].tasks.concat( tasks );
+                    self.clients[clientName].tasks = newTasks;
+                } else {
+                    self.clients[clientName].tasks = tasks;
+                }
+
+                delete self.clients[clientName].invoicedTasks;
+            }
+
+            saveData();
+        }
+
+
 
         /* --------------------------------------------
          * --util
@@ -275,7 +302,7 @@
         return function( items ){
             var result = {};
             angular.forEach(items, function(value, key) {
-                if( value.tasks && value.tasks.length > 0 ){
+                if( ( value.tasks && value.tasks.length > 0 ) || value.outstandingInvoice ){
                     result[key] = value;
                 };
             });
@@ -286,7 +313,7 @@
         return function( items ){
             var result = {};
             angular.forEach(items, function(value, key) {
-                if( value.tasks === undefined || value.tasks.length === 0 ){
+                if( ! ( ( value.tasks && value.tasks.length > 0 ) || value.outstandingInvoice ) ){
                     result[key] = value;
                 };
             });
