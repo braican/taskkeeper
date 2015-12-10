@@ -112,6 +112,11 @@
 
                     <ul class="task-list">
                         <li ng-repeat="(taskId, task) in client.tasks" class="task">
+                            <ul class="actionable">
+                                <li ng-hide="tk.editingTask === taskId"><a href="#" ng-click="tk.editTask(clientName, taskId)"><svg class="icon icon--edit"><use xlink:href="#icon--edit"></use></svg></a></li>
+                                <li ng-hide="tk.editingTask === taskId"><a href="#" ng-click="tk.removeTask(clientName, taskId)"><svg class="icon icon--remove"><use xlink:href="#icon--remove"></use></svg></a></li>
+                                <li ng-show="tk.editingTask === taskId"><a href="#" ng-click="tk.saveTask()"><svg class="icon icon--save"><use xlink:href="#icon--save"></use></svg></a></li>
+                            </ul>
                             <div class="task-data">
                                 <span class="description">
                                     <input ng-model="task.description" type="text" value="{{task.description}}" ng-show="tk.editingTask === taskId">
@@ -119,12 +124,6 @@
                                 </span>
                                 <span class="hours"><input ng-model="task.hours" type="number" step="any" value="{{task.hours}}" ng-disabled="tk.editingTask !== taskId"></span>
                             </div>
-
-                            <ul class="actionable">
-                                <li ng-hide="tk.editingTask === taskId"><a href="#" ng-click="tk.editTask(clientName, taskId)"><svg class="icon icon--edit"><use xlink:href="#icon--edit"></use></svg></a></li>
-                                <li ng-hide="tk.editingTask === taskId"><a href="#" ng-click="tk.removeTask(clientName, taskId)"><svg class="icon icon--remove"><use xlink:href="#icon--remove"></use></svg></a></li>
-                                <li ng-show="tk.editingTask === taskId"><a href="#" ng-click="tk.saveTask()"><svg class="icon icon--save"><use xlink:href="#icon--save"></use></svg></a></li>
-                            </ul>
                         </li>
                     </ul>
                 </div><!-- .client-tasks -->

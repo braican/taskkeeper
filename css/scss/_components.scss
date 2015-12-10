@@ -186,6 +186,7 @@
     padding-top: 1em;
 
     .add-new-task{
+        margin-top: 1em;
         input{
             border: 1px solid $accent;
             padding: 10px;
@@ -233,24 +234,41 @@
         }
     }
 
+    &.tasks--active .task{
+        @include flexbox();
+        -webkit-align-items: center;
+             -ms-flex-align: center;
+                align-items: center;
+    }
+
 
     .task-list{
-        margin-top: 1em;
 
         .task{
             border-bottom: 1px solid $light-gray;
             padding: 1em 0;
-        
+
+            .actionable{
+                @include flex(0 0 62px);
+                border-right: 1px solid #ccc;
+            }
+
+            .actionable + .task-data{
+                padding-left: 20px;
+            }
 
             .task-data{
+                @include flex(1 1 auto);
                 @include flexbox();
+
+                text-align: left;
 
                 .description{
                     @include flex(1 1 auto);
                     padding-right: 10px;
                 }
                 .hours{
-                    @include flex(0 0 80px);
+                    @include flex(0 0 60px);
 
                     input{
                         text-align: right;
@@ -276,6 +294,7 @@
 
 
     // archive
+    &.tasks--invoiced,
     &.tasks--archive{
         border-top: 2px solid rgba($accent, .5);
         margin-top: 4em;

@@ -26,11 +26,6 @@ h3{
     font-weight: 700;
 }
 
-// active tasks
-// invoiced tasks
-h4{
-    margin-bottom: .5em;
-}
 
 a{
     color: $accent;
@@ -45,7 +40,7 @@ a{
 
 input[type="text"],
 input[type="number"]{
-    padding: 10px 0;
+    padding: 6px 0;
     margin: 0;
     border: 0;
     border-bottom: 1px solid $light-gray;
@@ -130,7 +125,6 @@ button[disabled]{
 .actionable{
     @include uppercase();
     font-size: .8em;
-    margin-top: .5em;
 
     li{
         display: inline-block;
