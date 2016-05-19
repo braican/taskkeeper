@@ -4,7 +4,9 @@
 (function( TASKKEEPER ){
     var app = angular.module('taskkeeper', ["firebase"]);
 
-    var ref = new Firebase("https://taskkeeper.firebaseio.com/Clients");
+    var ref = firebase.database().ref('Clients');
+
+
 
     /**
      * ClientController
@@ -18,10 +20,13 @@
         self.clients = $firebaseObject(ref);
 
         self.clients.$loaded().then(function(){
+            console.log( self.clients );
             self.loaded = true;
         }).catch(function(err){
             console.error("Error: " + err);
         });
+
+
 
         // the tab to start on
         self.tab = localStorage.getItem('activeClient') ? localStorage.getItem('activeClient') : '';
@@ -53,6 +58,11 @@
         };
 
 
+        /* ------------------------------------------
+         * --checkers
+         * ------------------------------------------ */
+
+
         /**
          * check to see if the given clientName is the active one
          *
@@ -62,6 +72,13 @@
         self.isSelected = function( clientName ){
             return self.tab === clientName;
         }
+
+
+
+
+        /* ------------------------------------------
+         * --adders
+         * ------------------------------------------ */
 
 
         /**
@@ -108,6 +125,12 @@
         }
 
 
+
+        /* ------------------------------------------
+         * --getters
+         * ------------------------------------------ */
+
+
         /**
          * gets the total number of hours worked
          *
@@ -141,6 +164,29 @@
             var hours = self.totalHours( client );
             return hours * client.hourlyRate;
         }
+
+
+        /**
+         * gets the total amount due in an invoiced task
+         */
+        self.getInvoicedPrice = function( tasks, rate ){
+            var totalHrs = 0;
+
+            angular.forEach( tasks, function( task, index){
+                totalHrs += parseFloat(task.hours);
+            });
+
+            return totalHrs * rate;
+
+        }
+
+
+
+
+
+        /* ------------------------------------------
+         * --events
+         * ------------------------------------------ */
 
 
         /**
