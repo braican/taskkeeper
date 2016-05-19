@@ -1,294 +1,367 @@
-
-// ----------
-// namespace - TASKKEEPER
 //
-(function(TASKKEEPER, $, undefined){
-	
-	//
-	// PRIVATE
+// - angular codes
+//
+(function( TASKKEEPER ){
+    var app = angular.module('taskkeeper', ["firebase"]);
 
-	//
-	// strips out whitespace and dollar signs, and returns an int
-	//
-	function stripAndInt(string){
-		string = string.replace(/ /g, '').replace(/\$/g, '');
-		newInt = parseInt(string);
-		return newInt;
-	}
+    var ref = new Firebase("https://taskkeeper.firebaseio.com/Clients");
 
+    /**
+     * ClientController
+     */
+    app.controller("TaskkeeperController", ["$firebaseObject", function( $firebaseObject ){
+        var self = this;
 
-	// 
-	// PUBLIC
-	//
-	TASKKEEPER.init = function(){
+        self.loaded = false;
 
-		// -------------------------------
-		// forms
-		// -------------------------------
+        // download the data into a local object
+        self.clients = $firebaseObject(ref);
 
-		//
-		// add project form
-		//
-		$('#add-project').on('submit', function(e){
-		    e.preventDefault();
-		    $.ajax({
-		        type     : "POST",
-		        cache    : false,
-		        url      : $(this).attr('action'),
-		        data	 : $(this).serialize(),
-		        success  : function(data) {
-		        	console.log(data);
+        self.clients.$loaded().then(function(){
+            self.loaded = true;
+        }).catch(function(err){
+            console.error("Error: " + err);
+        });
 
-		            $(".success-text").empty().html(data).animate({opacity:1});
-		            setTimeout(function(){
-		            	$(".success-text").animate({opacity:0});
-		            }, 5000);
-		            $(".project-list").load("util/project-list.php");
-		        }
-		    });
+        // the tab to start on
+        self.tab = localStorage.getItem('activeClient') ? localStorage.getItem('activeClient') : '';
 
-			$('input[type=text]').val('');
-		});
+        // is the drawer active
+        self.drawerActive = false;
 
-		//
-		// add hours form
-		//
-		$('#add-hours').on('submit', function(e){
-		    e.preventDefault();
-		    var project = $(this).find('input[name=project]').attr('value');
-		    $.ajax({
-		        type     : "POST",
-		        cache    : false,
-		        url      : $(this).attr('action'),
-		        data	 : $(this).serialize(),
-		        success  : function(data) {
-		        	console.log(data);
+        // is the new client form active
+        self.newClientActive = false;
 
-		            $(".success-text").empty().html(data).animate({opacity:1});
-		            setTimeout(function(){
-		            	$(".success-text").animate({opacity:0});
-		            }, 5000);
-		            $(".hours-list").load("util/hours-list.php?val=" + project);
+        // are we editing a given task?
+        self.editingTask = false;
 
-		            $('input[type=text]').val('');
-		        }
-		    });
-		});
+        // a localized task object to use as the blank task template
+        self.task = {};
 
-		// -------------------------------
-		// project utilities on homepage
-		// -------------------------------
-
-		// cancel
-		$(document).on('click', '.cancel', function(e){
-			e.preventDefault();
-			$('.overlay').remove();
-		});
-
-		// rename project
-		$(document).on('click', '.rename', function(e){
-			e.preventDefault();
-			var project = $(this).parents('.project').attr('id'),
-				name = $(this).parents('.project').find('a').text(),
-				overlay = 	'<div class="overlay">' + 
-								'<div class="overlay-container">' +
-									'<form id="rename-project">' +
-										'<h3>Rename project ' + name + '</h3>' +
-										'<input type="text" id="new_name" name="new_name">' +
-										'<input type="hidden" name="old_name" value="' + project + '">' +
-										'<input type="submit" value="Go">' +
-										'<div class="cancel">Cancel</div>' +
-									'</form>' +
-								'</div>' + 
-							'</div>';
-			$('body').append(overlay);
-		});
-		$(document).on('submit', '#rename-project', function(e){
-			e.preventDefault();
-			$.ajax({
-				type	: "POST",
-				url		: 'util/rename-project.php',
-				data 	: $(this).serialize(),
-				success : function(data){
-					console.log(data);
-					if(data == 1){
-						$('.overlay-container').append('<p>Gotta add a name</p>');
-					} else{
-						$('.overlay').remove();
-						$(".project-list").load("util/project-list.php");
-					}
-				}
-			});
-		});
-
-		// delete project
-		$(document).on('click', '.delete', function(e){
-			e.preventDefault();
-			var project = $(this).parents('.project').attr('id'),
-				name = $(this).parents('.project').find('a').text(),
-				overlay = 	'<div class="overlay">' + 
-								'<div class="overlay-container">' +
-									'<form id="delete-project">' +
-										'<h3>You sure you want to delete project ' + name + '?</h3>' +
-										'<input type="hidden" name="old_name" value="' + project + '">' +
-										'<input type="submit" value="DELETE">' +
-										'<div class="cancel">NEVERMIND</div>' +
-									'</form>' +
-								'</div>' + 
-							'</div>';
-			$('body').append(overlay);
-		});
-		$(document).on('submit', '#delete-project', function(e){
-			e.preventDefault();
-			$.ajax({
-				type	: "POST",
-				url		: 'util/delete-project.php',
-				data 	: $(this).serialize(),
-				success : function(data){
-					if(data != 0){
-						console.log(data);
-						$('.overlay-container').append('<p>something went wrong</p>');
-					} else {
-						$('.overlay').remove();
-						$(".project-list").load("util/project-list.php");	
-					}
-				}
-			});
-		});
+        self.newClient = {};
 
 
-		// update hours on project
-		$(document).on('click', '.descriptions .row .num-hours', function(event) {
-			event.preventDefault();
-			var project = $('h1.page-title').attr('id'),
-				id = $(this).parent().attr('data-id'),
-				overlay = 	'<div class="overlay">' + 
-								'<div class="overlay-container">' +
-									'<form id="update-hours">' +
-										'<h3>Update Hours</h3>' +
-										'<input type="text" id="new_hours" name="new_hours">' +
-										'<input type="hidden" name="project_name" value="' + project + '">' +
-										'<input type="hidden" name="description_id" value="' + id + '">' +
-										'<input type="submit" value="Go">' +
-										'<div class="cancel">Cancel</div>' +
-									'</form>' +
-								'</div>' + 
-							'</div>';
-			$('body').append(overlay);
-		});
-		$(document).on('submit', '#update-hours', function(e){
-			e.preventDefault();
-			var project = $(this).find('input[name=project_name]').val();
-			$.ajax({
-				type	: "POST",
-				url		: 'util/update-hours.php',
-				data 	: $(this).serialize(),
-				success : function(data){
-					if(data != 0){
-						console.log(data);
-						$('.overlay-container').append('<p>something went wrong</p>');
-					} else {
-						$('.overlay').remove();
-						$(".hours-list").load("util/hours-list.php?val=" + project);
-					}
-				}
-			});
-		});
+        /**
+         * select this client, and display all their info
+         *
+         * @param clientName (string)
+         *   - the client to select
+         */
+        self.selectClient = function(clientName){
+            self.tab = clientName;
+            localStorage.setItem('activeClient', clientName);
+        };
 
-		// -------------------------------
-		// the hours listing page
-		// -------------------------------
 
-		//
-		// get paid button
-		//
-		$('.get-paid').on('click', function(e){
-			e.preventDefault();
-			var project = $(this).attr('data-project'),
-				ids = [];
+        /**
+         * check to see if the given clientName is the active one
+         *
+         * @param clientName (string)
+         *   - the client that we're checking is active
+         */
+        self.isSelected = function( clientName ){
+            return self.tab === clientName;
+        }
 
-			$('.waiting-on-invoice, .get-paid').addClass('hide');
-			$('.outbound-invoice').removeClass('hide');
 
-			$('.description-list .row.hold-row').each(function(i, e) {
-				ids.push($(e).attr('data-id'));
-			});
+        /**
+         * add a new client
+         */
+        self.addClient = function(){
 
-			$.ajax({
-				type	: "POST",
-				cache	: false,
-				url		: 'util/payed_switch.php?get-paid',
-				data	: 'project=' + project + '&hold=' + ids,
-				success : function(data){
-					$(".hours-list").load("util/hours-list.php?val=" + project);
-					console.log(data);
-				}
-			});
-		});
+            if( !self.newClient.hourlyRate ){
+                self.newClient.hourlyRate = 0;
+            }
 
-		//
-		// waiting on invoice button
-		//
-		$('.outbound-invoice').on('click', function(event) {
-			event.preventDefault();
-			var project = $(this).attr('data-project');
-			$('.waiting-on-invoice, .get-paid').removeClass('hide');
-			$('.outbound-invoice').addClass('hide');
-			$.ajax({
-				type	: "POST",
-				cache	: false,
-				url		: 'util/payed_switch.php',
-				data 	: 'project=' + project,
-				success : function(data){
-					$(".hours-list").load("util/hours-list.php?val=" + project);
-					console.log(data);
-				}
-			})
-		});
+            self.clients[ self.newClient.clientName ] = {
+                hourlyRate: self.newClient.hourlyRate
+            };
 
-		//
-		// show/hide the row utility menu
-		//
-		$(document).on('click', '.descriptions .row .description', function(e){
-			e.preventDefault();
-			var $p = $(this).parent(),
-				width = $p.find('.hidden-util').width() + 20;
+            saveData();
 
-			if($p.hasClass('show-hidden-util')){
-				$p.removeClass('show-hidden-util');
-			} else {
-				$p.addClass('show-hidden-util');
-			}
-		});
+            self.newClient = {};
+            self.newClientActive = false;
+        }
 
-		//
-		// the hidden utility switch
-		//
-		$(document).on('click', '.hidden-util span', function(event) {
-			event.preventDefault();
 
-			var $t = $(this),
-				id = $t.parents('.row').attr('data-id'),
-				project = $('.page-title').attr('id'),
-				newDue;
-			
-			if($t.hasClass('hold')){
-				$('.hours-list').load('util/hours-list.php?holdrow=' + id + '&val=' + project);
-			} else if($t.hasClass('unhold')){
-				$('.hours-list').load('util/hours-list.php?unholdrow=' + id + '&val=' + project);
-			} else if($t.hasClass('dull')){
-				$t.removeClass('dull').addClass('undull').text('un-dull').parents('.row').addClass('dulled');
-			} else if($t.hasClass('undull')){
-				$t.removeClass('undull').addClass('dull').text('dull').parents('.row').removeClass('dulled');
-			} else if($t.hasClass('delete-row')){
-				$('.hours-list').load('util/hours-list.php?deleterow=' + id + '&val=' + project);
-			}
-		});
+        /**
+         * add a new task
+         *
+         * @param clientName (string)
+         *   - the client to add the new task to
+         */
+        self.addTask = function( clientName ){
 
-	};
+            if( !self.task.hours ){
+                self.task.hours = 0;
+            }
 
-	$(document).ready(function(){
-		TASKKEEPER.init();
-	});
+            if( ! self.clients[ clientName ].tasks ){
+                self.clients[ clientName ].tasks = [self.task];
+            } else {
+               self.clients[ clientName ].tasks.push( self.task ); 
+            }
 
-}(window.TASKKEEPER = window.TASKKEEPER || {}, jQuery));
+            saveData();
+
+            self.task = {};
+        }
+
+
+        /**
+         * gets the total number of hours worked
+         *
+         * @param client (object)
+         *   - the client information
+         */        
+        self.totalHours = function( client ){
+
+            var tasks = client.tasks,
+                total = 0;
+
+            if( ! tasks ){
+                return total;
+            }
+
+            angular.forEach( tasks, function(task, index){
+                total += task.hours;
+            });
+
+            return total;
+        }
+
+
+        /**
+         * gets the total amount due
+         *
+         * @param client (object)
+         *   - the client information
+         */
+        self.totalDue = function( client ){
+            var hours = self.totalHours( client );
+            return hours * client.hourlyRate;
+        }
+
+
+        /**
+         * edit the clicked task
+         *
+         * @param clientName (string)
+         *   - the name of the client whose tasks we're editing
+         *
+         * @param taskId (number)
+         *   - the ID (from firebase) of the task we're editing
+         */
+        self.editTask = function(clientName, taskId){
+            self.editingTask = taskId;
+        }
+
+
+        /**
+         * remove the clicked task
+         *
+         * @param clientName (string)
+         *   - the name of the client whose tasks we're removing
+         *
+         * @param taskId (number)
+         *   - the ID (from firebase) of the task we're removing
+         */
+        self.removeTask = function(clientName, taskId){
+            
+            var removed = self.clients[clientName].tasks.splice(taskId, 1);
+
+            saveData();
+        }
+
+
+        /**
+         * save the currently edited task
+         */
+        self.saveTask = function(){
+            saveData();
+            self.editingTask = false;
+        }
+
+
+        /**
+         * indicate that we're waiting on an invoice from a client
+         *
+         * @param clientName (string)
+         *   - the client we're waiting on
+         */
+        self.waitingOnInvoice = function( clientName ){
+
+            if( !self.clients[clientName].tasks ){
+                return;
+            }
+
+            var invoicedTasks = [],
+                heldTasks     = [];
+
+            for(var i = 0; i < self.clients[clientName].tasks.length; i++){
+                console.log("test");
+            }
+
+            angular.forEach( self.clients[clientName].tasks, function( task, index ){
+                if(! task.hold){
+                    invoicedTasks.push( task );
+                } else {
+                    heldTasks.push(task);
+                }
+            } );
+            
+            self.clients[clientName].tasks = heldTasks;
+            self.clients[clientName].invoicedTasks = invoicedTasks;
+            self.clients[clientName].outstandingInvoice = true;
+
+            saveData();
+        }
+
+
+        /**
+         * check off that an invoice has been paid, so archive the
+         *  paid tasks and reset the invoice thing
+         *
+         * @param clientName (string)
+         *   - the client that just paid
+         */
+        self.paidInvoice = function( clientName ){
+
+            self.clients[clientName].outstandingInvoice = false;
+
+            if( self.clients[clientName].invoicedTasks ){
+                var today       = new Date(),
+                    dd          = today.getDate(),
+                    mm          = today.getMonth() + 1,
+                    yy          = today.getFullYear(),
+                    tasks       = self.clients[clientName].invoicedTasks,
+                    archiveTask = {
+                        invoiceDate : mm + '/' + dd + '/' + yy,
+                        tasks       : tasks
+                    };   
+
+                if( self.clients[clientName].taskArchive ){
+                    self.clients[clientName].taskArchive.push(archiveTask);
+                } else {
+                    self.clients[clientName].taskArchive = [archiveTask];
+                }
+                delete self.clients[clientName].invoicedTasks;
+            }
+            
+            saveData();
+        }
+
+
+        /**
+         * cancel the given invoices
+         *
+         * @param clientName (string)
+         *   - the client that just paid
+         */
+        self.cancelInvoice = function(clientName){
+            
+            self.clients[clientName].outstandingInvoice = false;
+
+            if( self.clients[clientName].invoicedTasks ){
+                var tasks = self.clients[clientName].invoicedTasks;
+
+                if( self.clients[clientName].tasks ){
+                    var newTasks = self.clients[clientName].tasks.concat( tasks );
+                    self.clients[clientName].tasks = newTasks;
+                } else {
+                    self.clients[clientName].tasks = tasks;
+                }
+
+                delete self.clients[clientName].invoicedTasks;
+            }
+
+            saveData();
+        }
+
+
+
+        /* --------------------------------------------
+         * --util
+         * -------------------------------------------- */
+
+
+        /**
+         * utility function that saves the data back to firebase
+         */
+        function saveData( ){
+            self.clients.$save().then(function(r){
+                r.key() === self.clients.$id;
+            }, function(error){
+                console.log("Error: " + error);
+            });
+        }
+    } ]);
+
+
+    app.filter('activeProject', function(){
+        return function( items ){
+            var result = {};
+            angular.forEach(items, function(value, key) {
+                if( ( value.tasks && value.tasks.length > 0 ) || value.outstandingInvoice ){
+                    result[key] = value;
+                };
+            });
+            return result;
+        };
+    });
+    app.filter('inactiveProject', function(){
+        return function( items ){
+            var result = {};
+            angular.forEach(items, function(value, key) {
+                if( ! ( ( value.tasks && value.tasks.length > 0 ) || value.outstandingInvoice ) ){
+                    result[key] = value;
+                };
+            });
+            return result;
+        };
+    });
+
+
+})( window.TASKKEEPER = window.TASKKEEPER || {});
+
+
+
+//
+// --load the svg sprites
+//
+(function( TASKKEEPER ){
+
+    /**
+     * load the svg sprite into the top of the page
+     */
+    function loadSvgSprite(){
+        var request = new XMLHttpRequest();
+        var spriteDiv = document.getElementById("tk-svg-sprite");
+
+        request.open('GET', 'svg/build/icons.svg', true);
+
+        request.onload = function() {
+            if (this.status >= 200 && this.status < 400) {
+                var resp = this.response;
+                spriteDiv.innerHTML = resp;
+            } else {
+                console.error("There was an error getting the icons");
+            }
+        };
+
+        request.onerror = function() {
+            console.error("There was an error getting the icons");
+        };
+
+        request.send();
+    }
+
+    
+    //
+    // --DOM READY
+    //
+    document.addEventListener("DOMContentLoaded", function(event) { 
+        loadSvgSprite();
+    });
+
+})( window.TASKKEEPER = window.TASKKEEPER || {} );

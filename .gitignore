@@ -4,3 +4,7 @@ error_log
 
 # ignore the db connect util - to hide personal un/pwds
 util/db_util.php
+
+node_modules
+
+.DS_Store

@@ -1,0 +1,302 @@
+/* ==============================================================
+   * --components
+   ============================================================== */
+
+
+/* --------------------------------------------
+ * --loading
+ * -------------------------------------------- */
+
+.tk-loading{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #fff;
+    @include transition(all .4s);
+
+    .app-name{
+        text-align: center;
+        position: absolute;
+        left: 0;
+        right: 0;
+        padding-left: 20px;
+        padding-right: 20px;
+        top: 50%;
+        @include transform(translateY(-50%));
+    }
+
+    .tkLoaded &{
+        opacity: 0;
+        visibility: hidden;
+    }
+}
+
+
+
+
+/* --------------------------------------------
+ * --header
+ * -------------------------------------------- */
+
+.tk-header{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    padding: 1em;
+    background: #fff;
+    border-bottom: 1px solid $light-gray;
+    line-height: 1em;
+
+    .icon{
+        position: absolute;
+        top: 50%;
+        margin-top: -20px;
+        left: 10px;
+    }
+}
+
+/* --------------------------------------------
+ * --sidebar
+ * -------------------------------------------- */
+
+.tk-sidebar header{
+    padding: 10px 20px;
+    position: relative;
+}
+
+.clients--inactive{
+    margin-top: 20px;
+}
+
+.tk-clients ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    border-top: 1px solid $light-gray;
+
+    li{
+        display: block;
+        padding: 20px;
+        cursor: pointer;
+        border-bottom: 1px solid $light-gray;
+
+        &.active{
+            background-color: $accent;
+            color: #fff;
+        }
+
+        &:not(.active){
+            .client--current-due{
+                color: $accent;
+            }
+        }
+
+        .client--invoice{
+            color: $red;
+        }
+    }
+}
+
+/**
+ * --add new client
+ */
+
+.add-new-client {
+
+    .add-new-client-form{
+        height: 0;
+        overflow: hidden;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    input,
+    button{
+        display: block;
+        width: 100%;
+    }
+
+    .cancel-new-client{
+        padding: .5em 0;
+        display: block;
+        text-align: center;
+    }
+
+    &.newClientActive {
+        .add-new-client-form{
+            height: auto;
+        }
+    }
+
+
+}
+
+
+/* --------------------------------------------
+ * --client view
+ * -------------------------------------------- */
+
+.client-header{
+    @include flexbox();
+    align-items: center;
+    justify-content: center;
+
+    .client-data{
+        @include flex(0 0 auto);
+        padding-right: 20px;
+
+        div{
+            padding-top: .5em;
+        }
+    }
+    .actionable{
+        @include flex(1 1 auto);
+        text-align: right;
+    }
+}
+
+
+.client-hours{
+    padding: 1em 0;
+    
+    li + li{
+        margin-top: 2px;
+    }
+    
+    span{
+        display: inline-block;
+        vertical-align: middle;
+        padding: 10px;
+    }
+    .value{
+        width: 160px;
+        background-color: $accent;
+        color: #fff;
+        font-weight: 700;
+        font-size: 1.2em;
+    }
+}
+
+.client-tasks{
+
+    padding-top: 1em;
+
+    .add-new-task{
+        margin-top: 1em;
+        input{
+            border: 1px solid $accent;
+            padding: 10px;
+        }
+        button[type="submit"]{
+            font-size: 3em;
+            line-height: .5;
+
+            &:not([disabled]):hover,
+            &:not([disabled]):focus{
+                background: $accent;
+            }
+        }
+
+        @include break-min(520px){
+            @include flexbox();
+
+            input[name="taskName"]{
+                @include flex(1 0 auto);
+            }
+            input[name="taskHours"]{
+                @include flex(0 0 auto);
+            }
+
+            input + input{
+                margin-left: 10px;
+            }
+
+            button[type="submit"]{
+                @include flex(0 0 auto);
+            }
+        }
+
+        @include break-max(519px){
+            input,
+            button{
+                display: block;
+                width: 100%;
+            }
+
+            input{
+                margin-bottom: .5em;
+            }
+
+        }
+    }
+
+    &.tasks--active .task{
+        @include flexbox();
+        -webkit-align-items: center;
+             -ms-flex-align: center;
+                align-items: center;
+    }
+
+
+    .task-list{
+
+        .task{
+            border-bottom: 1px solid $light-gray;
+            padding: 1em 0;
+
+            .actionable{
+                @include flex(0 0 62px);
+                border-right: 1px solid #ccc;
+            }
+
+            .actionable + .task-data{
+                padding-left: 20px;
+            }
+
+            .task-data{
+                @include flex(1 1 auto);
+                @include flexbox();
+
+                text-align: left;
+
+                .description{
+                    @include flex(1 1 auto);
+                    padding-right: 10px;
+                }
+                .hours{
+                    @include flex(0 0 60px);
+
+                    input{
+                        text-align: right;
+                        font-weight: 700;
+                    }
+                }
+
+                span input{
+                    display: block;
+                    width: 100%;
+                    padding-top: 0;
+                    border-bottom: 1px solid $accent;
+
+                    &[disabled]{
+                        border-color:#fff;
+                        padding-left: 0;
+                        padding-right: 0;
+                    }
+                }
+            }
+        }
+    }
+
+
+    // archive
+    &.tasks--invoiced,
+    &.tasks--archive{
+        border-top: 2px solid rgba($accent, .5);
+        margin-top: 4em;
+    }
+}

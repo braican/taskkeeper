@@ -1,0 +1,136 @@
+
+
+/* --------------------------------------------
+ * --type
+ * -------------------------------------------- */
+
+body, input, button{
+    font-size: 1em;
+    font-family: $font-stack;
+}
+
+h1, h2, h3, h4, h5, h6{
+    margin: 0;
+}
+
+.app-name{
+    font-size: 1em;
+    font-weight: 300;
+    @include uppercase();
+}
+
+// "clients"
+h3{
+    @include uppercase();
+    font-size: .8em;
+    font-weight: 700;
+}
+
+
+a{
+    color: $accent;
+    text-decoration: none;
+}
+
+
+
+/* --------------------------------------------
+ * --forms
+ * -------------------------------------------- */
+
+input[type="text"],
+input[type="number"]{
+    padding: 6px 0;
+    margin: 0;
+    border: 0;
+    border-bottom: 1px solid $light-gray;
+}
+input:focus,
+button:focus{
+    outline: none;
+}
+
+button{
+    appearance: none;
+    border-radius: 0;
+    border: 0;
+    cursor: pointer;
+    background-color: #fff;
+    font-weight: 700;
+}
+button[disabled]{
+    cursor: default;
+    opacity: .2;
+}
+
+
+
+/* --------------------------------------------
+ * --icons
+ * -------------------------------------------- */
+
+.icon{
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.icon--arrow{
+    width: 40px;
+    height: 40px;
+    stroke: #000;
+    fill:#000;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.icon--edit,
+.icon--remove,
+.icon--save{
+    width: 20px;
+    height: 20px;
+}
+
+.icon--edit{
+    fill: #666;
+}
+.icon--save{
+    stroke: $accent;
+    fill: $accent;
+}
+.icon--remove{
+    stroke: $red;
+    fill: $red;
+}
+
+.icon--plus{
+    padding: 0;
+    text-align: center;
+    font-size: 2em;
+    font-weight: 700;
+    line-height: 1;
+    cursor: pointer;
+}
+
+@include break-min(){
+    .tk-activate-drawer{
+        display: none;
+    }
+}
+
+
+/* --------------------------------------------
+ * --misc
+ * -------------------------------------------- */
+
+.actionable{
+    @include uppercase();
+    font-size: .8em;
+
+    li{
+        display: inline-block;
+
+        & + li{
+            margin-left: 6px;
+        }
+    }
+}

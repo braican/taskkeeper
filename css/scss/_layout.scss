@@ -1,0 +1,91 @@
+/* --------------------------------------------
+ * --layout
+ * -------------------------------------------- */
+
+html, body, .tk-app{
+    height: 100%;
+}
+.tk-app{
+    width: 100%;
+    padding-top: 3em;
+    position: relative;
+
+    @include break-min(){
+        @include flexbox();
+    }
+}
+
+.tk-sidebar{
+    width: 300px;
+    background: #fff;
+
+    @include break-min(){
+        @include flex(0 0 300px);
+        border-right: 1px solid $light-gray;
+    }
+
+    @include break-max(){
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: -100%;
+        z-index: 2;
+
+        @include transition( all .4s );
+
+        .drawerActive &{
+            left: 0;
+        }
+    }
+}
+
+.tk-content{
+    
+    padding: 20px;
+    position: relative;
+
+    @include break-min(){
+        @include flex(1 0 auto);
+    }
+
+    @include break-max(){
+        &:after{
+            content:"";
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #000;
+            opacity: 0;
+            visibility: hidden;
+            @include transition(all .4s);
+        }
+
+        .drawerActive &:after{
+            opacity: .4;
+            visibility: visible;
+        }
+    }
+}
+
+
+
+.layout--actions-right{
+    @include flexbox();
+         
+    -webkit-align-items: center;
+         -ms-flex-align: center;
+            align-items: center;
+
+    .action-main{
+        @include flex(1 1 auto);
+    }
+    .action-container{
+        @include flex(0 1 auto);
+
+        .hideAction{
+            visibility: hidden;
+        }
+    }
+}
