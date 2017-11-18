@@ -1,0 +1,12 @@
+
+$fontsize: 16px;
+$lineheight: 1.6;
+
+$font_primary: sans-serif;
+
+body{
+    color: $textcolor;
+    font-size: $fontsize;
+    line-height: $lineheight;
+    font-family: $font_primary;
+}
