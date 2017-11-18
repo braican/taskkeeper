@@ -1,4 +1,4 @@
 Taskkeeper
 ==========
 
-A simple app to keep track of clients, project hours, and prices.
+People should pay you, so you should know how much they owe you.
