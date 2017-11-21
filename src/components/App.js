@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Switch, Route, Link } from 'react-router-dom';
+import { BrowserRouter, Switch, Route, NavLink } from 'react-router-dom';
 
 // import the components
 import Header from './Header';
@@ -20,6 +20,43 @@ class App extends React.Component {
                 anywayreps : {
                     name : 'Anyway Reps',
                     rate : 56.00,
+
+                    invoices : {
+                        20171120323 : {
+                            invoicedate : '2017/11/20',
+                            status      : 'active',
+                            tasks       : [
+                                {
+                                    description : 'Fixing navigation bugs',
+                                    price       : null,
+                                    hours       : 4,
+                                }, {
+                                    description : 'Pushing new navigation live',
+                                    price       : null,
+                                    hours       : 2,
+                                }, {
+                                    description : 'Updating all the plugins',
+                                    price       : 100.00,
+                                    hours       : null,
+                                },
+                            ],
+                        },
+                        20171120352 : {
+                            invoicedate : '2017/11/20',
+                            status      : 'active',
+                            tasks       : [
+                                {
+                                    description : 'Lorem ipsum dolor site',
+                                    price       : null,
+                                    hours       : 4,
+                                }, {
+                                    description : 'Updating visibility on the PDF builde',
+                                    price       : null,
+                                    hours       : 10,
+                                },
+                            ],
+                        },
+                    },
                 },
                 christabianchi : {
                     name : 'Christa Bianchi',
@@ -42,12 +79,10 @@ class App extends React.Component {
         const client = this.state.clients[key];
 
         return (
-            <li className="clientthumb" key={key}>
-                <Link to={`/client/${key}`}>
-                    <h3 className="clientthumb__name">{client.name}</h3>
-                    <p className="clientthumb__rate">{formatPrice(client.rate)}</p>
-                </Link>
-            </li>
+            <NavLink to={`/client/${key}`} className="clientLink" activeClassName="clientLink--active">
+                <h3 className="clientthumb__name">{client.name}</h3>
+                <p className="clientthumb__rate">{formatPrice(client.rate)}</p>
+            </NavLink>
         );
     }
 
@@ -61,15 +96,28 @@ class App extends React.Component {
                 <Header />
 
                 <BrowserRouter>
-                    <div>
-                        <div className="clientList">
-                            <ul>
-                                {Object.keys(this.state.clients).map(this.renderClientList)}
-                            </ul>
-                        </div>
+                    <div className="app-main">
+                        <ul className="clientList">
+                            {
+                                Object.keys(this.state.clients).map((key) => {
+                                    return (
+                                        <li className="clientThumb" key={key}>
+                                            {this.renderClientList(key)}
+                                        </li>
+                                    );
+                                })
+                            }
+                        </ul>
                         <div className="clientPane">
                             <Switch>
-                                <Route path="/client/:clientId" render={(props) => <ClientPane clients={this.state.clients} params={props.match.params} />} />
+                                <Route
+                                    path="/client/:clientId"
+                                    render={(props) => (
+                                        <ClientPane
+                                            client={this.state.clients[props.match.params.clientId]}
+                                        />
+                                    )}
+                                />
                                 <Route component={Welcome} />
                             </Switch>
                         </div>

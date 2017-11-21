@@ -50,3 +50,25 @@ body {
   font-size: 16px;
   line-height: 1.6;
   font-family: sans-serif; }
+
+.app-main {
+  display: flex; }
+
+.masthead {
+  padding: 20px; }
+
+.clientList {
+  background-color: #f6f6f6;
+  width: 200px; }
+
+.clientThumb {
+  border-bottom: 1px solid #ddd; }
+
+.clientLink {
+  padding: 20px;
+  text-decoration: none;
+  color: inherit;
+  display: block; }
+
+.clientLink--active {
+  background-color: #ddd; }

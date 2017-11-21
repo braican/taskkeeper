@@ -1,0 +1,18 @@
+.clientList{
+    background-color: $offwhite;
+    width: 200px;
+}
+
+.clientThumb{
+    border-bottom: 1px solid $offwhite_border;
+}
+
+.clientLink{
+    padding: $windowgutter;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+.clientLink--active{
+    background-color: $offwhite_border;
+}

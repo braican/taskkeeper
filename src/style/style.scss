@@ -5,6 +5,8 @@
 // base
 @import './sass/base/reset';
 @import './sass/base/type';
+@import './sass/base/layout';
 
 // components
-@import './sass/components/header';
+@import './sass/components/Header';
+@import './sass/components/ClientList';
