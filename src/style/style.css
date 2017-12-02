@@ -51,24 +51,40 @@ body {
   line-height: 1.6;
   font-family: sans-serif; }
 
+html, body, #root, .app-main {
+  height: 100%; }
+
 .app-main {
-  display: flex; }
+  display: flex;
+  overflow: hidden; }
+
+.leftpane {
+  width: 200px;
+  background-color: #292929;
+  color: #fff;
+  height: 100%;
+  overflow: auto; }
+
+.clientPane {
+  flex: 1 0 auto;
+  height: 100%;
+  overflow: auto; }
 
 .masthead {
-  padding: 20px; }
-
-.clientList {
-  background-color: #f6f6f6;
-  width: 200px; }
+  padding: 10px; }
 
 .clientThumb {
-  border-bottom: 1px solid #ddd; }
+  border-top: 1px solid #404040; }
 
 .clientLink {
-  padding: 20px;
+  padding: 10px;
   text-decoration: none;
   color: inherit;
   display: block; }
 
 .clientLink--active {
-  background-color: #ddd; }
+  background-color: #404040; }
+
+.clientHeader {
+  padding: 10px;
+  background-color: #eaeaea; }

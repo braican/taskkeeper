@@ -1,22 +1,37 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import ActiveInvoices from './ActiveInvoices';
+import InvoiceArchive from './InvoiceArchive';
 
+
+/**
+ * Organize the client's invoices into their respective statuses
+ * @param {Object} invoices Invoices to organize
+ */
 function organizeInvoices(invoices) {
-    const inactiveInvoices = {};
-    const activeInvoices = {};
+    const active = {};
+    const archive = {};
+
+    // make sure there are invoices
+    if (!invoices) {
+        return {
+            active  : {},
+            archive : {},
+        };
+    }
 
     Object.keys(invoices).forEach((invoiceId) => {
         const invoiceData = invoices[invoiceId];
 
         if (invoiceData.status === 'active') {
-            activeInvoices[invoiceId] = invoiceData;
+            active[invoiceId] = invoiceData;
         } else {
-            inactiveInvoices[invoiceId] = invoiceData;
+            archive[invoiceId] = invoiceData;
         }
     });
 
-    return { inactiveInvoices, activeInvoices };
+    return { active, archive };
 }
 
 
@@ -24,16 +39,15 @@ const ClientPane = (props) => {
     const { client } = props;
     const invoices = organizeInvoices(client.invoices);
 
-    console.log(invoices);
-
     return (
-        <div>
-            <h2 className="clientname">{client.name}</h2>
-            <p className="clientrate">{client.rate}</p>
+        <div className="clientPane__main">
+            <header className="clientHeader">
+                <h2 className="clientname">{client.name}</h2>
+                <p className="clientrate">{client.rate}</p>
+            </header>
 
-            <div className="invoices">
-
-            </div>
+            <ActiveInvoices invoices={invoices.active} />
+            <InvoiceArchive invoices={invoices.archive} />
         </div>
     );
 };

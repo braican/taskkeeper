@@ -1,6 +1,26 @@
 
-$windowgutter: 20px;
+$windowgutter: 10px;
+
+html, body, #root, .app-main{
+    height: 100%;
+}
 
 .app-main{
     display:flex;
+    overflow:hidden;
 }
+
+.leftpane{
+    width: 200px;
+    background-color: $gray;
+    color: $white;
+    height: 100%;
+    overflow: auto;
+}
+
+.clientPane{
+    flex: 1 0 auto;
+    height: 100%;
+    overflow: auto;
+}
+

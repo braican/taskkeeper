@@ -92,11 +92,10 @@ class App extends React.Component {
      */
     render() {
         return (
-            <div className="taskkeeper">
-                <Header />
-
-                <BrowserRouter>
-                    <div className="app-main">
+            <BrowserRouter>
+                <div className="taskkeeper app-main">
+                    <aside className="leftpane">
+                        <Header />
                         <ul className="clientList">
                             {
                                 Object.keys(this.state.clients).map((key) => {
@@ -108,22 +107,22 @@ class App extends React.Component {
                                 })
                             }
                         </ul>
-                        <div className="clientPane">
-                            <Switch>
-                                <Route
-                                    path="/client/:clientId"
-                                    render={(props) => (
-                                        <ClientPane
-                                            client={this.state.clients[props.match.params.clientId]}
-                                        />
-                                    )}
-                                />
-                                <Route component={Welcome} />
-                            </Switch>
-                        </div>
+                    </aside>
+                    <div className="clientPane">
+                        <Switch>
+                            <Route
+                                path="/client/:clientId"
+                                render={(props) => (
+                                    <ClientPane
+                                        client={this.state.clients[props.match.params.clientId]}
+                                    />
+                                )}
+                            />
+                            <Route component={Welcome} />
+                        </Switch>
                     </div>
-                </BrowserRouter>
-            </div>
+                </div>
+            </BrowserRouter>
         );
     }
 }
