@@ -1,12 +1,62 @@
 
+//
+// VARS
+//
+
 $fontsize: 16px;
 $lineheight: 1.6;
 
 $font_primary: sans-serif;
+
+
+//
+// MIXINS
+//
+
+@mixin uppercase{
+    text-transform: uppercase;
+    font-size: 0.7em;
+    letter-spacing: 0.1em;
+}
+
+
+//
+// GO
+//
 
 body{
     color: $textcolor;
     font-size: $fontsize;
     line-height: $lineheight;
     font-family: $font_primary;
+}
+
+
+/* ------------------------------------
+ * --el
+ * ------------------------------------*/
+
+button{
+    -webkit-appearance:none;
+    border: 0;
+    border-radius: 0;
+    padding: 0;
+    cursor: pointer;
+
+    &:focus{
+        outline:none;
+    }
+}
+
+
+/* ------------------------------------
+ * --misc
+ * ------------------------------------*/
+
+ .cents{
+    display: inline-block;
+    vertical-align: super;
+    font-size: 0.6em;
+    margin-left: 2px;
+    line-height: 1.2;
 }

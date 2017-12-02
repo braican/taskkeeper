@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import ActiveInvoices from './ActiveInvoices';
-import InvoiceArchive from './InvoiceArchive';
+import Invoice from './Invoice';
+
+import { formatPrice } from '../helpers';
 
 
 /**
@@ -35,6 +36,36 @@ function organizeInvoices(invoices) {
 }
 
 
+/**
+ * Render the group of invoices, with a header.
+ * @param {Array} invoiceGroup Group of invoices
+ * @param {String} id Identifier for this invoice group
+ * @param {String} header The header text for this group
+ * @param {Number} rate Client billable rate
+ */
+function renderInvoices(invoiceGroup, id, header, rate) {
+    if (Object.keys(invoiceGroup).length === 0) {
+        return false;
+    }
+
+    return (
+        <div className={`invoices invoices--${id}`}>
+            <div>{header}</div>
+            {
+                Object.keys(invoiceGroup).map((invoiceId) => (
+                    <Invoice
+                        key={invoiceId}
+                        index={invoiceId}
+                        invoice={invoiceGroup[invoiceId]}
+                        rate={rate}
+                    />
+                ))
+            }
+        </div>
+    );
+}
+
+
 const ClientPane = (props) => {
     const { client } = props;
     const invoices = organizeInvoices(client.invoices);
@@ -43,11 +74,13 @@ const ClientPane = (props) => {
         <div className="clientPane__main">
             <header className="clientHeader">
                 <h2 className="clientname">{client.name}</h2>
-                <p className="clientrate">{client.rate}</p>
+                <p className="clientrate">{formatPrice(client.rate)}</p>
             </header>
 
-            <ActiveInvoices invoices={invoices.active} />
-            <InvoiceArchive invoices={invoices.archive} />
+            <div className="clientInvoices">
+                {renderInvoices(invoices.active, 'outstanding', 'Outstanding Invoices', client.rate)}
+                {renderInvoices(invoices.archive, 'archive', 'Invoice Archive', client.rate)}
+            </div>
         </div>
     );
 };

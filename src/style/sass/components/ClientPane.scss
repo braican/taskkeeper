@@ -1,5 +1,20 @@
 
+.clientPane{
+    flex: 1 1 auto;
+    height: 100%;
+    overflow: auto;
+    background-color: $offwhite;
+}
 .clientHeader{
     padding: $windowgutter;
-    background-color: $offwhite;
+    background-color: $white;
+}
+
+.clientname{
+    font-size: 2rem;
+}
+
+.clientrate{
+    font-size: 1.5rem;
+    color: $green;
 }

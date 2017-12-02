@@ -56,6 +56,25 @@ class App extends React.Component {
                                 },
                             ],
                         },
+                        20171202352 : {
+                            invoicedate : '2017/12/02',
+                            status      : 'archive',
+                            tasks       : [
+                                {
+                                    description : 'Consultation for Javascript Debugging (help with jquery and Divi - a bit of an emergency email from oct 17)',
+                                    price       : null,
+                                    hours       : 1,
+                                }, {
+                                    description : 'Fixing bugs on Capital Constellation site.',
+                                    price       : null,
+                                    hours       : 5,
+                                }, {
+                                    description : 'Debugging errors and css issues on Constellation site.',
+                                    price       : null,
+                                    hours       : 3,
+                                },
+                            ],
+                        },
                     },
                 },
                 christabianchi : {

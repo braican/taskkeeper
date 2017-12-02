@@ -1,6 +1,7 @@
 
 // vars
 @import './sass/vars/colors';
+@import './sass/vars/icons';
 
 // base
 @import './sass/base/reset';
@@ -11,3 +12,4 @@
 @import './sass/components/Header';
 @import './sass/components/ClientList';
 @import './sass/components/ClientPane';
+@import './sass/components/Invoice';

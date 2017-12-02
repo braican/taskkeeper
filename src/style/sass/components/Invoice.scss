@@ -1,0 +1,75 @@
+
+.invoices{
+    padding: $windowgutter;
+}
+
+.invoice{
+    margin-top: 10px;
+    background-color: $white;
+    padding: $windowgutter;
+    box-shadow: 2px 2px 6px rgba($gray, .1);
+    border-radius: 2px;
+}
+
+.invoice__header{
+    display: flex;
+    justify-content: space-between;
+}
+.invoice__date{
+    flex: 0 1 auto;
+}
+.invoice__price{
+    flex: 0 1 auto;
+    font-size: 2rem;
+    color: $green;
+}
+.tasklist__trigger{
+    // font-size: 0.8rem;
+    @include uppercase;
+    @include icon-right($icon_expand, 10px, 10px, 4px);
+    &:after{
+        transition: all .4s;
+    }
+}
+.tasklist__trigger--close:after{
+    transform: rotate(45deg);
+}
+
+.invoice__tasks{
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity .4s;
+    position: absolute;
+    left: -9999px;
+}
+.invoice__tasks--expanded{
+    visibility: visible;
+    position: static;
+    opacity: 1;
+}
+
+.task{
+    display:flex;
+    margin-top: 8px;
+    padding-top: 8px;    
+    border-top: 1px solid $offwhite;
+}
+.task--key{
+    border-top: 0;
+    @include uppercase;
+}
+
+.task__description{
+    flex: 1 1 auto;
+}
+.task__hours{
+    text-align: right;
+    flex: 0 0 80px;
+    padding-left: 20px;
+    padding-right: 10px;
+}
+.task__price{
+    flex: 0 0 100px;
+    text-align: right;
+}
+

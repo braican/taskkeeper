@@ -1,7 +1,16 @@
+/* ------------------------------------
+ * --icon mixins
+ * ------------------------------------*/
 /* http://meyerweb.com/eric/tools/css/reset/ 
    v2.0 | 20110126
    License: none (public domain)
 */
+html {
+  box-sizing: border-box; }
+
+*, *:before, *:after {
+  box-sizing: inherit; }
+
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -51,6 +60,28 @@ body {
   line-height: 1.6;
   font-family: sans-serif; }
 
+/* ------------------------------------
+ * --el
+ * ------------------------------------*/
+button {
+  -webkit-appearance: none;
+  border: 0;
+  border-radius: 0;
+  padding: 0;
+  cursor: pointer; }
+  button:focus {
+    outline: none; }
+
+/* ------------------------------------
+ * --misc
+ * ------------------------------------*/
+.cents {
+  display: inline-block;
+  vertical-align: super;
+  font-size: 0.6em;
+  margin-left: 2px;
+  line-height: 1.2; }
+
 html, body, #root, .app-main {
   height: 100%; }
 
@@ -59,14 +90,9 @@ html, body, #root, .app-main {
   overflow: hidden; }
 
 .leftpane {
-  width: 200px;
+  flex: 0 0 200px;
   background-color: #292929;
   color: #fff;
-  height: 100%;
-  overflow: auto; }
-
-.clientPane {
-  flex: 1 0 auto;
   height: 100%;
   overflow: auto; }
 
@@ -85,6 +111,103 @@ html, body, #root, .app-main {
 .clientLink--active {
   background-color: #404040; }
 
+.clientPane {
+  flex: 1 1 auto;
+  height: 100%;
+  overflow: auto;
+  background-color: #eaeaea; }
+
 .clientHeader {
   padding: 10px;
-  background-color: #eaeaea; }
+  background-color: #fff; }
+
+.clientname {
+  font-size: 2rem; }
+
+.clientrate {
+  font-size: 1.5rem;
+  color: #00844f; }
+
+.invoices {
+  padding: 10px; }
+
+.invoice {
+  margin-top: 10px;
+  background-color: #fff;
+  padding: 10px;
+  box-shadow: 2px 2px 6px rgba(41, 41, 41, 0.1);
+  border-radius: 2px; }
+
+.invoice__header {
+  display: flex;
+  justify-content: space-between; }
+
+.invoice__date {
+  flex: 0 1 auto; }
+
+.invoice__price {
+  flex: 0 1 auto;
+  font-size: 2rem;
+  color: #00844f; }
+
+.tasklist__trigger {
+  text-transform: uppercase;
+  font-size: 0.7em;
+  letter-spacing: 0.1em;
+  position: relative;
+  padding-right: calc(10px + 4px); }
+  .tasklist__trigger:after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 50%;
+    right: 0;
+    width: 10px;
+    height: 10px;
+    margin-top: -5px;
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024.11%2024.11%22%3E%3Ctitle%3Eicon-expand%3C%2Ftitle%3E%3Cg%20data-name%3D%22Layer%201-2%22%20fill%3D%22%23d80b6d%22%3E%3Cpath%20d%3D%22M10.05%200h4.01v24.11h-4.01z%22%2F%3E%3Cpath%20d%3D%22M0%2010.05h24.11v4.01H0z%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: contain; }
+  .tasklist__trigger:after {
+    transition: all .4s; }
+
+.tasklist__trigger--close:after {
+  transform: rotate(45deg); }
+
+.invoice__tasks {
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity .4s;
+  position: absolute;
+  left: -9999px; }
+
+.invoice__tasks--expanded {
+  visibility: visible;
+  position: static;
+  opacity: 1; }
+
+.task {
+  display: flex;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid #eaeaea; }
+
+.task--key {
+  border-top: 0;
+  text-transform: uppercase;
+  font-size: 0.7em;
+  letter-spacing: 0.1em; }
+
+.task__description {
+  flex: 1 1 auto; }
+
+.task__hours {
+  text-align: right;
+  flex: 0 0 80px;
+  padding-left: 20px;
+  padding-right: 10px; }
+
+.task__price {
+  flex: 0 0 100px;
+  text-align: right; }
