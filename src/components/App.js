@@ -13,7 +13,9 @@ class App extends React.Component {
     constructor() {
         super();
 
+        this.addTask = this.addTask.bind(this);
         this.renderClientList = this.renderClientList.bind(this);
+        this.renderClientPane = this.renderClientPane.bind(this);
 
         this.state = {
             clients : {
@@ -82,11 +84,27 @@ class App extends React.Component {
                     rate : 56.00,
                 },
                 gibhedstrom : {
-                    name : 'Gib Hedstrom',
-                    rate : 58.00,
+                    name      : 'Gib Hedstrom',
+                    rate      : 58.00,
                 },
             },
         };
+    }
+
+
+    /**
+     * Adds a task to an invoice for the client
+     */
+    addTask(task, client) {
+        const clients = { ...this.state.clients };
+
+        if (!clients[client].openTasks) {
+            clients[client].openTasks = [task];
+        } else {
+            clients[client].openTasks.push(task);
+        }
+
+        this.setState({ clients });
     }
 
 
@@ -102,6 +120,24 @@ class App extends React.Component {
                 <h3 className="clientthumb__name">{client.name}</h3>
                 <p className="clientthumb__rate">{formatPrice(client.rate)}</p>
             </NavLink>
+        );
+    }
+
+
+    /**
+     * Render the Client pane
+     * @param {Object} props // the props
+     */
+    renderClientPane(props) {
+        const clientKey = props.match.params.clientId;
+        const clientObj = this.state.clients[clientKey];
+
+        return (
+            <ClientPane
+                clientKey={clientKey}
+                client={clientObj}
+                addTask={this.addTask}
+            />
         );
     }
 
@@ -131,11 +167,7 @@ class App extends React.Component {
                         <Switch>
                             <Route
                                 path="/client/:clientId"
-                                render={(props) => (
-                                    <ClientPane
-                                        client={this.state.clients[props.match.params.clientId]}
-                                    />
-                                )}
+                                render={this.renderClientPane}
                             />
                             <Route component={Welcome} />
                         </Switch>

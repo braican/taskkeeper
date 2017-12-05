@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import TaskForm from './TaskForm';
 import Invoice from './Invoice';
 
 import { formatPrice } from '../helpers';
@@ -67,7 +68,7 @@ function renderInvoices(invoiceGroup, id, header, rate) {
 
 
 const ClientPane = (props) => {
-    const { client } = props;
+    const { clientKey, client } = props;
     const invoices = organizeInvoices(client.invoices);
 
     return (
@@ -76,6 +77,8 @@ const ClientPane = (props) => {
                 <h2 className="clientname">{client.name}</h2>
                 <p className="clientrate">{formatPrice(client.rate)}</p>
             </header>
+
+            <TaskForm addTask={props.addTask} clientKey={clientKey} />
 
             <div className="clientInvoices">
                 {renderInvoices(invoices.active, 'outstanding', 'Outstanding Invoices', client.rate)}
@@ -86,7 +89,9 @@ const ClientPane = (props) => {
 };
 
 ClientPane.propTypes = {
-    client : PropTypes.object.isRequired,
+    clientKey : PropTypes.string.isRequired,
+    client    : PropTypes.object.isRequired,
+    addTask   : PropTypes.func.isRequired,
 };
 
 export default ClientPane;
