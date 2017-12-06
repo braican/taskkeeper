@@ -5,6 +5,8 @@
    v2.0 | 20110126
    License: none (public domain)
 */
+@import url("https://fonts.googleapis.com/css?family=Nunito:400,700");
+@import url("https://fonts.googleapis.com/css?family=Nunito+Sans:400,900");
 html {
   box-sizing: border-box; }
 
@@ -54,11 +56,23 @@ table {
   border-collapse: collapse;
   border-spacing: 0; }
 
-body {
+body,
+button,
+input[type="text"],
+input[type="number"] {
   color: #404040;
   font-size: 16px;
   line-height: 1.6;
-  font-family: sans-serif; }
+  font-family: "Nunito Sans", sans-serif; }
+
+/* ------------------------------------
+ * --headers
+ * ------------------------------------*/
+.t-blocktitle {
+  text-transform: uppercase;
+  font-size: 1rem;
+  letter-spacing: 0.1em;
+  font-weight: 900; }
 
 /* ------------------------------------
  * --el
@@ -82,6 +96,15 @@ button {
   margin-left: 2px;
   line-height: 1.2; }
 
+input[type="text"],
+input[type="number"] {
+  display: block;
+  width: 100%;
+  padding: 4px; }
+  input[type="text"]:focus,
+  input[type="number"]:focus {
+    outline: 1px solid #292929; }
+
 html, body, #root, .app-main {
   height: 100%; }
 
@@ -95,6 +118,41 @@ html, body, #root, .app-main {
   color: #fff;
   height: 100%;
   overflow: auto; }
+
+.toggle__label {
+  display: inline-block;
+  vertical-align: middle;
+  text-transform: uppercase;
+  font-size: 0.7em;
+  letter-spacing: 0.1em;
+  font-weight: 900; }
+
+.toggle__check {
+  display: none; }
+
+.toggle__switch {
+  display: inline-block;
+  vertical-align: middle;
+  overflow: hidden;
+  background-color: #292929;
+  border-radius: 2em;
+  width: 2em;
+  padding: .25em;
+  margin-left: 0.5em;
+  margin-right: 0.5em;
+  cursor: pointer; }
+  .toggle__switch:before {
+    content: "";
+    display: block;
+    top: 0;
+    left: 0;
+    width: 50%;
+    height: .75em;
+    transition: all .2s;
+    background-color: #fff;
+    border-radius: 100%; }
+  input[type="checkbox"]:checked + .toggle__switch:before {
+    transform: translateX(100%); }
 
 .masthead {
   padding: 10px; }
@@ -154,6 +212,7 @@ html, body, #root, .app-main {
   text-transform: uppercase;
   font-size: 0.7em;
   letter-spacing: 0.1em;
+  font-weight: 900;
   position: relative;
   padding-right: calc(10px + 4px); }
   .tasklist__trigger:after {
@@ -197,7 +256,8 @@ html, body, #root, .app-main {
   border-top: 0;
   text-transform: uppercase;
   font-size: 0.7em;
-  letter-spacing: 0.1em; }
+  letter-spacing: 0.1em;
+  font-weight: 900; }
 
 .task__description {
   flex: 1 1 auto; }
@@ -211,3 +271,73 @@ html, body, #root, .app-main {
 .task__price {
   flex: 0 0 100px;
   text-align: right; }
+
+.taskform__fieldset {
+  margin-top: .75em; }
+
+.taskform {
+  padding: 10px; }
+
+.taskform__fieldset {
+  display: flex;
+  align-items: center; }
+
+.taskform__el {
+  position: relative;
+  padding-top: .75rem;
+  padding-bottom: .75rem; }
+
+.taskform__el--description {
+  flex: 1 0 auto; }
+
+.taskform__el--toggle {
+  padding-left: 10px;
+  padding-right: 10px; }
+
+.taskform__el--actions {
+  padding-left: 10px; }
+
+.taskform__label {
+  text-transform: uppercase;
+  font-size: 0.7em;
+  letter-spacing: 0.1em;
+  font-weight: 900;
+  position: absolute;
+  line-height: 1;
+  left: 6px;
+  top: 50%;
+  height: 1em;
+  transform: translateY(-50%);
+  pointer-events: none;
+  opacity: 0.2;
+  transition: all .2s; }
+  input[type="text"]:focus ~ .taskform__label,
+  input[type="number"]:focus ~ .taskform__label {
+    top: 0;
+    opacity: 1;
+    transform: translateY(0); }
+
+.taskform__labelswap {
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 1;
+  transform: translateY(0px);
+  transition: all .2s .2s; }
+
+.taskform__labelswap--hidden {
+  opacity: 0;
+  transform: translateY(-5px);
+  transition-delay: 0s; }
+
+.taskform__submit {
+  background-color: transparent;
+  display: inline-block;
+  vertical-align: middle;
+  width: 1em;
+  height: 1em;
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024.11%2024.11%22%3E%3Ctitle%3Eicon-expand%3C%2Ftitle%3E%3Cg%20data-name%3D%22Layer%201-2%22%20fill%3D%22%23d80b6d%22%3E%3Cpath%20d%3D%22M10.05%200h4.01v24.11h-4.01z%22%2F%3E%3Cpath%20d%3D%22M0%2010.05h24.11v4.01H0z%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: contain;
+  text-indent: -9999px; }

@@ -1,0 +1,66 @@
+.taskform__fieldset{
+    margin-top: .75em;
+}
+.taskform{
+    padding: $windowgutter;
+}
+
+.taskform__fieldset{
+    display:flex;
+    align-items: center;
+}
+
+.taskform__el{
+    position: relative;
+    padding-top: .75rem;
+    padding-bottom: .75rem;
+}
+.taskform__el--description{
+    flex: 1 0 auto;
+}
+.taskform__el--toggle{
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.taskform__el--actions{
+    padding-left: 10px;
+}
+.taskform__label{
+    @include uppercase;
+    position: absolute;
+    line-height: 1;
+    left: 6px;
+    top: 50%;
+    height: 1em;
+    transform: translateY(-50%);
+    pointer-events: none;
+    opacity: 0.2;
+    transition: all .2s;
+
+    input[type="text"]:focus ~ &,
+    input[type="number"]:focus ~ &{
+        top: 0;
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+.taskform__labelswap{
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 1;
+    transform: translateY(0px);
+    transition: all .2s .2s;
+}
+.taskform__labelswap--hidden{
+    opacity: 0;
+    transform: translateY(-5px);
+    transition-delay: 0s;
+}
+
+.taskform__submit{
+    background-color: transparent;
+    @include icon($icon_expand, 1em, 1em);
+}
+
+

@@ -1,22 +1,31 @@
 
 //
+// FONTS
+//
+
+@import url('https://fonts.googleapis.com/css?family=Nunito:400,700');
+@import url('https://fonts.googleapis.com/css?family=Nunito+Sans:400,900');
+
+
+//
 // VARS
 //
 
 $fontsize: 16px;
 $lineheight: 1.6;
 
-$font_primary: sans-serif;
+$font_primary: 'Nunito Sans', sans-serif;
 
 
 //
 // MIXINS
 //
 
-@mixin uppercase{
+@mixin uppercase($fz: .7em){
     text-transform: uppercase;
-    font-size: 0.7em;
+    font-size: $fz;
     letter-spacing: 0.1em;
+    font-weight: 900;
 }
 
 
@@ -24,11 +33,23 @@ $font_primary: sans-serif;
 // GO
 //
 
-body{
+body, 
+button,
+input[type="text"],
+input[type="number"]{
     color: $textcolor;
     font-size: $fontsize;
     line-height: $lineheight;
     font-family: $font_primary;
+}
+
+
+/* ------------------------------------
+ * --headers
+ * ------------------------------------*/
+
+.t-blocktitle{
+    @include uppercase(1rem);
 }
 
 

@@ -84,8 +84,8 @@ class App extends React.Component {
                     rate : 56.00,
                 },
                 gibhedstrom : {
-                    name      : 'Gib Hedstrom',
-                    rate      : 58.00,
+                    name : 'Gib Hedstrom',
+                    rate : 58.00,
                 },
             },
         };

@@ -50,8 +50,8 @@ function renderInvoices(invoiceGroup, id, header, rate) {
     }
 
     return (
-        <div className={`invoices invoices--${id}`}>
-            <div>{header}</div>
+        <section className={`invoices invoices--${id}`}>
+            <header><h3 className="t-blocktitle">{header}</h3></header>
             {
                 Object.keys(invoiceGroup).map((invoiceId) => (
                     <Invoice
@@ -62,7 +62,7 @@ function renderInvoices(invoiceGroup, id, header, rate) {
                     />
                 ))
             }
-        </div>
+        </section>
     );
 }
 

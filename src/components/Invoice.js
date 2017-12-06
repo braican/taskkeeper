@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { formatPrice } from '../helpers';
+import { formatPrice, formatDate } from '../helpers';
 
 
 /**
@@ -89,7 +89,7 @@ class Invoice extends React.Component {
             <div className="invoice">
                 <header className="invoice__header">
                     <div className="invoice__date">
-                        <p>{invoice.invoicedate}</p>
+                        <p>{formatDate(invoice.invoicedate)}</p>
                         <button
                             className={`tasklist__trigger${this.state.tasksOpen ? ' tasklist__trigger--close' : ''}`}
                             onClick={this.toggleTasklist}
