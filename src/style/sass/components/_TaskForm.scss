@@ -37,6 +37,7 @@
     opacity: 0.2;
     transition: all .2s;
 
+    .taskform__input--hasinput ~ &,
     input[type="text"]:focus ~ &,
     input[type="number"]:focus ~ &{
         top: 0;
@@ -61,6 +62,13 @@
 .taskform__submit{
     background-color: transparent;
     @include icon($icon_expand, 1em, 1em);
+    transition: all .2s;
+
+    &:hover,
+    &:focus{
+        background-image: $icon_expand_hover;
+        transform: rotate(90deg);
+    }
 }
 
 

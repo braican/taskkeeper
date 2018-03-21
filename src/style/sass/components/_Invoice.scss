@@ -2,6 +2,9 @@
 .invoices{
     padding: $windowgutter;
 }
+.invoices--outstanding{
+    margin-bottom: 60px;
+}
 
 .invoice{
     margin-top: 10px;
@@ -24,7 +27,6 @@
     color: $green;
 }
 .tasklist__trigger{
-    // font-size: 0.8rem;
     @include uppercase;
     @include icon-right($icon_expand, 10px, 10px, 4px);
     &:after{
@@ -47,29 +49,3 @@
     position: static;
     opacity: 1;
 }
-
-.task{
-    display:flex;
-    margin-top: 8px;
-    padding-top: 8px;    
-    border-top: 1px solid $offwhite;
-}
-.task--key{
-    border-top: 0;
-    @include uppercase;
-}
-
-.task__description{
-    flex: 1 1 auto;
-}
-.task__hours{
-    text-align: right;
-    flex: 0 0 80px;
-    padding-left: 20px;
-    padding-right: 10px;
-}
-.task__price{
-    flex: 0 0 100px;
-    text-align: right;
-}
-

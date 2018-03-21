@@ -10,9 +10,12 @@ class TaskForm extends React.Component {
 
         // binders
         this.toggleTaskQtyUnit = this.toggleTaskQtyUnit.bind(this);
+        this.handleQtyInputChange = this.handleQtyInputChange.bind(this);
 
         this.state = {
             taskByPrice : false,
+            description : '',
+            qty         : '',
         };
     }
 
@@ -40,6 +43,19 @@ class TaskForm extends React.Component {
         });
     }
 
+
+    handleQtyInputChange(event) {
+        this.setState({
+            qty : event.target.value,
+        });
+    }
+
+    handleDescriptionInputChange(event) {
+        this.setState({
+            description : event.target.value,
+        });
+    }
+
     render() {
         return (
             <form
@@ -51,13 +67,18 @@ class TaskForm extends React.Component {
                     <h3 className="taskform__title t-blocktitle">Open Tasks</h3>
                 </header>
 
+                <div>
+                    this form - {this.state.qty}
+                </div>
+
                 <div className="taskform__fieldset">
                     <div className="taskform__el taskform__el--description">
                         <input
                             ref={(input) => { this.taskDescription = input; }}
                             type="text"
                             id="task-description"
-                            className="taskform__input"
+                            onChange={(event) => this.handleDescriptionInputChange(event)}
+                            className={`taskform__input ${this.state.description === '' ? '' : 'taskform__input--hasinput'}`}
                         />
                         <label className="taskform__label" htmlFor="task-description">Task</label>
                     </div>
@@ -79,9 +100,14 @@ class TaskForm extends React.Component {
                             ref={(input) => { this.taskQty = input; }}
                             type="number"
                             id="task-qty"
-                            className="taskform__input"
+                            onChange={(event) => this.handleQtyInputChange(event)}
+                            className={`taskform__input ${this.state.qty === '' ? '' : 'taskform__input--hasinput'}`}
                         />
-                        <label className="taskform__label taskform__label--hasoptions" htmlFor="task-qty">
+
+                        <label
+                            className="taskform__label taskform__label--hasoptions"
+                            htmlFor="task-qty"
+                        >
                             <span className={`taskform__labelswap${this.state.taskByPrice ? ' taskform__labelswap--hidden' : ''}`}>
                                 Hours
                             </span>

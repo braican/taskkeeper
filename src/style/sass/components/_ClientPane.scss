@@ -20,5 +20,7 @@
 }
 
 .client__opentasks{
-    padding: $windowgutter;
+    background-color: $white;
+    padding: $windowgutter * 2;
+    margin-bottom: 60px;
 }

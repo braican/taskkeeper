@@ -19,7 +19,7 @@ const Task = (props) => {
 
 Task.propTypes = {
     children : PropTypes.string,
-    hours    : PropTypes.number,
+    hours    : PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     price    : PropTypes.number,
     rate     : PropTypes.number.isRequired,
 };

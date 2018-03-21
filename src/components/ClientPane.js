@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import TaskForm from './TaskForm';
-import Task from './Task';
+import TaskList from './TaskList';
 import Invoice from './Invoice';
 
 import { formatPrice } from '../helpers';
@@ -75,7 +75,7 @@ function renderInvoices(invoiceGroup, id, header, rate) {
 /**
  * Renders the open task list
  * @param {Array} tasklist The outstanding task list
- * @param {Number} tasklist Client's billable rate
+ * @param {Number} rate Client's billable rate
  */
 function renderOpenTasks(tasklist, rate) {
     if (!tasklist) {
@@ -84,22 +84,7 @@ function renderOpenTasks(tasklist, rate) {
 
     return (
         <section className="client__opentasks">
-            <header>
-                <h3 className="t-blocktitle">Open Tasks</h3>
-            </header>
-
-            <ul>
-                {tasklist.map((task) => (
-                    <Task
-                        hours={task.hours}
-                        price={task.price}
-                        rate={rate}
-                        key={`${task.description}-${task.hours}`}
-                    >
-                        {task.description}
-                    </Task>
-                ))}
-            </ul>
+            <TaskList tasks={tasklist} rate={rate} />
         </section>
     );
 }

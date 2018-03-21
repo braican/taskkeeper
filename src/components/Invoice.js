@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Task from './Task';
+import TaskList from './TaskList';
 
 import { formatPrice, formatDate, getTasklistSubtotal } from '../helpers';
 
@@ -31,8 +31,8 @@ class Invoice extends React.Component {
 
     render() {
         const { invoice, rate } = this.props;
-        const { tasks } = invoice;
-        const invoiceAmount = getTasklistSubtotal(tasks, rate);
+        const tasklist = invoice.tasks;
+        const invoiceAmount = getTasklistSubtotal(tasklist, rate);
 
         return (
             <div className="invoice">
@@ -50,27 +50,7 @@ class Invoice extends React.Component {
                 </header>
 
                 <div className={`invoice__tasks${this.state.tasksOpen ? ' invoice__tasks--expanded' : ''}`}>
-                    <div className="invoice__key">
-                        <div className="task task--key">
-                            <span className="task__description">Description</span>
-                            <span className="task__hours">Hours</span>
-                            <span className="task__price">Price</span>
-                        </div>
-                    </div>
-                    <ul className="invoice__tasklist">
-                        {
-                            tasks.map((task) => (
-                                <Task
-                                    hours={task.hours}
-                                    price={task.price}
-                                    rate={rate}
-                                    key={`${task.description}-${task.hours}`}
-                                >
-                                    {task.description}
-                                </Task>
-                            ))
-                        }
-                    </ul>
+                    <TaskList tasks={tasklist} rate={rate} />
                 </div>
             </div>
         );
