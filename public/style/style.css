@@ -186,6 +186,9 @@ html, body, #root, .app-main {
   font-size: 1.5rem;
   color: #00844f; }
 
+.client__opentasks {
+  padding: 10px; }
+
 .invoices {
   padding: 10px; }
 
@@ -341,3 +344,5 @@ html, body, #root, .app-main {
   background-position: center center;
   background-size: contain;
   text-indent: -9999px; }
+
+/*# sourceMappingURL=style.css.map */

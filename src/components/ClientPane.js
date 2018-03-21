@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import TaskForm from './TaskForm';
+import Task from './Task';
 import Invoice from './Invoice';
 
 import { formatPrice } from '../helpers';
@@ -37,6 +38,12 @@ function organizeInvoices(invoices) {
 }
 
 
+
+//
+// RENDER
+//
+
+
 /**
  * Render the group of invoices, with a header.
  * @param {Array} invoiceGroup Group of invoices
@@ -67,6 +74,39 @@ function renderInvoices(invoiceGroup, id, header, rate) {
 }
 
 
+/**
+ * Renders the open task list
+ * @param {Array} tasklist The outstanding task list
+ * @param {Number} tasklist Client's billable rate
+ */
+function renderOpenTasks(tasklist, rate) {
+    if (!tasklist) {
+        return null;
+    }
+
+    return (
+        <section className="client__opentasks">
+            <header>
+                <h3 className="t-blocktitle">Open Tasks</h3>
+            </header>
+
+            <ul>
+                {tasklist.map((task) => (
+                    <Task
+                        hours={task.hours}
+                        price={task.price}
+                        rate={rate}
+                        key={`${task.description}-${task.hours}`}
+                    >
+                        {task.description}
+                    </Task>
+                ))}
+            </ul>
+        </section>
+    )
+}
+
+
 const ClientPane = (props) => {
     const { clientKey, client } = props;
     const invoices = organizeInvoices(client.invoices);
@@ -79,6 +119,8 @@ const ClientPane = (props) => {
             </header>
 
             <TaskForm addTask={props.addTask} clientKey={clientKey} />
+
+            {renderOpenTasks(client.openTasks, client.rate)}
 
             <div className="clientInvoices">
                 {renderInvoices(invoices.active, 'outstanding', 'Outstanding Invoices', client.rate)}

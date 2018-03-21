@@ -24,3 +24,35 @@ export function formatPrice(price) {
 export function formatDate(date) {
     return date;
 }
+
+
+//
+// INDIVIDUAL TASKS
+//
+
+
+/**
+ * Gets an individual cost of a task
+ * @param {Object} task The task to get the cost of
+ * @param {Number} rate The billing rate for the client
+ */
+export function getTaskPrice(task, rate) {
+    if (task.price !== null) {
+        return task.price;
+    }
+
+    return task.hours * rate;
+}
+
+/**
+ * Gets the total amount due given the tasks
+ * @param {Array} tasks The tasks to check
+ * @param {Number} rate The billing rate for the client
+ * @return int
+ */
+export function getTasklistSubtotal(tasks, rate) {
+    return tasks.reduce((total, task) => {
+        const taskPrice = getTaskPrice(task, rate);
+        return total + taskPrice;
+    }, 0);
+}
