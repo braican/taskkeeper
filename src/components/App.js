@@ -23,6 +23,22 @@ class App extends React.Component {
                     name : 'Anyway Reps',
                     rate : 56.00,
 
+                    openTasks: [
+                        {
+                            description: 'Fixing navigation bugs',
+                            price: null,
+                            hours: 4,
+                        }, {
+                            description: 'Pushing new navigation live',
+                            price: null,
+                            hours: 2,
+                        }, {
+                            description: 'Updating all the plugins',
+                            price: 100.00,
+                            hours: null,
+                        },
+                    ],
+
                     invoices : {
                         20171120323 : {
                             invoicedate : '2017/11/20',

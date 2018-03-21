@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import TaskForm from './TaskForm';
+import TaskList from './TaskList';
 import Invoice from './Invoice';
 
 import { formatPrice } from '../helpers';
@@ -37,6 +38,11 @@ function organizeInvoices(invoices) {
 }
 
 
+//
+// RENDER
+//
+
+
 /**
  * Render the group of invoices, with a header.
  * @param {Array} invoiceGroup Group of invoices
@@ -56,12 +62,29 @@ function renderInvoices(invoiceGroup, id, header, rate) {
                 Object.keys(invoiceGroup).map((invoiceId) => (
                     <Invoice
                         key={invoiceId}
-                        index={invoiceId}
                         invoice={invoiceGroup[invoiceId]}
                         rate={rate}
                     />
                 ))
             }
+        </section>
+    );
+}
+
+
+/**
+ * Renders the open task list
+ * @param {Array} tasklist The outstanding task list
+ * @param {Number} rate Client's billable rate
+ */
+function renderOpenTasks(tasklist, rate) {
+    if (!tasklist) {
+        return null;
+    }
+
+    return (
+        <section className="client__opentasks">
+            <TaskList tasks={tasklist} rate={rate} />
         </section>
     );
 }
@@ -79,6 +102,8 @@ const ClientPane = (props) => {
             </header>
 
             <TaskForm addTask={props.addTask} clientKey={clientKey} />
+
+            {renderOpenTasks(client.openTasks, client.rate)}
 
             <div className="clientInvoices">
                 {renderInvoices(invoices.active, 'outstanding', 'Outstanding Invoices', client.rate)}
