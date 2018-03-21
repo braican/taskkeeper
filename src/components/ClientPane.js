@@ -38,7 +38,6 @@ function organizeInvoices(invoices) {
 }
 
 
-
 //
 // RENDER
 //
@@ -63,7 +62,6 @@ function renderInvoices(invoiceGroup, id, header, rate) {
                 Object.keys(invoiceGroup).map((invoiceId) => (
                     <Invoice
                         key={invoiceId}
-                        index={invoiceId}
                         invoice={invoiceGroup[invoiceId]}
                         rate={rate}
                     />
@@ -103,7 +101,7 @@ function renderOpenTasks(tasklist, rate) {
                 ))}
             </ul>
         </section>
-    )
+    );
 }
 
 

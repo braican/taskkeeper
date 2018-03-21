@@ -6,7 +6,6 @@ import React from 'react';
  * @param {number} price A price, in dollars and cents
  */
 export function formatPrice(price) {
-
     const priceString = price.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     const dollars = priceString.slice(0, priceString.length - 2).replace('.', '');
     const cents = priceString.slice(-2);
@@ -33,15 +32,16 @@ export function formatDate(date) {
 
 /**
  * Gets an individual cost of a task
- * @param {Object} task The task to get the cost of
+ * @param {Number} hours Number of hours the task took, if it was an hourly task
+ * @param {Number} price Price of a task, if it is a one-off task
  * @param {Number} rate The billing rate for the client
  */
-export function getTaskPrice(task, rate) {
-    if (task.price !== null) {
-        return task.price;
+export function getTaskPrice(hours, price, rate) {
+    if (price !== null) {
+        return price;
     }
 
-    return task.hours * rate;
+    return hours * rate;
 }
 
 /**
@@ -52,7 +52,7 @@ export function getTaskPrice(task, rate) {
  */
 export function getTasklistSubtotal(tasks, rate) {
     return tasks.reduce((total, task) => {
-        const taskPrice = getTaskPrice(task, rate);
+        const taskPrice = getTaskPrice(task.hours, task.price, rate);
         return total + taskPrice;
     }, 0);
 }

@@ -80,7 +80,6 @@ class Invoice extends React.Component {
 
 Invoice.propTypes = {
     invoice : PropTypes.object.isRequired,
-    index   : PropTypes.string.isRequired,
     rate    : PropTypes.number.isRequired,
 };
 
