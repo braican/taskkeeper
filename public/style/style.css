@@ -207,6 +207,12 @@ html, body, #root, .app-main {
 .invoices--outstanding {
   margin-bottom: 60px; }
 
+.invoicegroup__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-right: 20px; }
+
 .invoice {
   margin-top: 10px;
   background-color: #fff;

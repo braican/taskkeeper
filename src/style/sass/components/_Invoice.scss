@@ -3,6 +3,13 @@
     margin-bottom: 60px;
 }
 
+.invoicegroup__header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-right: $windowgutter;
+}
+
 .invoice{
     margin-top: 10px;
     background-color: $white;

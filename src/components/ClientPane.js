@@ -5,7 +5,7 @@ import TaskForm from './TaskForm';
 import TaskList from './TaskList';
 import Invoice from './Invoice';
 
-import { formatPrice } from '../helpers';
+import { formatPrice, getTasklistSubtotal } from '../helpers';
 
 
 /**
@@ -38,6 +38,19 @@ function organizeInvoices(invoices) {
 }
 
 
+function getInvoicegroupTotal(invoices, rate) {
+    return Object.keys(invoices).reduce((total, invoiceId) => {
+        const invoice = invoices[invoiceId];
+
+        if (!invoice.tasks) {
+            return total;
+        }
+
+        return total + getTasklistSubtotal(invoice.tasks, rate);
+    }, 0);
+}
+
+
 //
 // RENDER
 //
@@ -55,9 +68,15 @@ function renderInvoices(invoiceGroup, id, header, rate) {
         return false;
     }
 
+    const outstandingInvoiceTotal = 
+        <p className="invoice__price">{formatPrice(getInvoicegroupTotal(invoiceGroup, rate))}</p>;
+
     return (
         <section className={`invoices invoices--${id}`}>
-            <header><h3 className="t-blocktitle">{header}</h3></header>
+            <header className="invoicegroup__header">
+                <h3 className="t-blocktitle">{header}</h3>
+                {outstandingInvoiceTotal}
+            </header>
             {
                 Object.keys(invoiceGroup).map((invoiceId) => (
                     <Invoice
