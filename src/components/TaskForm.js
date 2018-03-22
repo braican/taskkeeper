@@ -1,9 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-// import { formatPrice } from '../helpers';
-
-
 class TaskForm extends React.Component {
     constructor() {
         super();
@@ -67,10 +64,6 @@ class TaskForm extends React.Component {
                     <h3 className="taskform__title t-blocktitle">Open Tasks</h3>
                 </header>
 
-                <div>
-                    this form - {this.state.qty}
-                </div>
-
                 <div className="taskform__fieldset">
                     <div className="taskform__el taskform__el--description">
                         <input
@@ -84,7 +77,7 @@ class TaskForm extends React.Component {
                     </div>
 
                     <div className="taskform__el taskform__el--toggle">
-                        <span className="toggle__label">Hours</span>
+                        <span className={`toggle__label${!this.state.taskByPrice ? ' toggle__label--active' : ''}`}>Hours</span>
                         <input
                             className="toggle__check"
                             id="task-unit-toggle"
@@ -92,10 +85,11 @@ class TaskForm extends React.Component {
                             onChange={this.toggleTaskQtyUnit}
                         />
                         <label htmlFor="task-unit-toggle" className="toggle__switch" />
-                        <span className="toggle__label">Cost</span>
+                        <span className={`toggle__label${this.state.taskByPrice ? ' toggle__label--active' : ''}`}>Cost</span>
                     </div>
 
-                    <div className="taskform__el">
+                    <div className={`taskform__el taskform__el--qty${this.state.taskByPrice ? ' taskform__el--byprice' : ''}`}>
+                        <span className="taskform__dollarsign">$</span>
                         <input
                             ref={(input) => { this.taskQty = input; }}
                             type="number"

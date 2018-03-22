@@ -3,6 +3,11 @@
     display: inline-block;
     vertical-align: middle;
     @include uppercase;
+    opacity: 0.2;
+    transition: opacity .2s;
+}
+.toggle__label--active{
+    opacity: 1;
 }
 .toggle__check{
     display: none;

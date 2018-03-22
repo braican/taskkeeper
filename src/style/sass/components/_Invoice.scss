@@ -28,7 +28,8 @@
 }
 .tasklist__trigger{
     @include uppercase;
-    @include icon-right($icon_expand, 10px, 10px, 4px);
+    @include icon-right($icon_expand, 12px, 12px, 6px);
+    padding-top: 2px;
     &:after{
         transition: all .4s;
     }
@@ -43,6 +44,7 @@
     transition: opacity .4s;
     position: absolute;
     left: -9999px;
+    margin-top: 10px;
 }
 .invoice__tasks--expanded{
     visibility: visible;

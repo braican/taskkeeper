@@ -1,5 +1,5 @@
 
-$windowgutter: 10px;
+$windowgutter: 20px;
 
 html, body, #root, .app-main{
     height: 100%;
@@ -18,3 +18,9 @@ html, body, #root, .app-main{
     overflow: auto;
 }
 
+
+.l-container{
+    width: 100%;
+    max-width: 1020px;
+    margin: 0 auto;
+}

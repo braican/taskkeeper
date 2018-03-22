@@ -119,13 +119,23 @@ html, body, #root, .app-main {
   height: 100%;
   overflow: auto; }
 
+.l-container {
+  width: 100%;
+  max-width: 1020px;
+  margin: 0 auto; }
+
 .toggle__label {
   display: inline-block;
   vertical-align: middle;
   text-transform: uppercase;
   font-size: 0.7em;
   letter-spacing: 0.1em;
-  font-weight: 900; }
+  font-weight: 900;
+  opacity: 0.2;
+  transition: opacity .2s; }
+
+.toggle__label--active {
+  opacity: 1; }
 
 .toggle__check {
   display: none; }
@@ -155,13 +165,13 @@ html, body, #root, .app-main {
     transform: translateX(100%); }
 
 .masthead {
-  padding: 10px; }
+  padding: 20px; }
 
 .clientThumb {
   border-top: 1px solid #404040; }
 
 .clientLink {
-  padding: 10px;
+  padding: 20px;
   text-decoration: none;
   color: inherit;
   display: block; }
@@ -176,7 +186,7 @@ html, body, #root, .app-main {
   background-color: #eaeaea; }
 
 .clientHeader {
-  padding: 10px;
+  padding: 20px;
   background-color: #fff; }
 
 .clientname {
@@ -188,11 +198,11 @@ html, body, #root, .app-main {
 
 .client__opentasks {
   background-color: #fff;
-  padding: 20px;
+  padding: 40px;
   margin-bottom: 60px; }
 
 .invoices {
-  padding: 10px; }
+  padding: 20px; }
 
 .invoices--outstanding {
   margin-bottom: 60px; }
@@ -200,7 +210,7 @@ html, body, #root, .app-main {
 .invoice {
   margin-top: 10px;
   background-color: #fff;
-  padding: 10px;
+  padding: 20px;
   box-shadow: 2px 2px 6px rgba(41, 41, 41, 0.1);
   border-radius: 2px; }
 
@@ -222,16 +232,17 @@ html, body, #root, .app-main {
   letter-spacing: 0.1em;
   font-weight: 900;
   position: relative;
-  padding-right: calc(10px + 4px); }
+  padding-right: calc(12px + 6px);
+  padding-top: 2px; }
   .tasklist__trigger:after {
     content: "";
     display: block;
     position: absolute;
     top: 50%;
     right: 0;
-    width: 10px;
-    height: 10px;
-    margin-top: -5px;
+    width: 12px;
+    height: 12px;
+    margin-top: -6px;
     background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024.11%2024.11%22%3E%3Ctitle%3Eicon-expand%3C%2Ftitle%3E%3Cg%20data-name%3D%22Layer%201-2%22%20fill%3D%22%23d80b6d%22%3E%3Cpath%20d%3D%22M10.05%200h4.01v24.11h-4.01z%22%2F%3E%3Cpath%20d%3D%22M0%2010.05h24.11v4.01H0z%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E");
     background-repeat: no-repeat;
     background-position: center center;
@@ -247,7 +258,8 @@ html, body, #root, .app-main {
   opacity: 0;
   transition: opacity .4s;
   position: absolute;
-  left: -9999px; }
+  left: -9999px;
+  margin-top: 10px; }
 
 .invoice__tasks--expanded {
   visibility: visible;
@@ -256,8 +268,8 @@ html, body, #root, .app-main {
 
 .task {
   display: flex;
-  margin-top: 8px;
-  padding-top: 8px;
+  margin-bottom: 10px;
+  padding-top: 10px;
   border-top: 1px solid #eaeaea; }
 
 .task--key {
@@ -280,30 +292,46 @@ html, body, #root, .app-main {
   flex: 0 0 100px;
   text-align: right; }
 
-.taskform__fieldset {
-  margin-top: .75em; }
-
 .taskform {
-  padding: 10px; }
+  padding: 20px; }
 
 .taskform__fieldset {
   display: flex;
-  align-items: center; }
+  margin-top: 1.5rem;
+  margin-bottom: 1rem; }
 
 .taskform__el {
-  position: relative;
-  padding-top: .75rem;
-  padding-bottom: .75rem; }
+  position: relative; }
 
 .taskform__el--description {
   flex: 1 0 auto; }
 
 .taskform__el--toggle {
   padding-left: 10px;
-  padding-right: 10px; }
+  padding-right: 10px;
+  align-self: center; }
+
+.taskform__el--qty {
+  flex: 0 0 180px; }
+  .taskform__el--qty input {
+    transition: padding-left .2s; }
+  .taskform__el--qty.taskform__el--byprice input {
+    padding-left: 20px; }
 
 .taskform__el--actions {
   padding-left: 10px; }
+
+.taskform__dollarsign {
+  position: absolute;
+  left: 6px;
+  top: 50%;
+  transform: translateY(-0.5em);
+  line-height: 1;
+  opacity: 0;
+  transition: opacity .2s;
+  font-weight: 900; }
+  .taskform__el--byprice .taskform__dollarsign {
+    opacity: 1; }
 
 .taskform__label {
   text-transform: uppercase;
@@ -319,10 +347,12 @@ html, body, #root, .app-main {
   pointer-events: none;
   opacity: 0.2;
   transition: all .2s; }
+  .taskform__el--byprice .taskform__label {
+    left: 26px; }
   .taskform__input--hasinput ~ .taskform__label,
   input[type="text"]:focus ~ .taskform__label,
   input[type="number"]:focus ~ .taskform__label {
-    top: 0;
+    top: -1.5em;
     opacity: 1;
     transform: translateY(0); }
 
@@ -343,16 +373,18 @@ html, body, #root, .app-main {
   background-color: transparent;
   display: inline-block;
   vertical-align: middle;
-  width: 1em;
-  height: 1em;
+  width: 44px;
+  height: 100%;
   background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024.11%2024.11%22%3E%3Ctitle%3Eicon-expand%3C%2Ftitle%3E%3Cg%20data-name%3D%22Layer%201-2%22%20fill%3D%22%23d80b6d%22%3E%3Cpath%20d%3D%22M10.05%200h4.01v24.11h-4.01z%22%2F%3E%3Cpath%20d%3D%22M0%2010.05h24.11v4.01H0z%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E");
   background-repeat: no-repeat;
   background-position: center center;
-  background-size: contain;
+  background-size: 20px;
   text-indent: -9999px;
-  transition: all .2s; }
+  transition: all .2s;
+  border-radius: 4px;
+  background-color: #ddd; }
   .taskform__submit:hover, .taskform__submit:focus {
-    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024.11%2024.11%22%3E%3Ctitle%3Eicon-expand%3C%2Ftitle%3E%3Cg%20data-name%3D%22Layer%201-2%22%20fill%3D%22%23000000%22%3E%3Cpath%20d%3D%22M10.05%200h4.01v24.11h-4.01z%22%2F%3E%3Cpath%20d%3D%22M0%2010.05h24.11v4.01H0z%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E");
-    transform: rotate(90deg); }
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024.11%2024.11%22%3E%3Ctitle%3Eicon-expand%3C%2Ftitle%3E%3Cg%20data-name%3D%22Layer%201-2%22%20fill%3D%22%23ffffff%22%3E%3Cpath%20d%3D%22M10.05%200h4.01v24.11h-4.01z%22%2F%3E%3Cpath%20d%3D%22M0%2010.05h24.11v4.01H0z%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E");
+    background-color: #d80b6d; }
 
 /*# sourceMappingURL=style.css.map */
