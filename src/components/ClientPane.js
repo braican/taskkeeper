@@ -68,8 +68,11 @@ function renderInvoices(invoiceGroup, id, header, rate) {
         return false;
     }
 
-    const outstandingInvoiceTotal = 
-        <p className="invoice__price moneydisplay">{formatPrice(getInvoicegroupTotal(invoiceGroup, rate))}</p>;
+    const outstandingInvoiceTotal = (
+        <p className="invoice__price moneydisplay">
+            {formatPrice(getInvoicegroupTotal(invoiceGroup, rate))}
+        </p>
+    );
 
     return (
         <section className={`invoices invoices--${id}`}>
