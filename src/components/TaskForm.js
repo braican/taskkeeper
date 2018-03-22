@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { getTasklistSubtotal } from '../helpers';
+
 class TaskForm extends React.Component {
     constructor() {
         super();
@@ -21,6 +23,11 @@ class TaskForm extends React.Component {
 
         const taskHours = this.state.taskByPrice ? null : this.taskQty.value;
         const taskPrice = this.state.taskByPrice ? this.taskQty.value : null;
+
+        if (this.taskDescription.value === '' && this.taskQty.value === '') {
+            console.error('No task added');
+            return;
+        }
 
         const task = {
             description : this.taskDescription.value,
@@ -55,6 +62,7 @@ class TaskForm extends React.Component {
 
     render() {
         const { taskByPrice, description, qty } = this.state;
+        const { client } = this.props;
 
         return (
             <form
@@ -64,6 +72,8 @@ class TaskForm extends React.Component {
             >
                 <header className="taskform__header">
                     <h3 className="taskform__title t-blocktitle">Open Tasks</h3>
+
+                    <p className="moneydisplay">{getTasklistSubtotal(client.openTasks, client.rate, true)}</p>
                 </header>
 
                 <div className="taskform__fieldset">
@@ -125,6 +135,7 @@ class TaskForm extends React.Component {
 
 TaskForm.propTypes = {
     clientKey : PropTypes.string.isRequired,
+    client    : PropTypes.object.isRequired,
     addTask   : PropTypes.func.isRequired,
 };
 

@@ -39,7 +39,7 @@ function organizeInvoices(invoices) {
 
 
 function getInvoicegroupTotal(invoices, rate) {
-    return Object.keys(invoices).reduce((total, invoiceId) => {
+    const subtotal = Object.keys(invoices).reduce((total, invoiceId) => {
         const invoice = invoices[invoiceId];
 
         if (!invoice.tasks) {
@@ -48,6 +48,8 @@ function getInvoicegroupTotal(invoices, rate) {
 
         return total + getTasklistSubtotal(invoice.tasks, rate);
     }, 0);
+
+    return formatPrice(subtotal);
 }
 
 
@@ -70,7 +72,7 @@ function renderInvoices(invoiceGroup, id, header, rate) {
 
     const outstandingInvoiceTotal = (
         <p className="invoice__price moneydisplay">
-            {formatPrice(getInvoicegroupTotal(invoiceGroup, rate))}
+            {getInvoicegroupTotal(invoiceGroup, rate)}
         </p>
     );
 
@@ -122,7 +124,7 @@ const ClientPane = (props) => {
                 </div>
             </header>
 
-            <TaskForm addTask={props.addTask} clientKey={clientKey} />
+            <TaskForm addTask={props.addTask} client={client} clientKey={clientKey} />
 
             <section className="client__opentasks">
                 {renderOpenTasks(client.openTasks, client.rate)}

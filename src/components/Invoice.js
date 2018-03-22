@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import TaskList from './TaskList';
 
-import { formatPrice, formatDate, getTasklistSubtotal } from '../helpers';
+import { formatDate, getTasklistSubtotal } from '../helpers';
 
 
 class Invoice extends React.Component {
@@ -32,7 +32,7 @@ class Invoice extends React.Component {
     render() {
         const { invoice, rate } = this.props;
         const tasklist = invoice.tasks;
-        const invoiceAmount = getTasklistSubtotal(tasklist, rate);
+        const invoiceAmount = getTasklistSubtotal(tasklist, rate, true);
 
         return (
             <div className="invoice">
@@ -47,7 +47,7 @@ class Invoice extends React.Component {
                         </button>
                     </div>
                     <p className="invoice__price moneydisplay moneydisplay--small">
-                        {formatPrice(invoiceAmount)}
+                        {invoiceAmount}
                     </p>
                 </header>
 

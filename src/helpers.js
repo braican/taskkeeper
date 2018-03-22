@@ -48,11 +48,18 @@ export function getTaskPrice(hours, price, rate) {
  * Gets the total amount due given the tasks
  * @param {Array} tasks The tasks to check
  * @param {Number} rate The billing rate for the client
+ * @param {Boolean} format Whether to format the price or not
  * @return int
  */
-export function getTasklistSubtotal(tasks, rate) {
-    return tasks.reduce((total, task) => {
+export function getTasklistSubtotal(tasks, rate, format = false) {
+    if (!tasks) {
+        return format ? formatPrice(0) : 0;
+    }
+
+    const subtotal = tasks.reduce((total, task) => {
         const taskPrice = getTaskPrice(task.hours, task.price, rate);
         return total + taskPrice;
     }, 0);
+
+    return format ? formatPrice(subtotal) : subtotal;
 }

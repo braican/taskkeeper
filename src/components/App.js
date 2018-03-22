@@ -23,7 +23,7 @@ class App extends React.Component {
                     name : 'Anyway Reps',
                     rate : 56.00,
 
-                    openTasks: [
+                    openTasks : [
                         {
                             description: 'Fixing navigation bugs',
                             price: null,

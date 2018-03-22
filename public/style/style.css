@@ -306,6 +306,11 @@ html, body, #root, .app-main {
   padding-bottom: 20px;
   margin-bottom: 20px; }
 
+.taskform__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center; }
+
 .taskform__fieldset {
   display: flex;
   margin-top: 1.5rem; }
