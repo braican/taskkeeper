@@ -54,11 +54,13 @@ class TaskForm extends React.Component {
     }
 
     render() {
+        const { taskByPrice, description, qty } = this.state;
+
         return (
             <form
                 ref={(input) => { this.taskForm = input; }}
                 onSubmit={(e) => this.addTask(e)}
-                className="taskform"
+                className="taskform l-container"
             >
                 <header className="taskform__header">
                     <h3 className="taskform__title t-blocktitle">Open Tasks</h3>
@@ -71,13 +73,13 @@ class TaskForm extends React.Component {
                             type="text"
                             id="task-description"
                             onChange={(event) => this.handleDescriptionInputChange(event)}
-                            className={`taskform__input ${this.state.description === '' ? '' : 'taskform__input--hasinput'}`}
+                            className={`taskform__input ${description === '' ? '' : 'taskform__input--hasinput'}`}
                         />
                         <label className="taskform__label" htmlFor="task-description">Task</label>
                     </div>
 
                     <div className="taskform__el taskform__el--toggle">
-                        <span className={`toggle__label${!this.state.taskByPrice ? ' toggle__label--active' : ''}`}>Hours</span>
+                        <span className={`toggle__label${!taskByPrice ? ' toggle__label--active' : ''}`}>Hours</span>
                         <input
                             className="toggle__check"
                             id="task-unit-toggle"
@@ -85,27 +87,27 @@ class TaskForm extends React.Component {
                             onChange={this.toggleTaskQtyUnit}
                         />
                         <label htmlFor="task-unit-toggle" className="toggle__switch" />
-                        <span className={`toggle__label${this.state.taskByPrice ? ' toggle__label--active' : ''}`}>Cost</span>
+                        <span className={`toggle__label${taskByPrice ? ' toggle__label--active' : ''}`}>Cost</span>
                     </div>
 
-                    <div className={`taskform__el taskform__el--qty${this.state.taskByPrice ? ' taskform__el--byprice' : ''}`}>
+                    <div className={`taskform__el taskform__el--qty${taskByPrice ? ' taskform__el--byprice' : ''}`}>
                         <span className="taskform__dollarsign">$</span>
                         <input
                             ref={(input) => { this.taskQty = input; }}
                             type="number"
                             id="task-qty"
                             onChange={(event) => this.handleQtyInputChange(event)}
-                            className={`taskform__input ${this.state.qty === '' ? '' : 'taskform__input--hasinput'}`}
+                            className={`taskform__input ${qty === '' ? '' : 'taskform__input--hasinput'}`}
                         />
 
                         <label
                             className="taskform__label taskform__label--hasoptions"
                             htmlFor="task-qty"
                         >
-                            <span className={`taskform__labelswap${this.state.taskByPrice ? ' taskform__labelswap--hidden' : ''}`}>
+                            <span className={`taskform__labelswap${taskByPrice ? ' taskform__labelswap--hidden' : ''}`}>
                                 Hours
                             </span>
-                            <span className={`taskform__labelswap${!this.state.taskByPrice ? ' taskform__labelswap--hidden' : ''}`}>
+                            <span className={`taskform__labelswap${!taskByPrice ? ' taskform__labelswap--hidden' : ''}`}>
                                 Price
                             </span>
                         </label>

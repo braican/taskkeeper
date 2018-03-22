@@ -11,7 +11,7 @@ const Task = (props) => {
     return (
         <li className="task">
             <span className="task__description">{description}</span>
-            <span className="task__hours">{hours}</span>
+            <span className="task__hours">{hours || '-'}</span>
             <span className="task__price">{formatPrice(getTaskPrice(hours, price, rate))}</span>
         </li>
     );

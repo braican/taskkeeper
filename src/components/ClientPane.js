@@ -78,14 +78,11 @@ function renderInvoices(invoiceGroup, id, header, rate) {
  * @param {Number} rate Client's billable rate
  */
 function renderOpenTasks(tasklist, rate) {
-    if (!tasklist) {
-        return null;
-    }
-
+    const notasksCopy = 'You have no billable tasks for this client.';
     return (
-        <section className="client__opentasks">
-            <TaskList tasks={tasklist} rate={rate} />
-        </section>
+        <div className="l-container">
+            {tasklist ? <TaskList tasks={tasklist} rate={rate} /> : <p>{notasksCopy}</p>}
+        </div>
     );
 }
 
@@ -97,15 +94,19 @@ const ClientPane = (props) => {
     return (
         <div className="clientPane__main">
             <header className="clientHeader">
-                <h2 className="clientname">{client.name}</h2>
-                <p className="clientrate">{formatPrice(client.rate)}</p>
+                <div className="l-container">
+                    <h2 className="clientname">{client.name}</h2>
+                    <p className="clientrate">{formatPrice(client.rate)}</p>
+                </div>
             </header>
 
             <TaskForm addTask={props.addTask} clientKey={clientKey} />
 
-            {renderOpenTasks(client.openTasks, client.rate)}
+            <section className="client__opentasks">
+                {renderOpenTasks(client.openTasks, client.rate)}
+            </section>
 
-            <div className="clientInvoices">
+            <div className="clientInvoices l-container">
                 {renderInvoices(invoices.active, 'outstanding', 'Outstanding Invoices', client.rate)}
                 {renderInvoices(invoices.archive, 'archive', 'Invoice Archive', client.rate)}
             </div>

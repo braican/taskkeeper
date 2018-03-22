@@ -122,7 +122,9 @@ html, body, #root, .app-main {
 .l-container {
   width: 100%;
   max-width: 1020px;
-  margin: 0 auto; }
+  margin: 0 auto;
+  padding-left: 20px;
+  padding-right: 20px; }
 
 .toggle__label {
   display: inline-block;
@@ -186,7 +188,7 @@ html, body, #root, .app-main {
   background-color: #eaeaea; }
 
 .clientHeader {
-  padding: 20px;
+  padding: 20px 0;
   background-color: #fff; }
 
 .clientname {
@@ -198,11 +200,9 @@ html, body, #root, .app-main {
 
 .client__opentasks {
   background-color: #fff;
-  padding: 40px;
-  margin-bottom: 60px; }
-
-.invoices {
-  padding: 20px; }
+  margin-bottom: 60px;
+  padding-top: 20px;
+  padding-bottom: 20px; }
 
 .invoices--outstanding {
   margin-bottom: 60px; }
@@ -293,12 +293,13 @@ html, body, #root, .app-main {
   text-align: right; }
 
 .taskform {
-  padding: 20px; }
+  padding-top: 20px;
+  padding-bottom: 20px;
+  margin-bottom: 20px; }
 
 .taskform__fieldset {
   display: flex;
-  margin-top: 1.5rem;
-  margin-bottom: 1rem; }
+  margin-top: 1.5rem; }
 
 .taskform__el {
   position: relative; }

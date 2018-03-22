@@ -6,7 +6,7 @@
     background-color: $offwhite;
 }
 .clientHeader{
-    padding: $windowgutter;
+    padding: $windowgutter 0;
     background-color: $white;
 }
 
@@ -21,6 +21,7 @@
 
 .client__opentasks{
     background-color: $white;
-    padding: $windowgutter * 2;
     margin-bottom: 60px;
+    padding-top: $windowgutter;
+    padding-bottom: $windowgutter;
 }

@@ -1,11 +1,12 @@
-.taskform{
-    padding: $windowgutter;
-}
 
+.taskform{
+    padding-top: $windowgutter;
+    padding-bottom: $windowgutter;
+    margin-bottom: $windowgutter;
+}
 .taskform__fieldset{
     display:flex;
     margin-top: 1.5rem;
-    margin-bottom: 1rem;
 }
 
 .taskform__el{
