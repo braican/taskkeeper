@@ -27,8 +27,6 @@
 }
 .invoice__price{
     flex: 0 1 auto;
-    font-size: 2rem;
-    color: $green;
 }
 .tasklist__trigger{
     @include uppercase;

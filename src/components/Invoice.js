@@ -46,7 +46,7 @@ class Invoice extends React.Component {
                             Tasklist
                         </button>
                     </div>
-                    <p className="invoice__price">{formatPrice(invoiceAmount)}</p>
+                    <p className="invoice__price moneydisplay moneydisplay--small">{formatPrice(invoiceAmount)}</p>
                 </header>
 
                 <div className={`invoice__tasks${this.state.tasksOpen ? ' invoice__tasks--expanded' : ''}`}>

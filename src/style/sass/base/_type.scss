@@ -71,13 +71,25 @@ button{
 
 
 /* ------------------------------------
- * --misc
+ * --moneyrate
  * ------------------------------------*/
 
- .cents{
+.moneydisplay{
+    font-size: 2rem;
+    color: $green;
+}
+.moneydisplay--small{
+    font-size: 1.25rem;
+    color: $green;
+}
+
+.cents{
     display: inline-block;
     vertical-align: super;
     font-size: 0.6em;
     margin-left: 2px;
     line-height: 1.2;
 }
+
+
+

@@ -69,7 +69,7 @@ function renderInvoices(invoiceGroup, id, header, rate) {
     }
 
     const outstandingInvoiceTotal = 
-        <p className="invoice__price">{formatPrice(getInvoicegroupTotal(invoiceGroup, rate))}</p>;
+        <p className="invoice__price moneydisplay">{formatPrice(getInvoicegroupTotal(invoiceGroup, rate))}</p>;
 
     return (
         <section className={`invoices invoices--${id}`}>
@@ -115,7 +115,7 @@ const ClientPane = (props) => {
             <header className="clientHeader">
                 <div className="l-container">
                     <h2 className="clientname">{client.name}</h2>
-                    <p className="clientrate">{formatPrice(client.rate)}</p>
+                    <p className="clientrate moneydisplay">{formatPrice(client.rate)}</p>
                 </div>
             </header>
 

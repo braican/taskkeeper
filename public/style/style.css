@@ -87,8 +87,16 @@ button {
     outline: none; }
 
 /* ------------------------------------
- * --misc
+ * --moneyrate
  * ------------------------------------*/
+.moneydisplay {
+  font-size: 2rem;
+  color: #00844f; }
+
+.moneydisplay--small {
+  font-size: 1.25rem;
+  color: #00844f; }
+
 .cents {
   display: inline-block;
   vertical-align: super;
@@ -185,7 +193,8 @@ html, body, #root, .app-main {
   flex: 1 1 auto;
   height: 100%;
   overflow: auto;
-  background-color: #eaeaea; }
+  background-color: #eaeaea;
+  padding-bottom: 100px; }
 
 .clientHeader {
   padding: 20px 0;
@@ -193,10 +202,6 @@ html, body, #root, .app-main {
 
 .clientname {
   font-size: 2rem; }
-
-.clientrate {
-  font-size: 1.5rem;
-  color: #00844f; }
 
 .client__opentasks {
   background-color: #fff;
@@ -228,9 +233,7 @@ html, body, #root, .app-main {
   flex: 0 1 auto; }
 
 .invoice__price {
-  flex: 0 1 auto;
-  font-size: 2rem;
-  color: #00844f; }
+  flex: 0 1 auto; }
 
 .tasklist__trigger {
   text-transform: uppercase;

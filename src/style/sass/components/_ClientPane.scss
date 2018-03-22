@@ -4,6 +4,7 @@
     height: 100%;
     overflow: auto;
     background-color: $offwhite;
+    padding-bottom: 100px;
 }
 .clientHeader{
     padding: $windowgutter 0;
@@ -13,12 +14,6 @@
 .clientname{
     font-size: 2rem;
 }
-
-.clientrate{
-    font-size: 1.5rem;
-    color: $green;
-}
-
 .client__opentasks{
     background-color: $white;
     margin-bottom: 60px;
