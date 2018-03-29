@@ -1,0 +1,52 @@
+
+$leftpane_size: 240px;
+
+.leftpane{
+    flex: 0 0 $leftpane_size;
+    background-color: $gray;
+    color: $white;
+    height: 100%;
+    overflow: auto;
+    position: relative;
+    z-index: 4;
+}
+
+.newclient{
+    text-align: center;
+    margin: $windowgutter;
+}
+
+.newclient__btn{
+    display: block;
+    width: 100%;
+    @include uppercase;
+    padding: 14px;
+    color: $white;
+    border-radius: 4px;
+    border: 2px solid $white;
+    transition: all .2s;
+    line-height: 1;
+    
+    &:after{
+        content:"";
+        display: inline-block;
+        vertical-align: middle;
+        width: 14px;
+        height: 14px;
+        margin-left: 10px;
+        background-image: $icon_expand_hover;
+        background-repeat:no-repeat;
+        background-position:center center;
+        background-size: contain;
+        transition: all .2s;
+    }
+
+    &:hover{
+        background-color: $white;
+        color: $textcolor;
+
+        &:after{
+            background-image: $icon_expand;
+        }
+    }
+}

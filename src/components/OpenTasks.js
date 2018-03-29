@@ -48,7 +48,7 @@ const OpenTasks = (props) => {
 
 OpenTasks.propTypes = {
     tasks         : PropTypes.array,
-    rate          : PropTypes.number.isRequired,
+    rate          : PropTypes.string.isRequired,
     submitInvoice : PropTypes.func.isRequired,
 };
 

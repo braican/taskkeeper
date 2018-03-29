@@ -1,30 +1,35 @@
 import React from 'react';
-import { BrowserRouter, Switch, Route, NavLink } from 'react-router-dom';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 // import firebase
 import base from '../firebase';
 
 // import the components
 import Header from './Header';
+import ClientSidebar from './ClientSidebar';
 import ClientPane from './ClientPane';
-import Welcome from './Welcome';
+import NewClientForm from './NewClientForm';
+import Default from './Default';
 
-// import helpers
-import { formatPrice } from '../helpers';
 
 class App extends React.Component {
     constructor() {
         super();
 
+        // actions
         this.addTask = this.addTask.bind(this);
         this.submitInvoice = this.submitInvoice.bind(this);
         this.archiveInvoice = this.archiveInvoice.bind(this);
-        this.renderClientList = this.renderClientList.bind(this);
+        this.addNewClient = this.addNewClient.bind(this);
+        this.toggleNewClientForm = this.toggleNewClientForm.bind(this);
+
+        // renderers
         this.renderClientPane = this.renderClientPane.bind(this);
 
         this.state = {
-            clients : {},
-            loaded  : false,
+            clients              : {},
+            loaded               : false,
+            newClientFormVisible : false,
         };
     }
 
@@ -37,7 +42,7 @@ class App extends React.Component {
                 this.setState({
                     loaded : true,
                 });
-            }
+            },
         });
     }
 
@@ -86,6 +91,11 @@ class App extends React.Component {
     }
 
 
+    /**
+     * Archive the invoice
+     * @param {string} client The client
+     * @param {string} invoiceId ID of the invoice
+     */
     archiveInvoice(client, invoiceId) {
         const clients = { ...this.state.clients };
         clients[client].invoices[invoiceId].status = 'archive';
@@ -94,19 +104,30 @@ class App extends React.Component {
 
 
     /**
-     * Renders the client listing
-     * @param {string} key object key for the client
+     * Adds a new client to the state object
+     * @param {string} clientKey The key for the client
+     * @param {object} clientData Data about the client
      */
-    renderClientList(key) {
-        const client = this.state.clients[key];
+    addNewClient(clientKey, clientData) {
+        const clients = { ...this.state.clients };
+        clients[clientKey] = clientData;
 
-        return (
-            <NavLink to={`/client/${key}`} className="clientLink" activeClassName="clientLink--active">
-                <h3 className="clientthumb__name">{client.name}</h3>
-                <p className="clientthumb__rate">{formatPrice(client.rate)}</p>
-            </NavLink>
-        );
+        this.setState({ clients });
     }
+
+
+    /**
+     * Opens or closes the new client form
+     */
+    toggleNewClientForm() {
+        const newClientFormStatus = this.state.newClientFormVisible;
+        this.setState({ newClientFormVisible : !newClientFormStatus });
+    }
+
+
+    //
+    // RENDER
+    //
 
 
     /**
@@ -130,34 +151,42 @@ class App extends React.Component {
     }
 
 
-    /**
-     * render function
-     */
+    // render function
     render() {
         return (
             <BrowserRouter>
                 <div className="taskkeeper app-main">
                     <aside className="leftpane">
                         <Header />
-                        <ul className="clientList">
-                            {
-                                Object.keys(this.state.clients).map((key) => (
-                                    <li className="clientThumb" key={key}>
-                                        {this.renderClientList(key)}
-                                    </li>
-                                ))
-                            }
-                        </ul>
+                        <ClientSidebar
+                            clients={this.state.clients}
+                            toggleNewClientForm={this.toggleNewClientForm}
+                        />
                     </aside>
                     <div className="clientPane">
                         <Switch>
+
                             <Route
                                 path="/client/:clientId"
                                 render={this.renderClientPane}
                             />
-                            <Route component={Welcome} />
+
+                            <Route
+                                render={() => (
+                                    <Default
+                                        loaded={this.state.loaded}
+                                        clients={this.state.clients}
+                                    />
+                                )}
+                            />
                         </Switch>
                     </div>
+
+                    <NewClientForm
+                        isVisible={this.state.newClientFormVisible}
+                        toggleNewClientForm={this.toggleNewClientForm}
+                        addNewClient={this.addNewClient}
+                    />
                 </div>
             </BrowserRouter>
         );

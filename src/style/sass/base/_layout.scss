@@ -10,14 +10,6 @@ html, body, #root, .app-main{
     overflow:hidden;
 }
 
-.leftpane{
-    flex: 0 0 240px;
-    background-color: $gray;
-    color: $white;
-    height: 100%;
-    overflow: auto;
-}
-
 
 .l-container{
     width: 100%;
