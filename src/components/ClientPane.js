@@ -24,7 +24,7 @@ function organizeInvoices(invoices) {
         };
     }
 
-    Object.keys(invoices).forEach((invoiceId) => {
+    Object.keys(invoices).reverse().forEach((invoiceId) => {
         const invoiceData = invoices[invoiceId];
 
         if (invoiceData.status === 'active') {
@@ -53,52 +53,9 @@ function getInvoicegroupTotal(invoices, rate) {
 }
 
 
-//
-// RENDER
-//
-
-
-/**
- * Render the group of invoices, with a header.
- * @param {Array} invoiceGroup Group of invoices
- * @param {String} id Identifier for this invoice group
- * @param {String} header The header text for this group
- * @param {Number} rate Client billable rate
- */
-function renderInvoices(invoiceGroup, id, header, rate) {
-    if (Object.keys(invoiceGroup).length === 0) {
-        return false;
-    }
-
-    const outstandingInvoiceTotal = (
-        <p className="invoice__price moneydisplay">
-            {getInvoicegroupTotal(invoiceGroup, rate)}
-        </p>
-    );
-
-    return (
-        <section className={`invoices invoices--${id}`}>
-            <header className="invoicegroup__header">
-                <h3 className="t-blocktitle">{header}</h3>
-                {outstandingInvoiceTotal}
-            </header>
-            {
-                Object.keys(invoiceGroup).map((invoiceId) => (
-                    <Invoice
-                        key={invoiceId}
-                        invoice={invoiceGroup[invoiceId]}
-                        rate={rate}
-                    />
-                ))
-            }
-        </section>
-    );
-}
-
-
 const ClientPane = (props) => {
     const { clientKey, client } = props;
-    const { openTasks } = client;
+    const { openTasks, rate } = client;
     const invoices = organizeInvoices(client.invoices);
 
 
@@ -108,6 +65,78 @@ const ClientPane = (props) => {
      */
     const clientSubmitInvoice = (tasks) => {
         props.submitInvoice(clientKey, tasks);
+    };
+
+
+    /**
+     * Client-knowledgeable archive invoice
+     */
+    const clientArchiveInvoice = (invoiceId) => {
+        props.archiveInvoice(clientKey, invoiceId);
+    };
+
+
+    //
+    // render the invoice groups
+    //
+
+    /**
+     * Render the group of invoices, with a header.
+     * @param {Array} invoiceGroup Group of invoices
+     */
+    const renderInvoices = (invoiceGroup) => (
+        Object.keys(invoiceGroup).map((invoiceId) => (
+            <Invoice
+                invoiceId={invoiceId}
+                key={invoiceId}
+                invoice={invoiceGroup[invoiceId]}
+                rate={rate}
+                archiveInvoice={clientArchiveInvoice}
+            />
+        ))
+    );
+
+    /**
+     * Render the outstanding invoice list
+     * @param {Array} invoiceGroup Group of outstanding invoices
+     */
+    const renderOutstandingInvoices = (invoiceGroup) => (
+        <section className="invoices invoices--outstanding">
+            <header className="invoicegroup__header">
+                <h3 className="t-blocktitle">Outstanding Invoices</h3>
+                <p className="invoice__price moneydisplay">
+                    {getInvoicegroupTotal(invoiceGroup, rate)}
+                </p>
+            </header>
+            {
+                Object.keys(invoiceGroup).length > 0 ?
+                    renderInvoices(invoiceGroup) :
+                    <p>There are no outstanding invoices for this client.</p>
+            }
+        </section>
+    );
+
+    /**
+     * Render the archive of invoices
+     * @param {Array} invoiceGroup Group of archived invoices
+     */
+    const renderArchivedInvoices = (invoiceGroup) => {
+        if (Object.keys(invoiceGroup).length === 0) {
+            return null;
+        }
+
+        return (
+            <section className="invoices invoices--archive">
+                <header className="invoicegroup__header">
+                    <h3 className="t-blocktitle">Invoice Archive</h3>
+                    <p className="invoice__price moneydisplay">
+                        {getInvoicegroupTotal(invoiceGroup, rate)}
+                    </p>
+                </header>
+
+                {renderInvoices(invoiceGroup)}
+            </section>
+        );
     };
 
 
@@ -125,18 +154,19 @@ const ClientPane = (props) => {
             <OpenTasks submitInvoice={clientSubmitInvoice} tasks={openTasks} rate={client.rate} />
 
             <div className="clientInvoices l-container">
-                {renderInvoices(invoices.active, 'outstanding', 'Outstanding Invoices', client.rate)}
-                {renderInvoices(invoices.archive, 'archive', 'Invoice Archive', client.rate)}
+                {renderOutstandingInvoices(invoices.active)}
+                {renderArchivedInvoices(invoices.archive)}
             </div>
         </div>
     );
 };
 
 ClientPane.propTypes = {
-    clientKey     : PropTypes.string.isRequired,
-    client        : PropTypes.object.isRequired,
-    addTask       : PropTypes.func.isRequired,
-    submitInvoice : PropTypes.func.isRequired,
+    clientKey      : PropTypes.string.isRequired,
+    client         : PropTypes.object.isRequired,
+    addTask        : PropTypes.func.isRequired,
+    submitInvoice  : PropTypes.func.isRequired,
+    archiveInvoice : PropTypes.func.isRequired,
 };
 
 export default ClientPane;

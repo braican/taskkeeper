@@ -21,11 +21,28 @@ class Invoice extends React.Component {
     }
 
 
+    /**
+     * Opens and closes the task list
+     */
     toggleTasklist() {
         const drawerStatus = this.state.tasksOpen;
         this.setState({
             tasksOpen : !drawerStatus,
         });
+    }
+
+
+    renderPaidBtn() {
+        return (
+            <div>
+                <button
+                    className="tk-btn tk-btn--paid"
+                    onClick={() => this.props.archiveInvoice(this.props.invoiceId)}
+                >
+                    Paid
+                </button>
+            </div>
+        );
     }
 
 
@@ -47,9 +64,7 @@ class Invoice extends React.Component {
                         </button>
                     </div>
 
-                    <div>
-                        <button className="tk-btn tk-btn--paid">Paid</button>
-                    </div>
+                    {invoice.status === 'active' ? this.renderPaidBtn() : null}
 
                     <p className="invoice__price moneydisplay moneydisplay--small">
                         {invoiceAmount}
@@ -66,8 +81,10 @@ class Invoice extends React.Component {
 
 
 Invoice.propTypes = {
-    invoice : PropTypes.object.isRequired,
-    rate    : PropTypes.number.isRequired,
+    invoiceId      : PropTypes.string.isRequired,
+    invoice        : PropTypes.object.isRequired,
+    rate           : PropTypes.number.isRequired,
+    archiveInvoice : PropTypes.func.isRequired,
 };
 
 export default Invoice;

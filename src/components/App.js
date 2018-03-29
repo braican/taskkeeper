@@ -15,6 +15,7 @@ class App extends React.Component {
 
         this.addTask = this.addTask.bind(this);
         this.submitInvoice = this.submitInvoice.bind(this);
+        this.archiveInvoice = this.archiveInvoice.bind(this);
         this.renderClientList = this.renderClientList.bind(this);
         this.renderClientPane = this.renderClientPane.bind(this);
 
@@ -148,6 +149,13 @@ class App extends React.Component {
     }
 
 
+    archiveInvoice(client, invoiceId) {
+        const clients = { ...this.state.clients };
+        clients[client].invoices[invoiceId].status = 'archive';
+        this.setState({ clients });
+    }
+
+
     /**
      * Renders the client listing
      * @param {string} key object key for the client
@@ -178,6 +186,7 @@ class App extends React.Component {
                 client={clientObj}
                 addTask={this.addTask}
                 submitInvoice={this.submitInvoice}
+                archiveInvoice={this.archiveInvoice}
             />
         );
     }
