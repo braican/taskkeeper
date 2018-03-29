@@ -175,7 +175,7 @@ html, body, #root, .app-main {
   overflow: hidden; }
 
 .leftpane {
-  flex: 0 0 200px;
+  flex: 0 0 240px;
   background-color: #292929;
   color: #fff;
   height: 100%;
@@ -250,17 +250,22 @@ html, body, #root, .app-main {
   padding: 20px;
   text-decoration: none;
   color: inherit;
-  display: block; }
+  display: block;
+  border-top: 4px solid transparent; }
+  .clientLink:hover {
+    background-color: #383838; }
+  .clientLink:active {
+    background-color: #333333; }
 
 .clientLink--active {
+  border-top-color: #d80b6d;
   background-color: #404040; }
 
 .clientPane {
   flex: 1 1 auto;
   height: 100%;
   overflow: auto;
-  background-color: #eaeaea;
-  padding-bottom: 100px; }
+  background-color: #eaeaea; }
 
 .clientHeader {
   padding: 20px 0;
@@ -269,8 +274,15 @@ html, body, #root, .app-main {
 .clientname {
   font-size: 2rem; }
 
+.clientPane__main {
+  padding-bottom: 100px; }
+
 .clientPane__noclients {
-  padding: 20px; }
+  height: 100%;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center; }
 
 .invoices--outstanding {
   margin-bottom: 60px; }
@@ -343,8 +355,8 @@ html, body, #root, .app-main {
 
 .opentasks {
   background-color: #fff;
-  padding-top: 20px;
-  padding-bottom: 20px; }
+  padding-top: 40px;
+  padding-bottom: 40px; }
 
 .task {
   display: flex;

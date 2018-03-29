@@ -22,7 +22,10 @@ class App extends React.Component {
         this.renderClientList = this.renderClientList.bind(this);
         this.renderClientPane = this.renderClientPane.bind(this);
 
-        this.state = { clients : {} };
+        this.state = {
+            clients : {},
+            loaded  : false,
+        };
     }
 
 
@@ -30,6 +33,11 @@ class App extends React.Component {
         base.syncState('clients', {
             context : this,
             state   : 'clients',
+            then() {
+                this.setState({
+                    loaded : true,
+                });
+            }
         });
     }
 
@@ -116,6 +124,7 @@ class App extends React.Component {
                 addTask={this.addTask}
                 submitInvoice={this.submitInvoice}
                 archiveInvoice={this.archiveInvoice}
+                loaded={this.state.loaded}
             />
         );
     }

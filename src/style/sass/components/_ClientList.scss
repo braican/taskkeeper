@@ -8,7 +8,16 @@
     text-decoration: none;
     color: inherit;
     display: block;
+    border-top: 4px solid transparent;
+
+    &:hover{
+        background-color: darken($gray_border, 3%);
+    }
+    &:active{
+        background-color: darken($gray_border, 5%);
+    }
 }
 .clientLink--active{
+    border-top-color: $pink;
     background-color: $gray_border;
 }

@@ -52,18 +52,24 @@ function getInvoicegroupTotal(invoices, rate) {
     return formatPrice(subtotal);
 }
 
+//
 // ClientPane
+//
 const ClientPane = (props) => {
-    const { clientKey, client } = props;
+    const { clientKey, client, loaded } = props;
 
+    if (!loaded) {
+        return (
+            <div className="clientPane__noclients">
+                <p>Loading...</p>
+            </div>
+        );
+    }
 
     if (!client) {
         return (
-            <div className="clientPane__main">
-                <div className="clientPane__noclients">
-                    <p>Welcome</p>
-                    <p>Add your first client now</p>
-                </div>
+            <div className="clientPane__noclients">
+                <p>Welcome to Taskkeeper. Add your first client.</p>
             </div>
         );
     }
@@ -179,10 +185,12 @@ ClientPane.propTypes = {
     addTask        : PropTypes.func.isRequired,
     submitInvoice  : PropTypes.func.isRequired,
     archiveInvoice : PropTypes.func.isRequired,
+    loaded         : PropTypes.bool,
 };
 
 ClientPane.defaultProps = {
     client : null,
+    loaded : false,
 };
 
 export default ClientPane;
