@@ -73,7 +73,9 @@ class TaskForm extends React.Component {
                 <header className="taskform__header">
                     <h3 className="taskform__title t-blocktitle">Open Tasks</h3>
 
-                    <p className="moneydisplay">{getTasklistSubtotal(client.openTasks, client.rate, true)}</p>
+                    <p className="moneydisplay">
+                        {getTasklistSubtotal(client.openTasks, client.rate, true)}
+                    </p>
                 </header>
 
                 <div className="taskform__fieldset">

@@ -28,13 +28,13 @@ const TaskList = (props) => {
                             >
                                 {task.description}
                             </Task>
-                        )
+                        );
                     })
                 }
             </ul>
         </div>
-    )
-}
+    );
+};
 
 TaskList.propTypes = {
     tasks : PropTypes.array.isRequired,

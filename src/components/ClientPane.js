@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import TaskForm from './TaskForm';
-import TaskList from './TaskList';
+import OpenTasks from './OpenTasks';
 import Invoice from './Invoice';
 
 import { formatPrice, getTasklistSubtotal } from '../helpers';
@@ -96,24 +96,20 @@ function renderInvoices(invoiceGroup, id, header, rate) {
 }
 
 
-/**
- * Renders the open task list
- * @param {Array} tasklist The outstanding task list
- * @param {Number} rate Client's billable rate
- */
-function renderOpenTasks(tasklist, rate) {
-    const notasksCopy = 'You have no billable tasks for this client.';
-    return (
-        <div className="l-container">
-            {tasklist ? <TaskList tasks={tasklist} rate={rate} /> : <p>{notasksCopy}</p>}
-        </div>
-    );
-}
-
-
 const ClientPane = (props) => {
     const { clientKey, client } = props;
+    const { openTasks } = client;
     const invoices = organizeInvoices(client.invoices);
+
+
+    /**
+     * Client-knowledgeable submit invoice
+     * @param {Array} tasks List of tasks
+     */
+    const clientSubmitInvoice = (tasks) => {
+        props.submitInvoice(clientKey, tasks);
+    };
+
 
     return (
         <div className="clientPane__main">
@@ -126,9 +122,7 @@ const ClientPane = (props) => {
 
             <TaskForm addTask={props.addTask} client={client} clientKey={clientKey} />
 
-            <section className="client__opentasks">
-                {renderOpenTasks(client.openTasks, client.rate)}
-            </section>
+            <OpenTasks submitInvoice={clientSubmitInvoice} tasks={openTasks} rate={client.rate} />
 
             <div className="clientInvoices l-container">
                 {renderInvoices(invoices.active, 'outstanding', 'Outstanding Invoices', client.rate)}
@@ -139,9 +133,10 @@ const ClientPane = (props) => {
 };
 
 ClientPane.propTypes = {
-    clientKey : PropTypes.string.isRequired,
-    client    : PropTypes.object.isRequired,
-    addTask   : PropTypes.func.isRequired,
+    clientKey     : PropTypes.string.isRequired,
+    client        : PropTypes.object.isRequired,
+    addTask       : PropTypes.func.isRequired,
+    submitInvoice : PropTypes.func.isRequired,
 };
 
 export default ClientPane;

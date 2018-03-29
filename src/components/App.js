@@ -14,6 +14,7 @@ class App extends React.Component {
         super();
 
         this.addTask = this.addTask.bind(this);
+        this.submitInvoice = this.submitInvoice.bind(this);
         this.renderClientList = this.renderClientList.bind(this);
         this.renderClientPane = this.renderClientPane.bind(this);
 
@@ -25,17 +26,17 @@ class App extends React.Component {
 
                     openTasks : [
                         {
-                            description: 'Fixing navigation bugs',
-                            price: null,
-                            hours: 4,
+                            description : 'Fixing navigation bugs',
+                            price       : null,
+                            hours       : 4,
                         }, {
-                            description: 'Pushing new navigation live',
-                            price: null,
-                            hours: 2,
+                            description : 'Pushing new navigation live',
+                            price       : null,
+                            hours       : 2,
                         }, {
-                            description: 'Updating all the plugins',
-                            price: 100.00,
-                            hours: null,
+                            description : 'Updating all the plugins',
+                            price       : 100.00,
+                            hours       : null,
                         },
                     ],
 
@@ -125,6 +126,29 @@ class App extends React.Component {
 
 
     /**
+     * Submits an invoice from a list of tasks
+     */
+    submitInvoice(client, tasks) {
+        const clients = { ...this.state.clients };
+        const timestamp = Date.now();
+        const today = new Date();
+        const year = today.getFullYear();
+        const month = today.getMonth() + 1;
+        const day = today.getDate();
+        const formattedDate = `${year}/${month}/${day}`;
+
+        clients[client].openTasks = [];
+        clients[client].invoices[timestamp] = {
+            invoicedate : formattedDate,
+            status      : 'active',
+            tasks,
+        };
+
+        this.setState({ clients });
+    }
+
+
+    /**
      * Renders the client listing
      * @param {string} key object key for the client
      */
@@ -153,6 +177,7 @@ class App extends React.Component {
                 clientKey={clientKey}
                 client={clientObj}
                 addTask={this.addTask}
+                submitInvoice={this.submitInvoice}
             />
         );
     }
@@ -169,13 +194,11 @@ class App extends React.Component {
                         <Header />
                         <ul className="clientList">
                             {
-                                Object.keys(this.state.clients).map((key) => {
-                                    return (
-                                        <li className="clientThumb" key={key}>
-                                            {this.renderClientList(key)}
-                                        </li>
-                                    );
-                                })
+                                Object.keys(this.state.clients).map((key) => (
+                                    <li className="clientThumb" key={key}>
+                                        {this.renderClientList(key)}
+                                    </li>
+                                ))
                             }
                         </ul>
                     </aside>
