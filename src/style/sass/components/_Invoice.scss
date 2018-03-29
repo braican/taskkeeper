@@ -22,11 +22,11 @@
     display: flex;
 }
 .invoice__date{
-    flex: 0 1 auto;
     margin-right: 20px;
 }
 .invoice__price{
-    flex: 0 1 auto;
+    margin-left: 20px;
+    margin-left: auto;
 }
 .tasklist__trigger{
     @include uppercase;

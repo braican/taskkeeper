@@ -46,6 +46,11 @@ class Invoice extends React.Component {
                             Tasklist
                         </button>
                     </div>
+
+                    <div>
+                        <button className="tk-btn tk-btn--paid">Paid</button>
+                    </div>
+
                     <p className="invoice__price moneydisplay moneydisplay--small">
                         {invoiceAmount}
                     </p>

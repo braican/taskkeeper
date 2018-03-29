@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import TaskList from './TaskList';
 
 
-
 const OpenTasks = (props) => {
     const notasksCopy = 'You have no billable tasks for this client.';
     const taskCount = props.tasks.length;
@@ -24,7 +23,9 @@ const OpenTasks = (props) => {
      */
     const renderSubmitInvoiceBtn = () => (
         <div className="l-container l-space-top l-align-right">
-            <button className="tk-btn tk-btn--submit" onClick={(e) => submitInvoice(e)}>Submit invoice</button>
+            <button className="tk-btn tk-btn--submit" onClick={(e) => submitInvoice(e)}>
+                Submit invoice
+            </button>
         </div>
     );
 
