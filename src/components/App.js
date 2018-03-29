@@ -1,6 +1,9 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route, NavLink } from 'react-router-dom';
 
+// import firebase
+import base from '../firebase';
+
 // import the components
 import Header from './Header';
 import ClientPane from './ClientPane';
@@ -19,94 +22,15 @@ class App extends React.Component {
         this.renderClientList = this.renderClientList.bind(this);
         this.renderClientPane = this.renderClientPane.bind(this);
 
-        this.state = {
-            clients : {
-                anywayreps : {
-                    name : 'Anyway Reps',
-                    rate : 56.00,
+        this.state = { clients : {} };
+    }
 
-                    openTasks : [
-                        {
-                            description : 'Fixing navigation bugs',
-                            price       : null,
-                            hours       : 4,
-                        }, {
-                            description : 'Pushing new navigation live',
-                            price       : null,
-                            hours       : 2,
-                        }, {
-                            description : 'Updating all the plugins',
-                            price       : 100.00,
-                            hours       : null,
-                        },
-                    ],
 
-                    invoices : {
-                        20171120323 : {
-                            invoicedate : '2017/11/20',
-                            status      : 'active',
-                            tasks       : [
-                                {
-                                    description : 'Fixing navigation bugs',
-                                    price       : null,
-                                    hours       : 4,
-                                }, {
-                                    description : 'Pushing new navigation live',
-                                    price       : null,
-                                    hours       : 2,
-                                }, {
-                                    description : 'Updating all the plugins',
-                                    price       : 100.00,
-                                    hours       : null,
-                                },
-                            ],
-                        },
-                        20171120352 : {
-                            invoicedate : '2017/11/20',
-                            status      : 'active',
-                            tasks       : [
-                                {
-                                    description : 'Lorem ipsum dolor site',
-                                    price       : null,
-                                    hours       : 4,
-                                }, {
-                                    description : 'Updating visibility on the PDF builde',
-                                    price       : null,
-                                    hours       : 10,
-                                },
-                            ],
-                        },
-                        20171202352 : {
-                            invoicedate : '2017/12/02',
-                            status      : 'archive',
-                            tasks       : [
-                                {
-                                    description : 'Consultation for Javascript Debugging (help with jquery and Divi - a bit of an emergency email from oct 17)',
-                                    price       : null,
-                                    hours       : 1,
-                                }, {
-                                    description : 'Fixing bugs on Capital Constellation site.',
-                                    price       : null,
-                                    hours       : 5,
-                                }, {
-                                    description : 'Debugging errors and css issues on Constellation site.',
-                                    price       : null,
-                                    hours       : 3,
-                                },
-                            ],
-                        },
-                    },
-                },
-                christabianchi : {
-                    name : 'Christa Bianchi',
-                    rate : 56.00,
-                },
-                gibhedstrom : {
-                    name : 'Gib Hedstrom',
-                    rate : 58.00,
-                },
-            },
-        };
+    componentDidMount() {
+        base.syncState('clients', {
+            context : this,
+            state   : 'clients',
+        });
     }
 
 
@@ -139,6 +63,11 @@ class App extends React.Component {
         const formattedDate = `${year}/${month}/${day}`;
 
         clients[client].openTasks = [];
+
+        if (!clients[client].invoices) {
+            clients[client].invoices = {};
+        }
+
         clients[client].invoices[timestamp] = {
             invoicedate : formattedDate,
             status      : 'active',

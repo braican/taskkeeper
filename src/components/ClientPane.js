@@ -52,9 +52,22 @@ function getInvoicegroupTotal(invoices, rate) {
     return formatPrice(subtotal);
 }
 
-
+// ClientPane
 const ClientPane = (props) => {
     const { clientKey, client } = props;
+
+
+    if (!client) {
+        return (
+            <div className="clientPane__main">
+                <div className="clientPane__noclients">
+                    <p>Welcome</p>
+                    <p>Add your first client now</p>
+                </div>
+            </div>
+        );
+    }
+
     const { openTasks, rate } = client;
     const invoices = organizeInvoices(client.invoices);
 
@@ -139,7 +152,6 @@ const ClientPane = (props) => {
         );
     };
 
-
     return (
         <div className="clientPane__main">
             <header className="clientHeader">
@@ -163,10 +175,14 @@ const ClientPane = (props) => {
 
 ClientPane.propTypes = {
     clientKey      : PropTypes.string.isRequired,
-    client         : PropTypes.object.isRequired,
+    client         : PropTypes.object,
     addTask        : PropTypes.func.isRequired,
     submitInvoice  : PropTypes.func.isRequired,
     archiveInvoice : PropTypes.func.isRequired,
+};
+
+ClientPane.defaultProps = {
+    client : null,
 };
 
 export default ClientPane;

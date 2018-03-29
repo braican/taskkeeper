@@ -6,7 +6,12 @@ import React from 'react';
  * @param {number} price A price, in dollars and cents
  */
 export function formatPrice(price) {
-    const priceString = price.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    if (!price) {
+        return null;
+    }
+
+    const priceNumber = parseInt(price, 10);
+    const priceString = priceNumber.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     const dollars = priceString.slice(0, priceString.length - 2).replace('.', '');
     const cents = priceString.slice(-2);
 

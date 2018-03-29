@@ -269,6 +269,9 @@ html, body, #root, .app-main {
 .clientname {
   font-size: 2rem; }
 
+.clientPane__noclients {
+  padding: 20px; }
+
 .invoices--outstanding {
   margin-bottom: 60px; }
 

@@ -3,6 +3,8 @@ error_log
 error_log
 .DS_Store
 
+*.map
+
 # See https://help.github.com/ignore-files/ for more about ignoring files.
 
 # dependencies
