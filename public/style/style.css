@@ -82,9 +82,42 @@ button {
   border: 0;
   border-radius: 0;
   padding: 0;
+  background-color: transparent;
   cursor: pointer; }
   button:focus {
     outline: none; }
+
+.tk-btn {
+  border-radius: 4px;
+  background-color: #d80b6d;
+  color: #fff;
+  padding: 8px 16px;
+  transition: all .2s; }
+  .tk-btn:hover {
+    background-color: #c00a61; }
+
+.tk-btn--submit {
+  position: relative; }
+  .tk-btn--submit:after {
+    content: "";
+    display: block;
+    position: absolute;
+    right: 18px;
+    top: 50%;
+    width: 14px;
+    height: 14px;
+    margin-top: -8px;
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024.11%2024.11%22%3E%3Ctitle%3Eicon-expand%3C%2Ftitle%3E%3Cg%20data-name%3D%22Layer%201-2%22%20fill%3D%22%23ffffff%22%3E%3Cpath%20d%3D%22M10.05%200h4.01v24.11h-4.01z%22%2F%3E%3Cpath%20d%3D%22M0%2010.05h24.11v4.01H0z%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: contain;
+    opacity: 0;
+    transition: all .2s; }
+  .tk-btn--submit:hover {
+    padding-right: 38px; }
+    .tk-btn--submit:hover:after {
+      opacity: 1;
+      transform: translateX(4px); }
 
 /* ------------------------------------
  * --moneyrate
@@ -133,6 +166,18 @@ html, body, #root, .app-main {
   margin: 0 auto;
   padding-left: 20px;
   padding-right: 20px; }
+
+/* ------------------------------------
+ * --spacing
+ * ------------------------------------*/
+.l-space-top {
+  margin-top: 1em; }
+
+/* ------------------------------------
+ * --alignemnt
+ * ------------------------------------*/
+.l-align-right {
+  text-align: right; }
 
 .toggle__label {
   display: inline-block;
@@ -203,12 +248,6 @@ html, body, #root, .app-main {
 .clientname {
   font-size: 2rem; }
 
-.client__opentasks {
-  background-color: #fff;
-  margin-bottom: 60px;
-  padding-top: 20px;
-  padding-bottom: 20px; }
-
 .invoices--outstanding {
   margin-bottom: 60px; }
 
@@ -226,11 +265,11 @@ html, body, #root, .app-main {
   border-radius: 2px; }
 
 .invoice__header {
-  display: flex;
-  justify-content: space-between; }
+  display: flex; }
 
 .invoice__date {
-  flex: 0 1 auto; }
+  flex: 0 1 auto;
+  margin-right: 20px; }
 
 .invoice__price {
   flex: 0 1 auto; }
@@ -274,6 +313,14 @@ html, body, #root, .app-main {
   visibility: visible;
   position: static;
   opacity: 1; }
+
+.client__opentasks {
+  margin-bottom: 60px; }
+
+.opentasks {
+  background-color: #fff;
+  padding-top: 20px;
+  padding-bottom: 20px; }
 
 .task {
   display: flex;

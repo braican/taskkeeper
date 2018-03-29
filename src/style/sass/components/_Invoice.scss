@@ -20,10 +20,10 @@
 
 .invoice__header{
     display: flex;
-    justify-content: space-between;
 }
 .invoice__date{
     flex: 0 1 auto;
+    margin-right: 20px;
 }
 .invoice__price{
     flex: 0 1 auto;
