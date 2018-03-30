@@ -81,6 +81,10 @@ button{
     &:hover{
         background-color: darken($pink, 5%);
     }
+
+    &:active{
+        background-color: darken($pink, 8%);
+    }
 }
 
 .tk-btn--submit,
@@ -137,6 +141,10 @@ button{
         &:after{
             transform: translateX(0);
         }
+    }
+
+    &:active{
+        background-color: darken($green, 8%);
     }
 }
 

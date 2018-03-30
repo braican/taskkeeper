@@ -96,6 +96,8 @@ button {
   line-height: 1; }
   .tk-btn:hover {
     background-color: #c00a61; }
+  .tk-btn:active {
+    background-color: #b10959; }
 
 .tk-btn--submit,
 .tk-btn--paid {
@@ -141,6 +143,8 @@ button {
     background-color: #006b40; }
     .tk-btn--paid:hover:after, .tk-btn--paid:focus:after {
       transform: translateX(0); }
+  .tk-btn--paid:active {
+    background-color: #005b37; }
 
 /* ------------------------------------
  * --moneyrate

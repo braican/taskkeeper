@@ -62,7 +62,7 @@ export function getTasklistSubtotal(tasks, rate, format = false) {
     }
 
     const subtotal = tasks.reduce((total, task) => {
-        const taskPrice = getTaskPrice(task.hours, task.price, rate);        
+        const taskPrice = getTaskPrice(task.hours, task.price, rate);
         return total + parseFloat(taskPrice);
     }, 0);
 
