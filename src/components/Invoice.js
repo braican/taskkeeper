@@ -83,7 +83,7 @@ class Invoice extends React.Component {
 Invoice.propTypes = {
     invoiceId      : PropTypes.string.isRequired,
     invoice        : PropTypes.object.isRequired,
-    rate           : PropTypes.number.isRequired,
+    rate           : PropTypes.string.isRequired,
     archiveInvoice : PropTypes.func.isRequired,
 };
 

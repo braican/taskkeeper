@@ -38,7 +38,7 @@ const TaskList = (props) => {
 
 TaskList.propTypes = {
     tasks : PropTypes.array.isRequired,
-    rate  : PropTypes.number.isRequired,
+    rate  : PropTypes.string.isRequired,
 };
 
 

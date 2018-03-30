@@ -42,7 +42,7 @@ export function formatDate(date) {
  * @param {Number} rate The billing rate for the client
  */
 export function getTaskPrice(hours, price, rate) {
-    if (price !== null) {
+    if (price !== null && price !== undefined) {
         return price;
     }
 
@@ -62,8 +62,8 @@ export function getTasklistSubtotal(tasks, rate, format = false) {
     }
 
     const subtotal = tasks.reduce((total, task) => {
-        const taskPrice = getTaskPrice(task.hours, task.price, rate);
-        return total + taskPrice;
+        const taskPrice = getTaskPrice(task.hours, task.price, rate);        
+        return total + parseFloat(taskPrice);
     }, 0);
 
     return format ? formatPrice(subtotal) : subtotal;

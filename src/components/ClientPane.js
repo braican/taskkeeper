@@ -69,7 +69,7 @@ const ClientPane = (props) => {
     if (!client) {
         return (
             <div className="clientPane__noclients">
-                <p>Welcome to Taskkeeper. Add your first client.</p>
+                <p>Welcome to Taskkeeper. Choose a client from the sidebar.</p>
             </div>
         );
     }
