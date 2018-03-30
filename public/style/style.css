@@ -5,8 +5,7 @@
    v2.0 | 20110126
    License: none (public domain)
 */
-@import url("https://fonts.googleapis.com/css?family=Nunito:400,700");
-@import url("https://fonts.googleapis.com/css?family=Nunito+Sans:400,900");
+@import url("https://fonts.googleapis.com/css?family=Nunito+Sans:400,700,900");
 html {
   box-sizing: border-box; }
 
@@ -98,6 +97,13 @@ button {
     background-color: #c00a61; }
   .tk-btn:active {
     background-color: #b10959; }
+
+.tk-btn--secondary {
+  background-color: #ddd;
+  color: #d80b6d;
+  font-weight: 700; }
+  .tk-btn--secondary:hover {
+    background-color: #d5d5d5; }
 
 .tk-btn--submit,
 .tk-btn--paid {
@@ -466,9 +472,13 @@ html, body, #root, .app-main {
 
 .task {
   display: flex;
-  margin-bottom: 10px;
+  padding-bottom: 10px;
   padding-top: 10px;
-  border-top: 1px solid #eaeaea; }
+  border-top: 1px solid #eaeaea;
+  position: relative; }
+
+.task--selected {
+  font-weight: 700; }
 
 .task--key {
   border-top: 0;
@@ -476,6 +486,11 @@ html, body, #root, .app-main {
   font-size: 0.7em;
   letter-spacing: 0.1em;
   font-weight: 900; }
+
+.task__description,
+.task__hours {
+  text-align: left;
+  cursor: text; }
 
 .task__description {
   flex: 1 1 auto; }
@@ -489,6 +504,41 @@ html, body, #root, .app-main {
 .task__price {
   flex: 0 0 100px;
   text-align: right; }
+
+.task__selector {
+  position: absolute;
+  left: -24px;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  cursor: pointer;
+  display: none; }
+  .task__selector input[type="checkbox"] {
+    display: none; }
+  .client__opentasks--interactive .task__selector {
+    display: block; }
+
+.task__selectorlabel {
+  display: block;
+  width: 14px;
+  height: 14px;
+  position: relative;
+  top: 50%;
+  margin-top: -9px;
+  border: 1px solid #404040;
+  border-radius: 50%; }
+  input[type="checkbox"]:checked + .task__selectorlabel {
+    background-color: #d80b6d;
+    border-color: #d80b6d; }
+
+/* ------------------------------------
+ * --editable
+ * ------------------------------------*/
+.task .taskedit {
+  display: none; }
+
+.task .taskedit--visible {
+  display: block; }
 
 .taskform {
   padding-top: 20px;

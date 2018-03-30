@@ -3,8 +3,7 @@
 // FONTS
 //
 
-@import url('https://fonts.googleapis.com/css?family=Nunito:400,700');
-@import url('https://fonts.googleapis.com/css?family=Nunito+Sans:400,900');
+@import url('https://fonts.googleapis.com/css?family=Nunito+Sans:400,700,900');
 
 
 //
@@ -84,6 +83,16 @@ button{
 
     &:active{
         background-color: darken($pink, 8%);
+    }
+}
+
+.tk-btn--secondary{
+    background-color: $offwhite_border;
+    color: $pink;
+    font-weight: 700;
+
+    &:hover{
+        background-color: darken($offwhite_border, 3%);
     }
 }
 

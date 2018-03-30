@@ -52,6 +52,7 @@ function getInvoicegroupTotal(invoices, rate) {
     return formatPrice(subtotal);
 }
 
+
 //
 // ClientPane
 //

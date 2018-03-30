@@ -52,12 +52,13 @@ class App extends React.Component {
      */
     addTask(task, client) {
         const clients = { ...this.state.clients };
+        const key =
+            (Date.now().toString(36) + Math.random().toString(36).substr(2, 5)).toUpperCase();
 
         if (!clients[client].openTasks) {
-            clients[client].openTasks = [task];
-        } else {
-            clients[client].openTasks.push(task);
+            clients[client].openTasks = {};
         }
+        clients[client].openTasks[key] = task;
 
         this.setState({ clients });
     }
@@ -68,6 +69,7 @@ class App extends React.Component {
      */
     submitInvoice(client, tasks) {
         const clients = { ...this.state.clients };
+        const openTasks = { ...clients[client].openTasks };
         const timestamp = Date.now();
         const today = new Date();
         const year = today.getFullYear();
@@ -75,17 +77,23 @@ class App extends React.Component {
         const day = today.getDate();
         const formattedDate = `${year}/${month}/${day}`;
 
-        clients[client].openTasks = [];
-
         if (!clients[client].invoices) {
             clients[client].invoices = {};
         }
 
-        clients[client].invoices[timestamp] = {
-            invoicedate : formattedDate,
-            status      : 'active',
-            tasks,
-        };
+        if (Object.keys(tasks).length > 0) {
+            clients[client].invoices[timestamp] = {
+                invoicedate : formattedDate,
+                status      : 'active',
+                tasks,
+            };
+        }
+
+        Object.keys(tasks).map((taskId) => {
+            openTasks[taskId] = null;
+            return true;
+        });
+        clients[client].openTasks = openTasks;
 
         this.setState({ clients });
     }
