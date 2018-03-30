@@ -6,12 +6,19 @@ class NewClientForm extends React.Component {
     addNewClient(event) {
         event.preventDefault();
 
-        const { clientName, clientRate } = this;
-        const clientKey = encodeURIComponent(clientName.value.toLowerCase().replace(/\s|\.|#|\$|\[|\]/g, ''));
+        let { clientName, clientRate } = this;
+        clientName = clientName.value;
+        clientRate = clientRate.value || '0';
+        const clientKey = encodeURIComponent(clientName.toLowerCase().replace(/\s|\.|#|\$|\[|\]/g, ''));
+
+        if (clientName === '') {
+            console.error('All clients have a name. Please add one.');
+            return;
+        }
 
         const clientObj = {
-            name : clientName.value,
-            rate : clientRate.value,
+            name : clientName,
+            rate : clientRate,
         };
 
         this.props.addNewClient(clientKey, clientObj);
@@ -32,21 +39,26 @@ class NewClientForm extends React.Component {
                         <h3>Add a new client</h3>
                     </header>
 
-                    <input
-                        ref={(input) => { this.clientName = input; }}
-                        name="client_name"
-                        className="clientform__input"
-                        type="text"
-                        placeholder="Client Name"
-                    />
+                    <div className="clientform__el">
+                        <input
+                            ref={(input) => { this.clientName = input; }}
+                            name="client_name"
+                            className="clientform__input"
+                            type="text"
+                            placeholder="Client Name"
+                        />
+                    </div>
 
-                    <input
-                        ref={(input) => { this.clientRate = input; }}
-                        name="client_rate"
-                        className="clientform__input clientform__input--number"
-                        type="number"
-                        placeholder="Hourly Rate"
-                    />
+                    <div className="clientform__el">
+                        <span className="clientform__beforeinput">$</span>
+                        <input
+                            ref={(input) => { this.clientRate = input; }}
+                            name="client_rate"
+                            className="clientform__input clientform__input--number"
+                            type="number"
+                            placeholder="Hourly Rate"
+                        />
+                    </div>
 
                     <div className="clientform__actions">
                         <button className="tk-btn tk-btn--submit">Add client</button>

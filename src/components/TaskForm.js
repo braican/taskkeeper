@@ -25,7 +25,7 @@ class TaskForm extends React.Component {
         const taskPrice = this.state.taskByPrice ? this.taskQty.value : null;
 
         if (this.taskDescription.value === '' && this.taskQty.value === '') {
-            console.error('No task added');
+            console.error('Please add a description and a cost or hours value to add a task.');
             return;
         }
 
@@ -36,7 +36,12 @@ class TaskForm extends React.Component {
         };
 
         this.props.addTask(task, this.props.clientKey);
-        this.taskForm.reset();
+        this.taskDescription.value = '';
+        this.taskQty.value = '';
+        this.setState({
+            qty         : '',
+            description : '',
+        });
     }
 
 

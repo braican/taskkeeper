@@ -428,12 +428,16 @@ html, body, #root, .app-main {
 .clientform__header {
   margin-bottom: 20px; }
 
+.clientform__el {
+  position: relative;
+  margin-bottom: 20px; }
+
 .clientform__input[type="text"],
 .clientform__input[type="number"] {
   border: 0;
   background-color: #eaeaea;
-  padding: 20px;
-  margin-bottom: 20px; }
+  padding: 14px;
+  font-size: inherit; }
 
 .clientform__input--number[type="number"] {
   display: inline-block;
@@ -442,6 +446,15 @@ html, body, #root, .app-main {
 .clientform__actions {
   display: flex;
   justify-content: space-between; }
+
+.clientform__beforeinput {
+  position: absolute;
+  left: 15px;
+  top: 0;
+  bottom: 0;
+  line-height: 2.5em; }
+  .clientform__beforeinput + .clientform__input[type="number"] {
+    padding-left: 1.5em; }
 
 .client__opentasks {
   margin-bottom: 60px; }
