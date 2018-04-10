@@ -490,9 +490,11 @@ html, body, #root, .app-main {
   font-weight: 900; }
 
 .task__description {
-  flex: 1 1 auto; }
+  flex: 1 1 auto;
+  position: relative; }
 
 .task__hours {
+  position: relative;
   text-align: right;
   flex: 0 0 80px;
   padding-left: 20px;
@@ -506,6 +508,8 @@ html, body, #root, .app-main {
   display: block;
   width: 100%;
   text-align: left; }
+  .task__hours .task__clickable {
+    text-align: right; }
 
 .task__selector {
   position: absolute;
@@ -537,17 +541,33 @@ html, body, #root, .app-main {
  * --editable
  * ------------------------------------*/
 .task .taskedit {
-  display: none; }
+  display: none;
+  position: absolute;
+  top: -6px;
+  left: 0;
+  width: 100%; }
 
 .task .taskedit--visible {
   display: block; }
 
+.task .taskedit--hours {
+  left: 20px; }
+  .task .taskedit--hours input {
+    text-align: right; }
+
 /* ------------------------------------
  * --taskaction
  * ------------------------------------*/
+.taskactions {
+  position: absolute;
+  width: 100px;
+  right: -100px;
+  top: -20px; }
+
 .taskaction {
   width: 44px;
-  height: 44px; }
+  height: 44px;
+  padding: 10px; }
 
 .taskform {
   padding-top: 20px;

@@ -128,6 +128,8 @@ class OpenTasks extends React.Component {
                                     rate={this.props.rate}
                                     editable
                                     updateSelectedTasks={this.updateSelectedTasks}
+                                    saveTask={this.props.saveTask}
+                                    removeTask={this.props.removeTask}
                                 /> :
                                 <p>{notasksCopy}</p>
                         }
@@ -144,6 +146,8 @@ OpenTasks.propTypes = {
     tasks         : PropTypes.object,
     rate          : PropTypes.string.isRequired,
     submitInvoice : PropTypes.func.isRequired,
+    saveTask      : PropTypes.func.isRequired,
+    removeTask    : PropTypes.func.isRequired,
 };
 
 OpenTasks.defaultProps = {

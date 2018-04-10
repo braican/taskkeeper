@@ -15,8 +15,10 @@
 }
 .task__description{
     flex: 1 1 auto;
+    position: relative;
 }
 .task__hours{
+    position: relative;
     text-align: right;
     flex: 0 0 80px;
     padding-left: 20px;
@@ -31,6 +33,10 @@
     display: block;
     width: 100%;
     text-align: left;
+
+    .task__hours &{
+        text-align: right;
+    }
 }
 
 
@@ -73,11 +79,24 @@
  * --editable
  * ------------------------------------*/
 
-.task .taskedit{
-    display: none;
-}
-.task .taskedit--visible{
-    display: block;
+.task {
+    .taskedit{
+        display: none;
+        position: absolute;
+        top: -6px;
+        left: 0;
+        width: 100%;
+    }
+    .taskedit--visible{
+        display: block;
+    }
+    .taskedit--hours{
+        left: 20px;
+
+        input{
+            text-align: right;
+        }
+    }
 }
 
 
@@ -85,7 +104,14 @@
  * --taskaction
  * ------------------------------------*/
 
+.taskactions{
+    position: absolute;
+    width: 100px;
+    right: -100px;
+    top: -20px;
+}
 .taskaction{
     width: 44px;
     height: 44px;
+    padding: 10px;
 }

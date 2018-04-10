@@ -18,6 +18,8 @@ class App extends React.Component {
 
         // actions
         this.addTask = this.addTask.bind(this);
+        this.saveTask = this.saveTask.bind(this);
+        this.removeTask = this.removeTask.bind(this);
         this.submitInvoice = this.submitInvoice.bind(this);
         this.archiveInvoice = this.archiveInvoice.bind(this);
         this.addNewClient = this.addNewClient.bind(this);
@@ -46,6 +48,10 @@ class App extends React.Component {
         });
     }
 
+    //
+    // TASK
+    //
+
 
     /**
      * Adds a task to an invoice for the client
@@ -63,6 +69,23 @@ class App extends React.Component {
         this.setState({ clients });
     }
 
+
+    saveTask(clientKey, taskKey, newTask) {
+        const clients = { ...this.state.clients };
+        clients[clientKey].openTasks[taskKey] = newTask;
+        this.setState({ clients });
+    }
+
+    removeTask(clientKey, taskKey) {
+        const clients = { ...this.state.clients };
+        clients[clientKey].openTasks[taskKey] = null;
+        this.setState({ clients });
+    }
+
+
+    //
+    // INVOICE
+    //
 
     /**
      * Submits an invoice from a list of tasks
@@ -130,18 +153,6 @@ class App extends React.Component {
     toggleNewClientForm() {
         const newClientFormStatus = this.state.newClientFormVisible;
         this.setState({ newClientFormVisible : !newClientFormStatus });
-    }
-
-
-    //
-    // TASK
-    //
-    saveTask(clientKey, taskKey, newTask) {
-
-    }
-
-    removeTask(clientKey, taskKey) {
-        
     }
 
 

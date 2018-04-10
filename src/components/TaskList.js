@@ -42,13 +42,15 @@ TaskList.propTypes = {
     rate                : PropTypes.string.isRequired,
     editable            : PropTypes.bool,
     updateSelectedTasks : PropTypes.func,
-    saveTask            : PropTypes.func.isRequired,
-    removeTask          : PropTypes.func.isRequired,
+    saveTask            : PropTypes.func,
+    removeTask          : PropTypes.func,
 };
 
 TaskList.defaultProps = {
     editable            : false,
     updateSelectedTasks : null,
+    saveTask            : null,
+    removeTask          : null,
 };
 
 

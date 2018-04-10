@@ -110,7 +110,7 @@ const ClientPane = (props) => {
      * @param {string} taskId The taskID
      */
     const clientRemoveTask = (taskId) => {
-        props.saveTask(clientKey, taskId);
+        props.removeTask(clientKey, taskId);
     };
 
 
@@ -130,8 +130,6 @@ const ClientPane = (props) => {
                 invoice={invoiceGroup[invoiceId]}
                 rate={rate}
                 archiveInvoice={clientArchiveInvoice}
-                saveTask={clientSaveTask}
-                removeTask={clientRemoveTask}
             />
         ))
     );
@@ -190,7 +188,13 @@ const ClientPane = (props) => {
 
             <TaskForm addTask={props.addTask} client={client} clientKey={clientKey} />
 
-            <OpenTasks submitInvoice={clientSubmitInvoice} tasks={openTasks} rate={client.rate} />
+            <OpenTasks
+                submitInvoice={clientSubmitInvoice}
+                tasks={openTasks}
+                rate={client.rate}
+                saveTask={clientSaveTask}
+                removeTask={clientRemoveTask}
+            />
 
             <div className="clientInvoices l-container">
                 {renderOutstandingInvoices(invoices.active)}
