@@ -10,7 +10,7 @@ export function formatPrice(price) {
         return null;
     }
 
-    const priceNumber = parseInt(price, 10);
+    const priceNumber = parseFloat(price);
     const priceString = priceNumber.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     const dollars = priceString.slice(0, priceString.length - 2).replace('.', '');
     const cents = priceString.slice(-2);

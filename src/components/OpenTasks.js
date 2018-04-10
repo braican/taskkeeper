@@ -6,14 +6,14 @@ import TaskList from './TaskList';
 
 
 class OpenTasks extends React.Component {
-    constructor(props) {
+    constructor() {
         super();
 
         this.updateSelectedTasks = this.updateSelectedTasks.bind(this);
 
         this.state = {
             interactiveMode : false,
-            selectedTasks   : props.tasks,
+            selectedTasks   : {},
         };
     }
 
@@ -23,10 +23,7 @@ class OpenTasks extends React.Component {
      */
     enableTaskSelector(event) {
         event.preventDefault();
-        this.setState({
-            interactiveMode : true,
-            selectedTasks   : {},
-        });
+        this.setState({ interactiveMode : true });
     }
 
 
@@ -38,7 +35,7 @@ class OpenTasks extends React.Component {
         if (event) event.preventDefault();
         this.setState({
             interactiveMode : false,
-            selectedTasks   : this.props.tasks,
+            selectedTasks   : {},
         });
     }
 
@@ -49,7 +46,11 @@ class OpenTasks extends React.Component {
      */
     submitTasksForInvoice(event) {
         event.preventDefault();
-        this.props.submitInvoice(this.state.selectedTasks);
+        if (this.state.interactiveMode) {
+            this.props.submitInvoice(this.state.selectedTasks);
+        } else {
+            this.props.submitInvoice(this.props.tasks);
+        }
         this.cancelTaskSelector();
     }
 
@@ -68,9 +69,7 @@ class OpenTasks extends React.Component {
             delete selected[taskIndex];
         }
 
-        this.setState({
-            selectedTasks : selected,
-        });
+        this.setState({ selectedTasks : selected });
     }
 
 

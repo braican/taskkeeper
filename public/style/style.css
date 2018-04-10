@@ -229,7 +229,10 @@ html, body, #root, .app-main {
   opacity: 1; }
 
 .toggle__check {
-  display: none; }
+  position: absolute;
+  left: -9999px;
+  top: -9999px;
+  opacity: 0; }
 
 .toggle__switch {
   display: inline-block;
@@ -252,6 +255,8 @@ html, body, #root, .app-main {
     transition: all .2s;
     background-color: #fff;
     border-radius: 100%; }
+  input[type="checkbox"]:focus + .toggle__switch {
+    outline: #d80b6d auto 4px; }
   input[type="checkbox"]:checked + .toggle__switch:before {
     transform: translateX(100%); }
 
@@ -350,10 +355,11 @@ html, body, #root, .app-main {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-right: 20px; }
+  padding-right: 20px;
+  margin-bottom: 10px; }
 
 .invoice {
-  margin-top: 10px;
+  margin-bottom: 10px;
   background-color: #fff;
   padding: 20px;
   box-shadow: 2px 2px 6px rgba(41, 41, 41, 0.1);
@@ -479,7 +485,8 @@ html, body, #root, .app-main {
   border-top: 1px solid #eaeaea;
   position: relative; }
 
-.task--selected {
+.task--selected,
+.task--selected .task__clickable {
   font-weight: 700; }
 
 .task--key {
@@ -489,12 +496,15 @@ html, body, #root, .app-main {
   letter-spacing: 0.1em;
   font-weight: 900; }
 
-.task__description {
-  flex: 1 1 auto;
+.task__description,
+.task__hours,
+.task__price {
   position: relative; }
 
+.task__description {
+  flex: 1 1 auto; }
+
 .task__hours {
-  position: relative;
   text-align: right;
   flex: 0 0 80px;
   padding-left: 20px;
@@ -508,7 +518,8 @@ html, body, #root, .app-main {
   display: block;
   width: 100%;
   text-align: left; }
-  .task__hours .task__clickable {
+  .task__hours .task__clickable,
+  .task__price .task__clickable {
     text-align: right; }
 
 .task__selector {
@@ -545,13 +556,15 @@ html, body, #root, .app-main {
   position: absolute;
   top: -6px;
   left: 0;
-  width: 100%; }
+  right: 0; }
 
 .task .taskedit--visible {
   display: block; }
 
+.task .taskedit--price,
 .task .taskedit--hours {
   left: 20px; }
+  .task .taskedit--price input,
   .task .taskedit--hours input {
     text-align: right; }
 
@@ -561,13 +574,26 @@ html, body, #root, .app-main {
 .taskactions {
   position: absolute;
   width: 100px;
-  right: -100px;
-  top: -20px; }
+  right: -120px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  justify-content: space-between; }
 
 .taskaction {
   width: 44px;
   height: 44px;
-  padding: 10px; }
+  padding: 14px;
+  display: flex;
+  align-items: center;
+  border-radius: 4px;
+  background-color: #eaeaea;
+  transition: background-color .2s; }
+  .taskaction svg {
+    width: 100%;
+    display: block; }
+  .taskaction:hover {
+    background-color: #ddd; }
 
 .taskform {
   padding-top: 20px;

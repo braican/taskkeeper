@@ -7,18 +7,24 @@
     position: relative;
 }
 .task--selected{
-    font-weight: 700;
+    &,
+    .task__clickable {
+        font-weight: 700;
+    }
 }
 .task--key{
     border-top: 0;
     @include uppercase;
 }
-.task__description{
-    flex: 1 1 auto;
+.task__description,
+.task__hours,
+.task__price{
     position: relative;
 }
+.task__description{
+    flex: 1 1 auto;
+}
 .task__hours{
-    position: relative;
     text-align: right;
     flex: 0 0 80px;
     padding-left: 20px;
@@ -34,7 +40,8 @@
     width: 100%;
     text-align: left;
 
-    .task__hours &{
+    .task__hours &,
+    .task__price &{
         text-align: right;
     }
 }
@@ -85,11 +92,13 @@
         position: absolute;
         top: -6px;
         left: 0;
-        width: 100%;
+        right: 0;
     }
     .taskedit--visible{
         display: block;
     }
+
+    .taskedit--price,
     .taskedit--hours{
         left: 20px;
 
@@ -107,11 +116,28 @@
 .taskactions{
     position: absolute;
     width: 100px;
-    right: -100px;
-    top: -20px;
+    right: -120px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    justify-content: space-between;
 }
 .taskaction{
     width: 44px;
     height: 44px;
-    padding: 10px;
+    padding: 14px;
+    display: flex;
+    align-items:center;
+    border-radius: 4px;
+    background-color: $offwhite;
+    transition: background-color .2s;
+
+    svg{
+        width: 100%;
+        display: block;
+    }
+
+    &:hover{
+        background-color: $offwhite_border;
+    }
 }

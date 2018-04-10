@@ -10,7 +10,11 @@
     opacity: 1;
 }
 .toggle__check{
-    display: none;
+    // display: none;
+    position: absolute;
+    left: -9999px;
+    top: -9999px;
+    opacity: 0;
 }
 .toggle__switch{
     display: inline-block;
@@ -34,6 +38,10 @@
         transition: all .2s;
         background-color: $white;
         border-radius: 100%;
+    }
+
+    input[type="checkbox"]:focus + &{
+        outline: $pink auto 4px;
     }
 
     input[type="checkbox"]:checked + &:before{

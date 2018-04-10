@@ -8,10 +8,11 @@
     justify-content: space-between;
     align-items: center;
     padding-right: $windowgutter;
+    margin-bottom: 10px;
 }
 
 .invoice{
-    margin-top: 10px;
+    margin-bottom: 10px;
     background-color: $white;
     padding: $windowgutter;
     box-shadow: 2px 2px 6px rgba($gray, .1);

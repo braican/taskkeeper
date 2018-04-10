@@ -48,10 +48,10 @@ class App extends React.Component {
         });
     }
 
+
     //
     // TASK
     //
-
 
     /**
      * Adds a task to an invoice for the client

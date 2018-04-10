@@ -90,6 +90,7 @@ class TaskForm extends React.Component {
                             ref={(input) => { this.taskDescription = input; }}
                             type="text"
                             id="task-description"
+                            tabIndex="0"
                             onChange={(event) => this.handleDescriptionInputChange(event)}
                             className={`taskform__input ${description === '' ? '' : 'taskform__input--hasinput'}`}
                         />
@@ -102,6 +103,7 @@ class TaskForm extends React.Component {
                             className="toggle__check"
                             id="task-unit-toggle"
                             type="checkbox"
+                            tabIndex="0"
                             onChange={this.toggleTaskQtyUnit}
                         />
                         <label htmlFor="task-unit-toggle" className="toggle__switch" />
@@ -113,7 +115,9 @@ class TaskForm extends React.Component {
                         <input
                             ref={(input) => { this.taskQty = input; }}
                             type="number"
+                            step="any"
                             id="task-qty"
+                            tabIndex="0"
                             onChange={(event) => this.handleQtyInputChange(event)}
                             className={`taskform__input ${qty === '' ? '' : 'taskform__input--hasinput'}`}
                         />

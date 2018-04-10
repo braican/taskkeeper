@@ -52,17 +52,18 @@ class Task extends React.Component {
 
 
     saveTask() {
-        const newDescription = this.new_description.value;
-        const newHours = this.new_hours.value;
+        const newTask = {
+            description : this.new_description.value,
+        };
+
+        if (this.new_hours) newTask.hours = this.new_hours.value;
+        if (this.new_price) newTask.price = this.new_price.value;
 
         this.setState({
             editingTask : false,
         });
 
-        this.props.saveTask(this.props.taskIndex, {
-            description : newDescription,
-            hours       : newHours,
-        });
+        this.props.saveTask(this.props.taskIndex, newTask);
     }
 
 
@@ -88,9 +89,9 @@ class Task extends React.Component {
      * @param {string} value The default value for the input
      * @param {string} id An ID for the input
      */
-    renderTaskInput(value, id) {
+    renderTaskInput(value, id, inputType = 'text') {
         const inputClass = `taskedit taskedit--${id}${this.state.editingTask ? ' taskedit--visible' : ''}`;
-        const inputType = id === 'hours' ? 'number' : 'text';
+        const inputStep = inputType === 'number' ? 'any' : null;
         const varName = `new_${id}`;
         return (
             <div className={inputClass}>
@@ -98,6 +99,7 @@ class Task extends React.Component {
                     ref={(input) => { this[varName] = input; }}
                     type={inputType}
                     defaultValue={value}
+                    step={inputStep}
                 />
             </div>
         );
@@ -126,7 +128,8 @@ class Task extends React.Component {
             editable,
         } = this.props;
         const description = this.props.children;
-        const formattedPrice = formatPrice(getTaskPrice(hours, price, rate));
+        const taskPrice = getTaskPrice(hours, price, rate);
+        const formattedPrice = formatPrice(taskPrice);
         const editHandler = editable ? this.editTask : null;
 
         if (!editable) {
@@ -152,10 +155,15 @@ class Task extends React.Component {
                     <button className="task__clickable" onClick={editHandler}>
                         {hours || '-'}
                     </button>
-                    {hours ? this.renderTaskInput(hours, 'hours') : null}
+                    {hours ? this.renderTaskInput(hours, 'hours', 'number') : null}
                 </div>
 
-                <span className="task__price">{formattedPrice}</span>
+                <div className="task__price">
+                    <button className="task__clickable" onClick={editHandler}>
+                        {formattedPrice}
+                    </button>
+                    {!hours ? this.renderTaskInput(taskPrice, 'price', 'number') : null}
+                </div>
 
                 {this.renderSelectable()}
                 {this.state.editingTask ? this.renderEditActions() : null}
