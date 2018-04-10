@@ -96,6 +96,24 @@ const ClientPane = (props) => {
     };
 
 
+    /**
+     * Edit the selected task
+     * @param {string} taskId The ID of the task to edit
+     * @param {object} newTask Task data
+     */
+    const clientSaveTask = (taskId, newTask) => {
+        props.saveTask(clientKey, taskId, newTask);
+    };
+
+    /**
+     * Remove the given task
+     * @param {string} taskId The taskID
+     */
+    const clientRemoveTask = (taskId) => {
+        props.saveTask(clientKey, taskId);
+    };
+
+
     //
     // render the invoice groups
     //
@@ -112,6 +130,8 @@ const ClientPane = (props) => {
                 invoice={invoiceGroup[invoiceId]}
                 rate={rate}
                 archiveInvoice={clientArchiveInvoice}
+                saveTask={clientSaveTask}
+                removeTask={clientRemoveTask}
             />
         ))
     );
@@ -187,6 +207,8 @@ ClientPane.propTypes = {
     submitInvoice  : PropTypes.func.isRequired,
     archiveInvoice : PropTypes.func.isRequired,
     loaded         : PropTypes.bool,
+    saveTask       : PropTypes.func.isRequired,
+    removeTask     : PropTypes.func.isRequired,
 };
 
 ClientPane.defaultProps = {

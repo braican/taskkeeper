@@ -25,6 +25,8 @@ const TaskList = (props) => (
                             rate={props.rate}
                             editable={props.editable}
                             updateSelectedTasks={props.updateSelectedTasks}
+                            saveTask={props.saveTask}
+                            removeTask={props.removeTask}
                         >
                             {task.description}
                         </Task>
@@ -40,6 +42,8 @@ TaskList.propTypes = {
     rate                : PropTypes.string.isRequired,
     editable            : PropTypes.bool,
     updateSelectedTasks : PropTypes.func,
+    saveTask            : PropTypes.func.isRequired,
+    removeTask          : PropTypes.func.isRequired,
 };
 
 TaskList.defaultProps = {

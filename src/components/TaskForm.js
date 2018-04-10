@@ -68,6 +68,7 @@ class TaskForm extends React.Component {
     render() {
         const { taskByPrice, description, qty } = this.state;
         const { client } = this.props;
+        const openTaskCost = getTasklistSubtotal(client.openTasks, client.rate, true);
 
         return (
             <form
@@ -79,7 +80,7 @@ class TaskForm extends React.Component {
                     <h3 className="taskform__title t-blocktitle">Open Tasks</h3>
 
                     <p className="moneydisplay">
-                        {getTasklistSubtotal(client.openTasks, client.rate, true)}
+                        {openTaskCost || <span>&nbsp;</span>}
                     </p>
                 </header>
 

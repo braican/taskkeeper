@@ -72,7 +72,12 @@ class Invoice extends React.Component {
                 </header>
 
                 <div className={`invoice__tasks${this.state.tasksOpen ? ' invoice__tasks--expanded' : ''}`}>
-                    <TaskList tasks={tasklist} rate={rate} />
+                    <TaskList
+                        tasks={tasklist}
+                        rate={rate}
+                        saveTask={this.props.saveTask}
+                        removeTask={this.props.removeTask}
+                    />
                 </div>
             </div>
         );
@@ -85,6 +90,8 @@ Invoice.propTypes = {
     invoice        : PropTypes.object.isRequired,
     rate           : PropTypes.string.isRequired,
     archiveInvoice : PropTypes.func.isRequired,
+    saveTask       : PropTypes.func.isRequired,
+    removeTask     : PropTypes.func.isRequired,
 };
 
 export default Invoice;

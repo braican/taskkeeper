@@ -13,11 +13,6 @@
     border-top: 0;
     @include uppercase;
 }
-.task__description,
-.task__hours{
-    text-align: left;
-    cursor: text;
-}
 .task__description{
     flex: 1 1 auto;
 }
@@ -30,6 +25,12 @@
 .task__price{
     flex: 0 0 100px;
     text-align: right;
+}
+
+.task__clickable{
+    display: block;
+    width: 100%;
+    text-align: left;
 }
 
 
@@ -77,4 +78,14 @@
 }
 .task .taskedit--visible{
     display: block;
+}
+
+
+/* ------------------------------------
+ * --taskaction
+ * ------------------------------------*/
+
+.taskaction{
+    width: 44px;
+    height: 44px;
 }

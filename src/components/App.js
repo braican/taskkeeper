@@ -134,6 +134,18 @@ class App extends React.Component {
 
 
     //
+    // TASK
+    //
+    saveTask(clientKey, taskKey, newTask) {
+
+    }
+
+    removeTask(clientKey, taskKey) {
+        
+    }
+
+
+    //
     // RENDER
     //
 
@@ -154,6 +166,8 @@ class App extends React.Component {
                 submitInvoice={this.submitInvoice}
                 archiveInvoice={this.archiveInvoice}
                 loaded={this.state.loaded}
+                saveTask={this.saveTask}
+                removeTask={this.removeTask}
             />
         );
     }

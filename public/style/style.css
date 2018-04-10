@@ -1,6 +1,9 @@
 /* ------------------------------------
  * --icon mixins
  * ------------------------------------*/
+/* ------------------------------------
+ * Queries
+ * ------------------------------------*/
 /* http://meyerweb.com/eric/tools/css/reset/ 
    v2.0 | 20110126
    License: none (public domain)
@@ -467,8 +470,7 @@ html, body, #root, .app-main {
 
 .opentasks {
   background-color: #fff;
-  padding-top: 40px;
-  padding-bottom: 40px; }
+  padding: 40px; }
 
 .task {
   display: flex;
@@ -487,11 +489,6 @@ html, body, #root, .app-main {
   letter-spacing: 0.1em;
   font-weight: 900; }
 
-.task__description,
-.task__hours {
-  text-align: left;
-  cursor: text; }
-
 .task__description {
   flex: 1 1 auto; }
 
@@ -504,6 +501,11 @@ html, body, #root, .app-main {
 .task__price {
   flex: 0 0 100px;
   text-align: right; }
+
+.task__clickable {
+  display: block;
+  width: 100%;
+  text-align: left; }
 
 .task__selector {
   position: absolute;
@@ -539,6 +541,13 @@ html, body, #root, .app-main {
 
 .task .taskedit--visible {
   display: block; }
+
+/* ------------------------------------
+ * --taskaction
+ * ------------------------------------*/
+.taskaction {
+  width: 44px;
+  height: 44px; }
 
 .taskform {
   padding-top: 20px;
