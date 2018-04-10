@@ -51,6 +51,9 @@ class Invoice extends React.Component {
         const tasklist = invoice.tasks;
         const invoiceAmount = getTasklistSubtotal(tasklist, rate, true);
 
+        console.log(this.props);
+        
+
         return (
             <div className="invoice">
                 <header className="invoice__header">
@@ -90,8 +93,13 @@ Invoice.propTypes = {
     invoice        : PropTypes.object.isRequired,
     rate           : PropTypes.string.isRequired,
     archiveInvoice : PropTypes.func.isRequired,
-    saveTask       : PropTypes.func.isRequired,
-    removeTask     : PropTypes.func.isRequired,
+    saveTask       : PropTypes.func,
+    removeTask     : PropTypes.func,
 };
+
+Invoice.defaultProps = {
+    saveTask   : null,
+    removeTask : null,
+}
 
 export default Invoice;
