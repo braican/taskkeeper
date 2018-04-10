@@ -2,6 +2,7 @@
 // vars
 @import './sass/vars/colors';
 @import './sass/vars/icons';
+@import './sass/vars/mediaqueries';
 
 // base
 @import './sass/base/reset';
@@ -16,6 +17,9 @@
 @import './sass/components/Header';
 @import './sass/components/ClientList';
 @import './sass/components/ClientPane';
+@import './sass/components/ClientSidebar';
 @import './sass/components/Invoice';
+@import './sass/components/NewClientForm';
+@import './sass/components/OpenTasks';
 @import './sass/components/Task';
 @import './sass/components/TaskForm';

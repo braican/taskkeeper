@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import TaskForm from './TaskForm';
-import TaskList from './TaskList';
+import OpenTasks from './OpenTasks';
 import Invoice from './Invoice';
 
-import { formatPrice } from '../helpers';
+import { formatPrice, getTasklistSubtotal } from '../helpers';
 
 
 /**
@@ -24,7 +24,7 @@ function organizeInvoices(invoices) {
         };
     }
 
-    Object.keys(invoices).forEach((invoiceId) => {
+    Object.keys(invoices).reverse().forEach((invoiceId) => {
         const invoiceData = invoices[invoiceId];
 
         if (invoiceData.status === 'active') {
@@ -38,85 +38,186 @@ function organizeInvoices(invoices) {
 }
 
 
-//
-// RENDER
-//
+function getInvoicegroupTotal(invoices, rate) {
+    const subtotal = Object.keys(invoices).reduce((total, invoiceId) => {
+        const invoice = invoices[invoiceId];
+
+        if (!invoice.tasks) {
+            return total;
+        }
+
+        return total + getTasklistSubtotal(invoice.tasks, rate);
+    }, 0);
+
+    return formatPrice(subtotal);
+}
 
 
-/**
- * Render the group of invoices, with a header.
- * @param {Array} invoiceGroup Group of invoices
- * @param {String} id Identifier for this invoice group
- * @param {String} header The header text for this group
- * @param {Number} rate Client billable rate
- */
-function renderInvoices(invoiceGroup, id, header, rate) {
-    if (Object.keys(invoiceGroup).length === 0) {
-        return false;
+//
+// ClientPane
+//
+const ClientPane = (props) => {
+    const { clientKey, client, loaded } = props;
+
+    if (!loaded) {
+        return (
+            <div className="clientPane__noclients">
+                <p>Loading...</p>
+            </div>
+        );
     }
 
-    return (
-        <section className={`invoices invoices--${id}`}>
-            <header><h3 className="t-blocktitle">{header}</h3></header>
+    if (!client) {
+        return (
+            <div className="clientPane__noclients">
+                <p>Welcome to Taskkeeper. Choose a client from the sidebar.</p>
+            </div>
+        );
+    }
+
+    const { openTasks, rate } = client;
+    const invoices = organizeInvoices(client.invoices);
+
+
+    /**
+     * Client-knowledgeable submit invoice
+     * @param {Array} tasks List of tasks
+     */
+    const clientSubmitInvoice = (tasks) => {
+        props.submitInvoice(clientKey, tasks);
+    };
+
+
+    /**
+     * Client-knowledgeable archive invoice
+     */
+    const clientArchiveInvoice = (invoiceId) => {
+        props.archiveInvoice(clientKey, invoiceId);
+    };
+
+
+    /**
+     * Edit the selected task
+     * @param {string} taskId The ID of the task to edit
+     * @param {object} newTask Task data
+     */
+    const clientSaveTask = (taskId, newTask) => {
+        props.saveTask(clientKey, taskId, newTask);
+    };
+
+    /**
+     * Remove the given task
+     * @param {string} taskId The taskID
+     */
+    const clientRemoveTask = (taskId) => {
+        props.removeTask(clientKey, taskId);
+    };
+
+
+    //
+    // render the invoice groups
+    //
+
+    /**
+     * Render the group of invoices, with a header.
+     * @param {Array} invoiceGroup Group of invoices
+     */
+    const renderInvoices = (invoiceGroup) => (
+        Object.keys(invoiceGroup).map((invoiceId) => (
+            <Invoice
+                invoiceId={invoiceId}
+                key={invoiceId}
+                invoice={invoiceGroup[invoiceId]}
+                rate={rate}
+                archiveInvoice={clientArchiveInvoice}
+            />
+        ))
+    );
+
+    /**
+     * Render the outstanding invoice list
+     * @param {Array} invoiceGroup Group of outstanding invoices
+     */
+    const renderOutstandingInvoices = (invoiceGroup) => (
+        <section className="invoices invoices--outstanding">
+            <header className="invoicegroup__header">
+                <h3 className="t-blocktitle">Outstanding Invoices</h3>
+                <p className="invoice__price moneydisplay">
+                    {getInvoicegroupTotal(invoiceGroup, rate)}
+                </p>
+            </header>
             {
-                Object.keys(invoiceGroup).map((invoiceId) => (
-                    <Invoice
-                        key={invoiceId}
-                        invoice={invoiceGroup[invoiceId]}
-                        rate={rate}
-                    />
-                ))
+                Object.keys(invoiceGroup).length > 0 ?
+                    renderInvoices(invoiceGroup) :
+                    <p>There are no outstanding invoices for this client.</p>
             }
         </section>
     );
-}
 
+    /**
+     * Render the archive of invoices
+     * @param {Array} invoiceGroup Group of archived invoices
+     */
+    const renderArchivedInvoices = (invoiceGroup) => {
+        if (Object.keys(invoiceGroup).length === 0) {
+            return null;
+        }
 
-/**
- * Renders the open task list
- * @param {Array} tasklist The outstanding task list
- * @param {Number} rate Client's billable rate
- */
-function renderOpenTasks(tasklist, rate) {
-    if (!tasklist) {
-        return null;
-    }
+        return (
+            <section className="invoices invoices--archive">
+                <header className="invoicegroup__header">
+                    <h3 className="t-blocktitle">Invoice Archive</h3>
+                    <p className="invoice__price moneydisplay">
+                        {getInvoicegroupTotal(invoiceGroup, rate)}
+                    </p>
+                </header>
 
-    return (
-        <section className="client__opentasks">
-            <TaskList tasks={tasklist} rate={rate} />
-        </section>
-    );
-}
-
-
-const ClientPane = (props) => {
-    const { clientKey, client } = props;
-    const invoices = organizeInvoices(client.invoices);
+                {renderInvoices(invoiceGroup)}
+            </section>
+        );
+    };
 
     return (
         <div className="clientPane__main">
             <header className="clientHeader">
-                <h2 className="clientname">{client.name}</h2>
-                <p className="clientrate">{formatPrice(client.rate)}</p>
+                <div className="l-container">
+                    <h2 className="clientname">{client.name}</h2>
+                    <p className="clientrate moneydisplay">{formatPrice(client.rate)}</p>
+                </div>
             </header>
 
-            <TaskForm addTask={props.addTask} clientKey={clientKey} />
+            <TaskForm addTask={props.addTask} client={client} clientKey={clientKey} />
 
-            {renderOpenTasks(client.openTasks, client.rate)}
+            <OpenTasks
+                submitInvoice={clientSubmitInvoice}
+                tasks={openTasks}
+                rate={client.rate}
+                saveTask={clientSaveTask}
+                removeTask={clientRemoveTask}
+            />
 
-            <div className="clientInvoices">
-                {renderInvoices(invoices.active, 'outstanding', 'Outstanding Invoices', client.rate)}
-                {renderInvoices(invoices.archive, 'archive', 'Invoice Archive', client.rate)}
+            <div className="clientInvoices l-container">
+                {renderOutstandingInvoices(invoices.active)}
+                {renderArchivedInvoices(invoices.archive)}
             </div>
         </div>
     );
 };
 
 ClientPane.propTypes = {
-    clientKey : PropTypes.string.isRequired,
-    client    : PropTypes.object.isRequired,
-    addTask   : PropTypes.func.isRequired,
+    clientKey      : PropTypes.string.isRequired,
+    client         : PropTypes.object,
+    addTask        : PropTypes.func.isRequired,
+    submitInvoice  : PropTypes.func.isRequired,
+    archiveInvoice : PropTypes.func.isRequired,
+    loaded         : PropTypes.bool,
+    saveTask       : PropTypes.func.isRequired,
+    removeTask     : PropTypes.func.isRequired,
+};
+
+ClientPane.defaultProps = {
+    client : null,
+    loaded : false,
 };
 
 export default ClientPane;

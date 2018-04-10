@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import TaskList from './TaskList';
 
-import { formatPrice, formatDate, getTasklistSubtotal } from '../helpers';
+import { formatDate, getTasklistSubtotal } from '../helpers';
 
 
 class Invoice extends React.Component {
@@ -21,6 +21,9 @@ class Invoice extends React.Component {
     }
 
 
+    /**
+     * Opens and closes the task list
+     */
     toggleTasklist() {
         const drawerStatus = this.state.tasksOpen;
         this.setState({
@@ -29,10 +32,24 @@ class Invoice extends React.Component {
     }
 
 
+    renderPaidBtn() {
+        return (
+            <div>
+                <button
+                    className="tk-btn tk-btn--paid"
+                    onClick={() => this.props.archiveInvoice(this.props.invoiceId)}
+                >
+                    Paid
+                </button>
+            </div>
+        );
+    }
+
+
     render() {
         const { invoice, rate } = this.props;
         const tasklist = invoice.tasks;
-        const invoiceAmount = getTasklistSubtotal(tasklist, rate);
+        const invoiceAmount = getTasklistSubtotal(tasklist, rate, true);
 
         return (
             <div className="invoice">
@@ -46,7 +63,12 @@ class Invoice extends React.Component {
                             Tasklist
                         </button>
                     </div>
-                    <p className="invoice__price">{formatPrice(invoiceAmount)}</p>
+
+                    {invoice.status === 'active' ? this.renderPaidBtn() : null}
+
+                    <p className="invoice__price moneydisplay moneydisplay--small">
+                        {invoiceAmount}
+                    </p>
                 </header>
 
                 <div className={`invoice__tasks${this.state.tasksOpen ? ' invoice__tasks--expanded' : ''}`}>
@@ -59,8 +81,15 @@ class Invoice extends React.Component {
 
 
 Invoice.propTypes = {
-    invoice : PropTypes.object.isRequired,
-    rate    : PropTypes.number.isRequired,
+    invoiceId      : PropTypes.string.isRequired,
+    invoice        : PropTypes.object.isRequired,
+    rate           : PropTypes.string.isRequired,
+    archiveInvoice : PropTypes.func.isRequired,
 };
+
+Invoice.defaultProps = {
+    saveTask   : null,
+    removeTask : null,
+}
 
 export default Invoice;

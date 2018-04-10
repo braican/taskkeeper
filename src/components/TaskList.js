@@ -13,23 +13,44 @@ const TaskList = (props) => (
             <span className="task__price">Price</span>
         </div>
         <ul>
-            {props.tasks.map((task) => (
-                <Task
-                    hours={task.hours}
-                    price={task.price}
-                    rate={props.rate}
-                    key={`${task.description}-${task.hours}`}
-                >
-                    {task.description}
-                </Task>
-            ))}
+            {
+                Object.keys(props.tasks).map((taskId) => {
+                    const task = props.tasks[taskId];
+                    return (
+                        <Task
+                            key={taskId}
+                            taskIndex={taskId}
+                            hours={task.hours}
+                            price={task.price}
+                            rate={props.rate}
+                            editable={props.editable}
+                            updateSelectedTasks={props.updateSelectedTasks}
+                            saveTask={props.saveTask}
+                            removeTask={props.removeTask}
+                        >
+                            {task.description}
+                        </Task>
+                    );
+                })
+            }
         </ul>
     </div>
 );
 
 TaskList.propTypes = {
-    tasks : PropTypes.array.isRequired,
-    rate  : PropTypes.number.isRequired,
+    tasks               : PropTypes.object.isRequired,
+    rate                : PropTypes.string.isRequired,
+    editable            : PropTypes.bool,
+    updateSelectedTasks : PropTypes.func,
+    saveTask            : PropTypes.func,
+    removeTask          : PropTypes.func,
+};
+
+TaskList.defaultProps = {
+    editable            : false,
+    updateSelectedTasks : null,
+    saveTask            : null,
+    removeTask          : null,
 };
 
 

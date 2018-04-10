@@ -1,17 +1,26 @@
 
 .task{
     display:flex;
-    margin-top: 8px;
-    padding-top: 8px;    
+    padding-bottom: 10px;
+    padding-top: 10px;
     border-top: 1px solid $offwhite;
-
-    
+    position: relative;
+}
+.task--selected{
+    &,
+    .task__clickable {
+        font-weight: 700;
+    }
 }
 .task--key{
     border-top: 0;
     @include uppercase;
 }
-
+.task__description,
+.task__hours,
+.task__price{
+    position: relative;
+}
 .task__description{
     flex: 1 1 auto;
 }
@@ -26,3 +35,109 @@
     text-align: right;
 }
 
+.task__clickable{
+    display: block;
+    width: 100%;
+    text-align: left;
+
+    .task__hours &,
+    .task__price &{
+        text-align: right;
+    }
+}
+
+
+.task__selector{
+    position: absolute;
+    left: -24px;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    cursor: pointer;
+    display: none;
+
+    input[type="checkbox"]{
+        display: none;
+    }
+
+    .client__opentasks--interactive &{
+        display: block;
+    }
+}
+
+.task__selectorlabel{
+    display: block;
+    width: 14px;
+    height: 14px;
+    position: relative;
+    top: 50%;
+    margin-top:-9px;
+    border: 1px solid $textcolor;
+    border-radius: 50%;
+
+    input[type="checkbox"]:checked + &{
+        background-color: $pink;
+        border-color: $pink;
+    }
+}
+
+
+/* ------------------------------------
+ * --editable
+ * ------------------------------------*/
+
+.task {
+    .taskedit{
+        display: none;
+        position: absolute;
+        top: -6px;
+        left: 0;
+        right: 0;
+    }
+    .taskedit--visible{
+        display: block;
+    }
+
+    .taskedit--price,
+    .taskedit--hours{
+        left: 20px;
+
+        input{
+            text-align: right;
+        }
+    }
+}
+
+
+/* ------------------------------------
+ * --taskaction
+ * ------------------------------------*/
+
+.taskactions{
+    position: absolute;
+    width: 100px;
+    right: -120px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    justify-content: space-between;
+}
+.taskaction{
+    width: 44px;
+    height: 44px;
+    padding: 14px;
+    display: flex;
+    align-items:center;
+    border-radius: 4px;
+    background-color: $offwhite;
+    transition: background-color .2s;
+
+    svg{
+        width: 100%;
+        display: block;
+    }
+
+    &:hover{
+        background-color: $offwhite_border;
+    }
+}

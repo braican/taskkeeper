@@ -1,13 +1,18 @@
 
-.invoices{
-    padding: $windowgutter;
-}
 .invoices--outstanding{
     margin-bottom: 60px;
 }
 
+.invoicegroup__header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-right: $windowgutter;
+    margin-bottom: 10px;
+}
+
 .invoice{
-    margin-top: 10px;
+    margin-bottom: 10px;
     background-color: $white;
     padding: $windowgutter;
     box-shadow: 2px 2px 6px rgba($gray, .1);
@@ -16,19 +21,18 @@
 
 .invoice__header{
     display: flex;
-    justify-content: space-between;
 }
 .invoice__date{
-    flex: 0 1 auto;
+    margin-right: 20px;
 }
 .invoice__price{
-    flex: 0 1 auto;
-    font-size: 2rem;
-    color: $green;
+    margin-left: 20px;
+    margin-left: auto;
 }
 .tasklist__trigger{
     @include uppercase;
-    @include icon-right($icon_expand, 10px, 10px, 4px);
+    @include icon-right($icon_expand, 12px, 12px, 6px);
+    padding-top: 2px;
     &:after{
         transition: all .4s;
     }
@@ -43,6 +47,7 @@
     transition: opacity .4s;
     position: absolute;
     left: -9999px;
+    margin-top: 10px;
 }
 .invoice__tasks--expanded{
     visibility: visible;

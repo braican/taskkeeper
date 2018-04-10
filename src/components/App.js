@@ -1,143 +1,164 @@
 import React from 'react';
-import { BrowserRouter, Switch, Route, NavLink } from 'react-router-dom';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
+
+// import firebase
+import base from '../firebase';
 
 // import the components
 import Header from './Header';
+import ClientSidebar from './ClientSidebar';
 import ClientPane from './ClientPane';
-import Welcome from './Welcome';
+import NewClientForm from './NewClientForm';
+import Default from './Default';
 
-// import helpers
-import { formatPrice } from '../helpers';
 
 class App extends React.Component {
     constructor() {
         super();
 
+        // actions
         this.addTask = this.addTask.bind(this);
-        this.renderClientList = this.renderClientList.bind(this);
+        this.saveTask = this.saveTask.bind(this);
+        this.removeTask = this.removeTask.bind(this);
+        this.submitInvoice = this.submitInvoice.bind(this);
+        this.archiveInvoice = this.archiveInvoice.bind(this);
+        this.addNewClient = this.addNewClient.bind(this);
+        this.toggleNewClientForm = this.toggleNewClientForm.bind(this);
+
+        // renderers
         this.renderClientPane = this.renderClientPane.bind(this);
 
         this.state = {
-            clients : {
-                anywayreps : {
-                    name : 'Anyway Reps',
-                    rate : 56.00,
-
-                    openTasks: [
-                        {
-                            description: 'Fixing navigation bugs',
-                            price: null,
-                            hours: 4,
-                        }, {
-                            description: 'Pushing new navigation live',
-                            price: null,
-                            hours: 2,
-                        }, {
-                            description: 'Updating all the plugins',
-                            price: 100.00,
-                            hours: null,
-                        },
-                    ],
-
-                    invoices : {
-                        20171120323 : {
-                            invoicedate : '2017/11/20',
-                            status      : 'active',
-                            tasks       : [
-                                {
-                                    description : 'Fixing navigation bugs',
-                                    price       : null,
-                                    hours       : 4,
-                                }, {
-                                    description : 'Pushing new navigation live',
-                                    price       : null,
-                                    hours       : 2,
-                                }, {
-                                    description : 'Updating all the plugins',
-                                    price       : 100.00,
-                                    hours       : null,
-                                },
-                            ],
-                        },
-                        20171120352 : {
-                            invoicedate : '2017/11/20',
-                            status      : 'active',
-                            tasks       : [
-                                {
-                                    description : 'Lorem ipsum dolor site',
-                                    price       : null,
-                                    hours       : 4,
-                                }, {
-                                    description : 'Updating visibility on the PDF builde',
-                                    price       : null,
-                                    hours       : 10,
-                                },
-                            ],
-                        },
-                        20171202352 : {
-                            invoicedate : '2017/12/02',
-                            status      : 'archive',
-                            tasks       : [
-                                {
-                                    description : 'Consultation for Javascript Debugging (help with jquery and Divi - a bit of an emergency email from oct 17)',
-                                    price       : null,
-                                    hours       : 1,
-                                }, {
-                                    description : 'Fixing bugs on Capital Constellation site.',
-                                    price       : null,
-                                    hours       : 5,
-                                }, {
-                                    description : 'Debugging errors and css issues on Constellation site.',
-                                    price       : null,
-                                    hours       : 3,
-                                },
-                            ],
-                        },
-                    },
-                },
-                christabianchi : {
-                    name : 'Christa Bianchi',
-                    rate : 56.00,
-                },
-                gibhedstrom : {
-                    name : 'Gib Hedstrom',
-                    rate : 58.00,
-                },
-            },
+            clients              : {},
+            loaded               : false,
+            newClientFormVisible : false,
         };
     }
 
+
+    componentDidMount() {
+        base.syncState('clients', {
+            context : this,
+            state   : 'clients',
+            then() {
+                this.setState({
+                    loaded : true,
+                });
+            },
+        });
+    }
+
+
+    //
+    // TASK
+    //
 
     /**
      * Adds a task to an invoice for the client
      */
     addTask(task, client) {
         const clients = { ...this.state.clients };
+        const key =
+            (Date.now().toString(36) + Math.random().toString(36).substr(2, 5)).toUpperCase();
 
         if (!clients[client].openTasks) {
-            clients[client].openTasks = [task];
-        } else {
-            clients[client].openTasks.push(task);
+            clients[client].openTasks = {};
         }
+        clients[client].openTasks[key] = task;
+
+        this.setState({ clients });
+    }
+
+
+    saveTask(clientKey, taskKey, newTask) {
+        const clients = { ...this.state.clients };
+        clients[clientKey].openTasks[taskKey] = newTask;
+        this.setState({ clients });
+    }
+
+    removeTask(clientKey, taskKey) {
+        const clients = { ...this.state.clients };
+        clients[clientKey].openTasks[taskKey] = null;
+        this.setState({ clients });
+    }
+
+
+    //
+    // INVOICE
+    //
+
+    /**
+     * Submits an invoice from a list of tasks
+     */
+    submitInvoice(client, tasks) {
+        const clients = { ...this.state.clients };
+        const openTasks = { ...clients[client].openTasks };
+        const timestamp = Date.now();
+        const today = new Date();
+        const year = today.getFullYear();
+        const month = today.getMonth() + 1;
+        const day = today.getDate();
+        const formattedDate = `${year}/${month}/${day}`;
+
+        if (!clients[client].invoices) {
+            clients[client].invoices = {};
+        }
+
+        if (Object.keys(tasks).length > 0) {
+            clients[client].invoices[timestamp] = {
+                invoicedate : formattedDate,
+                status      : 'active',
+                tasks,
+            };
+        }
+
+        Object.keys(tasks).map((taskId) => {
+            openTasks[taskId] = null;
+            return true;
+        });
+        clients[client].openTasks = openTasks;
 
         this.setState({ clients });
     }
 
 
     /**
-     * Renders the client listing
-     * @param {string} key object key for the client
+     * Archive the invoice
+     * @param {string} client The client
+     * @param {string} invoiceId ID of the invoice
      */
-    renderClientList(key) {
-        const client = this.state.clients[key];
-
-        return (
-            <NavLink to={`/client/${key}`} className="clientLink" activeClassName="clientLink--active">
-                <h3 className="clientthumb__name">{client.name}</h3>
-                <p className="clientthumb__rate">{formatPrice(client.rate)}</p>
-            </NavLink>
-        );
+    archiveInvoice(client, invoiceId) {
+        const clients = { ...this.state.clients };
+        clients[client].invoices[invoiceId].status = 'archive';
+        this.setState({ clients });
     }
+
+
+    /**
+     * Adds a new client to the state object
+     * @param {string} clientKey The key for the client
+     * @param {object} clientData Data about the client
+     */
+    addNewClient(clientKey, clientData) {
+        const clients = { ...this.state.clients };
+        clients[clientKey] = clientData;
+
+        this.setState({ clients });
+    }
+
+
+    /**
+     * Opens or closes the new client form
+     */
+    toggleNewClientForm() {
+        const newClientFormStatus = this.state.newClientFormVisible;
+        this.setState({ newClientFormVisible : !newClientFormStatus });
+    }
+
+
+    //
+    // RENDER
+    //
 
 
     /**
@@ -153,41 +174,52 @@ class App extends React.Component {
                 clientKey={clientKey}
                 client={clientObj}
                 addTask={this.addTask}
+                submitInvoice={this.submitInvoice}
+                archiveInvoice={this.archiveInvoice}
+                loaded={this.state.loaded}
+                saveTask={this.saveTask}
+                removeTask={this.removeTask}
             />
         );
     }
 
 
-    /**
-     * render function
-     */
+    // render function
     render() {
         return (
             <BrowserRouter>
                 <div className="taskkeeper app-main">
                     <aside className="leftpane">
                         <Header />
-                        <ul className="clientList">
-                            {
-                                Object.keys(this.state.clients).map((key) => {
-                                    return (
-                                        <li className="clientThumb" key={key}>
-                                            {this.renderClientList(key)}
-                                        </li>
-                                    );
-                                })
-                            }
-                        </ul>
+                        <ClientSidebar
+                            clients={this.state.clients}
+                            toggleNewClientForm={this.toggleNewClientForm}
+                        />
                     </aside>
                     <div className="clientPane">
                         <Switch>
+
                             <Route
                                 path="/client/:clientId"
                                 render={this.renderClientPane}
                             />
-                            <Route component={Welcome} />
+
+                            <Route
+                                render={() => (
+                                    <Default
+                                        loaded={this.state.loaded}
+                                        clients={this.state.clients}
+                                    />
+                                )}
+                            />
                         </Switch>
                     </div>
+
+                    <NewClientForm
+                        isVisible={this.state.newClientFormVisible}
+                        toggleNewClientForm={this.toggleNewClientForm}
+                        addNewClient={this.addNewClient}
+                    />
                 </div>
             </BrowserRouter>
         );

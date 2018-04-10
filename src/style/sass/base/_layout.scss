@@ -1,5 +1,5 @@
 
-$windowgutter: 10px;
+$windowgutter: 20px;
 
 html, body, #root, .app-main{
     height: 100%;
@@ -10,11 +10,30 @@ html, body, #root, .app-main{
     overflow:hidden;
 }
 
-.leftpane{
-    flex: 0 0 200px;
-    background-color: $gray;
-    color: $white;
-    height: 100%;
-    overflow: auto;
+
+.l-container{
+    width: 100%;
+    max-width: 1020px;
+    margin: 0 auto;
+    padding-left: $windowgutter;
+    padding-right: $windowgutter;
 }
 
+
+/* ------------------------------------
+ * --spacing
+ * ------------------------------------*/
+
+.l-space-top{
+    margin-top: 1em;
+}
+
+
+/* ------------------------------------
+ * --alignemnt
+ * ------------------------------------*/
+
+
+.l-align-right{
+    text-align: right;
+}

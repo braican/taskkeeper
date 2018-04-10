@@ -6,7 +6,7 @@
     background-color: $offwhite;
 }
 .clientHeader{
-    padding: $windowgutter;
+    padding: $windowgutter 0;
     background-color: $white;
 }
 
@@ -14,13 +14,14 @@
     font-size: 2rem;
 }
 
-.clientrate{
-    font-size: 1.5rem;
-    color: $green;
+.clientPane__main{
+    padding-bottom: 100px;
 }
 
-.client__opentasks{
-    background-color: $white;
-    padding: $windowgutter * 2;
-    margin-bottom: 60px;
+.clientPane__noclients{
+    height: 100%;
+    padding: $windowgutter;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-// import { formatPrice } from '../helpers';
-
+import { getTasklistSubtotal } from '../helpers';
 
 class TaskForm extends React.Component {
     constructor() {
@@ -25,6 +24,11 @@ class TaskForm extends React.Component {
         const taskHours = this.state.taskByPrice ? null : this.taskQty.value;
         const taskPrice = this.state.taskByPrice ? this.taskQty.value : null;
 
+        if (this.taskDescription.value === '' && this.taskQty.value === '') {
+            console.error('Please add a description and a cost or hours value to add a task.');
+            return;
+        }
+
         const task = {
             description : this.taskDescription.value,
             hours       : taskHours,
@@ -32,7 +36,12 @@ class TaskForm extends React.Component {
         };
 
         this.props.addTask(task, this.props.clientKey);
-        this.taskForm.reset();
+        this.taskDescription.value = '';
+        this.taskQty.value = '';
+        this.setState({
+            qty         : '',
+            description : '',
+        });
     }
 
 
@@ -57,19 +66,23 @@ class TaskForm extends React.Component {
     }
 
     render() {
+        const { taskByPrice, description, qty } = this.state;
+        const { client } = this.props;
+        const openTaskCost = getTasklistSubtotal(client.openTasks, client.rate, true);
+
         return (
             <form
                 ref={(input) => { this.taskForm = input; }}
                 onSubmit={(e) => this.addTask(e)}
-                className="taskform"
+                className="taskform l-container"
             >
                 <header className="taskform__header">
                     <h3 className="taskform__title t-blocktitle">Open Tasks</h3>
-                </header>
 
-                <div>
-                    this form - {this.state.qty}
-                </div>
+                    <p className="moneydisplay">
+                        {openTaskCost || <span>&nbsp;</span>}
+                    </p>
+                </header>
 
                 <div className="taskform__fieldset">
                     <div className="taskform__el taskform__el--description">
@@ -77,41 +90,46 @@ class TaskForm extends React.Component {
                             ref={(input) => { this.taskDescription = input; }}
                             type="text"
                             id="task-description"
+                            tabIndex="0"
                             onChange={(event) => this.handleDescriptionInputChange(event)}
-                            className={`taskform__input ${this.state.description === '' ? '' : 'taskform__input--hasinput'}`}
+                            className={`taskform__input ${description === '' ? '' : 'taskform__input--hasinput'}`}
                         />
                         <label className="taskform__label" htmlFor="task-description">Task</label>
                     </div>
 
                     <div className="taskform__el taskform__el--toggle">
-                        <span className="toggle__label">Hours</span>
+                        <span className={`toggle__label${!taskByPrice ? ' toggle__label--active' : ''}`}>Hours</span>
                         <input
                             className="toggle__check"
                             id="task-unit-toggle"
                             type="checkbox"
+                            tabIndex="0"
                             onChange={this.toggleTaskQtyUnit}
                         />
                         <label htmlFor="task-unit-toggle" className="toggle__switch" />
-                        <span className="toggle__label">Cost</span>
+                        <span className={`toggle__label${taskByPrice ? ' toggle__label--active' : ''}`}>Cost</span>
                     </div>
 
-                    <div className="taskform__el">
+                    <div className={`taskform__el taskform__el--qty${taskByPrice ? ' taskform__el--byprice' : ''}`}>
+                        <span className="taskform__dollarsign">$</span>
                         <input
                             ref={(input) => { this.taskQty = input; }}
                             type="number"
+                            step="any"
                             id="task-qty"
+                            tabIndex="0"
                             onChange={(event) => this.handleQtyInputChange(event)}
-                            className={`taskform__input ${this.state.qty === '' ? '' : 'taskform__input--hasinput'}`}
+                            className={`taskform__input ${qty === '' ? '' : 'taskform__input--hasinput'}`}
                         />
 
                         <label
                             className="taskform__label taskform__label--hasoptions"
                             htmlFor="task-qty"
                         >
-                            <span className={`taskform__labelswap${this.state.taskByPrice ? ' taskform__labelswap--hidden' : ''}`}>
+                            <span className={`taskform__labelswap${taskByPrice ? ' taskform__labelswap--hidden' : ''}`}>
                                 Hours
                             </span>
-                            <span className={`taskform__labelswap${!this.state.taskByPrice ? ' taskform__labelswap--hidden' : ''}`}>
+                            <span className={`taskform__labelswap${!taskByPrice ? ' taskform__labelswap--hidden' : ''}`}>
                                 Price
                             </span>
                         </label>
@@ -129,6 +147,7 @@ class TaskForm extends React.Component {
 
 TaskForm.propTypes = {
     clientKey : PropTypes.string.isRequired,
+    client    : PropTypes.object.isRequired,
     addTask   : PropTypes.func.isRequired,
 };
 
