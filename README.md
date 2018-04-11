@@ -5,8 +5,6 @@ People should pay you, so you should know how much they owe you.
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app). Head to that repo for specifics around that. Some relevant documentation is included below, however.
 
-Taskkeeper is hosted on [Netlify](https://www.netlify.com/) and can be accessed at [taskkeeper.braican.com](http://taskkeeper.braican.com).
-
 ## Getting started
 
 1. Clone this repo into a directory. `cd` into that directory.
