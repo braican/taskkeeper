@@ -5,7 +5,7 @@ import TaskForm from './TaskForm';
 import OpenTasks from './OpenTasks';
 import Invoice from './Invoice';
 
-import { formatPrice, getTasklistSubtotal } from '../helpers';
+import { formatPrice, getInvoicegroupTotal } from '../helpers';
 
 
 /**
@@ -35,21 +35,6 @@ function organizeInvoices(invoices) {
     });
 
     return { active, archive };
-}
-
-
-function getInvoicegroupTotal(invoices, rate) {
-    const subtotal = Object.keys(invoices).reduce((total, invoiceId) => {
-        const invoice = invoices[invoiceId];
-
-        if (!invoice.tasks) {
-            return total;
-        }
-
-        return total + getTasklistSubtotal(invoice.tasks, rate);
-    }, 0);
-
-    return formatPrice(subtotal);
 }
 
 
