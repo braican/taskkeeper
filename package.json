@@ -1,11 +1,8 @@
 {
   "name": "taskkeeper",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "App to keep track of projects and invoices.",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/braican/taskkeeper.git"
@@ -15,13 +12,32 @@
   "bugs": {
     "url": "https://github.com/braican/taskkeeper/issues"
   },
-  "homepage": "https://github.com/braican/taskkeeper#readme",
+  "homepage": "http://taskkeeper.braican.com",
+  "dependencies": {
+    "copyfiles": "^2.0.0",
+    "firebase": "^4.13.1",
+    "hoek": "^5.0.3",
+    "node-sass-chokidar": "0.0.3",
+    "npm-run-all": "^4.1.2",
+    "prop-types": "^15.6.1",
+    "re-base": "^3.2.2",
+    "react": "^16.3.2",
+    "react-dom": "^16.3.2",
+    "react-router": "^4.2.0",
+    "react-router-dom": "^4.2.2",
+    "react-scripts": "1.0.17"
+  },
+  "scripts": {
+    "start-js": "react-scripts start",
+    "start": "npm-run-all -p build-css watch-css start-js",
+    "build-js": "react-scripts build",
+    "build": "npm-run-all build-css build-js",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "build-css": "node-sass-chokidar src/ -o public/ --source-map true --source-map-contents sass",
+    "watch-css": "node-sass-chokidar src/ -o public/ --watch --source-map true --source-map-contents sass"
+  },
   "devDependencies": {
-    "gulp": "^3.9.0",
-    "gulp-rename": "^1.2.2",
-    "gulp-sass": "^2.0.4",
-    "gulp-sourcemaps": "^1.6.0",
-    "gulp-svgmin": "^1.2.0",
-    "gulp-svgstore": "^5.0.5"
+    "eslint-config-airbnb": "^16.1.0"
   }
 }

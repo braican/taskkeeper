@@ -1,0 +1,27 @@
+
+.clientPane{
+    flex: 1 1 auto;
+    height: 100%;
+    overflow: auto;
+    background-color: $offwhite;
+}
+.clientHeader{
+    padding: $windowgutter 0;
+    background-color: $white;
+}
+
+.clientname{
+    font-size: 2rem;
+}
+
+.clientPane__main{
+    padding-bottom: 100px;
+}
+
+.clientPane__noclients{
+    height: 100%;
+    padding: $windowgutter;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

@@ -1,10 +1,29 @@
 .htaccess
 error_log
-*/error_log
-
-# ignore the db connect util - to hide personal un/pwds
-util/db_util.php
-
-node_modules
-
+error_log
 .DS_Store
+
+*.map
+
+# See https://help.github.com/ignore-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+
+# testing
+/coverage
+
+# production
+/build
+
+# misc
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+

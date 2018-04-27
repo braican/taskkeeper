@@ -1,0 +1,107 @@
+
+.taskform{
+    padding-top: $windowgutter;
+    padding-bottom: $windowgutter;
+    margin-bottom: $windowgutter;
+}
+.taskform__header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.taskform__fieldset{
+    display:flex;
+    margin-top: 1.5rem;
+}
+
+.taskform__el{
+    position: relative;
+}
+.taskform__el--description{
+    flex: 1 0 auto;
+}
+.taskform__el--toggle{
+    padding-left: 10px;
+    padding-right: 10px;
+    align-self: center;
+}
+.taskform__el--qty {
+    flex: 0 0 180px;
+    input{
+        transition: padding-left .2s;
+    }
+    &.taskform__el--byprice input{
+        padding-left: 20px;
+    }
+}
+.taskform__el--actions{
+    padding-left: 10px;
+}
+
+.taskform__dollarsign{
+    position: absolute;
+    left: 6px;
+    top: 50%;
+    transform: translateY(-.5em);
+    line-height: 1;
+    opacity: 0;
+    transition: opacity .2s;
+    font-weight: 900;
+
+    .taskform__el--byprice &{
+        opacity: 1;
+    }
+}
+.taskform__label{
+    @include uppercase;
+    position: absolute;
+    line-height: 1;
+    left: 6px;
+    top: 50%;
+    height: 1em;
+    transform: translateY(-50%);
+    pointer-events: none;
+    opacity: 0.2;
+    transition: all .2s;
+
+    .taskform__el--byprice &{
+        left: 26px;
+    }
+
+    .taskform__input--hasinput ~ &,
+    input[type="text"]:focus ~ &,
+    input[type="number"]:focus ~ &{
+        top: -1.5em;
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+.taskform__labelswap{
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 1;
+    transform: translateY(0px);
+    transition: all .2s .2s;
+}
+.taskform__labelswap--hidden{
+    opacity: 0;
+    transform: translateY(-5px);
+    transition-delay: 0s;
+}
+
+.taskform__submit{
+    background-color: transparent;
+    @include icon($icon_expand, 44px, 100%, 20px);
+    transition: all .2s;
+    border-radius: 4px;
+    background-color: $offwhite_border;
+
+    &:hover,
+    &:focus{
+        background-image: $icon_expand_hover;
+        background-color: $pink;
+    }
+}
+
+

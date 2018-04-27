@@ -1,0 +1,66 @@
+.clientform__overlay{
+    background-color: $white;
+    position: fixed;
+    z-index: 2;
+    top: 0;
+    left: -100%;
+    bottom: 0;
+    width: 100%;
+    padding-left: $leftpane_size;
+    transform: translateX(0);
+    transition: all .4s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.clientform__overlay--visible{
+    transform: translateX(100%);
+}
+
+.clientform{
+    margin: 0 auto;
+    width: 100%;
+    max-width: 920px;
+    padding: $windowgutter 60px;
+    font-size: 2rem;
+}
+
+.clientform__header{
+    margin-bottom: $windowgutter;
+}
+
+.clientform__el{
+    position: relative;
+    margin-bottom: $windowgutter;
+}
+
+.clientform__input[type="text"],
+.clientform__input[type="number"]{
+    border: 0;
+    background-color: $offwhite;
+    padding: 14px;
+    font-size: inherit;
+}
+
+.clientform__input--number[type="number"] {
+    display: inline-block;
+    width: auto;
+}
+
+.clientform__actions{
+    display: flex;
+    justify-content: space-between;
+}
+
+.clientform__beforeinput{
+    position: absolute;
+    left: 15px;
+    top: 0;
+    bottom: 0;
+    line-height: 2.5em;
+
+    + .clientform__input[type="number"]{
+        padding-left: 1.5em;
+    }
+}
