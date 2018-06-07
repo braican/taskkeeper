@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 
 import Invoice from './Invoice';
 
-import { getInvoicegroupTotal } from '../helpers';
+import { getInvoicegroupTotal, formatPrice } from '../helpers';
 
 /**
  * Get all open invoices from all clients
- * @param object clients All the client data
+ * @param {object} clients All the client data
  */
 const getOpenInvoices = (clients) => {
     const openInvoices = {};
@@ -34,6 +34,20 @@ const getOpenInvoices = (clients) => {
     return openInvoices;
 };
 
+
+/**
+ * Aggregate the price of all the open invoices
+ * @param {object} openInvoices Unpaid invoices
+ * @param {object} clients The clients list
+ */
+const priceAllOpenInvoices = (openInvoices, clients) => {
+    const subtotal = Object.keys(openInvoices)
+        .map((clientId) => getInvoicegroupTotal(openInvoices[clientId], clients[clientId].rate))
+        .reduce((total, val) => total + val, 0);
+
+    return formatPrice(subtotal);
+}
+
 const Homepage = (props) => {
     const { loaded, clients } = props;
 
@@ -54,7 +68,6 @@ const Homepage = (props) => {
     }
 
     const openInvoices = getOpenInvoices(props.clients);
-    const rate = '50';
 
     if (Object.keys(openInvoices).length === 0) {
         return (
@@ -66,23 +79,31 @@ const Homepage = (props) => {
 
     return (
         <div className="clientPane__noclients">
-            <section className="invoices invoices--outstanding">
+            <section className="invoices invoices--outstanding l-container">
                 <header className="invoicegroup__header">
                     <h3 className="t-blocktitle">Outstanding Invoices</h3>
                     <p className="invoice__price moneydisplay">
-                        {getInvoicegroupTotal(openInvoices, rate)}
+                        {priceAllOpenInvoices(openInvoices, props.clients)}
                     </p>
                 </header>
                 {
-                    // Object.keys(openInvoices).map((invoiceId) => (
-                    //     <Invoice
-                    //         invoiceId={invoiceId}
-                    //         key={invoiceId}
-                    //         invoice={openInvoices[invoiceId]}
-                    //         rate={rate}
-                    //         archiveInvoice={() => 1}
-                    //     />
-                    // ))
+                    Object.keys(openInvoices).map((clientId) => (
+                        <div key={clientId} className="invoices invoices--header">
+                            <header className="invoicegroup__header">
+                                <h3 className="t-blocktitle">{ props.clients[clientId].name }</h3>
+                            </header>
+
+                            { Object.keys(openInvoices[clientId]).map((invoiceId) => (
+                                <Invoice
+                                    invoiceId={invoiceId}
+                                    key={invoiceId}
+                                    invoice={openInvoices[clientId][invoiceId]}
+                                    rate={props.clients[clientId].rate}
+                                    archiveInvoice={() => 1}
+                                />
+                            )) }
+                        </div>
+                    ))
                 }
             </section>
         </div>
