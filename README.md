@@ -65,3 +65,15 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 
 
 
+## Changelog
+
+**v1.1.1** `6/8/2018`  
+* Setting up a deployment process via Travis.
+* Adding a changelog to the readme.
+
+**v1.1.0** `6/8/2018`
+* Adding visual indicators for clients, and adding a new homepage.
+
+**v1.0.0** `4/10/2018`
+* Initial launch of the new and improved React version.
+
