@@ -20,6 +20,6 @@ install:
 deploy:
   provider: script
   skip_cleanup: true
-  script: rsync -r --delete-after --quiet $TRAVIS_BUILD_DIR/build braican@69.164.211.156:/var/www/tk2
+  script: rsync -r --delete-after --quiet $TRAVIS_BUILD_DIR braican@69.164.211.156:/var/www/tk2
   on:
     branch: setup
