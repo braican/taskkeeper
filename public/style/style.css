@@ -76,6 +76,9 @@ input[type="number"] {
   letter-spacing: 0.1em;
   font-weight: 700; }
 
+.t-subheader {
+  font-weight: 700; }
+
 /* ------------------------------------
  * --el
  * ------------------------------------*/

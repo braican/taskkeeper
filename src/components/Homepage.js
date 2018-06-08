@@ -90,7 +90,7 @@ const Homepage = (props) => {
                     Object.keys(openInvoices).map((clientId) => (
                         <div key={clientId} className="invoices invoices--header">
                             <header className="invoicegroup__header">
-                                <h3 className="t-blocktitle">{ clients[clientId].name }</h3>
+                                <h3 className="t-subheader">{ clients[clientId].name }</h3>
                             </header>
 
                             { Object.keys(openInvoices[clientId]).map((invoiceId) => (
