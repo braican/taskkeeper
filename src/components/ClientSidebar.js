@@ -11,11 +11,8 @@ const getOutstandingStatus = (client) => {
         return false;
     }
 
-    const anyActive = Object.entries(client.invoices).some(([invoiceId, invoiceData]) => {
-        return invoiceData.status === 'active';
-    });
-
-    return anyActive;
+    return Object.entries(client.invoices)
+        .some(([invoiceId, invoiceData]) => invoiceData.status === 'active');
 };
 
 const getActiveStatus = (client) => client.openTasks;
