@@ -4,6 +4,10 @@ node_js:
 cache:
   directories:
   - node_modules
+addons:
+  ssh_known_hosts:
+    - braican.com
+    - 69.164.211.156
 before_install:
 - openssl aes-256-cbc -K $encrypted_ea2966dd748b_key -iv $encrypted_ea2966dd748b_iv -in .travis/deploy_rsa.enc -out .travis/deploy_rsa -d
 - eval "$(ssh-agent -s)"
