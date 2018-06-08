@@ -38,11 +38,10 @@ const getOpenInvoices = (clients) => {
 /**
  * Aggregate the price of all the open invoices
  * @param {object} openInvoices Unpaid invoices
- * @param {object} clients The clients list
  */
-const priceAllOpenInvoices = (openInvoices, clients) => {
+const priceAllOpenInvoices = (openInvoices) => {
     const subtotal = Object.keys(openInvoices)
-        .map((clientId) => getInvoicegroupTotal(openInvoices[clientId], clients[clientId].rate))
+        .map((clientId) => getInvoicegroupTotal(openInvoices[clientId]))
         .reduce((total, val) => total + val, 0);
 
     return formatPrice(subtotal);
@@ -84,7 +83,7 @@ const Homepage = (props) => {
                 <header className="invoicegroup__header">
                     <h3 className="t-blocktitle">Outstanding Invoices</h3>
                     <p className="invoice__price moneydisplay">
-                        {priceAllOpenInvoices(openInvoices, clients)}
+                        {priceAllOpenInvoices(openInvoices)}
                     </p>
                 </header>
                 {

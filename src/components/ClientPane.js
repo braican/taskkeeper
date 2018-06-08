@@ -70,7 +70,7 @@ const ClientPane = (props) => {
         );
     }
 
-    const { openTasks, rate } = client;
+    const { openTasks } = client;
     const invoices = organizeInvoices(client.invoices);
 
 
@@ -102,7 +102,7 @@ const ClientPane = (props) => {
             <header className="invoicegroup__header">
                 <h3 className="t-blocktitle">Outstanding Invoices</h3>
                 <p className="invoice__price moneydisplay">
-                    {getInvoicegroupTotal(invoiceGroup, rate, true)}
+                    {getInvoicegroupTotal(invoiceGroup, true)}
                 </p>
             </header>
             {
@@ -127,7 +127,7 @@ const ClientPane = (props) => {
                 <header className="invoicegroup__header">
                     <h3 className="t-blocktitle">Invoice Archive</h3>
                     <p className="invoice__price moneydisplay">
-                        {getInvoicegroupTotal(invoiceGroup, rate, true)}
+                        {getInvoicegroupTotal(invoiceGroup, true)}
                     </p>
                 </header>
 

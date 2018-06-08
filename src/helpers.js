@@ -76,7 +76,7 @@ export function getTasklistSubtotal(tasks, rate, format = false) {
  * @param {object} invoices A bunch of invoices as objects
  * @param {number} rate The hourly rate to calculate the total for
  */
-export function getInvoicegroupTotal(invoices, rate, format = false) {
+export function getInvoicegroupTotal(invoices, format = false) {
     const subtotal = Object.keys(invoices).reduce((total, invoiceId) => {
         const invoice = invoices[invoiceId];
 
@@ -84,7 +84,7 @@ export function getInvoicegroupTotal(invoices, rate, format = false) {
             return total;
         }
 
-        return total + getTasklistSubtotal(invoice.tasks, rate, false);
+        return total + getTasklistSubtotal(invoice.tasks, invoice.rate);
     }, 0);
 
     return format ? formatPrice(subtotal) : subtotal;
