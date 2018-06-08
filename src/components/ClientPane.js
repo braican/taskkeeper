@@ -42,7 +42,17 @@ function organizeInvoices(invoices) {
 // ClientPane
 //
 const ClientPane = (props) => {
-    const { clientKey, client, loaded } = props;
+    const {
+        clientKey,
+        client,
+        loaded,
+
+        // fn
+        archiveInvoice,
+        submitInvoice,
+        saveTask,
+        removeTask,
+    } = props;
 
     if (!loaded) {
         return (
@@ -64,41 +74,6 @@ const ClientPane = (props) => {
     const invoices = organizeInvoices(client.invoices);
 
 
-    /**
-     * Client-knowledgeable submit invoice
-     * @param {Array} tasks List of tasks
-     */
-    const clientSubmitInvoice = (tasks) => {
-        props.submitInvoice(clientKey, tasks);
-    };
-
-
-    /**
-     * Client-knowledgeable archive invoice
-     */
-    const clientArchiveInvoice = (invoiceId) => {
-        props.archiveInvoice(clientKey, invoiceId);
-    };
-
-
-    /**
-     * Edit the selected task
-     * @param {string} taskId The ID of the task to edit
-     * @param {object} newTask Task data
-     */
-    const clientSaveTask = (taskId, newTask) => {
-        props.saveTask(clientKey, taskId, newTask);
-    };
-
-    /**
-     * Remove the given task
-     * @param {string} taskId The taskID
-     */
-    const clientRemoveTask = (taskId) => {
-        props.removeTask(clientKey, taskId);
-    };
-
-
     //
     // render the invoice groups
     //
@@ -113,8 +88,7 @@ const ClientPane = (props) => {
                 invoiceId={invoiceId}
                 key={invoiceId}
                 invoice={invoiceGroup[invoiceId]}
-                rate={rate}
-                archiveInvoice={clientArchiveInvoice}
+                archiveInvoice={(_invoiceId) => archiveInvoice(clientKey, _invoiceId)}
             />
         ))
     );
@@ -162,6 +136,7 @@ const ClientPane = (props) => {
         );
     };
 
+
     return (
         <div className="clientPane__main">
             <header className="clientHeader">
@@ -174,11 +149,11 @@ const ClientPane = (props) => {
             <TaskForm addTask={props.addTask} client={client} clientKey={clientKey} />
 
             <OpenTasks
-                submitInvoice={clientSubmitInvoice}
                 tasks={openTasks}
                 rate={client.rate}
-                saveTask={clientSaveTask}
-                removeTask={clientRemoveTask}
+                saveTask={(taskId, newTask) => saveTask(clientKey, taskId, newTask)}
+                submitInvoice={(tasks) => submitInvoice(clientKey, tasks)}
+                removeTask={(taskId) => removeTask(clientKey, taskId)}
             />
 
             <div className="clientInvoices l-container">

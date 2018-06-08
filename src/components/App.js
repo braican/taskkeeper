@@ -108,6 +108,7 @@ class App extends React.Component {
             clients[client].invoices[timestamp] = {
                 invoicedate : formattedDate,
                 status      : 'active',
+                rate        : clients[client].rate,
                 tasks,
             };
         }

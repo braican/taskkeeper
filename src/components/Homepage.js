@@ -99,7 +99,6 @@ const Homepage = (props) => {
                                     invoiceId={invoiceId}
                                     key={invoiceId}
                                     invoice={openInvoices[clientId][invoiceId]}
-                                    rate={clients[clientId].rate}
                                     archiveInvoice={() => archiveInvoice(clientId, invoiceId)}
                                 />
                             )) }
