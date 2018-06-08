@@ -3,12 +3,22 @@
     margin-bottom: 60px;
 }
 
+.invoices--homepage{
+    padding-top: 40px;
+    padding-bottom: 40px;
+    margin: auto;
+}
+
 .invoicegroup__header{
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding-right: $windowgutter;
     margin-bottom: 10px;
+}
+
+.invoices--header{
+    margin-top: 40px;
 }
 
 .invoice{

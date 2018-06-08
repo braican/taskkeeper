@@ -176,7 +176,7 @@ Task.propTypes = {
     children            : PropTypes.string,
     hours               : PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     price               : PropTypes.string,
-    rate                : PropTypes.string.isRequired,
+    rate                : PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
     editable            : PropTypes.bool,
     taskIndex           : PropTypes.string.isRequired,
     updateSelectedTasks : PropTypes.func,

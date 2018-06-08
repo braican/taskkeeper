@@ -47,15 +47,20 @@ class Invoice extends React.Component {
 
 
     render() {
-        const { invoice, rate } = this.props;
-        const tasklist = invoice.tasks;
-        const invoiceAmount = getTasklistSubtotal(tasklist, rate, true);
+        const {
+            tasks,
+            invoicedate,
+            rate,
+            status,
+        } = this.props.invoice;
+
+        const invoiceAmount = getTasklistSubtotal(tasks, rate, true);
 
         return (
             <div className="invoice">
                 <header className="invoice__header">
                     <div className="invoice__date">
-                        <p>{formatDate(invoice.invoicedate)}</p>
+                        <p>{formatDate(invoicedate)}</p>
                         <button
                             className={`tasklist__trigger${this.state.tasksOpen ? ' tasklist__trigger--close' : ''}`}
                             onClick={this.toggleTasklist}
@@ -64,7 +69,7 @@ class Invoice extends React.Component {
                         </button>
                     </div>
 
-                    {invoice.status === 'active' ? this.renderPaidBtn() : null}
+                    {status === 'active' ? this.renderPaidBtn() : null}
 
                     <p className="invoice__price moneydisplay moneydisplay--small">
                         {invoiceAmount}
@@ -72,7 +77,7 @@ class Invoice extends React.Component {
                 </header>
 
                 <div className={`invoice__tasks${this.state.tasksOpen ? ' invoice__tasks--expanded' : ''}`}>
-                    <TaskList tasks={tasklist} rate={rate} />
+                    <TaskList tasks={tasks} rate={rate} />
                 </div>
             </div>
         );
@@ -83,13 +88,7 @@ class Invoice extends React.Component {
 Invoice.propTypes = {
     invoiceId      : PropTypes.string.isRequired,
     invoice        : PropTypes.object.isRequired,
-    rate           : PropTypes.string.isRequired,
     archiveInvoice : PropTypes.func.isRequired,
 };
-
-Invoice.defaultProps = {
-    saveTask   : null,
-    removeTask : null,
-}
 
 export default Invoice;

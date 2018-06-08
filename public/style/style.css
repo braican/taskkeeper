@@ -8,7 +8,7 @@
    v2.0 | 20110126
    License: none (public domain)
 */
-@import url("https://fonts.googleapis.com/css?family=Nunito+Sans:400,700,900");
+@import url("https://fonts.googleapis.com/css?family=Nunito+Sans:400,700");
 html {
   box-sizing: border-box; }
 
@@ -74,7 +74,10 @@ input[type="number"] {
   text-transform: uppercase;
   font-size: 1rem;
   letter-spacing: 0.1em;
-  font-weight: 900; }
+  font-weight: 700; }
+
+.t-subheader {
+  font-weight: 700; }
 
 /* ------------------------------------
  * --el
@@ -221,7 +224,7 @@ html, body, #root, .app-main {
   text-transform: uppercase;
   font-size: 0.7em;
   letter-spacing: 0.1em;
-  font-weight: 900;
+  font-weight: 700;
   opacity: 0.2;
   transition: opacity .2s; }
 
@@ -260,14 +263,49 @@ html, body, #root, .app-main {
   input[type="checkbox"]:checked + .toggle__switch:before {
     transform: translateX(100%); }
 
-.masthead {
+.appname a {
+  text-transform: uppercase;
+  font-size: 1rem;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+  display: block;
+  color: #fff;
+  text-decoration: none;
   padding: 20px; }
+  .appname a:hover {
+    background-color: #404040; }
 
 .clientThumb {
-  border-top: 1px solid #404040; }
+  border-top: 1px solid #404040;
+  position: relative; }
+
+.clientThumb--outstanding:after {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-100%);
+  background-color: #00844f; }
+
+.clientThumb--active:before {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  right: 10px;
+  top: 50%;
+  bottom: 10px;
+  transform: translateY(100%);
+  background-color: #d80b6d; }
 
 .clientLink {
-  padding: 20px;
+  padding: 20px 32px;
   text-decoration: none;
   color: inherit;
   display: block;
@@ -278,8 +316,11 @@ html, body, #root, .app-main {
     background-color: #333333; }
 
 .clientLink--active {
-  border-top-color: #d80b6d;
   background-color: #404040; }
+  .clientThumb--active .clientLink--active {
+    border-top-color: #d80b6d; }
+  .clientThumb--outstanding .clientLink--active {
+    border-top-color: #00844f; }
 
 .clientPane {
   flex: 1 1 auto;
@@ -323,7 +364,7 @@ html, body, #root, .app-main {
   text-transform: uppercase;
   font-size: 0.7em;
   letter-spacing: 0.1em;
-  font-weight: 900;
+  font-weight: 700;
   padding: 14px;
   color: #fff;
   border-radius: 4px;
@@ -351,12 +392,20 @@ html, body, #root, .app-main {
 .invoices--outstanding {
   margin-bottom: 60px; }
 
+.invoices--homepage {
+  padding-top: 40px;
+  padding-bottom: 40px;
+  margin: auto; }
+
 .invoicegroup__header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding-right: 20px;
   margin-bottom: 10px; }
+
+.invoices--header {
+  margin-top: 40px; }
 
 .invoice {
   margin-bottom: 10px;
@@ -379,7 +428,7 @@ html, body, #root, .app-main {
   text-transform: uppercase;
   font-size: 0.7em;
   letter-spacing: 0.1em;
-  font-weight: 900;
+  font-weight: 700;
   position: relative;
   padding-right: calc(12px + 6px);
   padding-top: 2px; }
@@ -494,7 +543,7 @@ html, body, #root, .app-main {
   text-transform: uppercase;
   font-size: 0.7em;
   letter-spacing: 0.1em;
-  font-weight: 900; }
+  font-weight: 700; }
 
 .task__description,
 .task__hours,
@@ -638,7 +687,7 @@ html, body, #root, .app-main {
   line-height: 1;
   opacity: 0;
   transition: opacity .2s;
-  font-weight: 900; }
+  font-weight: 700; }
   .taskform__el--byprice .taskform__dollarsign {
     opacity: 1; }
 
@@ -646,7 +695,7 @@ html, body, #root, .app-main {
   text-transform: uppercase;
   font-size: 0.7em;
   letter-spacing: 0.1em;
-  font-weight: 900;
+  font-weight: 700;
   position: absolute;
   line-height: 1;
   left: 6px;

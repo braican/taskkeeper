@@ -39,7 +39,7 @@ const TaskList = (props) => (
 
 TaskList.propTypes = {
     tasks               : PropTypes.object.isRequired,
-    rate                : PropTypes.string.isRequired,
+    rate                : PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
     editable            : PropTypes.bool,
     updateSelectedTasks : PropTypes.func,
     saveTask            : PropTypes.func,

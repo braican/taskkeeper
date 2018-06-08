@@ -9,7 +9,7 @@ import Header from './Header';
 import ClientSidebar from './ClientSidebar';
 import ClientPane from './ClientPane';
 import NewClientForm from './NewClientForm';
-import Default from './Default';
+import Homepage from './Homepage';
 
 
 class App extends React.Component {
@@ -108,6 +108,7 @@ class App extends React.Component {
             clients[client].invoices[timestamp] = {
                 invoicedate : formattedDate,
                 status      : 'active',
+                rate        : clients[client].rate,
                 tasks,
             };
         }
@@ -206,9 +207,10 @@ class App extends React.Component {
 
                             <Route
                                 render={() => (
-                                    <Default
+                                    <Homepage
                                         loaded={this.state.loaded}
                                         clients={this.state.clients}
+                                        archiveInvoice={this.archiveInvoice}
                                     />
                                 )}
                             />

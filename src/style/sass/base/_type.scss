@@ -3,7 +3,7 @@
 // FONTS
 //
 
-@import url('https://fonts.googleapis.com/css?family=Nunito+Sans:400,700,900');
+@import url('https://fonts.googleapis.com/css?family=Nunito+Sans:400,700');
 
 
 //
@@ -24,7 +24,7 @@ $font_primary: 'Nunito Sans', sans-serif;
     text-transform: uppercase;
     font-size: $fz;
     letter-spacing: 0.1em;
-    font-weight: 900;
+    font-weight: 700;
 }
 
 
@@ -49,6 +49,10 @@ input[type="number"]{
 
 .t-blocktitle{
     @include uppercase(1rem);
+}
+
+.t-subheader{
+    font-weight: 700;
 }
 
 
