@@ -1,22 +1,19 @@
 language: node_js
 node_js:
-  - "stable"
+- stable
 cache:
   directories:
-    - node_modules
-
+  - node_modules
 before_install:
-  - nvm install
-
+- openssl aes-256-cbc -K $encrypted_f732c9a55019_key -iv $encrypted_f732c9a55019_iv
+  -in id_rsa.enc -out ~\/.ssh/id_rsa -d
+- nvm install
 install:
-  - npm install
-  - npm run build
-
+- npm install
+- npm run build
 deploy:
   provider: script
   skip_cleanup: true
   script: rsync -r --delete-after --quiet $TRAVIS_BUILD_DIR/build braican@69.164.211.156:/var/www/tk2
-
-
-on:
+true:
   branch: setup
