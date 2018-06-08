@@ -46,10 +46,11 @@ const priceAllOpenInvoices = (openInvoices, clients) => {
         .reduce((total, val) => total + val, 0);
 
     return formatPrice(subtotal);
-}
+};
+
 
 const Homepage = (props) => {
-    const { loaded, clients } = props;
+    const { loaded, clients, archiveInvoice } = props;
 
     if (!loaded) {
         return (
@@ -67,7 +68,7 @@ const Homepage = (props) => {
         );
     }
 
-    const openInvoices = getOpenInvoices(props.clients);
+    const openInvoices = getOpenInvoices(clients);
 
     if (Object.keys(openInvoices).length === 0) {
         return (
@@ -79,18 +80,18 @@ const Homepage = (props) => {
 
     return (
         <div className="clientPane__noclients">
-            <section className="invoices invoices--outstanding l-container">
+            <section className="invoices invoices--homepage l-container">
                 <header className="invoicegroup__header">
                     <h3 className="t-blocktitle">Outstanding Invoices</h3>
                     <p className="invoice__price moneydisplay">
-                        {priceAllOpenInvoices(openInvoices, props.clients)}
+                        {priceAllOpenInvoices(openInvoices, clients)}
                     </p>
                 </header>
                 {
                     Object.keys(openInvoices).map((clientId) => (
                         <div key={clientId} className="invoices invoices--header">
                             <header className="invoicegroup__header">
-                                <h3 className="t-blocktitle">{ props.clients[clientId].name }</h3>
+                                <h3 className="t-blocktitle">{ clients[clientId].name }</h3>
                             </header>
 
                             { Object.keys(openInvoices[clientId]).map((invoiceId) => (
@@ -98,8 +99,8 @@ const Homepage = (props) => {
                                     invoiceId={invoiceId}
                                     key={invoiceId}
                                     invoice={openInvoices[clientId][invoiceId]}
-                                    rate={props.clients[clientId].rate}
-                                    archiveInvoice={() => 1}
+                                    rate={clients[clientId].rate}
+                                    archiveInvoice={() => archiveInvoice(clientId, invoiceId)}
                                 />
                             )) }
                         </div>
@@ -112,8 +113,9 @@ const Homepage = (props) => {
 
 
 Homepage.propTypes = {
-    loaded  : PropTypes.bool,
-    clients : PropTypes.object,
+    loaded         : PropTypes.bool,
+    clients        : PropTypes.object,
+    archiveInvoice : PropTypes.func.isRequired,
 };
 
 Homepage.defaultProps = {

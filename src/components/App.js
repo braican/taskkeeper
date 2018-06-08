@@ -209,6 +209,7 @@ class App extends React.Component {
                                     <Homepage
                                         loaded={this.state.loaded}
                                         clients={this.state.clients}
+                                        archiveInvoice={this.archiveInvoice}
                                     />
                                 )}
                             />

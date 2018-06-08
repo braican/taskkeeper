@@ -351,6 +351,11 @@ html, body, #root, .app-main {
 .invoices--outstanding {
   margin-bottom: 60px; }
 
+.invoices--homepage {
+  padding-top: 40px;
+  padding-bottom: 40px;
+  margin: auto; }
+
 .invoicegroup__header {
   display: flex;
   justify-content: space-between;
