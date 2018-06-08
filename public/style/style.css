@@ -276,10 +276,36 @@ html, body, #root, .app-main {
     background-color: #404040; }
 
 .clientThumb {
-  border-top: 1px solid #404040; }
+  border-top: 1px solid #404040;
+  position: relative; }
+
+.clientThumb--outstanding:after {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-100%);
+  background-color: #00844f; }
+
+.clientThumb--active:before {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  right: 10px;
+  top: 50%;
+  bottom: 10px;
+  transform: translateY(100%);
+  background-color: #d80b6d; }
 
 .clientLink {
-  padding: 20px;
+  padding: 20px 32px;
   text-decoration: none;
   color: inherit;
   display: block;
@@ -290,8 +316,11 @@ html, body, #root, .app-main {
     background-color: #333333; }
 
 .clientLink--active {
-  border-top-color: #d80b6d;
   background-color: #404040; }
+  .clientThumb--active .clientLink--active {
+    border-top-color: #d80b6d; }
+  .clientThumb--outstanding .clientLink--active {
+    border-top-color: #00844f; }
 
 .clientPane {
   flex: 1 1 auto;

@@ -1,10 +1,39 @@
 
 .clientThumb{
     border-top: 1px solid $gray_border;
+    position: relative;
+}
+
+.clientThumb--outstanding:after{
+    content:"";
+    display: block;
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    right: 10px;
+    top: 50%;
+    // top: 10px;
+    transform: translateY(-100%);
+    background-color: $green;
+}
+
+.clientThumb--active:before{
+    content:"";
+    display: block;
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    right: 10px;
+    top: 50%;
+    bottom: 10px;
+    transform: translateY(100%);
+    background-color: $pink;
 }
 
 .clientLink{
-    padding: $windowgutter;
+    padding: $windowgutter 32px;
     text-decoration: none;
     color: inherit;
     display: block;
@@ -18,6 +47,12 @@
     }
 }
 .clientLink--active{
-    border-top-color: $pink;
     background-color: $gray_border;
+
+    .clientThumb--active &{
+        border-top-color: $pink;
+    }
+    .clientThumb--outstanding &{
+        border-top-color: $green;
+    }
 }
