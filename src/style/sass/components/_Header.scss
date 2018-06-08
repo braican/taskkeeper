@@ -1,3 +1,11 @@
-.masthead{
+.appname a{
+    @include uppercase(1rem);
+    display: block;
+    color: $white;
+    text-decoration: none;
     padding: $windowgutter;
+
+    &:hover{
+        background-color: $gray_border;
+    }
 }

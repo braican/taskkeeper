@@ -8,7 +8,7 @@
    v2.0 | 20110126
    License: none (public domain)
 */
-@import url("https://fonts.googleapis.com/css?family=Nunito+Sans:400,700,900");
+@import url("https://fonts.googleapis.com/css?family=Nunito+Sans:400,700");
 html {
   box-sizing: border-box; }
 
@@ -74,7 +74,7 @@ input[type="number"] {
   text-transform: uppercase;
   font-size: 1rem;
   letter-spacing: 0.1em;
-  font-weight: 900; }
+  font-weight: 700; }
 
 /* ------------------------------------
  * --el
@@ -221,7 +221,7 @@ html, body, #root, .app-main {
   text-transform: uppercase;
   font-size: 0.7em;
   letter-spacing: 0.1em;
-  font-weight: 900;
+  font-weight: 700;
   opacity: 0.2;
   transition: opacity .2s; }
 
@@ -260,8 +260,17 @@ html, body, #root, .app-main {
   input[type="checkbox"]:checked + .toggle__switch:before {
     transform: translateX(100%); }
 
-.masthead {
+.appname a {
+  text-transform: uppercase;
+  font-size: 1rem;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+  display: block;
+  color: #fff;
+  text-decoration: none;
   padding: 20px; }
+  .appname a:hover {
+    background-color: #404040; }
 
 .clientThumb {
   border-top: 1px solid #404040; }
@@ -323,7 +332,7 @@ html, body, #root, .app-main {
   text-transform: uppercase;
   font-size: 0.7em;
   letter-spacing: 0.1em;
-  font-weight: 900;
+  font-weight: 700;
   padding: 14px;
   color: #fff;
   border-radius: 4px;
@@ -387,7 +396,7 @@ html, body, #root, .app-main {
   text-transform: uppercase;
   font-size: 0.7em;
   letter-spacing: 0.1em;
-  font-weight: 900;
+  font-weight: 700;
   position: relative;
   padding-right: calc(12px + 6px);
   padding-top: 2px; }
@@ -502,7 +511,7 @@ html, body, #root, .app-main {
   text-transform: uppercase;
   font-size: 0.7em;
   letter-spacing: 0.1em;
-  font-weight: 900; }
+  font-weight: 700; }
 
 .task__description,
 .task__hours,
@@ -646,7 +655,7 @@ html, body, #root, .app-main {
   line-height: 1;
   opacity: 0;
   transition: opacity .2s;
-  font-weight: 900; }
+  font-weight: 700; }
   .taskform__el--byprice .taskform__dollarsign {
     opacity: 1; }
 
@@ -654,7 +663,7 @@ html, body, #root, .app-main {
   text-transform: uppercase;
   font-size: 0.7em;
   letter-spacing: 0.1em;
-  font-weight: 900;
+  font-weight: 700;
   position: absolute;
   line-height: 1;
   left: 6px;

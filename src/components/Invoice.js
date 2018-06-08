@@ -87,9 +87,4 @@ Invoice.propTypes = {
     archiveInvoice : PropTypes.func.isRequired,
 };
 
-Invoice.defaultProps = {
-    saveTask   : null,
-    removeTask : null,
-}
-
 export default Invoice;

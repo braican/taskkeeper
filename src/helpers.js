@@ -84,7 +84,7 @@ export function getInvoicegroupTotal(invoices, rate, format = false) {
             return total;
         }
 
-        return total + getTasklistSubtotal(invoice.tasks, rate, format);
+        return total + getTasklistSubtotal(invoice.tasks, rate, false);
     }, 0);
 
     return format ? formatPrice(subtotal) : subtotal;

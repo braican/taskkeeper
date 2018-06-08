@@ -128,7 +128,7 @@ const ClientPane = (props) => {
             <header className="invoicegroup__header">
                 <h3 className="t-blocktitle">Outstanding Invoices</h3>
                 <p className="invoice__price moneydisplay">
-                    {getInvoicegroupTotal(invoiceGroup, rate)}
+                    {getInvoicegroupTotal(invoiceGroup, rate, true)}
                 </p>
             </header>
             {
@@ -153,7 +153,7 @@ const ClientPane = (props) => {
                 <header className="invoicegroup__header">
                     <h3 className="t-blocktitle">Invoice Archive</h3>
                     <p className="invoice__price moneydisplay">
-                        {getInvoicegroupTotal(invoiceGroup, rate)}
+                        {getInvoicegroupTotal(invoiceGroup, rate, true)}
                     </p>
                 </header>
 
