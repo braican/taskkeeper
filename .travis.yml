@@ -20,6 +20,6 @@ install:
 deploy:
   provider: script
   skip_cleanup: true
-  script: bash .deploy
+  script: bash ./deploy.sh
   on:
     branch: setup
