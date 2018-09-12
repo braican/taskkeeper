@@ -8,8 +8,8 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ## Getting started
 
 1. Clone this repo into a directory. `cd` into that directory.
-1. Run `npm install` to install all the good stuff.
-1. Run `npm start` to star the server and watch all the files.
+1. Run `yarn install` to install all the good stuff.
+1. Run `yarn start` to star the server and watch all the files.
 
 
 ## Folder Structure
