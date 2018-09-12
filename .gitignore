@@ -8,7 +8,8 @@
 # production
 /build
 
-# build maps
+# build products
+src/**/*.css
 *.map
 
 # misc
