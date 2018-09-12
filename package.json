@@ -18,5 +18,17 @@
     "build": "npm-run-all build-css build-js",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "@upstatement/prettier-config": "^0.1.2",
+    "babel-eslint": "^8.2.6",
+    "eslint": "^5.2.0",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-prettier": "^2.6.2",
+    "eslint-plugin-react": "^7.11.1",
+    "npm": "^6.4.1",
+    "prettier": "^1.14.2",
+    "stylelint": "^9.5.0",
+    "stylelint-config-sass-guidelines": "^5.2.0"
   }
 }
