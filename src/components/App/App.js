@@ -41,33 +41,38 @@ class App extends React.Component {
     render() {
         const { user } = this.state;
         return (
-            <div className="app appframe">
-                <aside
-                    className={`sidebar sidebar--${
-                        this.state.user ? 'logged-in' : 'anonymous'
-                    }`}
-                >
+            <div
+                className={`app app--${
+                    this.state.user ? 'logged-in' : 'anonymous'
+                }`}
+            >
+                <header className="header">
+                    <h1>Taskkeeper</h1>
                     <div>
-                        <h1>Taskkeeper</h1>
                         {this.state.user ? (
                             <button onClick={this.logout}>Logout</button>
                         ) : (
                             <button onClick={this.login}>Log In</button>
                         )}
                     </div>
-                    {this.state.user ? (
-                        <div>
-                            <img
-                                src={user.photoURL}
-                                alt={`Thumbnail of ${user.displayName ||
-                                    user.email}`}
-                            />
-                            <p>{user.displayName || user.email}</p>
-                        </div>
-                    ) : null}
-                </aside>
+                </header>
 
-                <main className="appmain" />
+                <div className="appframe">
+                    <aside className="sidebar">
+                        {this.state.user ? (
+                            <div>
+                                <img
+                                    src={user.photoURL}
+                                    alt={`Thumbnail of ${user.displayName ||
+                                        user.email}`}
+                                />
+                                <p>{user.displayName || user.email}</p>
+                            </div>
+                        ) : null}
+                    </aside>
+
+                    <main className="appmain" />
+                </div>
             </div>
         );
     }

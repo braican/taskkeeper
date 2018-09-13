@@ -1,6 +1,13 @@
 @import '../../sass/variables';
 @import '../../sass/mixins';
 
+
+.header {
+    display: flex;
+    justify-content: space-between;
+}
+
+
 .appframe {
     display: flex;
 }
@@ -19,3 +26,4 @@
 .appmain {
     flex: 1;
 }
+
