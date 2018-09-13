@@ -1,5 +1,5 @@
 import React from 'react';
-import firebase, { auth, provider } from '../firebase';
+import firebase, { auth, provider } from '../../firebase';
 import './App.css';
 
 class App extends React.Component {
@@ -39,9 +39,14 @@ class App extends React.Component {
 
     // render function
     render() {
+        const { user } = this.state;
         return (
-            <div className="app">
-                <header>
+            <div className="app appframe">
+                <aside
+                    className={`sidebar sidebar--${
+                        this.state.user ? 'logged-in' : 'anonymous'
+                    }`}
+                >
                     <div>
                         <h1>Taskkeeper</h1>
                         {this.state.user ? (
@@ -50,16 +55,19 @@ class App extends React.Component {
                             <button onClick={this.login}>Log In</button>
                         )}
                     </div>
-                </header>
-                {this.state.user ? (
-                    <div>
-                        <img src={this.state.user.photoURL} />
-                        <p>
-                            {this.state.user.displayName ||
-                                this.state.user.email}
-                        </p>
-                    </div>
-                ) : null}
+                    {this.state.user ? (
+                        <div>
+                            <img
+                                src={user.photoURL}
+                                alt={`Thumbnail of ${user.displayName ||
+                                    user.email}`}
+                            />
+                            <p>{user.displayName || user.email}</p>
+                        </div>
+                    ) : null}
+                </aside>
+
+                <main className="appmain" />
             </div>
         );
     }

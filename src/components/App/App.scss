@@ -1,0 +1,21 @@
+@import '../../sass/variables';
+@import '../../sass/mixins';
+
+.appframe {
+    display: flex;
+}
+
+.sidebar {
+    @include transition(all);
+    background-color: $c-gray;
+    width: 20%;
+    color: $c-white;
+}
+
+.sidebar--anonymous {
+    width: 100%;
+}
+
+.appmain {
+    flex: 1;
+}

@@ -1,0 +1,9 @@
+body, 
+button,
+input[type="text"],
+input[type="number"]{
+    color: $c-black;
+    font-size: $font-size;
+    line-height: $line-height;
+    font-family: $font-primary;
+}
