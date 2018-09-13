@@ -1,3 +1,4 @@
+// Firebase config values here.
 const config = {
     apiKey: '',
     authDomain: '',
