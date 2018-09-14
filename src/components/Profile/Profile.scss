@@ -3,9 +3,9 @@
 .profile {
     display: flex;
     align-items: center;
-    padding-bottom: 20px;
+    padding-bottom: $space-md;
     border-bottom: 1px solid $c-gray-5;
-    margin-bottom: 20px;
+    margin-bottom: $space-md;
 }
 
 .profile__headshot {
@@ -13,5 +13,5 @@
     height: 80px;
     border-radius: 50%;
     overflow: hidden;
-    margin-right: 20px;
+    margin-right: $space-md;
 }

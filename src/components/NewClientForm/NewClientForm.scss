@@ -1,0 +1,59 @@
+@import '../../sass/variables';
+@import '../../sass/mixins';
+
+.new-client {
+    @include transition(transform);
+    position: absolute;
+    z-index: 2;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: $c-gray-6;
+    color: $c-white;
+    padding-left: $sidebar-width;
+    transform: translateX(-100%);
+
+    .app--new-client & {
+        transform: translateX(0);
+    }
+
+    input {
+        @include transition(box-shadow, 0.2s);
+        background-color: transparent;
+        border: 0;
+        border-bottom: 1px solid $c-gray-9;
+        display: block;
+        font-size: 2rem;
+        color: $c-white;
+        margin-top: 2rem;
+
+        &:focus {
+            outline: none;
+            box-shadow: inset 0 -2px 0 $c-gray-9;
+        }
+
+        &:focus + label {
+            opacity: 1;
+        }
+    }
+
+    label {
+        @include transition(all, 0.2s);
+        display: block;
+        opacity: 0.6;
+        margin-top: 0.5em;
+    }
+}
+
+.new-client__inner {
+    padding: $space-md;
+}
+
+.new-client__input {
+    position: relative;
+}
+
+.new-client__actions {
+    margin-top: $space-lg;
+}
