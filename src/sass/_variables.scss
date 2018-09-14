@@ -4,8 +4,11 @@
 
 $c-black: #000000;
 $c-white: #ffffff;
-$c-gray: #3f3b3b;
-
+$c-gray-5: #555555;
+$c-gray-4: #444444;
+$c-gray-3: #333333;
+$c-accent: #f7720c;
+$c-accent-hover: darken($c-accent, 6%);
 
 // --------------------------------------------------------------
 // TYPE

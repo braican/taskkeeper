@@ -1,29 +1,41 @@
 @import '../../sass/variables';
 @import '../../sass/mixins';
 
-
-.header {
-    display: flex;
-    justify-content: space-between;
-}
-
-
-.appframe {
+.app {
     display: flex;
 }
 
 .sidebar {
-    @include transition(all);
-    background-color: $c-gray;
+    @include transition(width);
+    background-color: $c-gray-3;
     width: 20%;
     color: $c-white;
-}
+    height: 100vh;
+    padding: 20px;
 
-.sidebar--anonymous {
-    width: 100%;
+    .app--anonymous & {
+        width: 100%;
+    }
 }
 
 .appmain {
     flex: 1;
 }
 
+.welcome {
+    height: 100%;
+    display: flex;
+    padding: 20px;
+    justify-content: center;
+    align-items: center;
+}
+
+.authdata {
+    opacity: 0;
+
+    .app--logged-in & {
+        @include transition(opacity);
+        transition-delay: 0.4s;
+        opacity: 1;
+    }
+}

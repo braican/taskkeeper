@@ -1,11 +1,15 @@
 import React from 'react';
 import firebase, { auth, provider } from '../../firebase';
+
+import Profile from '../Profile/Profile';
+
 import './App.css';
 
 class App extends React.Component {
     constructor() {
         super();
         this.state = {
+            loaded: false,
             username: '',
             user: null
         };
@@ -16,6 +20,9 @@ class App extends React.Component {
 
     componentDidMount() {
         auth.onAuthStateChanged(user => {
+            this.setState({
+                loaded: true
+            });
             if (user) {
                 this.setState({ user });
             }
@@ -39,40 +46,38 @@ class App extends React.Component {
 
     // render function
     render() {
-        const { user } = this.state;
         return (
-            <div
-                className={`app app--${
-                    this.state.user ? 'logged-in' : 'anonymous'
-                }`}
-            >
-                <header className="header">
-                    <h1>Taskkeeper</h1>
-                    <div>
-                        {this.state.user ? (
-                            <button onClick={this.logout}>Logout</button>
-                        ) : (
-                            <button onClick={this.login}>Log In</button>
-                        )}
-                    </div>
-                </header>
-
-                <div className="appframe">
-                    <aside className="sidebar">
+            <div className={`app app--${this.state.user ? 'logged-in' : 'anonymous'}`}>
+                <aside className="sidebar">
+                    <div className="authdata">
                         {this.state.user ? (
                             <div>
-                                <img
-                                    src={user.photoURL}
-                                    alt={`Thumbnail of ${user.displayName ||
-                                        user.email}`}
-                                />
-                                <p>{user.displayName || user.email}</p>
+                                <Profile user={this.state.user} />
+                                <button onClick={this.logout}>Logout</button>
                             </div>
                         ) : null}
-                    </aside>
+                    </div>
 
-                    <main className="appmain" />
-                </div>
+                    {this.state.user === null ? (
+                        <div className="welcome">
+                            {this.state.loaded ? (
+                                <div>
+                                    <h1>Taskkeeper</h1>
+                                    <p className="space-em">
+                                        Keep track of all your clients and tasks
+                                    </p>
+                                    <button onClick={this.login}>Log In</button>
+                                </div>
+                            ) : (
+                                <div>
+                                    <p>Loading</p>
+                                </div>
+                            )}
+                        </div>
+                    ) : null}
+                </aside>
+
+                <main className="appmain" />
             </div>
         );
     }

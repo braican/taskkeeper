@@ -1,0 +1,17 @@
+@import '../../sass/variables';
+
+.profile {
+    display: flex;
+    align-items: center;
+    padding-bottom: 20px;
+    border-bottom: 1px solid $c-gray-5;
+    margin-bottom: 20px;
+}
+
+.profile__headshot {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 20px;
+}

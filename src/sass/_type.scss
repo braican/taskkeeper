@@ -1,9 +1,42 @@
-body, 
+body,
 button,
-input[type="text"],
-input[type="number"]{
+input[type='text'],
+input[type='number'] {
     color: $c-black;
     font-size: $font-size;
     line-height: $line-height;
     font-family: $font-primary;
+}
+
+// --------------------------------------------------------------
+// BUTTONS and CTAs
+// --------------------------------------------------------------
+
+button {
+    background-color: $c-accent;
+    color: $c-white;
+    border: 0;
+    cursor: pointer;
+    padding: 10px 20px;
+    border-radius: 3px;
+
+    &:hover {
+        background-color: $c-accent-hover;
+    }
+}
+
+// --------------------------------------------------------------
+// HEADERS
+// --------------------------------------------------------------
+
+h1 {
+    font-size: 2rem;
+}
+
+// --------------------------------------------------------------
+// SPACING
+// --------------------------------------------------------------
+
+.space-em {
+    margin-bottom: 1em;
 }

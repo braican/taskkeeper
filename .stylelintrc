@@ -14,7 +14,7 @@
     "indentation": 4,
     "max-empty-lines": 3,
     "max-nesting-depth": 5,
-    "number-leading-zero": "never",
+    "number-leading-zero": "always",
     "order/properties-alphabetical-order": null,
     "selector-class-pattern": null,
     "selector-id-pattern": null,
