@@ -23,12 +23,12 @@ class NewClientForm extends React.Component {
     }
 
     addNewClient() {
-        if (!this.props.firebase) {
+        if (!this.props.clientRef) {
             return;
         }
 
         const client = { ...this.state };
-        this.props.firebase.push(client);
+        this.props.clientRef.push(client);
     }
 
     render() {
@@ -75,11 +75,7 @@ class NewClientForm extends React.Component {
 
 NewClientForm.propTypes = {
     close: PropTypes.func.isRequired,
-    firebase: PropTypes.object
-};
-
-NewClientForm.defaultProps = {
-    firebase: null
+    clientRef: PropTypes.object.isRequired
 };
 
 export default NewClientForm;

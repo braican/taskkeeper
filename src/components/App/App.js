@@ -64,13 +64,25 @@ class App extends React.Component {
         this.setState({ newClientForm: false });
     }
 
-    // render function
-    render() {
-        let appClass = `app--${this.state.user ? 'logged-in' : 'anonymous'}`;
+    /**
+     * Return the classes for the app container, indicating state.
+     */
+    getAppState() {
+        let classes = `app--${this.state.user ? 'logged-in' : 'anonymous'}`;
 
         if (this.state.newClientForm) {
-            appClass += ' app--new-client';
+            classes += ' app--new-client';
         }
+
+        return classes;
+    }
+
+    // render function
+    render() {
+        const appClass = this.getAppState();
+        const clientRef = this.state.user
+            ? firebase.database().ref(`${this.state.user.uid}/clients`)
+            : null;
 
         return (
             <div className={`app ${appClass}`}>
@@ -82,7 +94,7 @@ class App extends React.Component {
                                 <button className="btn" onClick={this.logout}>
                                     Logout
                                 </button>
-                                <ClientList />
+                                <ClientList clientRef={clientRef} />
                                 <button className="btn" onClick={this.openNewClientForm}>
                                     New Client
                                 </button>
@@ -111,14 +123,9 @@ class App extends React.Component {
 
                 <main className="appmain" />
 
-                <NewClientForm
-                    close={this.closeNewClientForm}
-                    firebase={
-                        this.state.user
-                            ? firebase.database().ref(`${this.state.user.uid}/clients`)
-                            : null
-                    }
-                />
+                {this.state.user ? (
+                    <NewClientForm close={this.closeNewClientForm} clientRef={clientRef} />
+                ) : null}
             </div>
         );
     }
