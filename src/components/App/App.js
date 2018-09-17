@@ -1,4 +1,5 @@
 import React from 'react';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import firebase, { auth, provider } from '../../firebase';
 
 import Profile from '../Profile/Profile';
@@ -85,48 +86,58 @@ class App extends React.Component {
             : null;
 
         return (
-            <div className={`app ${appClass}`}>
-                <aside className="sidebar">
-                    <div className="authdata">
-                        {this.state.user ? (
-                            <div>
-                                <Profile user={this.state.user} />
-                                <button className="btn" onClick={this.logout}>
-                                    Logout
-                                </button>
-                                <ClientList clientRef={clientRef} />
-                                <button className="btn" onClick={this.openNewClientForm}>
-                                    New Client
-                                </button>
-                            </div>
-                        ) : null}
-                    </div>
-
-                    {this.state.user === null ? (
-                        <div className="welcome">
-                            {this.state.loaded ? (
+            <BrowserRouter>
+                <div className={`app ${appClass}`}>
+                    <aside className="sidebar">
+                        <div className="authdata">
+                            {this.state.user ? (
                                 <div>
-                                    <h1>Taskkeeper</h1>
-                                    <p>Keep track of all your clients and tasks</p>
-                                    <button onClick={this.login} className="space-top">
-                                        Log In
+                                    <Profile user={this.state.user} />
+                                    <button className="btn" onClick={this.logout}>
+                                        Logout
+                                    </button>
+                                    <ClientList clientRef={clientRef} />
+                                    <button className="btn" onClick={this.openNewClientForm}>
+                                        New Client
                                     </button>
                                 </div>
-                            ) : (
-                                <div>
-                                    <p>Loading</p>
-                                </div>
-                            )}
+                            ) : null}
                         </div>
+
+                        {this.state.user === null ? (
+                            <div className="welcome">
+                                {this.state.loaded ? (
+                                    <div>
+                                        <h1>Taskkeeper</h1>
+                                        <p>Keep track of all your clients and tasks</p>
+                                        <button onClick={this.login} className="space-top btn">
+                                            Log In
+                                        </button>
+                                    </div>
+                                ) : (
+                                    <div>
+                                        <p>Loading</p>
+                                    </div>
+                                )}
+                            </div>
+                        ) : null}
+                    </aside>
+
+                    <main className="appmain">
+                        <Switch>
+                            <Route
+                                path="/client/:clientId"
+                                render={props => <p>{props.match.params.clientId}</p>}
+                            />
+                            <Route render={() => <p>Nope</p>} />
+                        </Switch>
+                    </main>
+
+                    {this.state.user ? (
+                        <NewClientForm close={this.closeNewClientForm} clientRef={clientRef} />
                     ) : null}
-                </aside>
-
-                <main className="appmain" />
-
-                {this.state.user ? (
-                    <NewClientForm close={this.closeNewClientForm} clientRef={clientRef} />
-                ) : null}
-            </div>
+                </div>
+            </BrowserRouter>
         );
     }
 }

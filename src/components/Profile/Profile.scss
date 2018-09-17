@@ -9,9 +9,10 @@
 }
 
 .profile__headshot {
-    width: 80px;
-    height: 80px;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
     overflow: hidden;
     margin-right: $space-md;
+    border: 2px solid $c-gray-d;
 }

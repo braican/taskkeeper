@@ -2,8 +2,12 @@
 // COLORS
 // --------------------------------------------------------------
 
-$c-black: #000000;
 $c-white: #ffffff;
+$c-gray-e: #eeeeee;
+$c-gray-d: #dddddd;
+$c-gray-c: #cccccc;
+$c-gray-b: #bbbbbb;
+$c-gray-a: #aaaaaa;
 $c-gray-9: #999999;
 $c-gray-8: #888888;
 $c-gray-7: #777777;
@@ -11,6 +15,9 @@ $c-gray-6: #666666;
 $c-gray-5: #555555;
 $c-gray-4: #444444;
 $c-gray-3: #333333;
+$c-gray-2: #222222;
+$c-gray-1: #111111;
+$c-black: #000000;
 $c-accent: #f7720c;
 $c-accent-hover: darken($c-accent, 6%);
 

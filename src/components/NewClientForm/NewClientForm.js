@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { slugify } from '../../util';
+
 import './NewClientForm.css';
 
 class NewClientForm extends React.Component {
@@ -22,20 +24,31 @@ class NewClientForm extends React.Component {
         });
     }
 
-    addNewClient() {
+    addNewClient(event) {
+        event.preventDefault();
         if (!this.props.clientRef) {
             return;
         }
 
         const client = { ...this.state };
+        client.slug = slugify(client.name);
         this.props.clientRef.push(client);
+
+        this.clientForm.reset();
+        this.props.close();
     }
 
     render() {
         return (
-            <div className="new-client">
+            <form
+                className="new-client"
+                ref={input => {
+                    this.clientForm = input;
+                }}
+                onSubmit={this.addNewClient}
+            >
                 <div className="new-client__inner">
-                    <p>Add a new client</p>
+                    <h2>Add a new client</h2>
 
                     <div className="new-client__input space-top">
                         <input
@@ -59,7 +72,7 @@ class NewClientForm extends React.Component {
                     </div>
 
                     <div className="new-client__actions">
-                        <button className="btn" onClick={this.addNewClient}>
+                        <button className="btn" type="submit">
                             Submit
                         </button>
                         &nbsp;&nbsp;&nbsp;
@@ -68,7 +81,7 @@ class NewClientForm extends React.Component {
                         </button>
                     </div>
                 </div>
-            </div>
+            </form>
         );
     }
 }
