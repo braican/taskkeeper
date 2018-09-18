@@ -5,7 +5,8 @@ cache:
   directories:
   - node_modules
 install:
-  - touch ./src/.runtimeconfig.json
+  - chmod +x ./bin/setup.sh
+  - ./bin/setup.sh
   - nvm install
   - npm install
   - npm run build
