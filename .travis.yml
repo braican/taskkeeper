@@ -1,3 +1,5 @@
+before_deploy:
+  - ./bin/deploy.sh
 deploy:
   provider: firebase
   token:

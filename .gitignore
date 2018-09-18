@@ -22,6 +22,7 @@ firebase.config.js
 .htaccess
 error_log
 .firebase
+.runtimeconfig.json
 
 npm-debug.log*
 yarn-debug.log*
