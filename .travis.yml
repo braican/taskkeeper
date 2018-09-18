@@ -5,10 +5,9 @@ cache:
   directories:
   - node_modules
 install:
+  - touch ./src/.runtimeconfig.json
   - nvm install
   - npm install
-  - chmod +x ./bin/deploy.sh
-  - ./bin/deploy.sh
   - npm run build
 deploy:
   provider: firebase
