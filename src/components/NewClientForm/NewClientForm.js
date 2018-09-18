@@ -18,9 +18,9 @@ class NewClientForm extends React.Component {
         this.addNewClient = this.addNewClient.bind(this);
     }
 
-    handleChange(e) {
+    handleChange(event) {
         this.setState({
-            [e.target.name]: e.target.value
+            [event.target.name]: event.target.value
         });
     }
 

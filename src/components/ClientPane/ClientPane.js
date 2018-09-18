@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import TaskForm from '../TaskForm/TaskForm';
+import TaskList from '../TaskList/TaskList';
+
 class ClientPane extends React.Component {
     constructor() {
         super();
@@ -44,13 +47,22 @@ class ClientPane extends React.Component {
             return null;
         }
 
+        const rate = parseFloat(this.state.client.rate);
+
         return (
             <div>
                 <header>
                     <h2>{this.state.client.name}</h2>
                     <p>{this.state.client.rate}</p>
                 </header>
-                <div className="client-main" />
+                <div className="client-main">
+                    <TaskForm taskRef={this.props.taskRef} clientKey={this.state.clientKey} />
+                    <TaskList
+                        taskRef={this.props.taskRef}
+                        clientKey={this.state.clientKey}
+                        rate={rate}
+                    />
+                </div>
             </div>
         );
     }
@@ -58,11 +70,15 @@ class ClientPane extends React.Component {
 
 ClientPane.propTypes = {
     slug: PropTypes.string.isRequired,
-    clientRef: PropTypes.object
+    clientRef: PropTypes.object,
+    invoiceRef: PropTypes.object,
+    taskRef: PropTypes.object
 };
 
 ClientPane.defaultProps = {
-    clientRef: undefined
+    clientRef: null,
+    invoiceRef: null,
+    taskRef: null
 };
 
 export default ClientPane;

@@ -101,7 +101,16 @@ class App extends React.Component {
             .child('clients')
             .orderByChild('slug')
             .equalTo(slug);
-        return <ClientPane slug={slug} clientRef={clientRef} />;
+        const invoiceRef = this.state.db.child('invoices');
+        const taskRef = this.state.db.child('tasks');
+        return (
+            <ClientPane
+                slug={slug}
+                clientRef={clientRef}
+                invoiceRef={invoiceRef}
+                taskRef={taskRef}
+            />
+        );
     }
 
     /**
