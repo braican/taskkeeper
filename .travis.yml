@@ -6,8 +6,8 @@ cache:
   - node_modules
 install:
   - nvm install
-  - yarn install
-  - yarn build
+  - npm install
+  - npm run build
 before_deploy:
   - ./bin/deploy.sh
 deploy:
