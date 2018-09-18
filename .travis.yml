@@ -1,25 +1,4 @@
-language: node_js
-node_js:
-- stable
-cache:
-  directories:
-  - node_modules
-addons:
-  ssh_known_hosts:
-    - braican.com
-    - 69.164.211.156
-before_install:
-- openssl aes-256-cbc -K $encrypted_ea2966dd748b_key -iv $encrypted_ea2966dd748b_iv -in .travis/deploy_rsa.enc -out .travis/deploy_rsa -d
-- eval "$(ssh-agent -s)"
-- chmod 600 .travis/deploy_rsa
-- ssh-add .travis/deploy_rsa
-- nvm install
-install:
-- npm install
-- npm run build
 deploy:
-  provider: script
-  skip_cleanup: true
-  script: bash ./deploy.sh
-  on:
-    branch: master
+  provider: firebase
+  token:
+    secure: pCxTWsulYlIihuetA2z99Nxad09pnZWgLKYDwTKaJFSrZYzcu70POPbYGY/pT3fIf8KBanGuNCGQ3yqtZ0FxA/Fql47PmQ9n29q0xowRX23mzaIVPE26+u/2ElD8iVQFIrAPSPXWOazDRONvpPA11ZNw58gk4FJ1RlstBh2gALL795akeC2Kq7tVV5RxesW4wseYXV7OG3q5m4grjkYFfUItSz7kdG9uROrwXrlWRMqI/6S020tFEiwkYYxBemRCu9cxg1wpIJCre8AnpCh0ZI13wtwv4oNdVzSDAt/S3jzOa5u8QMOnoIetgt7OpmWf1Jqoot+jraOU5W/WpbiGOEOHCWbVa45iTDZXEgkIDSWcMDhHDOBsQDXYZrpaybEjmq5l/WK+07Fp3BJS23c7kCQlWEYtEfPefrfJHJCZKs/yguJMhsC7C4gVg+jq9cMFQI2AaEOECeUVj4kBCej6imNtjBet1gx03bBhUbh9p2lVK11vV8gzI9zqAa6HP+9Cjb05Nj5bXehLpbM1Ar4H3vCN3lkRPiHrUGAoGZ/nSXtPaPdjmyB7WZUr7ZY+Z2Jw0FmQTVp81cFEBVUDg/KwPWi9vIarqgfJR6H7WW7wClQD9oAnXWZNVWFlIgVbMT3TpzbxmAxPMT8FrD2gkPCaF8AVGJhI2JeXI+v2N9wBDss=
