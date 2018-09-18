@@ -5,11 +5,10 @@ cache:
   directories:
   - node_modules
 install:
+  - ./bin/deploy.sh
   - nvm install
   - npm install
   - npm run build
-before_deploy:
-  - ./bin/deploy.sh
 deploy:
   provider: firebase
   token:
