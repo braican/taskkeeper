@@ -54,6 +54,7 @@ class ClientPane extends React.Component {
                 <header>
                     <h2>{this.state.client.name}</h2>
                     <p>{this.state.client.rate}</p>
+                    <p>This was deployed</p>
                 </header>
                 <div className="client-main">
                     <TaskForm taskRef={this.props.taskRef} clientKey={this.state.clientKey} />
