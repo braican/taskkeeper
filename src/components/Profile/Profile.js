@@ -9,7 +9,7 @@ const Profile = ({ user }) => (
             <img src={user.photoURL} alt={`Thumbnail of ${user.displayName || user.email}`} />
         </div>
 
-        <p>{user.displayName || user.email}</p>
+        <p className="profile__meta">{user.displayName || user.email}</p>
     </div>
 );
 

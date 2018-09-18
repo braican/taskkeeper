@@ -5,10 +5,8 @@
 # testing
 /coverage
 
-# production
-/build
-
 # build products
+/build
 src/**/*.css
 *.map
 
@@ -28,3 +26,5 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+# local dev
+.vscode

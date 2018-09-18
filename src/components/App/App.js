@@ -5,6 +5,7 @@ import firebase, { auth, provider } from '../../firebase';
 import Profile from '../Profile/Profile';
 import ClientList from '../ClientList/ClientList';
 import NewClientForm from '../NewClientForm/NewClientForm';
+import ClientPane from '../ClientPane/ClientPane';
 
 import './App.css';
 
@@ -15,13 +16,15 @@ class App extends React.Component {
             loaded: false,
             username: '',
             user: null,
-            newClientForm: false
+            newClientForm: false,
+            db: null
         };
 
         this.login = this.login.bind(this);
         this.logout = this.logout.bind(this);
         this.openNewClientForm = this.openNewClientForm.bind(this);
         this.closeNewClientForm = this.closeNewClientForm.bind(this);
+        this.renderClientPane = this.renderClientPane.bind(this);
     }
 
     componentDidMount() {
@@ -31,11 +34,19 @@ class App extends React.Component {
             });
 
             if (user) {
-                this.setState({ user });
+                this.setState({
+                    user,
+                    db: firebase.database().ref(user.uid)
+                });
             }
         });
     }
 
+    /**
+     * Log the user in.
+     *
+     * @return void
+     */
     login() {
         auth.signInWithPopup(provider).then(result => {
             const user = result.user;
@@ -43,6 +54,11 @@ class App extends React.Component {
         });
     }
 
+    /**
+     * Log the user out.
+     *
+     * @return void
+     */
     logout() {
         auth.signOut().then(() => {
             this.setState({
@@ -53,6 +69,8 @@ class App extends React.Component {
 
     /**
      * Opens the new client form
+     *
+     * @return void
      */
     openNewClientForm() {
         this.setState({ newClientForm: true });
@@ -60,13 +78,36 @@ class App extends React.Component {
 
     /**
      * Close the new client form
+     *
+     * @return void
      */
     closeNewClientForm() {
         this.setState({ newClientForm: false });
     }
 
     /**
+     * Render the ClientPane.
+     *
+     * @param {object} props The properties based in via the url.
+     *
+     * @return ClientPane
+     */
+    renderClientPane(props) {
+        if (this.state.db === null) {
+            return null;
+        }
+        const slug = props.match.params.clientSlug;
+        const clientRef = this.state.db
+            .child('clients')
+            .orderByChild('slug')
+            .equalTo(slug);
+        return <ClientPane slug={slug} clientRef={clientRef} />;
+    }
+
+    /**
      * Return the classes for the app container, indicating state.
+     *
+     * @return string
      */
     getAppState() {
         let classes = `app--${this.state.user ? 'logged-in' : 'anonymous'}`;
@@ -81,9 +122,7 @@ class App extends React.Component {
     // render function
     render() {
         const appClass = this.getAppState();
-        const clientRef = this.state.user
-            ? firebase.database().ref(`${this.state.user.uid}/clients`)
-            : null;
+        const clientRef = this.state.user ? this.state.db.child('clients') : null;
 
         return (
             <BrowserRouter>
@@ -125,10 +164,7 @@ class App extends React.Component {
 
                     <main className="appmain">
                         <Switch>
-                            <Route
-                                path="/client/:clientId"
-                                render={props => <p>{props.match.params.clientId}</p>}
-                            />
+                            <Route path="/client/:clientSlug" render={this.renderClientPane} />
                             <Route render={() => <p>Nope</p>} />
                         </Switch>
                     </main>

@@ -24,7 +24,8 @@ class ClientList extends React.Component {
                 newClients.push({
                     id: clientId,
                     name: clients[clientId].name,
-                    rate: clients[clientId].rate
+                    rate: clients[clientId].rate,
+                    slug: clients[clientId].slug
                 });
             });
 
@@ -40,7 +41,7 @@ class ClientList extends React.Component {
                 {this.state.clients.map(client => (
                     <li key={client.id}>
                         <NavLink
-                            to={`/client/${client.id}`}
+                            to={`/client/${client.slug}`}
                             className="client-link"
                             activeClassName="client-link--active"
                         >
