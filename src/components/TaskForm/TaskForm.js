@@ -29,8 +29,7 @@ class TaskForm extends React.Component {
 
         const task = { ...this.state };
         task.client = this.props.clientKey;
-        this.props.taskRef.push(task);
-        this.taskForm.reset();
+        this.props.taskRef.add(task);
         this.setState({
             description: '',
             hours: 0,
@@ -40,13 +39,7 @@ class TaskForm extends React.Component {
 
     render() {
         return (
-            <form
-                className="new-task"
-                ref={input => {
-                    this.taskForm = input;
-                }}
-                onSubmit={this.addNewTask}
-            >
+            <form className="new-task" onSubmit={this.addNewTask}>
                 <input
                     type="text"
                     name="description"

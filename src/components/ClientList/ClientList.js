@@ -5,33 +5,25 @@ import { NavLink } from 'react-router-dom';
 import './ClientList.css';
 
 class ClientList extends React.Component {
-    constructor(props) {
+    constructor() {
         super();
 
         this.state = {
             clients: []
         };
+    }
 
-        props.clientRef.on('value', snapshot => {
-            const clients = snapshot.val();
+    componentDidMount() {
+        this.props.clientRef.onSnapshot(snapshot => {
             const newClients = [];
 
-            if (!clients) {
-                return;
-            }
-
-            Object.keys(clients).forEach(clientId => {
-                newClients.push({
-                    id: clientId,
-                    name: clients[clientId].name,
-                    rate: clients[clientId].rate,
-                    slug: clients[clientId].slug
-                });
+            snapshot.forEach(doc => {
+                const newClient = doc.data();
+                newClient.id = doc.id;
+                newClients.push(newClient);
             });
 
-            this.setState({
-                clients: newClients
-            });
+            this.setState({ clients: newClients });
         });
     }
 

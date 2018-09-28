@@ -21,31 +21,17 @@ class TaskList extends React.Component {
     }
 
     getTasks() {
-        this.props.taskRef
-            .orderByChild('client')
-            .equalTo(this.props.clientKey)
-            .on('value', snapshot => {
-                const tasks = snapshot.val();
-                const newTasks = [];
+        this.props.taskRef.where('client', '==', this.props.clientKey).onSnapshot(snapshot => {
+            const newTasks = [];
 
-                if (!tasks) {
-                    return;
-                }
-
-                Object.keys(tasks).forEach(taskId => {
-                    const task = tasks[taskId];
-                    const { description, hours, price } = task;
-
-                    newTasks.push({
-                        taskId,
-                        description,
-                        hours,
-                        price
-                    });
-                });
-
-                this.setState({ tasks: newTasks });
+            snapshot.forEach(doc => {
+                const newTask = doc.data();
+                newTask.taskId = doc.id;
+                newTasks.push(newTask);
             });
+
+            this.setState({ tasks: newTasks });
+        });
     }
 
     render() {

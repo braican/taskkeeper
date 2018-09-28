@@ -17,8 +17,12 @@ class App extends React.Component {
             username: '',
             user: null,
             newClientForm: false,
-            db: null
+            db: firebase.firestore()
         };
+
+        this.state.db.settings({
+            timestampsInSnapshots: true
+        });
 
         this.login = this.login.bind(this);
         this.logout = this.logout.bind(this);
@@ -33,12 +37,24 @@ class App extends React.Component {
                 loaded: true
             });
 
-            if (user) {
-                this.setState({
-                    user,
-                    db: firebase.database().ref(user.uid)
-                });
+            if (!user) {
+                return;
             }
+
+            const userRef = this.state.db.collection('users');
+
+            this.setState({ user });
+
+            userRef
+                .doc(user.uid)
+                .get()
+                .then(doc => {
+                    if (!doc.exists) {
+                        userRef.doc(user.uid).set({
+                            email: user.email
+                        });
+                    }
+                });
         });
     }
 
@@ -61,9 +77,7 @@ class App extends React.Component {
      */
     logout() {
         auth.signOut().then(() => {
-            this.setState({
-                user: null
-            });
+            this.setState({ user: null });
         });
     }
 
@@ -93,16 +107,18 @@ class App extends React.Component {
      * @return ClientPane
      */
     renderClientPane(props) {
-        if (this.state.db === null) {
-            return null;
-        }
         const slug = props.match.params.clientSlug;
+        const getOptions = {
+            source: 'default'
+        };
+
         const clientRef = this.state.db
-            .child('clients')
-            .orderByChild('slug')
-            .equalTo(slug);
-        const invoiceRef = this.state.db.child('invoices');
-        const taskRef = this.state.db.child('tasks');
+            .collection('clients')
+            .doc(slug)
+            .get(getOptions);
+
+        const invoiceRef = this.state.db.collection('invoices');
+        const taskRef = this.state.db.collection('tasks');
         return (
             <ClientPane
                 slug={slug}
@@ -131,7 +147,10 @@ class App extends React.Component {
     // render function
     render() {
         const appClass = this.getAppState();
-        const clientRef = this.state.user ? this.state.db.child('clients') : null;
+        const clientsRef = this.state.user ? this.state.db.collection('clients') : null;
+        const userClientsQuery = clientsRef
+            ? clientsRef.where('user', '==', this.state.user.uid)
+            : null;
 
         return (
             <BrowserRouter>
@@ -144,7 +163,7 @@ class App extends React.Component {
                                     <button className="btn" onClick={this.logout}>
                                         Logout
                                     </button>
-                                    <ClientList clientRef={clientRef} />
+                                    <ClientList clientRef={userClientsQuery} />
                                     <button className="btn" onClick={this.openNewClientForm}>
                                         New Client
                                     </button>
@@ -179,7 +198,11 @@ class App extends React.Component {
                     </main>
 
                     {this.state.user ? (
-                        <NewClientForm close={this.closeNewClientForm} clientRef={clientRef} />
+                        <NewClientForm
+                            close={this.closeNewClientForm}
+                            clientRef={clientsRef}
+                            user={this.state.user.uid}
+                        />
                     ) : null}
                 </div>
             </BrowserRouter>

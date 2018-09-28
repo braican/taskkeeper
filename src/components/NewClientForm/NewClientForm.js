@@ -6,12 +6,13 @@ import { slugify } from '../../util';
 import './NewClientForm.css';
 
 class NewClientForm extends React.Component {
-    constructor() {
+    constructor(props) {
         super();
 
         this.state = {
             name: '',
-            rate: ''
+            rate: '',
+            user: props.user
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -31,22 +32,20 @@ class NewClientForm extends React.Component {
         }
 
         const client = { ...this.state };
-        client.slug = slugify(client.name);
-        this.props.clientRef.push(client);
+        const slug = slugify(client.name);
+        client.slug = slug;
+        this.props.clientRef.doc(slug).set(client);
 
-        this.clientForm.reset();
         this.props.close();
+        this.setState({
+            name: '',
+            rate: ''
+        });
     }
 
     render() {
         return (
-            <form
-                className="new-client"
-                ref={input => {
-                    this.clientForm = input;
-                }}
-                onSubmit={this.addNewClient}
-            >
+            <form className="new-client" onSubmit={this.addNewClient}>
                 <div className="new-client__inner">
                     <h2>Add a new client</h2>
 
@@ -88,7 +87,8 @@ class NewClientForm extends React.Component {
 
 NewClientForm.propTypes = {
     close: PropTypes.func.isRequired,
-    clientRef: PropTypes.object.isRequired
+    clientRef: PropTypes.object.isRequired,
+    user: PropTypes.string.isRequired
 };
 
 export default NewClientForm;

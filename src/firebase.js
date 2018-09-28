@@ -1,6 +1,7 @@
 import firebase from 'firebase/app';
 import 'firebase/auth';
-import 'firebase/database';
+import 'firebase/firestore';
+// import 'firebase/database';
 import settings from './.runtimeconfig.json';
 
 const config = {

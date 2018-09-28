@@ -30,14 +30,11 @@ class ClientPane extends React.Component {
      * Updates state with the client
      */
     updateClient() {
-        this.props.clientRef.on('value', snapshot => {
-            const client = snapshot.val();
-
-            Object.keys(client).forEach(clientKey => {
-                this.setState({
-                    clientKey,
-                    client: client[clientKey]
-                });
+        this.props.clientRef.then(doc => {
+            const client = doc.data();
+            this.setState({
+                clientKey: doc.id,
+                client: client
             });
         });
     }
@@ -54,9 +51,6 @@ class ClientPane extends React.Component {
                 <header>
                     <h2>{this.state.client.name}</h2>
                     <p>{this.state.client.rate}</p>
-                    <p>This was deployed</p>
-                    <p>This was also deployed - as part of Travis CI</p>
-                    <p>This was also deployed - a third time</p>
                 </header>
                 <div className="client-main">
                     <TaskForm taskRef={this.props.taskRef} clientKey={this.state.clientKey} />
