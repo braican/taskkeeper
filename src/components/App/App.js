@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import firebase, { auth, provider } from '../../firebase';
 
+import LogoutButton from '../LogoutButton/LogoutButton';
 import Profile from '../Profile/Profile';
 import ClientList from '../ClientList/ClientList';
 import NewClientForm from '../NewClientForm/NewClientForm';
@@ -107,6 +108,10 @@ class App extends React.Component {
      * @return ClientPane
      */
     renderClientPane(props) {
+        if (this.state.user === null) {
+            return null;
+        }
+
         const slug = props.match.params.clientSlug;
         const getOptions = {
             source: 'default'
@@ -160,9 +165,11 @@ class App extends React.Component {
                             {this.state.user ? (
                                 <div>
                                     <Profile user={this.state.user} />
-                                    <button className="btn" onClick={this.logout}>
-                                        Logout
-                                    </button>
+                                    <Route
+                                        render={props => (
+                                            <LogoutButton {...props} click={this.logout} />
+                                        )}
+                                    />
                                     <ClientList clientRef={userClientsQuery} />
                                     <button className="btn" onClick={this.openNewClientForm}>
                                         New Client
