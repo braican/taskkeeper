@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { formatPrice } from '../../util/util';
+
 class TaskList extends React.Component {
     constructor() {
         super();
@@ -39,7 +41,8 @@ class TaskList extends React.Component {
             <ul>
                 {this.state.tasks.map(task => (
                     <li key={task.taskId}>
-                        {task.description} - {task.hours} - {task.hours * this.props.rate}
+                        {task.description} - {task.hours} -
+                        {formatPrice(task.hours * this.props.rate)}
                     </li>
                 ))}
             </ul>

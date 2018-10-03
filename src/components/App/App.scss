@@ -11,9 +11,9 @@
     width: $sidebar-width;
     color: $c-white;
     height: 100vh;
-    padding: $space-md;
     position: relative;
     z-index: 4;
+    padding: $space-md;
 
     .app--anonymous & {
         width: 100%;
@@ -22,6 +22,7 @@
 
 .appmain {
     flex: 1;
+    padding: $space-lg;
 }
 
 .welcome {

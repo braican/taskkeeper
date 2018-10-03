@@ -1,5 +1,42 @@
 @import '../../sass/variables';
 
+.client-list {
+    margin-top: $space-md;
+    margin-bottom: $space-md;
+}
+
 .client-link {
+    display: block;
+    position: relative;
     color: $c-white;
+    text-decoration: none;
+    padding: $space-md;
+    margin-left: -$space-md;
+    margin-right: -$space-md;
+    margin-top: -1px;
+
+    &:hover {
+        background-color: $c-gray-4;
+
+        &::after {
+            border-bottom-color: $c-gray-4;
+        }
+    }
+
+    &::after {
+        content: '';
+        border-bottom: 1px solid $c-gray-6;
+        position: absolute;
+        left: $space-md;
+        right: $space-md;
+        bottom: 0;
+    }
+
+    &--active {
+        background-color: $c-gray-5;
+
+        &::after {
+            border-bottom-color: $c-gray-5;
+        }
+    }
 }

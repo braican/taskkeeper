@@ -11,8 +11,9 @@ class NewClientForm extends React.Component {
 
         this.state = {
             name: '',
-            rate: '',
-            user: props.user
+            rate: 0,
+            user: props.user,
+            error: null
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -21,13 +22,21 @@ class NewClientForm extends React.Component {
 
     handleChange(event) {
         this.setState({
-            [event.target.name]: event.target.value
+            [event.target.name]: event.target.value,
+            error: null
         });
     }
 
     addNewClient(event) {
         event.preventDefault();
         if (!this.props.clientRef) {
+            return;
+        }
+
+        if (!this.state.name) {
+            this.setState({
+                error: 'You need to at least set a client name.'
+            });
             return;
         }
 
@@ -39,7 +48,7 @@ class NewClientForm extends React.Component {
         this.props.close();
         this.setState({
             name: '',
-            rate: ''
+            rate: 0
         });
     }
 
@@ -70,12 +79,16 @@ class NewClientForm extends React.Component {
                         <label htmlFor="client_rate">Client rate</label>
                     </div>
 
+                    {this.state.error ? (
+                        <div className="new-client__error">{this.state.error}</div>
+                    ) : null}
+
                     <div className="new-client__actions">
                         <button className="btn" type="submit">
                             Submit
                         </button>
                         &nbsp;&nbsp;&nbsp;
-                        <button onClick={this.props.close} className="cta-secondary">
+                        <button onClick={this.props.close} type="button" className="cta-secondary">
                             Cancel
                         </button>
                     </div>

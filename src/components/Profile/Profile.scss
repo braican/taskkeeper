@@ -1,16 +1,21 @@
 @import '../../sass/variables';
 
+$headshot-size: 60px;
+
 .profile {
+    border-bottom: 1px solid $c-gray-6;
+    padding-bottom: $space-md;
+}
+
+.profile__user {
     display: flex;
     align-items: center;
-    padding-bottom: $space-md;
-    border-bottom: 1px solid $c-gray-5;
-    margin-bottom: $space-md;
 }
 
 .profile__headshot {
-    width: 60px;
-    height: 60px;
+    width: $headshot-size;
+    height: $headshot-size;
+    flex: 0 0 $headshot-size;
     border-radius: 50%;
     overflow: hidden;
     margin-right: $space-md;
@@ -19,4 +24,8 @@
 
 .profile__meta {
     flex: 1;
+}
+
+.profile__logout {
+    margin-left: calc(#{$headshot-size} + #{$space-md});
 }

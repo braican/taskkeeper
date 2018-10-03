@@ -4,6 +4,10 @@ import PropTypes from 'prop-types';
 import TaskForm from '../TaskForm/TaskForm';
 import TaskList from '../TaskList/TaskList';
 
+import { formatPrice } from '../../util/util';
+
+import './ClientPane.css';
+
 class ClientPane extends React.Component {
     constructor() {
         super();
@@ -49,8 +53,8 @@ class ClientPane extends React.Component {
         return (
             <div>
                 <header>
-                    <h2>{this.state.client.name}</h2>
-                    <p>{this.state.client.rate}</p>
+                    <h2 className="client__name">{this.state.client.name}</h2>
+                    <p>{formatPrice(this.state.client.rate)}</p>
                 </header>
                 <div className="client-main">
                     <TaskForm taskRef={this.props.taskRef} clientKey={this.state.clientKey} />

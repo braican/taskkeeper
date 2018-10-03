@@ -2,6 +2,19 @@
 // TRANSITIONS
 // --------------------------------------------------------------
 
-@mixin transition($prop, $timing: .4s) {
+@mixin hover-transition($prop, $timing: 0.2s) {
     transition: $prop $timing;
+}
+
+@mixin transition($prop, $timing: 0.4s) {
+    transition: $prop $timing;
+}
+
+// --------------------------------------------------------------
+// TYPE
+// --------------------------------------------------------------
+
+@mixin display-text {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 900;
 }

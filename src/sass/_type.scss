@@ -20,6 +20,7 @@ button {
 }
 
 .btn {
+    @include hover-transition(background-color);
     background-color: $c-accent;
     color: $c-white;
     border: 0;
@@ -31,8 +32,17 @@ button {
     }
 }
 
+.btn--secondary {
+    border: 1px solid $c-gray-c;
+    background-color: rgba($c-gray-c, 0);
+
+    &:hover {
+        background-color: rgba($c-gray-c, 0.2);
+    }
+}
+
 .cta-secondary {
-    @include transition(all, 0.2s);
+    @include hover-transition(all);
     color: inherit;
     display: inline-block;
     text-decoration: none;
@@ -52,6 +62,7 @@ button {
 h1 {
     font-size: 2rem;
 }
+
 h2 {
     font-size: 1.6rem;
 }

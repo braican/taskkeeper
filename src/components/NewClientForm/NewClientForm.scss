@@ -19,7 +19,7 @@
     }
 
     input {
-        @include transition(box-shadow, 0.2s);
+        @include hover-transition(box-shadow);
         background-color: transparent;
         border: 0;
         border-bottom: 1px solid $c-gray-9;
@@ -38,7 +38,7 @@
     }
 
     label {
-        @include transition(all, 0.2s);
+        @include hover-transition(all);
         display: block;
         opacity: 0.6;
         margin-top: 0.5em;

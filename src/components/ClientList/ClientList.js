@@ -29,25 +29,38 @@ class ClientList extends React.Component {
 
     render() {
         return (
-            <ul className="client-list">
-                {this.state.clients.map(client => (
-                    <li key={client.id}>
-                        <NavLink
-                            to={`/client/${client.slug}`}
-                            className="client-link"
-                            activeClassName="client-link--active"
-                        >
-                            {client.name} - {client.rate}
-                        </NavLink>
-                    </li>
-                ))}
-            </ul>
+            <div className="client-list">
+                <ul className="client-list">
+                    {this.state.clients.map(client => (
+                        <li key={client.id} className="client-list__client">
+                            <NavLink
+                                to={`/client/${client.slug}`}
+                                className="client-link"
+                                activeClassName="client-link--active"
+                            >
+                                {client.name} - {client.rate}
+                            </NavLink>
+                        </li>
+                    ))}
+                </ul>
+
+                {this.props.openPane ? (
+                    <button className="btn" onClick={this.props.openPane}>
+                        New Client
+                    </button>
+                ) : null}
+            </div>
         );
     }
 }
 
 ClientList.propTypes = {
-    clientRef: PropTypes.object.isRequired
+    clientRef: PropTypes.object.isRequired,
+    openPane: PropTypes.func
+};
+
+ClientList.defaultProps = {
+    openPane: null
 };
 
 export default ClientList;

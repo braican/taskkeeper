@@ -2,7 +2,6 @@ import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import firebase, { auth, provider } from '../../firebase';
 
-import LogoutButton from '../LogoutButton/LogoutButton';
 import Profile from '../Profile/Profile';
 import ClientList from '../ClientList/ClientList';
 import NewClientForm from '../NewClientForm/NewClientForm';
@@ -161,22 +160,17 @@ class App extends React.Component {
             <BrowserRouter>
                 <div className={`app ${appClass}`}>
                     <aside className="sidebar">
-                        <div className="authdata">
-                            {this.state.user ? (
-                                <div>
-                                    <Profile user={this.state.user} />
-                                    <Route
-                                        render={props => (
-                                            <LogoutButton {...props} click={this.logout} />
-                                        )}
-                                    />
-                                    <ClientList clientRef={userClientsQuery} />
-                                    <button className="btn" onClick={this.openNewClientForm}>
-                                        New Client
-                                    </button>
-                                </div>
-                            ) : null}
-                        </div>
+                        {this.state.user ? (
+                            <div className="authdata">
+                                <Profile user={this.state.user} logout={this.logout} />
+                                <ClientList
+                                    clientRef={userClientsQuery}
+                                    openPane={this.openNewClientForm}
+                                />
+                            </div>
+                        ) : (
+                            <div className="authdata" />
+                        )}
 
                         {this.state.user === null ? (
                             <div className="welcome">

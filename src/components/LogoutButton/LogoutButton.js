@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 const LogoutButton = ({ click, history }) => (
     <button
-        className="btn"
+        className="profile__logout"
         onClick={() => {
             click();
             history.push('/');
