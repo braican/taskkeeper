@@ -29,7 +29,7 @@ class ClientList extends React.Component {
 
     render() {
         return (
-            <div className="client-list">
+            <div className="client-admin">
                 <ul className="client-list">
                     {this.state.clients.map(client => (
                         <li key={client.id} className="client-list__client">
@@ -38,16 +38,18 @@ class ClientList extends React.Component {
                                 className="client-link"
                                 activeClassName="client-link--active"
                             >
-                                {client.name} - {client.rate}
+                                {client.name} <br />${client.rate}
                             </NavLink>
                         </li>
                     ))}
                 </ul>
 
                 {this.props.openPane ? (
-                    <button className="btn" onClick={this.props.openPane}>
-                        New Client
-                    </button>
+                    <div className="client-list__footer">
+                        <button className="btn" onClick={this.props.openPane}>
+                            New Client
+                        </button>
+                    </div>
                 ) : null}
             </div>
         );

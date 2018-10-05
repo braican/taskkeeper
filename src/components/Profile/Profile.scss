@@ -3,13 +3,20 @@
 $headshot-size: 60px;
 
 .profile {
-    border-bottom: 1px solid $c-gray-6;
-    padding-bottom: $space-md;
+    background-color: $c-gray-2;
+    box-shadow: inset 0 -5px 30px -10px $c-black;
 }
 
 .profile__user {
     display: flex;
+    width: 100%;
     align-items: center;
+    padding: $space-md;
+    color: $c-white;
+
+    &:focus {
+        outline: none;
+    }
 }
 
 .profile__headshot {
@@ -26,6 +33,18 @@ $headshot-size: 60px;
     flex: 1;
 }
 
-.profile__logout {
-    margin-left: calc(#{$headshot-size} + #{$space-md});
+// Util drawer
+// ------
+
+.util-drawer {
+    display: none;
+    padding: $space-md;
+
+    &--active {
+        display: block;
+    }
+
+    button {
+        color: $c-white;
+    }
 }

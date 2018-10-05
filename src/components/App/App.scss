@@ -5,40 +5,25 @@
     display: flex;
 }
 
-.sidebar {
-    @include transition(width);
-    background-color: $c-gray-3;
-    width: $sidebar-width;
-    color: $c-white;
-    height: 100vh;
-    position: relative;
-    z-index: 4;
-    padding: $space-md;
+.appmain {
+    flex: 1;
+    padding: $space-xlg;
 
     .app--anonymous & {
-        width: 100%;
+        width: 0;
+        padding: 0;
     }
 }
 
-.appmain {
-    flex: 1;
-    padding: $space-lg;
-}
-
 .welcome {
+    position: absolute;
+    top: 0;
+    left: 0;
     height: 100%;
+    width: 100%;
     display: flex;
     padding: $space-md;
     justify-content: center;
     align-items: center;
-}
-
-.authdata {
-    opacity: 0;
-
-    .app--logged-in & {
-        @include transition(opacity);
-        transition-delay: 0.4s;
-        opacity: 1;
-    }
+    color: $c-white;
 }
