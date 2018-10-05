@@ -11,8 +11,9 @@ $headshot-size: 60px;
     display: flex;
     width: 100%;
     align-items: center;
-    padding: $space-md;
+    padding: $space-md 60px $space-md $space-md;
     color: $c-white;
+    position: relative;
 
     &:focus {
         outline: none;
@@ -31,6 +32,77 @@ $headshot-size: 60px;
 
 .profile__meta {
     flex: 1;
+}
+
+// Menu icon
+// ------
+
+.menu-toggle {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    right: 0;
+    top: 50%;
+    margin-top: -20px;
+}
+
+.menu-toggle__icon {
+    top: 50%;
+    margin-top: -1px;
+    width: 20px;
+
+    &,
+    &::before,
+    &::after {
+        position: absolute;
+        transition: all 0.4s cubic-bezier(0.215, 0.61, 0.355, 1);
+        background-color: $c-gray-6;
+        display: block;
+        height: 3px;
+        left: 0;
+
+        .profile__user:hover & {
+            background-color: $c-gray-5;
+        }
+    }
+
+    &::before,
+    &::after {
+        content: ' ';
+
+        .profile--expanded &,
+        .profile__user:hover & {
+            width: 20px;
+        }
+    }
+
+    &::before {
+        top: -6px;
+        width: 13px;
+    }
+
+    &::after {
+        top: 6px;
+        width: 17px;
+    }
+
+    .profile--expanded .profile__user & {
+        background-color: transparent;
+    }
+
+    .profile--expanded &::before {
+        left: 3px;
+        top: -7px;
+        transform: rotate(45deg);
+        transform-origin: 0 100%;
+    }
+
+    .profile--expanded &::after {
+        left: 3px;
+        top: 8px;
+        transform: rotate(-45deg);
+        transform-origin: 0 0;
+    }
 }
 
 // Util drawer

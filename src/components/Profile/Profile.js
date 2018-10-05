@@ -37,6 +37,10 @@ class Profile extends React.Component {
                     </div>
 
                     <p className="profile__meta">{user.displayName || user.email}</p>
+
+                    <span className="menu-toggle">
+                        <span className="menu-toggle__icon" />
+                    </span>
                 </button>
 
                 <div className={`util-drawer${drawer_active ? ' util-drawer--active' : ''}`}>
