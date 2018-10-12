@@ -1,14 +1,18 @@
 import React from 'react';
 import { render } from 'react-dom';
+import { Provider } from 'react-redux';
+
+// import { createStore, compose } from 'redux';
 
 import './sass/style.css';
 
 // Import components
 import App from './components/App/App';
+import Profile from './components/Profile/Profile';
 
 // Redux and react things
-import { Provider } from 'react-redux';
-import { BrowserRouter, Switch, Route, Router, Link } from 'react-router-dom';
+
+// import { BrowserRouter, Switch, Route, Router, Link } from 'react-router-dom';
 import store from './store';
 
 // <Provider store={store}>
@@ -27,7 +31,9 @@ import store from './store';
 
 const router = (
     <Provider store={store}>
-        <App />
+        <App>
+            <Profile user="null" />
+        </App>
         {/* <App> */}
         {/* <BrowserRouter>
                 <Switch>

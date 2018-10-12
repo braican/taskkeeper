@@ -9,11 +9,13 @@
     "react": "^16.5.0",
     "react-dom": "^16.5.0",
     "react-redux": "^5.0.7",
+    "react-redux-firebase": "^2.1.8",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
     "react-router-redux": "^4.0.8",
     "react-scripts": "1.1.5",
-    "redux": "^4.0.0"
+    "redux": "^4.0.0",
+    "redux-firestore": "^0.5.8"
   },
   "scripts": {
     "build-css": "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",
