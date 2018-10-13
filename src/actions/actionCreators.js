@@ -3,3 +3,10 @@ export function toggleNewClientDrawer() {
         type: 'TOGGLE_NEW_CLIENT_DRAWER'
     };
 }
+
+export function toggleAuthenticatedUser(isAuth) {
+    return {
+        type: 'TOGGLE_AUTHENTICATED_USER',
+        isAuth
+    };
+}

@@ -1,3 +1,6 @@
+@import '../../sass/variables';
+@import '../../sass/mixins';
+
 .sidebar {
     @include transition(width);
     background-color: $c-gray-3;

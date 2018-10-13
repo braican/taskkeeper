@@ -1,8 +1,8 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
 import PropTypes from 'prop-types';
-
-import LogoutButton from '../LogoutButton/LogoutButton';
+// import { connect } from 'react-redux';
+// import { compose } from 'redux';
+// import { firebaseConnect, isLoaded, isEmpty } from 'react-redux-firebase';
 
 import './Profile.css';
 
@@ -19,13 +19,13 @@ class Profile extends React.Component {
 
     toggle_drawer() {
         const drawer_state = this.state.drawer_active;
-
         this.setState({ drawer_active: !drawer_state });
     }
 
     render() {
         const { user, logout } = this.props;
         const { drawer_active } = this.state;
+
         return (
             <div className={`profile${drawer_active ? ' profile--expanded' : ''}`}>
                 <button className="profile__user" onClick={this.toggle_drawer}>
@@ -45,13 +45,11 @@ class Profile extends React.Component {
 
                 <div className={`util-drawer${drawer_active ? ' util-drawer--active' : ''}`}>
                     <ul>
-                        {logout ? (
-                            <li>
-                                <Route
-                                    render={props => <LogoutButton {...props} click={logout} />}
-                                />
-                            </li>
-                        ) : null}
+                        <li>
+                            <button className="profile__logout" onClick={logout}>
+                                Logout
+                            </button>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -60,12 +58,19 @@ class Profile extends React.Component {
 }
 
 Profile.propTypes = {
-    user: PropTypes.object.isRequired,
-    logout: PropTypes.func
-};
-
-Profile.defaultProps = {
-    logout: null
+    user: PropTypes.object,
+    logout: PropTypes.func.isRequired
 };
 
 export default Profile;
+
+// const mapStateToProps = state => ({ ...state });
+// const mapDispatchToProps = {};
+
+// export default compose(
+//     connect(
+//         mapStateToProps,
+//         mapDispatchToProps
+//     ),
+//     firebaseConnect()
+// )(Profile);

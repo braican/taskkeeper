@@ -6,8 +6,9 @@
 function view(state = [], action) {
     switch (action.type) {
         case 'TOGGLE_NEW_CLIENT_DRAWER':
-            console.log(state);
-            return state;
+            return { ...state, new_client_drawer: !state.new_client_drawer };
+        case 'TOGGLE_AUTHENTICATED_USER':
+            return { ...state, authenticated_user: action.isAuth };
         default:
             return state;
     }

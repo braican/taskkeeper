@@ -1,28 +1,56 @@
 import React from 'react';
-import { bindActionCreators } from 'redux';
+import PropTypes from 'prop-types';
+import { compose, bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { firebaseConnect } from 'react-redux-firebase';
 import * as actionCreators from '../../actions/actionCreators';
-// import { NavLink } from 'react-router-dom';
 
-class Main extends React.Component {
+class App extends React.Component {
+    constructor() {
+        super();
+
+        this.getAppClass = this.getAppClass.bind(this);
+    }
+
+    getAppClass() {
+        const { view } = this.props;
+        let className = `app app--${view.authenticated_user ? 'logged-in' : 'anonymous'}`;
+
+        if (view.new_client_drawer) {
+            className += ' app--new-client';
+        }
+
+        return className;
+    }
+
     render() {
-        return <div>{React.cloneElement(this.props.children, this.props)}</div>;
+        const { children, ...passProps } = this.props;
+
+        return (
+            <div className={this.getAppClass()}>
+                {children.map((child, i) => (
+                    <div key={`child-component-${i}`}>{React.cloneElement(child, passProps)}</div>
+                ))}
+            </div>
+        );
     }
 }
 
-function mapStateToProps(state) {
-    return {
-        view: state.view
-    };
-}
+App.propTypes = {
+    view: PropTypes.shape({
+        new_client_drawer: PropTypes.bool.isRequired
+    }),
+    children: PropTypes.node
+};
 
-function mapDispatchToProps(dispatch) {
-    return bindActionCreators(actionCreators, dispatch);
-}
+const mapStateToProps = state => ({ view: state.view });
+// const mapDispatchToProps = {};
+const mapDispatchToProps = dispatch => bindActionCreators(actionCreators, dispatch);
 
-const App = connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(Main);
-
-export default App;
+export default compose(
+    connect(
+        mapStateToProps,
+        mapDispatchToProps
+    ),
+    firebaseConnect()
+)(App);

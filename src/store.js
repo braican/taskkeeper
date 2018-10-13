@@ -1,6 +1,4 @@
 import { createStore, compose } from 'redux';
-// import { syncHistoryWithStore } from 'react-router-redux';
-// import { browserHistory } from 'react-router';
 import { reactReduxFirebase } from 'react-redux-firebase';
 import { reduxFirestore } from 'redux-firestore';
 import firebase from './firebase';
@@ -8,30 +6,25 @@ import firebase from './firebase';
 // import the route reducer
 import rootReducer from './reducers/index';
 
-// react-redux-firebase config
-// const rrfConfig = {
-//     userProfile: 'users',
-//     useFirestoreForProfile: true // Firestore for Profile instead of Realtime DB
-// };
+const enhancers = [
+    reduxFirestore(firebase),
+    reactReduxFirebase(firebase, {
+        userProfile: 'users',
+        useFirestoreForProfile: true
+    })
+];
 
-// Add reactReduxFirebase enhancer when making store creator
-const createStoreWithFirebase = compose(
-    // reactReduxFirebase(firebase, rrfConfig), // firebase instance as first argument
-    reduxFirestore(firebase) // <- needed if using firestore
-)(createStore);
+if (window.devToolsExtension) {
+    enhancers.push(window.devToolsExtension());
+}
 
 // create an object for default data
 const defaultState = {
     view: {
-        new_client_drawer: false
+        new_client_drawer: false,
+        authenticated_user: false
     }
 };
-
-const enhancers = compose(window.devToolsExtension ? window.devToolsExtension() : f => f);
-
-const store = createStoreWithFirebase(rootReducer, defaultState, enhancers);
-
-// export const history = syncHistoryWithStore(browserHistory, store);
 
 if (module.hot) {
     module.hot.accept('./reducers/', () => {
@@ -40,4 +33,6 @@ if (module.hot) {
     });
 }
 
+const composedEnhancers = compose(...enhancers);
+const store = createStore(rootReducer, defaultState, composedEnhancers);
 export default store;

@@ -1,0 +1,14 @@
+@import '../../sass/variables';
+
+.welcome {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    padding: $space-md;
+    justify-content: center;
+    align-items: center;
+    color: $c-white;
+}
