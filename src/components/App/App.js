@@ -24,15 +24,7 @@ class App extends React.Component {
     }
 
     render() {
-        const { children, ...passProps } = this.props;
-
-        return (
-            <div className={this.getAppClass()}>
-                {children.map((child, i) => (
-                    <div key={`child-component-${i}`}>{React.cloneElement(child, passProps)}</div>
-                ))}
-            </div>
-        );
+        return <div className={this.getAppClass()}>{this.props.children}</div>;
     }
 }
 
@@ -44,7 +36,6 @@ App.propTypes = {
 };
 
 const mapStateToProps = state => ({ view: state.view });
-// const mapDispatchToProps = {};
 const mapDispatchToProps = dispatch => bindActionCreators(actionCreators, dispatch);
 
 export default compose(

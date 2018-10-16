@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose, bindActionCreators } from 'redux';
 import { firebaseConnect, isLoaded, isEmpty } from 'react-redux-firebase';
-
 import * as actionCreators from '../../actions/actionCreators';
 
 import Welcome from '../Welcome/Welcome';
@@ -19,7 +18,7 @@ class Auth extends React.Component {
         }
     }
     render() {
-        const { auth, firebase, toggleNewClientDrawer } = this.props;
+        const { auth, firebase } = this.props;
         const authSettings = {
             provider: 'google',
             type: 'popup'
@@ -40,12 +39,7 @@ class Auth extends React.Component {
         }
 
         // Authenticated, let's go
-        return (
-            <div>
-                <Profile user={auth} logout={() => firebase.logout()} />
-                <button onClick={toggleNewClientDrawer}>Open drawer</button>
-            </div>
-        );
+        return <Profile user={auth} logout={() => firebase.logout()} />;
     }
 }
 
@@ -55,7 +49,6 @@ Auth.propTypes = {
         login: PropTypes.func.isRequired,
         logout: PropTypes.func.isRequired
     }),
-    toggleNewClientDrawer: PropTypes.func,
     toggleAuthenticatedUser: PropTypes.func
 };
 

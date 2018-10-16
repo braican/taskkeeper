@@ -1,68 +1,77 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { compose, bindActionCreators } from 'redux';
+import { firestoreConnect } from 'react-redux-firebase';
+import * as actionCreators from '../../actions/actionCreators';
 
 import './ClientList.css';
 
 class ClientList extends React.Component {
-    constructor() {
-        super();
-
-        this.state = {
-            clients: []
-        };
-    }
-
-    componentDidMount() {
-        this.props.clientRef.onSnapshot(snapshot => {
-            const newClients = [];
-
-            snapshot.forEach(doc => {
-                const newClient = doc.data();
-                newClient.id = doc.id;
-                newClients.push(newClient);
-            });
-
-            this.setState({ clients: newClients });
-        });
-    }
-
     render() {
+        if (!this.props.uid) {
+            return null;
+        }
+
         return (
             <div className="client-admin">
                 <ul className="client-list">
-                    {this.state.clients.map(client => (
+                    {this.props.clients.map(client => (
                         <li key={client.id} className="client-list__client">
                             <NavLink
-                                to={`/client/${client.slug}`}
+                                to={`/client/${client.id}`}
                                 className="client-link"
                                 activeClassName="client-link--active"
                             >
-                                {client.name} <br />${client.rate}
+                                {client.name}
                             </NavLink>
                         </li>
                     ))}
                 </ul>
 
-                {this.props.openPane ? (
-                    <div className="client-list__footer">
-                        <button className="btn" onClick={this.props.openPane}>
-                            New Client
-                        </button>
-                    </div>
-                ) : null}
+                <div className="client-list__footer">
+                    <button className="btn" onClick={this.props.toggleNewClientDrawer}>
+                        Open drawer
+                    </button>
+                </div>
             </div>
         );
     }
 }
 
 ClientList.propTypes = {
-    clientRef: PropTypes.object.isRequired,
-    openPane: PropTypes.func
+    uid: PropTypes.string,
+    clients: PropTypes.arrayOf(PropTypes.object).isRequired,
+    toggleNewClientDrawer: PropTypes.func
 };
 
-ClientList.defaultProps = {
-    openPane: null
+const mapStateToProps = state => {
+    return {
+        uid: state.firebase.auth.uid,
+        clients: state.firestore.ordered.clients || []
+    };
 };
 
-export default ClientList;
+const mapDispatchToProps = dispatch => bindActionCreators(actionCreators, dispatch);
+
+const clientConnector = props => {
+    if (!props.uid) {
+        return [];
+    }
+
+    return [
+        {
+            collection: 'clients',
+            where: [['uid', '==', props.uid]]
+        }
+    ];
+};
+
+export default compose(
+    connect(
+        mapStateToProps,
+        mapDispatchToProps
+    ),
+    firestoreConnect(clientConnector)
+)(ClientList);

@@ -1,8 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-// import { connect } from 'react-redux';
-// import { compose } from 'redux';
-// import { firebaseConnect, isLoaded, isEmpty } from 'react-redux-firebase';
 
 import './Profile.css';
 
@@ -63,14 +60,3 @@ Profile.propTypes = {
 };
 
 export default Profile;
-
-// const mapStateToProps = state => ({ ...state });
-// const mapDispatchToProps = {};
-
-// export default compose(
-//     connect(
-//         mapStateToProps,
-//         mapDispatchToProps
-//     ),
-//     firebaseConnect()
-// )(Profile);

@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { compose } from 'redux';
+import { compose, bindActionCreators } from 'redux';
 import { firestoreConnect } from 'react-redux-firebase';
+import * as actionCreators from '../../actions/actionCreators';
 
 import { slugify } from '../../util/util';
 
@@ -39,15 +40,15 @@ class NewClientForm extends React.Component {
             return;
         }
 
-        this.props.firestore.set(
+        this.props.firestore.add(
             {
-                collection: 'clients',
-                doc: slug
+                collection: 'clients'
             },
             {
                 uid: this.props.uid,
                 name,
-                rate
+                rate,
+                slug
             }
         );
 
@@ -119,7 +120,7 @@ NewClientForm.propTypes = {
 };
 
 const mapStateToProps = state => ({ uid: state.firebase.auth.uid });
-const mapDispatchToProps = {};
+const mapDispatchToProps = dispatch => bindActionCreators(actionCreators, dispatch);
 
 export default compose(
     connect(
