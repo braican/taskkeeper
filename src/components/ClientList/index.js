@@ -32,7 +32,7 @@ class ClientList extends React.Component {
 
                 <div className="client-list__footer">
                     <button className="btn" onClick={this.props.toggleNewClientDrawer}>
-                        Open drawer
+                        Add new client
                     </button>
                 </div>
             </div>

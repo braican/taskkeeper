@@ -5,8 +5,8 @@ import { compose, bindActionCreators } from 'redux';
 import { firebaseConnect, isLoaded, isEmpty } from 'react-redux-firebase';
 import * as actionCreators from '../../actions/actionCreators';
 
-import Welcome from '../Welcome/Welcome';
-import Profile from '../Profile/Profile';
+import Welcome from '../Welcome';
+import Profile from '../Profile';
 
 class Auth extends React.Component {
     componentDidUpdate() {

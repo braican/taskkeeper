@@ -2,12 +2,10 @@ import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import firebase, { auth, provider } from '../../firebase';
 
-import Profile from '../Profile/Profile';
-import ClientList from '../ClientList/ClientList';
-import NewClientForm from '../NewClientForm/NewClientForm';
-import ClientPane from '../ClientPane/ClientPane';
-
-import './Main.css';
+import Profile from '../Profile';
+import ClientList from '../ClientList';
+import NewClientForm from '../NewClientForm';
+import ClientPane from '../ClientPane';
 
 class Main extends React.Component {
     constructor() {

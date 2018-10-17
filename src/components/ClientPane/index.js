@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import TaskForm from '../TaskForm/TaskForm';
-import TaskList from '../TaskList/TaskList';
+import TaskForm from '../TaskForm';
+import TaskList from '../TaskList';
 
 import { formatPrice } from '../../util/util';
 

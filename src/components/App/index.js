@@ -14,7 +14,7 @@ class App extends React.Component {
 
     getAppClass() {
         const { view } = this.props;
-        let className = `app app--${view.authenticated_user ? 'logged-in' : 'anonymous'}`;
+        let className = `app--${view.authenticated_user ? 'logged-in' : 'anonymous'}`;
 
         if (view.new_client_drawer) {
             className += ' app--new-client';
