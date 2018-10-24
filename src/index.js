@@ -29,7 +29,12 @@ const router = (
                     <main className="appmain">
                         <Switch className="appmain">
                             <Route exact path="/" component={() => <Overview />} />
-                            <Route path="/client/:clientId" component={() => <ClientPane />} />
+                            <Route
+                                path="/client/:clientId"
+                                component={req => (
+                                    <ClientPane clientId={req.match.params.clientId} />
+                                )}
+                            />
                         </Switch>
                     </main>
 

@@ -10,6 +10,8 @@ import './styles.css';
 
 class ClientList extends React.Component {
     render() {
+        console.log(this.props);
+
         if (!this.props.uid) {
             return null;
         }
