@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import './Sidebar.css';
+import './styles.css';
 
 const Sidebar = ({ children }) => <aside className="sidebar">{children}</aside>;
 

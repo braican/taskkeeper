@@ -7,7 +7,7 @@ import * as actionCreators from '../../actions/actionCreators';
 
 import { slugify } from '../../util/util';
 
-import './NewClientForm.css';
+import './styles.css';
 
 class NewClientForm extends React.Component {
     constructor() {

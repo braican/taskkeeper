@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import './Profile.css';
+import './styles.css';
 
 class Profile extends React.Component {
     constructor() {

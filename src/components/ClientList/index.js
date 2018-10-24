@@ -6,7 +6,7 @@ import { compose, bindActionCreators } from 'redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import * as actionCreators from '../../actions/actionCreators';
 
-import './ClientList.css';
+import './styles.css';
 
 class ClientList extends React.Component {
     render() {

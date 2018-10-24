@@ -10,6 +10,8 @@ import App from './components/App';
 import Sidebar from './components/Sidebar';
 import Auth from './components/Auth';
 import ClientList from './components/ClientList';
+import Overview from './components/Overview';
+import ClientPane from './components/ClientPane';
 import NewClientForm from './components/NewClientForm';
 
 import store from './store';
@@ -24,10 +26,12 @@ const router = (
                         <ClientList />
                     </Sidebar>
 
-                    <Switch className="appmain">
-                        <Route exact path="/" component={() => <h1>Home</h1>} />
-                        <Route path="/client/:clientId" component={() => <h1>Clienbt</h1>} />
-                    </Switch>
+                    <main className="appmain">
+                        <Switch className="appmain">
+                            <Route exact path="/" component={() => <Overview />} />
+                            <Route path="/client/:clientId" component={() => <ClientPane />} />
+                        </Switch>
+                    </main>
 
                     <NewClientForm />
                 </div>
