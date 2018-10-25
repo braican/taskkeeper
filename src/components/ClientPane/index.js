@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { firestoreConnect } from 'react-redux-firebase';
 
+import { formatPrice } from '../../util/helpers';
+
 import './styles.css';
 
 class ClientPane extends React.Component {
@@ -18,7 +20,7 @@ class ClientPane extends React.Component {
             <div>
                 <header>
                     <h1>{name}</h1>
-                    <p>{rate}</p>
+                    <p>{formatPrice(rate)}</p>
                 </header>
             </div>
         );
