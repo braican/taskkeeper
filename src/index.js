@@ -31,8 +31,8 @@ const router = (
                             <Route exact path="/" component={() => <Overview />} />
                             <Route
                                 path="/client/:clientId"
-                                component={req => (
-                                    <ClientPane clientId={req.match.params.clientId} />
+                                component={request => (
+                                    <ClientPane clientId={request.match.params.clientId} />
                                 )}
                             />
                         </Switch>

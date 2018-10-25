@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { NavLink } from 'react-router-dom';
+import { NavLink, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { compose, bindActionCreators } from 'redux';
 import { firestoreConnect } from 'react-redux-firebase';
@@ -10,8 +10,6 @@ import './styles.css';
 
 class ClientList extends React.Component {
     render() {
-        console.log(this.props);
-
         if (!this.props.uid) {
             return null;
         }
@@ -48,12 +46,10 @@ ClientList.propTypes = {
     toggleNewClientDrawer: PropTypes.func
 };
 
-const mapStateToProps = state => {
-    return {
-        uid: state.firebase.auth.uid,
-        clients: state.firestore.ordered.clients || []
-    };
-};
+const mapStateToProps = state => ({
+    uid: state.firebase.auth.uid,
+    clients: state.firestore.ordered.clients || []
+});
 
 const mapDispatchToProps = dispatch => bindActionCreators(actionCreators, dispatch);
 
@@ -71,6 +67,7 @@ const clientConnector = props => {
 };
 
 export default compose(
+    withRouter,
     connect(
         mapStateToProps,
         mapDispatchToProps

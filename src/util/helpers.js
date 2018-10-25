@@ -1,7 +1,6 @@
 import React from 'react';
 
 /* eslint-disable */
-
 /**
  * Transform a string into a slug.
  *

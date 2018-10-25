@@ -1,42 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { compose, bindActionCreators } from 'redux';
+import { compose } from 'redux';
 import { firestoreConnect } from 'react-redux-firebase';
 
 import './styles.css';
 
 class ClientPane extends React.Component {
-    constructor() {
-        super();
-
-        this.state = {
-            name: ''
-        };
-    }
-
-    componentDidMount() {
-        const { firestore, clientId } = this.props;
-        firestore.get(`clients/${clientId}`).then(doc => {
-            const { name, rate } = doc.data();
-            this.setState({ name, rate });
-        });
-    }
-
-    componentDidUpdate(prevProps) {
-        if (this.props.clientId !== prevProps.clientId) {
-            const { firestore, clientId } = this.props;
-            firestore.get(`clients/${clientId}`).then(doc => {
-                const { name, rate } = doc.data();
-                this.setState({ name, rate });
-            });
-        }
-    }
     render() {
+        if (!this.props.client) {
+            return <h2>Loading</h2>;
+        }
+
+        const { name, rate } = this.props.client;
+
         return (
             <div>
                 <header>
-                    <h1>{this.state.name}</h1>
+                    <h1>{name}</h1>
+                    <p>{rate}</p>
                 </header>
             </div>
         );
@@ -44,15 +26,17 @@ class ClientPane extends React.Component {
 }
 
 ClientPane.propTypes = {
-    firestore: PropTypes.object.isRequired,
+    client: PropTypes.object,
     clientId: PropTypes.string.isRequired
 };
 
-// export default ClientPane;
+const mapStateToProps = (state, props) => {
+    if (!state.firestore.data.clients) {
+        return {};
+    }
 
-const mapStateToProps = state => {
     return {
-        firestore: state.firestore
+        client: state.firestore.data.clients[props.clientId]
     };
 };
 

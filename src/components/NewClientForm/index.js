@@ -5,7 +5,7 @@ import { compose, bindActionCreators } from 'redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import * as actionCreators from '../../actions/actionCreators';
 
-import { slugify } from '../../util/util';
+import { slugify } from '../../util/helpers';
 
 import './styles.css';
 
