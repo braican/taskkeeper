@@ -14,8 +14,12 @@
     margin-bottom: -1px;
     border-bottom: 1px solid $c-gray-4;
 
-    &:hover {
+    &:hover:not(.client-link--active) {
         background-color: $c-gray-4;
+    }
+
+    &:focus:not(.client-link--active) {
+        background-color: $c-gray-3;
     }
 
     &::before {
