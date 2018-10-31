@@ -18,3 +18,10 @@
     font-family: 'Raleway', sans-serif;
     font-weight: 900;
 }
+
+@mixin uppercase {
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 700;
+    font-size: 0.8em;
+}

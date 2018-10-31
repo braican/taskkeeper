@@ -1,45 +1,46 @@
 @import '../../sass/variables';
+@import '../../sass/mixins';
 
-.client-admin {
-    flex: 1;
-    overflow: auto;
-}
-
+.overview-link,
 .client-link {
     display: block;
     position: relative;
     color: $c-white;
     text-decoration: none;
     padding: $space-md;
-    margin-bottom: -1px;
-    border-bottom: 1px solid $c-gray-4;
 
-    &:hover:not(.client-link--active) {
-        background-color: $c-gray-4;
+    &:hover {
+        background-color: lighten($c-gray-3, 4%);
     }
 
-    &:focus:not(.client-link--active) {
-        background-color: $c-gray-3;
-    }
-
-    &::before {
-        content: '';
-        border-top: 4px solid $c-gray-6;
-        position: absolute;
-        left: 0;
-        right: 0;
-        top: 0;
-        display: none;
+    &:active {
+        background-color: darken($c-gray-3, 2%);
     }
 
     &--active {
         background-color: $c-gray-5;
         border-bottom-color: $c-gray-5;
-
-        &::before {
-            display: block;
-        }
     }
+}
+
+.overview-link {
+    margin-bottom: $space-md;
+}
+
+.client-list__header {
+    @include uppercase;
+    padding: $space-md;
+    color: $c-gray-9;
+}
+
+.client-link {
+    margin-bottom: -1px;
+    border-bottom: 1px solid $c-gray-4;
+}
+
+.client-admin {
+    flex: 1;
+    overflow: auto;
 }
 
 .client-list__footer {

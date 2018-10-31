@@ -16,6 +16,16 @@ class ClientList extends React.Component {
 
         return (
             <div className="client-admin">
+                <NavLink
+                    to="/"
+                    className="overview-link"
+                    activeClassName="overview-link--active"
+                    exact={true}
+                >
+                    Overview
+                </NavLink>
+
+                <h3 className="client-list__header">Client List</h3>
                 <ul className="client-list">
                     {this.props.clients.map(client => (
                         <li key={client.id} className="client-list__client">
