@@ -12,6 +12,7 @@ import './styles.css';
 class NewClientForm extends React.Component {
     constructor() {
         super();
+
         this.state = {
             name: '',
             rate: 0,

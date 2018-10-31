@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { compose } from 'redux';
-import { firestoreConnect } from 'react-redux-firebase';
 
 import { formatPrice } from '../../util/helpers';
+
+import TaskForm from '../TaskForm';
+import BacklogTasks from '../BacklogTasks';
 
 import './styles.css';
 
@@ -22,6 +23,9 @@ class ClientPane extends React.Component {
                     <h1>{name}</h1>
                     <p>{formatPrice(rate)}</p>
                 </header>
+
+                <TaskForm clientId={this.props.clientId} />
+                <BacklogTasks clientId={this.props.clientId} />
             </div>
         );
     }
@@ -42,12 +46,4 @@ const mapStateToProps = (state, props) => {
     };
 };
 
-const mapDispatchToProps = {};
-
-export default compose(
-    connect(
-        mapStateToProps,
-        mapDispatchToProps
-    ),
-    firestoreConnect()
-)(ClientPane);
+export default connect(mapStateToProps)(ClientPane);

@@ -72,6 +72,10 @@ const clientConnector = props => {
         {
             collection: 'clients',
             where: [['uid', '==', props.uid]]
+        },
+        {
+            collection: 'tasks',
+            where: [['uid', '==', props.uid]]
         }
     ];
 };

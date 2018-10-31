@@ -1,5 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { firestoreConnect } from 'react-redux-firebase';
 
 class TaskForm extends React.Component {
     constructor() {
@@ -23,13 +26,19 @@ class TaskForm extends React.Component {
 
     addNewTask(event) {
         event.preventDefault();
-        if (!this.props.taskRef) {
-            return;
-        }
 
         const task = { ...this.state };
-        task.client = this.props.clientKey;
-        this.props.taskRef.add(task);
+        task.clientId = this.props.clientId;
+        task.uid = this.props.uid;
+        task.status = 'backlog';
+
+        this.props.firestore.add(
+            {
+                collection: 'tasks'
+            },
+            task
+        );
+
         this.setState({
             description: '',
             hours: 0,
@@ -59,12 +68,17 @@ class TaskForm extends React.Component {
 }
 
 TaskForm.propTypes = {
-    taskRef: PropTypes.object,
-    clientKey: PropTypes.string.isRequired
+    uid: PropTypes.string,
+    clientId: PropTypes.string.isRequired,
+    firestore: PropTypes.shape({
+        add: PropTypes.func.isRequired,
+        set: PropTypes.func.isRequired
+    })
 };
 
-TaskForm.defaultProps = {
-    taskRef: null
-};
+const mapStateToProps = state => ({ uid: state.firebase.auth.uid });
 
-export default TaskForm;
+export default compose(
+    connect(mapStateToProps),
+    firestoreConnect()
+)(TaskForm);
