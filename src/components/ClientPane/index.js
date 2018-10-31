@@ -15,7 +15,8 @@ class ClientPane extends React.Component {
             return <h2>Loading</h2>;
         }
 
-        const { name, rate } = this.props.client;
+        const { name } = this.props.client;
+        const rate = parseFloat(this.props.client.rate);
 
         return (
             <div>
@@ -25,7 +26,7 @@ class ClientPane extends React.Component {
                 </header>
 
                 <TaskForm clientId={this.props.clientId} />
-                <BacklogTasks clientId={this.props.clientId} />
+                <BacklogTasks clientId={this.props.clientId} rate={rate} />
             </div>
         );
     }

@@ -2,19 +2,25 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
+import { getTaskSubtotal } from '../../util/tasks';
+import { formatPrice } from '../../util/helpers';
+
 class BacklogTasks extends React.Component {
     render() {
-        const { tasks } = this.props;
+        const { tasks, rate } = this.props;
 
         if (!tasks) {
             return null;
         }
 
         return (
-            <div className="client-admin">
+            <div>
+                <h3>Backlog</h3>
                 <ul className="client-list">
                     {tasks.map(task => (
-                        <li key={task.id}>{task.description}</li>
+                        <li key={task.id}>
+                            {task.description} - {formatPrice(getTaskSubtotal(task, rate))}
+                        </li>
                     ))}
                 </ul>
             </div>
@@ -23,7 +29,9 @@ class BacklogTasks extends React.Component {
 }
 
 BacklogTasks.propTypes = {
-    tasks: PropTypes.array
+    clientId: PropTypes.string,
+    tasks: PropTypes.array,
+    rate: PropTypes.number
 };
 
 const mapStateToProps = (state, props) => {

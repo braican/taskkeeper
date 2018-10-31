@@ -5,6 +5,8 @@ import React from 'react';
  * Transform a string into a slug.
  *
  * @param {string} text The text to transform into a slug.
+ *
+ * @return {string} The input text transformed into a slug.
  */
 export function slugify(text) {
     return text
@@ -22,6 +24,8 @@ export function slugify(text) {
  * Format the price.
  *
  * @param {number} price A price, in dollars and cents
+ *
+ * @return {jsx} The formatted dollars and cents.
  */
 export function formatPrice(price) {
     const priceNumber = parseFloat(price);
