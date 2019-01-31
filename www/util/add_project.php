@@ -1,12 +1,12 @@
-<?php 
+<?php
 	require_once("db_util.php");
 	$proj_name = htmlspecialchars($_POST["new_project"]);
 	$new_project = str_replace(array(' ', '_', '.'), '_', $proj_name);
 	$new_project = strtolower($new_project);
-	
+
 	$rate = $_POST["rate"];
 
-	if ($new_project!="") {
+	if ($new_project != "") {
 		//connect to database
 		$db = dbconnect();
 
@@ -14,7 +14,7 @@
 	 	$new_project = $db->real_escape_string($new_project);
 
 	 	// check if the potential project exists in the database
-	 	$sql = "SELECT COUNT( * ) FROM projects WHERE project = '$new_project'";
+	 	$sql = "SELECT * FROM projects WHERE project = '$new_project'";
 	 	//$sql = "SELECT * FROM  `projects`";
 	 	$result = $db->query($sql);
 		$row = $result->fetch_row();
