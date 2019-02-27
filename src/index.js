@@ -2,11 +2,17 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import * as serviceWorker from './serviceWorker';
 
+import store from './store';
+import { addClient } from './actions';
+
 import ClientForm from './components/ClientForm';
 import ClientList from './components/ClientList';
 import ClientPane from './components/ClientPane';
 
 import './styles/globals.scss';
+
+window.store = store;
+window.addClient = addClient;
 
 const App = () => (
   <div>
