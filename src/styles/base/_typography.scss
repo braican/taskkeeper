@@ -26,37 +26,31 @@ h1,
 .h1 {
   @include font($sans, $fs--h1, $lh--h1, $fw--sans-black);
   @include fluid-size($tween-start: $fs--xl $bp--mobile, $tween-end: $fs--xxxxl $bp--desktop-xl);
-  margin: $margin--h1;
 }
 
 h2,
 .h2 {
   @include font($ff--heading, $fs--h2, $lh--h2, $fw--sans-black);
-  margin: $margin--h2;
 }
 
 h3,
 .h3 {
   @include font($ff--heading, $fs--h3, $lh--h3, $fw--sans-black);
-  margin: $margin--h3;
 }
 
 h4,
 .h4 {
   @include font($ff--heading, $fs--h4, $lh--h4, $fw--sans-black);
-  margin: $margin--h4;
 }
 
 h5,
 .h5 {
   @include font($ff--heading, $fs--h5, $lh--h5, $fw--sans-black);
-  margin: $margin--h5;
 }
 
 h6,
 .h6 {
   @include font($ff--heading, $fs--h6, $lh--h6, $fw--sans-black);
-  margin: $margin--h6;
 }
 
 h1 small,
@@ -182,27 +176,12 @@ sub {
 // Lists
 // -------
 
-// Address margins set differently in IE 6/7.
-dl,
-menu,
-ol,
-ul {
-  margin: $margin--list;
-}
-
 dd {
   margin: $margin--dd;
 
   &:first-child {
     margin-top: 0;
   }
-}
-
-// Address paddings set differently in IE 6/7.
-menu,
-ol,
-ul {
-  padding: $font-padding--list;
 }
 
 // Correct list images handled incorrectly in IE 7.

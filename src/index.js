@@ -1,9 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
 import * as serviceWorker from './serviceWorker';
 
+import ClientForm from './components/ClientForm';
+import ClientList from './components/ClientList';
+import ClientPane from './components/ClientPane';
+
 import './styles/globals.scss';
+
+const App = () => (
+  <div>
+    <ClientForm />
+    <ClientList />
+    <ClientPane />
+  </div>
+);
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
