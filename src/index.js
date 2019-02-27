@@ -1,48 +1,13 @@
 import React from 'react';
-import { render } from 'react-dom';
-import { Provider } from 'react-redux';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import ReactDOM from 'react-dom';
+import App from './App';
+import * as serviceWorker from './serviceWorker';
 
-import './sass/style.css';
+import './styles/globals.scss';
 
-// Import components
-import App from './components/App';
-import Sidebar from './components/Sidebar';
-import Auth from './components/Auth';
-import ClientList from './components/ClientList';
-import Overview from './components/Overview';
-import ClientPane from './components/ClientPane';
-import NewClientForm from './components/NewClientForm';
+ReactDOM.render(<App />, document.getElementById('root'));
 
-import store from './store';
-
-const router = (
-    <Provider store={store}>
-        <App>
-            <BrowserRouter>
-                <div className="app">
-                    <Sidebar>
-                        <Auth />
-                        <ClientList />
-                    </Sidebar>
-
-                    <main className="appmain">
-                        <Switch className="appmain">
-                            <Route exact path="/" component={() => <Overview />} />
-                            <Route
-                                path="/client/:clientId"
-                                component={request => (
-                                    <ClientPane clientId={request.match.params.clientId} />
-                                )}
-                            />
-                        </Switch>
-                    </main>
-
-                    <NewClientForm />
-                </div>
-            </BrowserRouter>
-        </App>
-    </Provider>
-);
-
-render(router, document.getElementById('root'));
+// If you want your app to work offline and load faster, you can change
+// unregister() to register() below. Note this comes with some pitfalls.
+// Learn more about service workers: http://bit.ly/CRA-PWA
+serviceWorker.unregister();

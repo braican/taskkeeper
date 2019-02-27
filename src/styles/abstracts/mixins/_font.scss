@@ -1,0 +1,50 @@
+// Tito's Font mixin
+// -------
+// FOR: Declaring font shorthand using variables with fallbacks
+// USE: @include font(sans, 24px, $font-weight--bold);
+
+@mixin font(
+  $font-family: false,
+  //sans, serif, etc.
+    $font-size: false,
+  $line-height: false,
+  $font-weight: false,
+  $font-style: false,
+  $text-transform: false,
+  $ls: false
+) {
+  // Set font-family
+  @if $font-family {
+    font-family: $font-family;
+  }
+
+  // Set font-size
+  @if $font-size {
+    font-size: $font-size;
+  }
+
+  // Set line-height
+  @if $line-height {
+    line-height: $line-height;
+  }
+
+  // Set font-weight
+  @if $font-weight {
+    font-weight: $font-weight;
+  }
+
+  // Set font-style
+  @if $font-style {
+    font-style: $font-style;
+  }
+
+  // Set text-transform
+  @if $text-transform {
+    text-transform: $text-transform;
+  }
+
+  // Set letter-spacing
+  @if $ls {
+    letter-spacing: $ls;
+  }
+} // font mixin

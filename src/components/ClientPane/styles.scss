@@ -1,8 +1,0 @@
-@import '../../sass/variables';
-@import '../../sass/mixins';
-
-.client__name {
-    @include display-text;
-    font-size: 6vw;
-    line-height: 1;
-}

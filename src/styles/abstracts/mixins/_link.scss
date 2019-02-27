@@ -1,0 +1,10 @@
+@mixin link($color: $c--black) {
+  color: $color;
+  transition: $transition;
+  text-decoration: none;
+
+  &:focus,
+  &:hover {
+    color: $c--red;
+  }
+}
