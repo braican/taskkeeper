@@ -1,93 +1,77 @@
-<p align="center">
-  <a href="https://www.upstatement.com/">
-    <img src="https://pbs.twimg.com/profile_images/704375735654477824/NHmbSXOe_400x400.jpg" width="60" alt="ups logo" />
-  </a>
-</p>
-<h1 align="center">
-  Ups Starter + Create React App
-</h1>
+# Taskkeeper
 
-Kick off your project with this boilerplate. This starter ships with the main dev dependencies you might need + [Create React App](https://github.com/facebook/create-react-app).
+People should pay you, so you should know how much they owe you.
 
-## 🚀 Quick Start
+This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app). Head to that repo for specifics around that. Some relevant documentation is included below, however.
 
-1.  **Ensure [NVM](https://github.com/creationix/nvm) is installed globally** (see [Ups Dev Env Setup](https://github.com/Upstatement/Upstatement/wiki/2018-Development-Environment-Setup))
 
-    ```sh
-    nvm -v
-    ```
+## Getting started
 
-2.  **Ensure you're using the correct version of Node**
+1. Clone this repo into a directory. `cd` into that directory.
+1. Run `nvm install` to make sure we're using the right version of node.
+1. Run `yarn install` to install all the good stuff.
+1. Run `yarn start` to star the server and watch all the files.
 
-    ```sh
-    nvm install
-    ```
 
-3.  **Install project dependencies**
+## Folder Structure
 
-    ```sh
-    npm install
-    ```
+For the project to build, **these files must exist with exact filenames**:
 
-    or
+* `public/index.html` is the page template;
+* `src/index.js` is the JavaScript entry point.
 
-    ```sh
-    yarn
-    ```
 
-4.  **Start developing**
+## Styles
 
-    ```sh
-    npm start
-    ```
+Global styles exist in the `src/styles` directory. Component-specific styles exist within their component directory.
 
-    or
+## Available Scripts
 
-    ```sh
-    yarn start
-    ```
+In the project directory, you can run:
 
-## 🧐 What's inside?
+### `yarn start`
 
-A quick look at the files included in this repo.
+Runs the app in the development mode.<br>
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-    .
-    ├── docs/PULL_REQUEST_TEMPLATE.md
-    ├── .editorconfig
-    ├── .eslintrc
-    ├── .gitignore
-    ├── .nvmrc
-    ├── README.md
-    ├── package-lock.json
-    ├── package.json
-    └── prettier.config.js
+The page will reload if you make edits.<br>
+You will also see any lint errors in the console.
 
-1.  **`docs/PULL_REQUEST_TEMPLATE.md`**: A markdown file for a custom [pull request template](https://help.github.com/articles/about-issue-and-pull-request-templates/#pull-request-templates) which will automatically populate the body of a pull request in this repo. This helps enforce descriptive and thoughtful pull requests.
+### `yarn test`
 
-2.  **`.editorconfig`**: This file helps developers define and maintain consistent coding styles between different editors and IDEs.
+Launches the test runner in the interactive watch mode.<br>
+See the section about [running tests](#running-tests) for more information.
 
-3.  **`.eslintrc`**: This is a configuration file for [ESLint](https://eslint.org/), a tool for identifying and reporting on patterns found in ECMAScript/JavaScript code, with the goal of making code more consistent and avoiding bugs. This file extends Upstatement's [default ESLint config](https://github.com/Upstatement/eslint-config).
+### `yarn run build`
 
-4.  **`.gitignore`**: This file tells git which files it should not track / not maintain a version history for.
+Builds the app for production to the `build` folder.<br>
+It correctly bundles React in production mode and optimizes the build for the best performance.
 
-5.  **`README.md`**: A markdown file containing useful reference information about your project.
+The build is minified and the filenames include the hashes.<br>
+Your app is ready to be deployed!
 
-6.  **`package-lock.json`** (See `package.json` below, first). This is an automatically generated file based on the exact versions of your npm dependencies that were installed for your project. (You won’t change this file directly).
+See the section about [deployment](#deployment) for more information.
 
-7.  **`package.json`**: A manifest file for Node.js projects, which includes things like metadata (the project’s name, author, etc). This manifest is how npm knows which packages to install for your project.
+### `yarn run eject`
 
-8.  **`prettier.config.js`**: This is a configuration file for a tool called [Prettier](https://prettier.io/), which is a tool to help keep the formatting of your code consistent. This file extends Upstatement's [default Prettier config](https://github.com/Upstatement/prettier-config).
+**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
-## 🛠 Linting & Precommit Hooks
+If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-A few linting tools already baked into this starter repo:
+Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
-1.  [`@upstatement/eslint-config`](https://github.com/Upstatement/eslint-config): Upstatement's default ESLint config
+You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-2.  [`@upstatement/prettier-config`](https://github.com/Upstatement/prettier-config): Upstatement's default Prettier config
 
-3.  [`husky`](https://github.com/typicode/husky): Git hooks made easy
+## Changelog
 
-4.  [`pretty-quick`](https://github.com/azz/pretty-quick): Runs Prettier on your changed files
+**v1.1.1** `6/8/2018`
+* Setting up a deployment process via Travis.
+* Adding a changelog to the readme.
 
-5.  [`lint-staged`](https://github.com/okonet/lint-staged): Runs ESLint on your staged git files
+**v1.1.0** `6/8/2018`
+* Adding visual indicators for clients, and adding a new homepage.
+
+**v1.0.0** `4/10/2018`
+* Initial launch of the new and improved React version.
+

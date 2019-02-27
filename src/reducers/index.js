@@ -1,8 +1,6 @@
-const initialState = {
-  clients: [],
-};
+const rootReducer = (state = [], action) => {
+  console.log(state);
 
-const rootReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'ADD_CLIENT':
       return { ...state };
