@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { addClient } from '../../actions';
 
@@ -6,10 +7,7 @@ const mapDispatchToProps = dispatch => ({
   addClient: client => dispatch(addClient(client)),
 });
 
-const ClientForm = connect(
-  null,
-  mapDispatchToProps,
-)(({ addClient }) => {
+const ClientForm = ({ addClient }) => {
   const [clientName, updateClientName] = useState('');
 
   return (
@@ -24,6 +22,13 @@ const ClientForm = connect(
       <button>Add</button>
     </form>
   );
-});
+};
 
-export default ClientForm;
+ClientForm.propTypes = {
+  addClient: PropTypes.func,
+};
+
+export default connect(
+  null,
+  mapDispatchToProps,
+)(ClientForm);
