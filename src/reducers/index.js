@@ -1,9 +1,7 @@
 const rootReducer = (state = [], action) => {
-  console.log(state);
-
   switch (action.type) {
     case 'ADD_CLIENT':
-      return { ...state };
+      return { ...state, clients: state.clients.concat(action.payload) };
     default:
       return state;
   }
