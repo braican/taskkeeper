@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { compose } from 'redux';
 import { connect } from 'react-redux';
+import { firebaseConnect } from 'react-redux-firebase';
 import { addClient } from '../../actions';
 
 const mapDispatchToProps = dispatch => ({
@@ -15,6 +17,7 @@ const ClientForm = ({ addClient }) => {
       onSubmit={event => {
         event.preventDefault();
         addClient({ name: clientName });
+        updateClientName('');
       }}>
       <h2>Add new client form</h2>
       <input type="text" value={clientName} onChange={e => updateClientName(e.target.value)} />
@@ -25,10 +28,14 @@ const ClientForm = ({ addClient }) => {
 };
 
 ClientForm.propTypes = {
+  auth: PropTypes.object,
   addClient: PropTypes.func,
 };
 
-export default connect(
-  null,
-  mapDispatchToProps,
+export default compose(
+  firebaseConnect(),
+  connect(
+    null,
+    mapDispatchToProps,
+  ),
 )(ClientForm);

@@ -9,11 +9,13 @@ const mapStateToProps = state => ({
 const ClientList = ({ clients }) => (
   <div>
     <h2>Client List</h2>
-    <ul>
-      {clients.map(client => (
-        <li key={client.name}>{client.name}</li>
-      ))}
-    </ul>
+    {clients ? (
+      <ul>
+        {clients.map(client => (
+          <li key={client.name}>{client.name}</li>
+        ))}
+      </ul>
+    ) : null}
   </div>
 );
 

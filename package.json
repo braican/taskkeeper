@@ -38,13 +38,16 @@
     }
   },
   "dependencies": {
+    "firebase": "^5.8.5",
     "node-sass": "^4.11.0",
     "prop-types": "^15.7.2",
     "react": "^16.8.3",
     "react-dom": "^16.8.3",
     "react-redux": "^6.0.1",
+    "react-redux-firebase": "^3.0.0-alpha.10",
     "react-scripts": "2.1.5",
-    "redux": "^4.0.1"
+    "redux": "^4.0.1",
+    "redux-firestore": "^0.7.0"
   },
   "devDependencies": {
     "@upstatement/eslint-config": "0.3.1",

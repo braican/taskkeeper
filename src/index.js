@@ -1,20 +1,32 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
+import { createFirestoreInstance } from 'redux-firestore';
+import { ReactReduxFirebaseProvider } from 'react-redux-firebase';
 import store from './store';
 import * as serviceWorker from './serviceWorker';
 
-import ClientForm from './components/ClientForm';
-import ClientList from './components/ClientList';
-import ClientPane from './components/ClientPane';
+import firebase from './firebase';
+
+import Taskkeeper from './Taskkeeper';
 
 import './styles/globals.scss';
 
+const rrfProps = {
+  firebase,
+  config: {
+    userProfile: 'users',
+    useFirestoreForProfile: true,
+  },
+  dispatch: store.dispatch,
+  createFirestoreInstance,
+};
+
 const App = () => (
   <Provider store={store}>
-    <ClientForm />
-    <ClientList />
-    <ClientPane />
+    <ReactReduxFirebaseProvider {...rrfProps}>
+      <Taskkeeper />
+    </ReactReduxFirebaseProvider>
   </Provider>
 );
 

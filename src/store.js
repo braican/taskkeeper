@@ -1,9 +1,7 @@
 import { createStore } from 'redux';
 import rootReducer from './reducers';
 
-const defaultState = {
-  clients: [],
-};
+const defaultState = {};
 
 const store = createStore(rootReducer, defaultState);
 
