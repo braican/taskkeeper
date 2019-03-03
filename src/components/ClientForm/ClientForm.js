@@ -6,7 +6,7 @@ import { firestoreConnect } from 'react-redux-firebase';
 
 const mapStateToProps = state => ({ uid: state.firebase.auth.uid });
 
-const ClientForm = ({ firestore, uid }) => {
+const ClientForm = ({ uid, firestore }) => {
   const [clientName, updateClientName] = useState('');
 
   const handleSubmit = event => {
@@ -35,8 +35,10 @@ const ClientForm = ({ firestore, uid }) => {
 };
 
 ClientForm.propTypes = {
-  firestore: PropTypes.object,
   uid: PropTypes.string,
+  firestore: PropTypes.shape({
+    collection: PropTypes.func,
+  }),
 };
 
 export default compose(
