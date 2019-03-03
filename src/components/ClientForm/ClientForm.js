@@ -2,24 +2,31 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { firebaseConnect } from 'react-redux-firebase';
-import { addClient } from '../../actions';
+import { firestoreConnect } from 'react-redux-firebase';
 
-const mapDispatchToProps = dispatch => ({
-  addClient: client => dispatch(addClient(client)),
-});
+const mapStateToProps = state => ({ uid: state.firebase.auth.uid });
 
-const ClientForm = ({ addClient }) => {
+const ClientForm = ({ firestore, uid }) => {
   const [clientName, updateClientName] = useState('');
 
+  const handleSubmit = event => {
+    event.preventDefault();
+    const clientData = {
+      name: clientName,
+    };
+
+    firestore
+      .collection('users')
+      .doc(uid)
+      .collection('clients')
+      .add(clientData);
+
+    updateClientName('');
+  };
+
   return (
-    <form
-      onSubmit={event => {
-        event.preventDefault();
-        addClient({ name: clientName });
-        updateClientName('');
-      }}>
-      <h2>Add new client form</h2>
+    <form onSubmit={handleSubmit}>
+      <h2>Add new client</h2>
       <input type="text" value={clientName} onChange={e => updateClientName(e.target.value)} />
       <input type="number" />
       <button>Add</button>
@@ -28,14 +35,11 @@ const ClientForm = ({ addClient }) => {
 };
 
 ClientForm.propTypes = {
-  auth: PropTypes.object,
-  addClient: PropTypes.func,
+  firestore: PropTypes.object,
+  uid: PropTypes.string,
 };
 
 export default compose(
-  firebaseConnect(),
-  connect(
-    null,
-    mapDispatchToProps,
-  ),
+  firestoreConnect(),
+  connect(mapStateToProps),
 )(ClientForm);
