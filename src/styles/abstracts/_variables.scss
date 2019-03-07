@@ -102,9 +102,9 @@ $margin--code: 30px 0;
 // -----
 
 // Font Family
-$ff--sans-serif: Gilroy, sans-serif;
+$ff--sans-serif: sans-serif;
 $ff--sans: $ff--sans-serif;
-$ff--serif: Copernicus, serif;
+$ff--serif: serif;
 $ff--monospace: monospace;
 
 // Shortcuts
@@ -113,7 +113,7 @@ $mono: $ff--monospace;
 $serif: $ff--serif;
 
 // Applications
-$ff--base: $ff--serif;
+$ff--base: $ff--sans;
 $ff--heading: $ff--sans;
 
 // Font Weights

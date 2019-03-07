@@ -4,6 +4,9 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { firebaseConnect, isLoaded, isEmpty } from 'react-redux-firebase';
 
+import { BrowserRouter, Route } from 'react-router-dom';
+
+import Dashboard from './components/Dashboard';
 import AuthButton from './components/AuthButton';
 import ClientForm from './components/ClientForm';
 import ClientList from './components/ClientList';
@@ -17,19 +20,22 @@ const Taskkeeper = ({ auth }) => {
   }
 
   return (
-    <>
-      <AuthButton />
+    <BrowserRouter>
+      <>
+        <AuthButton />
 
-      {!isEmpty(auth) ? (
-        <>
-          <ClientForm />
-          <ClientList />
-          <ClientPane />
-        </>
-      ) : (
-        <div>Log in</div>
-      )}
-    </>
+        {!isEmpty(auth) ? (
+          <>
+            <ClientForm />
+            <ClientList />
+            <Route path="/" exact component={Dashboard} />
+            <Route path="/client/:clientId" component={ClientPane} />
+          </>
+        ) : (
+          <div>Log in</div>
+        )}
+      </>
+    </BrowserRouter>
   );
 };
 

@@ -4,21 +4,18 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
 
-const mapStateToProps = state => {
-  const { uid } = state.firebase.auth;
-  const clients = state.firestore.ordered.userClients;
+import { Link } from 'react-router-dom';
 
-  return {
-    uid,
-    clients,
-  };
-};
+const mapStateToProps = state => ({
+  uid: state.firebase.auth.uid,
+  clients: state.firestore.ordered.userClients,
+});
 
 /**
  * Query the "client" subcollection for the current user.
  *
  * @param {string} uid UID of the current user. This comes from the props passed to this component,
- *                      as mapped in the `mapStateToProps` function.
+ *                     as mapped in the `mapStateToProps` function.
  *
  * @return array
  */
@@ -43,7 +40,9 @@ const ClientList = ({ clients }) => {
       {clients ? (
         <ul>
           {clients.map(client => (
-            <li key={client.id}>{client.name}</li>
+            <li key={client.id}>
+              <Link to={`/client/${client.id}`}>{client.name}</Link>
+            </li>
           ))}
         </ul>
       ) : null}
