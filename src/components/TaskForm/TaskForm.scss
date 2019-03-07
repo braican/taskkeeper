@@ -1,0 +1,60 @@
+@import '../../styles/abstracts/abstracts';
+
+$dotSize: 12px;
+$trackBorder: 3px;
+$trackHeight: $dotSize + ($trackBorder * 2);
+$trackWidth: $trackHeight * 1.8;
+$dotMove: $trackWidth - ($dotSize + $trackBorder + $trackBorder);
+
+.TaskForm {
+  .unit-toggle {
+    display: flex;
+    align-items: center;
+  }
+
+  .unit-toggle-control {
+    display: none;
+  }
+
+  .unit-toggle-track {
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+    background-color: $c--dark-blue;
+    border-radius: 2em;
+    height: $trackHeight;
+    width: $trackWidth;
+    margin-left: $spacing--sm;
+    margin-right: $spacing--sm;
+    cursor: pointer;
+
+    &:before {
+      content: '';
+      position: absolute;
+      display: block;
+      top: 50%;
+      left: $trackBorder;
+      width: $dotSize;
+      height: $dotSize;
+      margin-top: -$dotSize / 2;
+      transition: all $transition;
+      background-color: $c--white;
+      border-radius: 100%;
+    }
+  }
+
+  .unit-toggle-control:checked + .unit-toggle-track:before {
+    transform: translateX($dotMove);
+  }
+
+  .toggle-label {
+    transition: opacity $transition;
+
+    &:focus {
+      outline: 0;
+    }
+  }
+  .toggle-label--disabled {
+    opacity: 0.2;
+  }
+}
