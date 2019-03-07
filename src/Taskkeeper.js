@@ -7,7 +7,7 @@ import { firebaseConnect, isLoaded, isEmpty } from 'react-redux-firebase';
 import { BrowserRouter, Route } from 'react-router-dom';
 
 import Dashboard from './components/Dashboard';
-import AuthButton from './components/AuthButton';
+import Auth from './components/Auth';
 import ClientForm from './components/ClientForm';
 import ClientList from './components/ClientList';
 import ClientPane from './components/ClientPane';
@@ -22,7 +22,7 @@ const Taskkeeper = ({ auth }) => {
   return (
     <BrowserRouter>
       <>
-        <AuthButton />
+        <Auth />
 
         {!isEmpty(auth) ? (
           <>

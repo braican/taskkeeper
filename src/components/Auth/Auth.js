@@ -4,9 +4,13 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { firebaseConnect, isLoaded, isEmpty } from 'react-redux-firebase';
 
+import User from '../User';
+
+import './Auth.scss';
+
 const mapStateToProps = state => ({ auth: state.firebase.auth });
 
-const AuthButton = ({ auth, firebase }) => {
+const Auth = ({ auth, firebase }) => {
   const authSettings = {
     provider: 'google',
     type: 'popup',
@@ -18,25 +22,31 @@ const AuthButton = ({ auth, firebase }) => {
 
   if (isEmpty(auth)) {
     return (
-      <div>
+      <div className="Auth">
         <button onClick={() => firebase.login(authSettings)}>Log in with Google</button>
       </div>
     );
   }
+
   return (
-    <div>
-      <button onClick={() => firebase.logout()}>Logout</button>
-      <p>{auth.displayName}</p>
+    <div className="Auth">
+      <button className="action-secondary logout" onClick={() => firebase.logout()}>
+        Logout
+      </button>
+      <User name={auth.displayName} avatar={auth.photoURL} />
     </div>
   );
 };
 
-AuthButton.propTypes = {
-  auth: PropTypes.object,
+Auth.propTypes = {
+  auth: PropTypes.shape({
+    displayName: PropTypes.string,
+    photoURL: PropTypes.string,
+  }),
   firebase: PropTypes.object,
 };
 
 export default compose(
   firebaseConnect(),
   connect(mapStateToProps),
-)(AuthButton);
+)(Auth);

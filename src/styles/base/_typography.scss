@@ -28,6 +28,19 @@ a:hover {
   text-decoration: none;
 }
 
+// Buttons
+// -------
+
+button {
+  cursor: pointer;
+}
+
+.action-secondary {
+  color: $c--light-blue;
+  font-weight: $fw--sans-bold;
+  font-size: 0.9rem;
+}
+
 // Typography
 // -------
 // Address font sizes and margins set differently in IE 6/7.
@@ -124,12 +137,6 @@ hr {
 mark {
   background-color: $c--base-tint-5;
   color: $c--text;
-}
-
-// Address margins set differently in IE 6/7.
-p,
-pre {
-  margin: $margin--base;
 }
 
 // Correct font family set oddly in IE 6, Safari 4/5, and Chrome.
