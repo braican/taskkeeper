@@ -229,7 +229,8 @@ sup {
 }
 
 sup {
-  top: -0.5em;
+  top: -$spacing--xs;
+  font-size: 0.8em;
 }
 
 sub {

@@ -6,6 +6,8 @@ import { firestoreConnect } from 'react-redux-firebase';
 
 import { NavLink, withRouter } from 'react-router-dom';
 
+import formatPrice from '../../util/formatPrice';
+
 import './ClientList.scss';
 
 const mapStateToProps = state => ({
@@ -46,7 +48,10 @@ const ClientList = ({ clients }) => {
                 to={`/client/${client.id}`}
                 className="client-link"
                 activeClassName="client-link--active">
-                {client.name}
+                <div className="client-info">
+                  <span className="client-name">{client.name}</span>
+                  <span className="client-rate">{formatPrice(client.rate)}</span>
+                </div>
               </NavLink>
             </li>
           ))}
@@ -61,6 +66,7 @@ ClientList.propTypes = {
     PropTypes.shape({
       id: PropTypes.string,
       name: PropTypes.string,
+      rate: PropTypes.string,
     }),
   ),
 };

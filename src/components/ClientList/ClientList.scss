@@ -3,10 +3,30 @@
 .ClientList {
   .client-link {
     display: block;
-    padding: 0.6em 1em;
+    padding: 1em;
     line-height: 1;
+    color: inherit;
+
+    &:hover:not(.client-link--active) {
+      background-color: darken($c--gray-e, 5%);
+    }
   }
   .client-link--active {
     background-color: darken($c--gray-e, 10%);
+  }
+
+  .client-info {
+    transition: all $transition;
+  }
+
+  .client-link:hover .client-info,
+  .client-link--active .client-info {
+    transform: translateX(4px);
+  }
+
+  .client-name {
+    font-weight: $fw--bold;
+    display: block;
+    margin-bottom: $spacing--xs;
   }
 }

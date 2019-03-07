@@ -10,11 +10,13 @@ const mapStateToProps = state => ({ uid: state.firebase.auth.uid });
 
 const ClientForm = ({ uid, firestore }) => {
   const [clientName, updateClientName] = useState('');
+  const [clientRate, updateClientRate] = useState('');
 
   const handleSubmit = event => {
     event.preventDefault();
     const clientData = {
       name: clientName,
+      rate: clientRate,
     };
 
     firestore
@@ -24,13 +26,14 @@ const ClientForm = ({ uid, firestore }) => {
       .add(clientData);
 
     updateClientName('');
+    updateClientRate('');
   };
 
   return (
     <form onSubmit={handleSubmit} className="ClientForm">
       <h4>Add new client</h4>
       <input type="text" value={clientName} onChange={e => updateClientName(e.target.value)} />
-      <input type="number" />
+      <input type="number" value={clientRate} onChange={e => updateClientRate(e.target.value)} />
       <button className="action-primary add">Add</button>
     </form>
   );
