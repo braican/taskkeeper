@@ -6,6 +6,7 @@ import { firebaseConnect, isLoaded, isEmpty } from 'react-redux-firebase';
 
 import User from '../User';
 
+import Exit from '../../svg/exit';
 import './Auth.scss';
 
 const mapStateToProps = state => ({ auth: state.firebase.auth });
@@ -30,9 +31,14 @@ const Auth = ({ auth, firebase }) => {
 
   return (
     <div className="Auth">
-      <button className="action-secondary logout" onClick={() => firebase.logout()}>
-        Logout
-      </button>
+      <div>
+        <button
+          className="action-secondary action-has-icon logout"
+          onClick={() => firebase.logout()}>
+          <span className="action-word">Logout</span>
+          <Exit />
+        </button>
+      </div>
       <User name={auth.displayName} avatar={auth.photoURL} />
     </div>
   );

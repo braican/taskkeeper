@@ -6,7 +6,7 @@ html {
 }
 
 body {
-  @include font($sans, 16px, $lh--base);
+  @include font($sans, $fs--base, $lh--base);
 }
 
 // Links
@@ -36,10 +36,59 @@ button {
   background-color: transparent;
 }
 
+.action-primary {
+  transition: background-color $transition;
+  background-color: $c--light-blue;
+  font-weight: $fw--bold;
+  font-size: 0.9rem;
+  padding: 0.4em 1.2em;
+  color: $c--white;
+
+  &:hover {
+    background-color: darken($c--light-blue, 10%);
+  }
+}
 .action-secondary {
+  transition: color $transition;
   color: $c--light-blue;
   font-weight: $fw--bold;
   font-size: 0.9rem;
+  background-color: $c--white;
+
+  &:hover {
+    color: darken($c--light-blue, 10%);
+  }
+
+  &.action-has-icon {
+    position: relative;
+    padding-right: 10px;
+
+    .action-word {
+      display: inline-block;
+      transition: all $transition;
+    }
+
+    svg {
+      transition: all $transition;
+      transform: translate(0%, -50%);
+      position: absolute;
+      right: 0;
+      top: 50%;
+      width: 18px;
+      fill: darken($c--light-blue, 10%);
+      opacity: 0;
+    }
+
+    &:hover {
+      .action-word {
+        transform: translateX(-6px);
+      }
+      svg {
+        transform: translate(6px, -50%);
+        opacity: 1;
+      }
+    }
+  }
 }
 
 // Typography

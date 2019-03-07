@@ -4,7 +4,9 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
 
-import { Link } from 'react-router-dom';
+import { NavLink, withRouter } from 'react-router-dom';
+
+import './ClientList.scss';
 
 const mapStateToProps = state => ({
   uid: state.firebase.auth.uid,
@@ -35,13 +37,17 @@ const clientQuery = ({ uid }) => {
 
 const ClientList = ({ clients }) => {
   return (
-    <div>
-      <h2>Client List</h2>
+    <div className="ClientList">
       {clients ? (
-        <ul>
+        <ul className="list">
           {clients.map(client => (
-            <li key={client.id}>
-              <Link to={`/client/${client.id}`}>{client.name}</Link>
+            <li key={client.id} className="client">
+              <NavLink
+                to={`/client/${client.id}`}
+                className="client-link"
+                activeClassName="client-link--active">
+                {client.name}
+              </NavLink>
             </li>
           ))}
         </ul>
@@ -60,6 +66,7 @@ ClientList.propTypes = {
 };
 
 export default compose(
+  withRouter,
   connect(mapStateToProps),
   firestoreConnect(clientQuery),
 )(ClientList);
