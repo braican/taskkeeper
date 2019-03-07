@@ -33,11 +33,12 @@ a:hover {
 
 button {
   cursor: pointer;
+  background-color: transparent;
 }
 
 .action-secondary {
   color: $c--light-blue;
-  font-weight: $fw--sans-bold;
+  font-weight: $fw--bold;
   font-size: 0.9rem;
 }
 
@@ -48,33 +49,33 @@ button {
 
 h1,
 .h1 {
-  @include font($sans, $fs--h1, $lh--h1, $fw--sans-black);
+  @include font($sans, $fs--h1, $lh--h1, $fw--bold);
   @include fluid-size($tween-start: $fs--xl $bp--mobile, $tween-end: $fs--xxxxl $bp--desktop-xl);
 }
 
 h2,
 .h2 {
-  @include font($ff--heading, $fs--h2, $lh--h2, $fw--sans-black);
+  @include font($ff--heading, $fs--h2, $lh--h2, $fw--bold);
 }
 
 h3,
 .h3 {
-  @include font($ff--heading, $fs--h3, $lh--h3, $fw--sans-black);
+  @include font($ff--heading, $fs--h3, $lh--h3, $fw--bold);
 }
 
 h4,
 .h4 {
-  @include font($ff--heading, $fs--h4, $lh--h4, $fw--sans-black);
+  @include font($ff--heading, $fs--h4, $lh--h4, $fw--bold);
 }
 
 h5,
 .h5 {
-  @include font($ff--heading, $fs--h5, $lh--h5, $fw--sans-black);
+  @include font($ff--heading, $fs--h5, $lh--h5, $fw--bold);
 }
 
 h6,
 .h6 {
-  @include font($ff--heading, $fs--h6, $lh--h6, $fw--sans-black);
+  @include font($ff--heading, $fs--h6, $lh--h6, $fw--bold);
 }
 
 h1 small,
@@ -110,7 +111,7 @@ abbr[title] {
 // Address style set to `bolder` in Firefox 3+, Safari 4/5, and Chrome.
 b,
 strong {
-  font-weight: $fw--sans-bold;
+  font-weight: $fw--bold;
 }
 
 blockquote {

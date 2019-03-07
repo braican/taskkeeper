@@ -26,7 +26,7 @@ const ClientForm = ({ uid, firestore }) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <h2>Add new client</h2>
+      <h4>Add new client</h4>
       <input type="text" value={clientName} onChange={e => updateClientName(e.target.value)} />
       <input type="number" />
       <button>Add</button>

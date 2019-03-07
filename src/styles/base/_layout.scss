@@ -1,0 +1,16 @@
+.layout {
+  display: flex;
+}
+
+.sidebar {
+  flex: 0 0 200px;
+  background-color: $c--gray-e;
+  height: 100vh;
+  overflow: auto;
+  padding: $app--padding;
+}
+
+.main {
+  flex: 1 1 auto;
+  padding: 60px 8vw 8vw 8vw;
+}

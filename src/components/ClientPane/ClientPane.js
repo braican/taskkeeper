@@ -21,7 +21,7 @@ const ClientPane = ({ client }) => {
 
   return (
     <div>
-      <p>{client.name}</p>
+      <h1>{client.name}</h1>
     </div>
   );
 };

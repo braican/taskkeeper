@@ -97,12 +97,13 @@ $font-padding--list: 0 0 0 40px;
 $margin--dd: 0 0 0 40px;
 $font-padding--code: 0.2em 0.4em;
 $margin--code: 30px 0;
+$app--padding: 20px;
 
 // Fonts
 // -----
 
 // Font Family
-$ff--sans-serif: sans-serif;
+$ff--sans-serif: 'Overpass', sans-serif;
 $ff--sans: $ff--sans-serif;
 $ff--serif: serif;
 $ff--monospace: monospace;
@@ -117,16 +118,8 @@ $ff--base: $ff--sans;
 $ff--heading: $ff--sans;
 
 // Font Weights
-$fw--sans-light: 300;
-$fw--sans-normal: 400;
-$fw--sans-bold: 700;
-$fw--sans-black: 800;
-$fw--serif-light: 300;
-$fw--serif-normal: 400;
-$fw--serif-bold: 700;
-
-$fw--semibold: 400;
-$fw--bold: 900;
+$fw--normal: 400;
+$fw--bold: 800;
 
 // Widths
 // ------

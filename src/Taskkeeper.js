@@ -25,12 +25,16 @@ const Taskkeeper = ({ auth }) => {
         <Auth />
 
         {!isEmpty(auth) ? (
-          <>
-            <ClientForm />
-            <ClientList />
-            <Route path="/" exact component={Dashboard} />
-            <Route path="/client/:clientId" component={ClientPane} />
-          </>
+          <div className="layout">
+            <aside className="sidebar">
+              <ClientForm />
+              <ClientList />
+            </aside>
+            <div className="main">
+              <Route path="/" exact component={Dashboard} />
+              <Route path="/client/:clientId" component={ClientPane} />
+            </div>
+          </div>
         ) : (
           <div>Log in</div>
         )}
