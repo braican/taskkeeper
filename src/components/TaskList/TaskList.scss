@@ -1,0 +1,32 @@
+@import '../../styles/abstracts/abstracts';
+
+.TaskList {
+  .row {
+    display: flex;
+
+    &.header {
+      @include uppercase;
+      border-bottom: 1px solid $c--light-blue;
+    }
+  }
+
+  .cell {
+    padding: $spacing--xs 0 $spacing--xs 0;
+  }
+
+  .description {
+    flex: 1 1 auto;
+  }
+  .hours,
+  .price {
+    flex: 0 0 auto;
+    padding-left: 1em;
+    text-align: right;
+  }
+  .hours {
+    flex-basis: 80px;
+  }
+  .price {
+    flex-basis: 100px;
+  }
+}

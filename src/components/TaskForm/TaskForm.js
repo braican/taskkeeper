@@ -13,17 +13,19 @@ const mapStateToProps = state => ({ uid: state.firebase.auth.uid });
 const TaskForm = ({ uid, firestore, clientId }) => {
   const { rate } = useContext(ClientContext);
   const [taskDescription, updateDescription] = useState('');
-  const [taskPrice, updatePrice] = useState('');
+  const [taskUnit, updatePrice] = useState('');
   const [isFixedRate, updateFlag] = useState(false);
 
   const handleSubmit = event => {
     event.preventDefault();
 
-    const price = isFixedRate ? taskPrice : taskPrice * rate;
+    const price = isFixedRate ? taskUnit : taskUnit * rate;
     const taskData = {
+      client: clientId,
+      status: 'active',
       description: taskDescription,
       price,
-      client: clientId,
+      hours: isFixedRate ? 0 : taskUnit,
     };
 
     firestore
@@ -71,7 +73,7 @@ const TaskForm = ({ uid, firestore, clientId }) => {
         </button>
       </div>
 
-      <input type="number" value={taskPrice} onChange={e => updatePrice(e.target.value)} />
+      <input type="number" value={taskUnit} onChange={e => updatePrice(e.target.value)} />
 
       <button>Add task</button>
     </form>

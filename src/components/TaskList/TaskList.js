@@ -4,18 +4,22 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
 
-const mapStateToProps = (state, props) => {
-  return {
-    uid: state.firebase.auth.uid,
-    tasks: state.firestore.ordered.tasks,
-  };
-};
+import formatPrice from '../../util/formatPrice';
+
+import TaskRow from './TaskRow';
+
+import './TaskList.scss';
+
+const mapStateToProps = (state, props) => ({
+  uid: state.firebase.auth.uid,
+  tasks: state.firestore.ordered[`${props.clientId}_tasks`],
+});
 
 /**
- * Query the "client" subcollection for the current user.
+ * Query the "task" subcollection for the current user.
  *
- * @param {string} uid UID of the current user. This comes from the props passed to this component,
- *                     as mapped in the `mapStateToProps` function.
+ * @param {string} uid      ID of the current user.
+ * @param {string} clientId ID of the client.
  *
  * @return array
  */
@@ -31,7 +35,7 @@ const taskQuery = ({ uid, clientId }) => {
       subcollections: [
         {
           collection: 'tasks',
-          where: [['client', '==', clientId]],
+          where: [['client', '==', clientId], ['status', '==', 'active']],
         },
       ],
       storeAs: `${clientId}_tasks`,
@@ -39,22 +43,36 @@ const taskQuery = ({ uid, clientId }) => {
   ];
 };
 
-const TaskList = props => {
-  console.log(props);
-
-  // if (!tasks) {
-  //   return null;
-  // }
-
-  // console.log(tasks);
+const TaskList = ({ tasks }) => {
+  if (!tasks) {
+    return null;
+  }
 
   return (
-    <ul>
-      {/* {tasks.map(({ id, description, price }) => (
-        <li key={id}>{description}</li>
-      ))} */}
+    <ul className="TaskList">
+      <TaskRow className="header" description="Description" hours="Hours" price="Price" />
+      {tasks.map(({ id, description, hours, price }) => (
+        <TaskRow
+          key={id}
+          description={description}
+          hours={hours || '-'}
+          price={formatPrice(price)}
+        />
+      ))}
     </ul>
   );
+};
+
+TaskList.propTypes = {
+  tasks: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string,
+      client: PropTypes.string,
+      description: PropTypes.string,
+      hours: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+      price: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+    }),
+  ),
 };
 
 export default compose(
