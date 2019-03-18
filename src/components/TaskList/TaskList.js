@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
 
 import formatPrice from '../../util/formatPrice';
+import computeTotal from '../../util/computeTotal';
 
 import TaskRow from './TaskRow';
 
@@ -48,18 +49,24 @@ const TaskList = ({ tasks }) => {
     return null;
   }
 
+  const total = computeTotal(tasks);
+
   return (
-    <ul className="TaskList">
-      <TaskRow className="header" description="Description" hours="Hours" price="Price" />
-      {tasks.map(({ id, description, hours, price }) => (
-        <TaskRow
-          key={id}
-          description={description}
-          hours={hours || '-'}
-          price={formatPrice(price)}
-        />
-      ))}
-    </ul>
+    <>
+      <ul className="TaskList">
+        <TaskRow className="header" description="Description" hours="Hours" price="Price" />
+        {tasks.map(({ id, description, hours, price }) => (
+          <TaskRow
+            key={id}
+            description={description}
+            hours={hours || '-'}
+            price={formatPrice(price)}
+          />
+        ))}
+      </ul>
+
+      <p>Billable {formatPrice(total)}</p>
+    </>
   );
 };
 

@@ -4,13 +4,21 @@ import ClientContext from '../../contexts/ClientContext';
 
 import formatPrice from '../../util/formatPrice';
 
+import './ClientHeader.scss';
+
 const ClientHeader = () => {
   const { name, rate } = useContext(ClientContext);
   return (
-    <>
-      <h1>{name}</h1>
-      <p>Hourly rate: {formatPrice(rate)}</p>
-    </>
+    <header className="ClientHeader">
+      <h1 className="client-name">{name}</h1>
+      <dl>
+        <dd>Hourly rate</dd>
+        <dt>{formatPrice(rate)}</dt>
+
+        <dd>Outstanding</dd>
+        <dt />
+      </dl>
+    </header>
   );
 };
 

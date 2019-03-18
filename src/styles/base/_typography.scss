@@ -277,6 +277,15 @@ ol ol {
   margin: 0;
 }
 
+// Definition Lists
+// --------
+
+dd {
+  @include uppercase;
+  text-align: left;
+  margin: 0;
+}
+
 // Code
 // -------
 
