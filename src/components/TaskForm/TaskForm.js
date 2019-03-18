@@ -6,6 +6,8 @@ import { firestoreConnect } from 'react-redux-firebase';
 
 import ClientContext from '../../contexts/ClientContext';
 
+import Toggler from '../Toggler';
+
 import './TaskForm.scss';
 
 const mapStateToProps = state => ({ uid: state.firebase.auth.uid });
@@ -39,44 +41,22 @@ const TaskForm = ({ uid, firestore, clientId }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="TaskForm">
-      <input
-        type="text"
-        value={taskDescription}
-        onChange={e => updateDescription(e.target.value)}
-      />
-
-      <div className="unit-toggle">
-        <button
-          type="button"
-          className={`toggle-label${isFixedRate ? ' toggle-label--disabled' : ''}`}
-          onClick={() => updateFlag(false)}>
-          Hours
-        </button>
-
+    <div className="TaskForm">
+      <h4>Add a new task</h4>
+      <form onSubmit={handleSubmit}>
         <input
-          type="checkbox"
-          className="unit-toggle-control"
-          id="task-unit-toggle"
-          checked={isFixedRate}
-          onChange={e => updateFlag(e.target.checked)}
+          type="text"
+          value={taskDescription}
+          onChange={e => updateDescription(e.target.value)}
         />
-        <label className="unit-toggle-track" htmlFor="task-unit-toggle">
-          &nbsp;
-        </label>
 
-        <button
-          type="button"
-          className={`toggle-label${!isFixedRate ? ' toggle-label--disabled' : ''}`}
-          onClick={() => updateFlag(true)}>
-          Cost
-        </button>
-      </div>
+        <Toggler onLabel="Hours" offLabel="Cost" onChange={updateFlag} isOn={isFixedRate} />
 
-      <input type="number" value={taskUnit} onChange={e => updatePrice(e.target.value)} />
+        <input type="number" value={taskUnit} onChange={e => updatePrice(e.target.value)} />
 
-      <button>Add task</button>
-    </form>
+        <button className="action-primary">Add task</button>
+      </form>
+    </div>
   );
 };
 

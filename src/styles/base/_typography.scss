@@ -40,11 +40,13 @@ button {
   transition: background-color $transition;
   background-color: $c--light-blue;
   font-weight: $fw--bold;
-  font-size: 0.9rem;
-  padding: 0.4em 1.2em;
+  font-size: $fs--input;
+  padding: $spacing--sm 1em;
   color: $c--white;
 
+  &:focus,
   &:hover {
+    outline: 0;
     background-color: darken($c--light-blue, 10%);
   }
 }
@@ -52,9 +54,10 @@ button {
   transition: color $transition;
   color: $c--light-blue;
   font-weight: $fw--bold;
-  font-size: 0.9rem;
+  font-size: $fs--input;
   background-color: $c--white;
 
+  &:focus,
   &:hover {
     color: darken($c--light-blue, 10%);
   }

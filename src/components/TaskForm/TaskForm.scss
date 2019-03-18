@@ -1,60 +1,26 @@
 @import '../../styles/abstracts/abstracts';
 
-$dotSize: 12px;
-$trackBorder: 3px;
-$trackHeight: $dotSize + ($trackBorder * 2);
-$trackWidth: $trackHeight * 1.8;
-$dotMove: $trackWidth - ($dotSize + $trackBorder + $trackBorder);
-
 .TaskForm {
-  .unit-toggle {
+  margin-top: $spacing--lg;
+  margin-bottom: $spacing--lg;
+
+  form {
     display: flex;
-    align-items: center;
-  }
 
-  .unit-toggle-control {
-    display: none;
-  }
-
-  .unit-toggle-track {
-    position: relative;
-    display: inline-block;
-    overflow: hidden;
-    background-color: $c--dark-blue;
-    border-radius: 2em;
-    height: $trackHeight;
-    width: $trackWidth;
-    margin-left: $spacing--sm;
-    margin-right: $spacing--sm;
-    cursor: pointer;
-
-    &:before {
-      content: '';
-      position: absolute;
-      display: block;
-      top: 50%;
-      left: $trackBorder;
-      width: $dotSize;
-      height: $dotSize;
-      margin-top: -$dotSize / 2;
-      transition: all $transition;
-      background-color: $c--white;
-      border-radius: 100%;
+    input[type='text'] {
+      flex: 1;
     }
-  }
-
-  .unit-toggle-control:checked + .unit-toggle-track:before {
-    transform: translateX($dotMove);
-  }
-
-  .toggle-label {
-    transition: opacity $transition;
-
-    &:focus {
-      outline: 0;
+    input[type='number'] {
+      width: 120px;
     }
-  }
-  .toggle-label--disabled {
-    opacity: 0.2;
+
+    .Toggler {
+      margin-left: 1em;
+      margin-right: 1em;
+    }
+
+    .action-primary {
+      margin-left: 1em;
+    }
   }
 }
