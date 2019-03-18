@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import ClientContext from '../../contexts/ClientContext';
 
+import ClientHeader from '../ClientHeader';
 import TaskForm from '../TaskForm';
 import TaskList from '../TaskList';
 
@@ -26,7 +27,7 @@ const ClientPane = ({ match, client }) => {
 
   return (
     <ClientContext.Provider value={client}>
-      <h1>{client.name}</h1>
+      <ClientHeader />
       <TaskForm clientId={match.params.clientId} />
       <TaskList clientId={match.params.clientId} />
     </ClientContext.Provider>
