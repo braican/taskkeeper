@@ -7,6 +7,10 @@
   form {
     display: flex;
 
+    @include mq('max', $bp--tablet-xxl) {
+      flex-wrap: wrap;
+    }
+
     input[type='text'] {
       flex: 1;
     }
@@ -21,6 +25,14 @@
 
     .action-primary {
       margin-left: 1em;
+      white-space: nowrap;
+
+      @include mq('max', $bp--tablet-xxl) {
+        margin-left: 0;
+        width: 100%;
+        flex: 0 0 100%;
+        margin-top: $spacing--md;
+      }
     }
   }
 }

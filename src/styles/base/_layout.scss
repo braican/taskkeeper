@@ -1,15 +1,34 @@
 .layout {
-  display: flex;
+  @include mq($bp--tablet-xl) {
+    display: flex;
+  }
 }
 
 .sidebar {
-  flex: 0 0 200px;
+  width: 240px;
+  flex: 0 0 240px;
   background-color: $c--gray-e;
   height: 100vh;
   overflow: auto;
+  transition: all $transition;
+  z-index: 10;
+
+  @include mq('max', $bp--tablet-xl) {
+    position: fixed;
+    top: 0;
+    left: -240px;
+    box-shadow: -8px 0px 60px rgba(0, 0, 0, 0.2);
+  }
+
+  .layout--sidebar-visible & {
+    transform: translateX(240px);
+  }
 }
 
 .main {
-  flex: 1 1 auto;
-  padding: 60px 8vw 8vw 8vw;
+  padding: 80px 8vw 8vw 8vw;
+
+  @include mq($bp--tablet-xl) {
+    flex: 1 1 auto;
+  }
 }

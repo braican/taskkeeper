@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { compose } from 'redux';
 import { connect } from 'react-redux';
+import { firestoreConnect } from 'react-redux-firebase';
 
 import ClientContext from '../../contexts/ClientContext';
 
@@ -16,8 +18,42 @@ const mapStateToProps = (state, props) => {
   const { clientId } = props.match.params;
 
   return {
+    clientId,
     client: state.firestore.data.userClients[clientId],
   };
+};
+
+/**
+ * Query the "task" subcollection for the current user.
+ *
+ * @param {string} uid      ID of the current user.
+ * @param {string} clientId ID of the client.
+ *
+ * @return array
+ */
+// eslint-disable-next-line
+const taskQuery = ({ uid, clientId }) => {
+  // console.log(uid, clientId);
+
+  // if (!props.match.params.clientId) {
+  //   return [];
+  // }
+
+  return [];
+
+  // return [
+  //   {
+  //     collection: 'users',
+  //     doc: uid,
+  //     subcollections: [
+  //       {
+  //         collection: 'tasks',
+  //         where: [['client', '==', clientId], ['status', '==', 'active']],
+  //       },
+  //     ],
+  //     storeAs: `${clientId}_tasks`,
+  //   },
+  // ];
 };
 
 const ClientPane = ({ match, client }) => {
@@ -46,4 +82,7 @@ ClientPane.propTypes = {
   }),
 };
 
-export default connect(mapStateToProps)(ClientPane);
+export default compose(
+  connect(mapStateToProps),
+  firestoreConnect(taskQuery),
+)(ClientPane);

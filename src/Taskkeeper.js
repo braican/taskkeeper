@@ -7,14 +7,18 @@ import { firebaseConnect, isLoaded, isEmpty } from 'react-redux-firebase';
 import { BrowserRouter, Route } from 'react-router-dom';
 
 import Dashboard from './components/Dashboard';
+import SidebarTrigger from './components/SidebarTrigger';
 import Auth from './components/Auth';
 import ClientForm from './components/ClientForm';
 import ClientList from './components/ClientList';
 import ClientPane from './components/ClientPane';
 
-const mapStateToProps = state => ({ auth: state.firebase.auth });
+const mapStateToProps = state => ({
+  auth: state.firebase.auth,
+  sidebarVisible: state.views.sidebarVisible,
+});
 
-const Taskkeeper = ({ auth }) => {
+const Taskkeeper = ({ auth, sidebarVisible }) => {
   if (!isLoaded(auth)) {
     return <div>Loading</div>;
   }
@@ -23,9 +27,10 @@ const Taskkeeper = ({ auth }) => {
     <BrowserRouter>
       <>
         <Auth />
+        <SidebarTrigger />
 
         {!isEmpty(auth) ? (
-          <div className="layout">
+          <div className={`layout${sidebarVisible ? ' layout--sidebar-visible' : ''}`}>
             <aside className="sidebar">
               <ClientForm />
               <ClientList />
@@ -45,6 +50,7 @@ const Taskkeeper = ({ auth }) => {
 
 Taskkeeper.propTypes = {
   auth: PropTypes.object,
+  sidebarVisible: PropTypes.bool,
 };
 
 export default compose(
