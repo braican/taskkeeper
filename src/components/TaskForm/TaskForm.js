@@ -28,6 +28,7 @@ const TaskForm = ({ uid, firestore, clientId }) => {
       description: taskDescription,
       price,
       hours: isFixedRate ? 0 : taskUnit,
+      timestamp: +new Date(),
     };
 
     firestore

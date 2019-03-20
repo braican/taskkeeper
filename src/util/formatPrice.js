@@ -13,6 +13,10 @@ export default function formatPrice(price) {
   const dollars = priceString.slice(0, priceString.length - 2).replace('.', '');
   const cents = priceString.slice(-2);
 
+  if (isNaN(priceNumber)) {
+    return null;
+  }
+
   return (
     <span>
       ${dollars}.<sup className="cents">{cents}</sup>
