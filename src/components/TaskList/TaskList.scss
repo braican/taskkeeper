@@ -3,15 +3,20 @@
 .TaskList {
   .row {
     display: flex;
+    transition: background-color $transition;
 
     &.header {
       @include uppercase;
       border-bottom: 1px solid $c--light-blue;
     }
+
+    &:not(.header):hover {
+      background-color: $c--gray-e;
+    }
   }
 
   .cell {
-    padding: $spacing--xs 0 $spacing--xs 0;
+    padding: $spacing--xs;
   }
 
   .description {

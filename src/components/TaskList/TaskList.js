@@ -7,13 +7,14 @@ import TaskRow from './TaskRow';
 
 import './TaskList.scss';
 
-const TaskList = ({ tasks }) => {
+const TaskList = ({ tasks, header }) => {
   if (!tasks) {
     return null;
   }
 
   return (
-    <>
+    <section>
+      <header>{header}</header>
       <ul className="TaskList">
         <TaskRow className="header" description="Description" hours="Hours" price="Price" />
         {tasks.map(({ id, description, hours, price }) => (
@@ -25,7 +26,7 @@ const TaskList = ({ tasks }) => {
           />
         ))}
       </ul>
-    </>
+    </section>
   );
 };
 
@@ -39,6 +40,7 @@ TaskList.propTypes = {
       price: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     }),
   ),
+  header: PropTypes.string,
 };
 
 export default TaskList;

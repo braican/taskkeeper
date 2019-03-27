@@ -24,7 +24,7 @@ const TaskForm = ({ uid, firestore, clientId }) => {
     const price = isFixedRate ? taskUnit : taskUnit * rate;
     const taskData = {
       client: clientId,
-      status: 'active',
+      status: 'estimated',
       description: taskDescription,
       price,
       hours: isFixedRate ? 0 : taskUnit,

@@ -7,7 +7,7 @@ import formatPrice from '../../util/formatPrice';
 import './ClientHeader.scss';
 
 const ClientHeader = () => {
-  const { name, rate, activeBalance } = useContext(ClientContext);
+  const { name, rate, estimatedBalance } = useContext(ClientContext);
   return (
     <header className="ClientHeader">
       <h1 className="client-name">{name}</h1>
@@ -22,10 +22,10 @@ const ClientHeader = () => {
 
         <div className="unbilled">
           <dl>
-            <dd>Active Balance</dd>
-            <dt>{formatPrice(activeBalance)}</dt>
+            <dd>Estimated Balance</dd>
+            <dt>{formatPrice(estimatedBalance)}</dt>
             <dd>Unbilled Hours</dd>
-            <dt>{formatPrice(activeBalance)}</dt>
+            <dt>{formatPrice(estimatedBalance)}</dt>
           </dl>
         </div>
       </div>

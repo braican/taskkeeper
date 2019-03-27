@@ -14,7 +14,7 @@ export default function formatPrice(price) {
   const cents = priceString.slice(-2);
 
   if (isNaN(priceNumber)) {
-    return null;
+    return <span>$0</span>;
   }
 
   return (
