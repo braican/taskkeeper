@@ -2,7 +2,7 @@
 
 .TaskRow {
   position: relative;
-  transition: background-color 0.2s, padding-right $transition;
+  transition: background-color 0.2s;
 
   .wrapper {
     display: flex;
@@ -17,25 +17,25 @@
     border-bottom: 1px solid $c--gray-a;
   }
 
-  &.editing {
-    padding-right: 48px;
-  }
-
   .wrapper-clickable {
-    transition: background-color $transition;
+    transition: background-color $transition, padding-right $transition;
 
     &:focus {
       outline: none;
     }
   }
 
+  &.editing .wrapper-clickable {
+    padding-right: 48px;
+  }
+
   &:not(.utilMenuActive):not(.editing) .wrapper-clickable:hover {
-    background-color: lighten($c--gray-e, 2%);
+    background-color: $c--gray-fe;
   }
 
   &.editing .wrapper-clickable,
   &.utilMenuActive .wrapper-clickable {
-    background-color: $c--gray-e;
+    background-color: $c--gray-fe;
   }
 
   .cell {
@@ -68,6 +68,7 @@
 
   .save-edits {
     @include utility-button;
+    background-color: transparent;
     position: absolute;
     top: 0;
     right: 0;
