@@ -14,6 +14,7 @@ $c--dark-blue: #141928;
 $c--primary-blue: #283250;
 $c--light-blue: #73c2fb;
 $c--bg-blue: #f9fafd;
+$c--green: #4bb543;
 $c--red: #ff3a38;
 $c--pink: #ba2778;
 $c--purple: #912d8d;
@@ -192,3 +193,8 @@ $border-thicker: ($border-width * 2) solid $c--black;
 // --------
 
 $opacity-light: 0.4;
+
+// Sizing
+// -------
+
+$buttonSize: 44px;
