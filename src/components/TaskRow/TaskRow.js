@@ -27,8 +27,11 @@ const TaskRow = ({
   header,
   footer,
   hasUtility,
+  canInvoice,
+  creatingInvoice,
 }) => {
   const [isEditing, setIsEditing] = useState(false);
+  const [isInvoiceTask, setInvoiceTask] = useState(false);
   const [utilMenuActive, setUtilMenuActive] = useState(false);
   const [utilMenuStyles, setUtilMenuStyles] = useState({ left: '0', top: '0' });
   const [taskDescription, setDescription] = useState(description);
@@ -51,9 +54,9 @@ const TaskRow = ({
     event.persist();
 
     const rowOffset = rowRef.current.getBoundingClientRect();
-    const { pageX, pageY } = event;
-    const relX = pageX - rowOffset.x;
-    const relY = pageY - rowOffset.y;
+    const { clientX, clientY } = event;
+    const relX = clientX - rowOffset.x;
+    const relY = clientY - rowOffset.y;
 
     setUtilMenuStyles({
       left: `${relX}px`,
@@ -97,6 +100,8 @@ const TaskRow = ({
         ${footer ? ' footer' : ''}
         ${utilMenuActive ? ' utilMenuActive' : ''}
         ${isEditing ? ' editing' : ''}
+        ${isInvoiceTask ? ' should-invoice' : ''}
+        ${creatingInvoice ? ' can-invoice' : ''}
       `}
       ref={rowRef}>
       <TaskContext.Provider value={{ uid, taskId, firestore, setIsEditing }}>
@@ -147,6 +152,18 @@ const TaskRow = ({
             </span>
           </button>
         )}
+
+        {canInvoice && (
+          <div className={`toggle-invoiceable${creatingInvoice ? ' active' : ''}`}>
+            <button
+              className={`invoiceable-control${isInvoiceTask ? ' selected' : ''}`}
+              onClick={() => setInvoiceTask(!isInvoiceTask)}>
+              <span>
+                <CompleteIcon />
+              </span>
+            </button>
+          </div>
+        )}
       </TaskContext.Provider>
     </li>
   );
@@ -164,6 +181,8 @@ TaskRow.propTypes = {
   header: PropTypes.bool,
   footer: PropTypes.bool,
   hasUtility: PropTypes.bool,
+  canInvoice: PropTypes.bool,
+  creatingInvoice: PropTypes.bool,
 };
 
 export default compose(

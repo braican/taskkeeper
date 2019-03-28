@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import computeTotal from '../../util/computeTotal';
@@ -9,23 +9,33 @@ import TaskRow from '../TaskRow/TaskRow';
 
 import './TaskList.scss';
 
-const TaskList = ({ tasks, header, hasUtility }) => {
+const TaskList = ({ tasks, header, hasUtility, canInvoice }) => {
   if (!tasks) {
     return null;
   }
+
+  const [creatingInvoice, setCreatingInvoice] = useState(false);
 
   const balance = computeTotal(tasks);
   const hours = computeHours(tasks);
 
   return (
     <section className="TaskList">
-      <header>{header}</header>
+      <header>
+        <h4>{header}</h4>
+      </header>
       <ul>
         {tasks.length === 0 ? (
           <p>No tasks</p>
         ) : (
           <>
-            <TaskRow header description="Description" hours="Hours" price="Price" />
+            <TaskRow
+              header
+              description="Description"
+              hours="Hours"
+              price="Price"
+              creatingInvoice={creatingInvoice}
+            />
             {tasks.map(({ id, description, hours, price }) => (
               <TaskRow
                 key={id}
@@ -34,6 +44,8 @@ const TaskList = ({ tasks, header, hasUtility }) => {
                 hours={hours || '-'}
                 price={price}
                 hasUtility={hasUtility}
+                canInvoice={canInvoice}
+                creatingInvoice={creatingInvoice}
               />
             ))}
             <li className="footer">
@@ -43,6 +55,19 @@ const TaskList = ({ tasks, header, hasUtility }) => {
           </>
         )}
       </ul>
+
+      {tasks.length > 0 && canInvoice && (
+        <div className="actions">
+          <button
+            className={`action-cancel${creatingInvoice ? ' active' : ''}`}
+            onClick={() => setCreatingInvoice(false)}>
+            Cancel
+          </button>
+          <button className="action-primary" onClick={() => setCreatingInvoice(true)}>
+            Create Invoice
+          </button>
+        </div>
+      )}
     </section>
   );
 };
@@ -59,6 +84,7 @@ TaskList.propTypes = {
   ),
   header: PropTypes.string,
   hasUtility: PropTypes.bool,
+  canInvoice: PropTypes.bool,
 };
 
 export default TaskList;

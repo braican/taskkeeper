@@ -55,7 +55,6 @@ button {
   color: $c--light-blue;
   font-weight: $fw--bold;
   font-size: $fs--input;
-  background-color: $c--white;
 
   &:focus,
   &:hover {
@@ -91,6 +90,13 @@ button {
         opacity: 1;
       }
     }
+  }
+}
+
+.action-cancel {
+  font-size: $fs--input;
+  &:focus {
+    outline: none;
   }
 }
 

@@ -69,7 +69,7 @@ const ClientPane = ({ match, client, estimatedTasks, completedTasks }) => {
       <ClientHeader />
       <TaskForm clientId={match.params.clientId} />
       <TaskList tasks={estimatedTasks} header="Estimated Tasks" hasUtility />
-      <TaskList tasks={completedTasks} header="Completed Tasks" />
+      <TaskList tasks={completedTasks} header="Completed Tasks" canInvoice />
     </ClientContext.Provider>
   );
 };

@@ -2,7 +2,23 @@
 
 .TaskRow {
   position: relative;
-  transition: background-color 0.2s;
+  transition: background-color $transition, padding-right $transition;
+
+  &.can-invoice,
+  &.editing {
+    padding-right: 48px;
+  }
+
+  &.editing,
+  &.should-invoice,
+  &.utilMenuActive {
+    background-color: $c--gray-fe;
+  }
+
+  &.header {
+    @include uppercase;
+    border-bottom: 1px solid $c--gray-a;
+  }
 
   .wrapper {
     display: flex;
@@ -12,29 +28,15 @@
     align-items: center;
   }
 
-  &.header {
-    @include uppercase;
-    border-bottom: 1px solid $c--gray-a;
-  }
-
   .wrapper-clickable {
-    transition: background-color $transition, padding-right $transition;
+    transition: background-color $transition;
 
     &:focus {
       outline: none;
     }
   }
 
-  &.editing .wrapper-clickable {
-    padding-right: 48px;
-  }
-
   &:not(.utilMenuActive):not(.editing) .wrapper-clickable:hover {
-    background-color: $c--gray-fe;
-  }
-
-  &.editing .wrapper-clickable,
-  &.utilMenuActive .wrapper-clickable {
     background-color: $c--gray-fe;
   }
 
@@ -102,6 +104,58 @@
     &.active {
       opacity: 1;
       transition-delay: 0.2s;
+    }
+  }
+
+  .toggle-invoiceable {
+    position: absolute;
+    top: 0;
+    right: 0;
+    opacity: 0;
+    transition: all $transition;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &.active {
+      opacity: 1;
+      transition-delay: 0.2s;
+    }
+  }
+
+  .invoiceable-control {
+    display: block;
+    width: $buttonSize;
+    height: $buttonSize;
+    padding: 0.5em;
+
+    &:focus {
+      outline: none;
+    }
+
+    span {
+      display: block;
+      border-radius: 50%;
+      border: 2px solid lighten($c--gray-a, 20%);
+      transition: all $transition;
+      padding: 2px;
+
+      svg {
+        display: block;
+        width: 100%;
+        fill: $c--gray-a;
+        opacity: 0.2;
+        transition: all $transition;
+      }
+    }
+
+    &.selected span {
+      border-color: $c--green;
+      background-color: $c--green;
+      svg {
+        opacity: 1;
+        fill: $c--white;
+      }
     }
   }
 }
