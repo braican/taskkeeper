@@ -68,8 +68,14 @@ const ClientPane = ({ match, client, estimatedTasks, completedTasks }) => {
     <ClientContext.Provider value={{ ...client }}>
       <ClientHeader />
       <TaskForm clientId={match.params.clientId} />
-      <TaskList tasks={estimatedTasks} header="Estimated Tasks" hasUtility />
-      <TaskList tasks={completedTasks} header="Completed Tasks" canInvoice />
+      {estimatedTasks === undefined && completedTasks === undefined ? (
+        <p>Loading...</p>
+      ) : (
+        <>
+          <TaskList tasks={estimatedTasks} header="Estimated Tasks" hasUtility />
+          <TaskList tasks={completedTasks} header="Completed Tasks" canInvoice />
+        </>
+      )}
     </ClientContext.Provider>
   );
 };
