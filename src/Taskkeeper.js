@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
@@ -18,10 +18,27 @@ const mapStateToProps = state => ({
   sidebarVisible: state.views.sidebarVisible,
 });
 
-const Taskkeeper = ({ auth, sidebarVisible }) => {
+const mapDispatchToProps = dispatch => ({
+  toggleSidebar: isOpen => dispatch({ type: 'TOGGLE_CLIENT_SIDEBAR', isOpen }),
+});
+
+const Taskkeeper = ({ auth, sidebarVisible, toggleSidebar }) => {
   if (!isLoaded(auth)) {
     return <div>Loading</div>;
   }
+  const main = useRef();
+
+  const handleOffClick = () => {
+    toggleSidebar(false);
+  };
+
+  useEffect(() => {
+    main.current.addEventListener('mousedown', handleOffClick);
+
+    return () => {
+      main.current.removeEventListener('mousedown', handleOffClick);
+    };
+  }, []);
 
   return (
     <BrowserRouter>
@@ -35,7 +52,7 @@ const Taskkeeper = ({ auth, sidebarVisible }) => {
               <ClientForm />
               <ClientList />
             </aside>
-            <div className="main">
+            <div className="main" ref={main}>
               <Route path="/" exact component={Dashboard} />
               <Route path="/client/:clientId" component={ClientPane} />
             </div>
@@ -51,9 +68,13 @@ const Taskkeeper = ({ auth, sidebarVisible }) => {
 Taskkeeper.propTypes = {
   auth: PropTypes.object,
   sidebarVisible: PropTypes.bool,
+  toggleSidebar: PropTypes.func,
 };
 
 export default compose(
   firebaseConnect(),
-  connect(mapStateToProps),
+  connect(
+    mapStateToProps,
+    mapDispatchToProps,
+  ),
 )(Taskkeeper);

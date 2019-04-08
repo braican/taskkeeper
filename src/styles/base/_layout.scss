@@ -1,12 +1,10 @@
-.layout {
-  @include mq($bp--tablet-xl) {
-    display: flex;
-  }
-}
+$sidebar-width: 240px;
 
 .sidebar {
-  width: 240px;
-  flex: 0 0 240px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: $sidebar-width;
   background-color: $c--gray-e;
   height: 100vh;
   overflow: auto;
@@ -14,14 +12,11 @@
   z-index: 10;
 
   @include mq('max', $bp--tablet-xl) {
-    position: fixed;
-    top: 0;
-    left: -240px;
+    left: -$sidebar-width;
     box-shadow: -8px 0px 60px rgba(0, 0, 0, 0.2);
-  }
-
-  .layout--sidebar-visible & {
-    transform: translateX(240px);
+    .layout--sidebar-visible & {
+      transform: translateX($sidebar-width);
+    }
   }
 }
 
@@ -29,6 +24,6 @@
   padding: 80px 8vw 8vw 8vw;
 
   @include mq($bp--tablet-xl) {
-    flex: 1 1 auto;
+    margin-left: $sidebar-width;
   }
 }
