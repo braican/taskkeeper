@@ -5,6 +5,9 @@ import computeTotal from '../../util/computeTotal';
 import computeHours from '../../util/computeHours';
 import formatPrice from '../../util/formatPrice';
 
+import TaskListContext from '../../contexts/TaskListContext';
+
+import TaskRowHeader from '../TaskRow/TaskRowHeader';
 import TaskRow from '../TaskRow/TaskRow';
 
 import './TaskList.scss';
@@ -15,60 +18,56 @@ const TaskList = ({ tasks, header, hasUtility, canInvoice }) => {
   }
 
   const [creatingInvoice, setCreatingInvoice] = useState(false);
+  const [invoiceAll, setInvoiceAll] = useState(false);
 
   const balance = computeTotal(tasks);
   const hours = computeHours(tasks);
 
   return (
-    <section className="TaskList">
-      <header>
-        <h4>{header}</h4>
-      </header>
-      <ul>
-        {tasks.length === 0 ? (
-          <p>No tasks</p>
-        ) : (
-          <>
-            <TaskRow
-              header
-              description="Description"
-              hours="Hours"
-              price="Price"
-              creatingInvoice={creatingInvoice}
-            />
-            {tasks.map(({ id, description, hours, price }) => (
-              <TaskRow
-                key={id}
-                taskId={id}
-                description={description}
-                hours={hours || '-'}
-                price={price}
-                hasUtility={hasUtility}
-                canInvoice={canInvoice}
-                creatingInvoice={creatingInvoice}
-              />
-            ))}
-            <li className="footer">
-              <span className="hours">{hours}</span>
-              <span className="price">{formatPrice(balance)}</span>
-            </li>
-          </>
-        )}
-      </ul>
+    <TaskListContext.Provider value={{ invoiceAll, creatingInvoice }}>
+      <section className="TaskList">
+        <header>
+          <h4>{header}</h4>
+        </header>
+        <ul>
+          {tasks.length === 0 ? (
+            <p>No tasks</p>
+          ) : (
+            <>
+              <TaskRowHeader setInvoiceAll={setInvoiceAll} />
+              {tasks.map(({ id, description, hours, price }) => (
+                <TaskRow
+                  key={id}
+                  taskId={id}
+                  description={description}
+                  hours={hours || '-'}
+                  price={price}
+                  hasUtility={hasUtility}
+                  canInvoice={canInvoice}
+                />
+              ))}
+              <li className="footer">
+                <span className="hours">{hours}</span>
+                <span className="price">{formatPrice(balance)}</span>
+              </li>
+            </>
+          )}
+        </ul>
 
-      {tasks.length > 0 && canInvoice && (
-        <div className="actions">
-          <button
-            className={`action-cancel${creatingInvoice ? ' active' : ''}`}
-            onClick={() => setCreatingInvoice(false)}>
-            Cancel
-          </button>
-          <button className="action-primary" onClick={() => setCreatingInvoice(true)}>
-            Create Invoice
-          </button>
-        </div>
-      )}
-    </section>
+        {tasks.length > 0 && canInvoice && (
+          <div className="actions">
+            <button
+              className={`action-cancel${creatingInvoice ? ' active' : ''}`}
+              onClick={() => setCreatingInvoice(false)}>
+              Cancel
+            </button>
+            <button className="action-primary" onClick={() => setCreatingInvoice(true)}>
+              {creatingInvoice ? 'Create' : 'Start'} Invoice
+            </button>
+          </div>
+        )}
+      </section>
+    </TaskListContext.Provider>
   );
 };
 

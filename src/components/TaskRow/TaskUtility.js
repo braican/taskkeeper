@@ -1,7 +1,8 @@
-import React, { useEffect, useContext, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-
-import TaskContext from '../../contexts/TaskContext';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
+import { firestoreConnect } from 'react-redux-firebase';
 
 import CompleteIcon from '../../svg/complete';
 import EditIcon from '../../svg/edit';
@@ -10,8 +11,9 @@ import BackIcon from '../../svg/back';
 
 import './TaskUtility.scss';
 
-const TaskUtility = ({ style, active }) => {
-  const { uid, taskId, firestore, setIsEditing } = useContext(TaskContext);
+const mapStateToProps = state => ({ uid: state.firebase.auth.uid });
+
+const TaskUtility = ({ uid, firestore, taskId, setIsEditing, style, active }) => {
   const [promptConfirmDelete, setPromptConfirmDelete] = useState(false);
 
   const completeTask = () => {
@@ -76,8 +78,17 @@ const TaskUtility = ({ style, active }) => {
 };
 
 TaskUtility.propTypes = {
+  uid: PropTypes.string,
+  firestore: PropTypes.shape({
+    collection: PropTypes.func,
+  }),
+  taskId: PropTypes.string,
+  setIsEditing: PropTypes.func,
   active: PropTypes.bool,
   style: PropTypes.object,
 };
 
-export default TaskUtility;
+export default compose(
+  firestoreConnect(),
+  connect(mapStateToProps),
+)(TaskUtility);
