@@ -1,37 +1,57 @@
 @import '../../styles/abstracts/abstracts';
 
 .TaskList {
-  .row {
+  padding: $spacing--md;
+  background-color: $c--gray-e;
+  margin-bottom: $spacing--lg;
+
+  .footer {
+    border-top: 2px solid $c--gray-2;
     display: flex;
-    transition: background-color $transition;
+    justify-content: flex-end;
 
-    &.header {
-      @include uppercase;
-      border-bottom: 1px solid $c--light-blue;
+    .hours,
+    .price {
+      padding: $spacing--xs;
+      flex: 0 0 auto;
+      padding-left: 1em;
+      text-align: right;
     }
 
-    &:not(.header):hover {
-      background-color: $c--gray-e;
+    .hours {
+      flex-basis: 80px;
+    }
+    .price {
+      flex-basis: 100px;
     }
   }
 
-  .cell {
-    padding: $spacing--xs;
-  }
-
-  .description {
-    flex: 1 1 auto;
-  }
-  .hours,
-  .price {
-    flex: 0 0 auto;
-    padding-left: 1em;
+  .actions {
+    margin-top: $spacing--md;
     text-align: right;
+
+    .action-cancel {
+      margin-right: 1em;
+      opacity: 0;
+      transition: opacity $transition;
+
+      &.active {
+        opacity: 1;
+      }
+    }
   }
-  .hours {
-    flex-basis: 80px;
-  }
-  .price {
-    flex-basis: 100px;
+
+  .invoice-data {
+    position: relative;
+    height: 0;
+    opacity: 0;
+    z-index: -1;
+
+    &.active {
+      opacity: 1;
+      height: auto;
+      z-index: 2;
+      transition: opacity 0.4s;
+    }
   }
 }

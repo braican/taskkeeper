@@ -5,6 +5,10 @@ import { connect } from 'react-redux';
 
 import './SidebarTrigger.scss';
 
+const mapDispatchToProps = dispatch => ({
+  toggleSidebar: isOpen => dispatch({ type: 'TOGGLE_CLIENT_SIDEBAR', isOpen }),
+});
+
 const SidebarTrigger = ({ toggleSidebar }) => {
   return (
     <button className="SidebarTrigger" onClick={() => toggleSidebar()}>
@@ -17,10 +21,6 @@ const SidebarTrigger = ({ toggleSidebar }) => {
 SidebarTrigger.propTypes = {
   toggleSidebar: PropTypes.func,
 };
-
-const mapDispatchToProps = dispatch => ({
-  toggleSidebar: isOpen => dispatch({ type: 'TOGGLE_CLIENT_SIDEBAR', isOpen }),
-});
 
 export default compose(
   connect(

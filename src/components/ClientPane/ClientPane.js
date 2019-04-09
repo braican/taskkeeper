@@ -10,8 +10,6 @@ import ClientHeader from '../ClientHeader';
 import TaskForm from '../TaskForm';
 import TaskList from '../TaskList';
 
-import computeTotal from '../../util/computeTotal';
-
 const mapStateToProps = (state, props) => {
   if (!state.firestore.data.userClients) {
     return {};
@@ -27,15 +25,6 @@ const mapStateToProps = (state, props) => {
     completedTasks: state.firestore.ordered[`${clientId}_completed_tasks`],
   };
 };
-
-/**
- * Query the "task" subcollection for the current user.
- *
- * @param {string} uid      ID of the current user.
- * @param {string} clientId ID of the client.
- *
- * @return array
- */
 
 const taskQuery = ({ uid, clientId }) => {
   if (!clientId || !uid) {
@@ -75,15 +64,18 @@ const ClientPane = ({ match, client, estimatedTasks, completedTasks }) => {
     return null;
   }
 
-  const estimatedBalance = computeTotal(estimatedTasks);
-  const completedBalance = computeTotal(completedTasks);
-
   return (
-    <ClientContext.Provider value={{ ...client, estimatedBalance }}>
+    <ClientContext.Provider value={{ ...client }}>
       <ClientHeader />
       <TaskForm clientId={match.params.clientId} />
-      <TaskList tasks={estimatedTasks} header="Estimated Tasks" taskBalance={estimatedBalance} />
-      <TaskList tasks={completedTasks} header="Completed Tasks" taskBalance={completedBalance} />
+      {estimatedTasks === undefined && completedTasks === undefined ? (
+        <p>Loading...</p>
+      ) : (
+        <>
+          <TaskList tasks={estimatedTasks} header="Estimated Tasks" hasUtility />
+          <TaskList tasks={completedTasks} header="Completed Tasks" canInvoice />
+        </>
+      )}
     </ClientContext.Provider>
   );
 };
