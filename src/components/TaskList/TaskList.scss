@@ -40,4 +40,18 @@
       }
     }
   }
+
+  .invoice-data {
+    position: relative;
+    height: 0;
+    opacity: 0;
+    z-index: -1;
+
+    &.active {
+      opacity: 1;
+      height: auto;
+      z-index: 2;
+      transition: opacity 0.4s;
+    }
+  }
 }
