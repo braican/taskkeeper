@@ -18,14 +18,14 @@ const mapStateToProps = state => ({ uid: state.firebase.auth.uid });
 
 const TaskRow = ({ uid, firestore, taskId, description, hours, price, hasUtility, canInvoice }) => {
   const { rate } = useContext(ClientContext);
-  const { creatingInvoice, invoiceAll } = useContext(TaskListContext);
+  const { creatingInvoice, selectTask, selectedTasks } = useContext(TaskListContext);
 
   const [taskDescription, setDescription] = useState(description);
   const [taskHours, setHours] = useState(hours);
   const [taskPrice, setPrice] = useState(price);
 
   const [isEditing, setIsEditing] = useState(false);
-  const [isInvoiceTask, setInvoiceTask] = useState(invoiceAll);
+  const [isSelected, setSelected] = useState(false);
 
   const [utilMenuActive, setUtilMenuActive] = useState(false);
   const [utilMenuStyles, setUtilMenuStyles] = useState({ left: '0', top: '0' });
@@ -72,13 +72,21 @@ const TaskRow = ({ uid, firestore, taskId, description, hours, price, hasUtility
       });
   };
 
+  const onSelect = () => {
+    const newSelectedState = !isSelected;
+    setSelected(newSelectedState);
+    selectTask(newSelectedState, taskId);
+  };
+
   useEffect(() => {
+    setSelected(selectedTasks.includes(taskId));
+
     document.addEventListener('mousedown', handleOffClick);
 
     return () => {
       document.removeEventListener('mousedown', handleOffClick);
     };
-  }, []);
+  }, [selectedTasks]);
 
   return (
     <li
@@ -87,7 +95,7 @@ const TaskRow = ({ uid, firestore, taskId, description, hours, price, hasUtility
         ${utilMenuActive ? ' utilMenuActive' : ''}
         ${isEditing ? ' editing' : ''}
         ${creatingInvoice ? ' can-invoice' : ''}
-        ${isInvoiceTask && creatingInvoice ? ' should-invoice' : ''}
+        ${isSelected && creatingInvoice ? ' selected' : ''}
       `}
       ref={rowRef}>
       <TaskRowWrapper clickable={hasUtility} onClick={triggerUtilMenu}>
@@ -116,10 +124,8 @@ const TaskRow = ({ uid, firestore, taskId, description, hours, price, hasUtility
       )}
 
       {canInvoice && (
-        <div className={`toggle-invoiceable${creatingInvoice ? ' active' : ''}`}>
-          <button
-            className={`invoiceable-control${isInvoiceTask ? ' selected' : ''}`}
-            onClick={() => setInvoiceTask(!isInvoiceTask)}>
+        <div className={`row-action${creatingInvoice ? ' active' : ''}`}>
+          <button className={`toggle-select${isSelected ? ' selected' : ''}`} onClick={onSelect}>
             <span>
               <CompleteIcon />
             </span>

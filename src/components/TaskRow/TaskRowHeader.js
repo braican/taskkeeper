@@ -1,13 +1,31 @@
-import React, { useState, useContext } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState, useContext, useEffect } from 'react';
 
 import TaskListContext from '../../contexts/TaskListContext';
 
 import CompleteIcon from '../../svg/complete';
 
-const TaskRowHeader = ({ setInvoiceAll }) => {
-  const [invoiceAll, markInvoiceAll] = useState(false);
-  const { creatingInvoice } = useContext(TaskListContext);
+const TaskRowHeader = () => {
+  const [selectAll, setSelectAll] = useState(false);
+  const { tasks, creatingInvoice, selectAllTasks, selectedTasks } = useContext(TaskListContext);
+
+  const toggleSelectAll = () => {
+    const newSelectAllStatus = !selectAll;
+    const taskIds = tasks.map(({ id }) => id);
+    setSelectAll(newSelectAllStatus);
+    if (newSelectAllStatus) {
+      selectAllTasks(taskIds);
+    } else if (selectedTasks.length === tasks.length) {
+      selectAllTasks([]);
+    }
+  };
+
+  useEffect(() => {
+    if (selectedTasks.length < tasks.length) {
+      setSelectAll(false);
+    } else {
+      setSelectAll(true);
+    }
+  }, [selectedTasks]);
 
   return (
     <li className={`TaskRow row header${creatingInvoice ? ' can-invoice' : ''}`}>
@@ -17,26 +35,17 @@ const TaskRowHeader = ({ setInvoiceAll }) => {
         <span className="cell price">Price</span>
       </div>
 
-      {setInvoiceAll && (
-        <div className={`toggle-invoiceable${creatingInvoice ? ' active' : ''}`}>
-          <button
-            className={`invoiceable-control${invoiceAll ? ' selected' : ''}`}
-            onClick={() => {
-              markInvoiceAll(!invoiceAll);
-              setInvoiceAll(true);
-            }}>
-            <span>
-              <CompleteIcon />
-            </span>
-          </button>
-        </div>
-      )}
+      <div className={`row-action${creatingInvoice ? ' active' : ''}`}>
+        <button
+          className={`toggle-select${selectAll ? ' selected' : ''}`}
+          onClick={toggleSelectAll}>
+          <span>
+            <CompleteIcon />
+          </span>
+        </button>
+      </div>
     </li>
   );
-};
-
-TaskRowHeader.propTypes = {
-  setInvoiceAll: PropTypes.func,
 };
 
 export default TaskRowHeader;

@@ -18,13 +18,34 @@ const TaskList = ({ tasks, header, hasUtility, canInvoice }) => {
   }
 
   const [creatingInvoice, setCreatingInvoice] = useState(false);
-  const [invoiceAll, setInvoiceAll] = useState(false);
+  const [selectedTasks, setSelectedTasks] = useState([]);
 
   const balance = computeTotal(tasks);
   const hours = computeHours(tasks);
 
+  const selectTask = (selected, task) => {
+    const newSelectedTasks = [...selectedTasks];
+    const index = newSelectedTasks.indexOf(task);
+    if (selected) {
+      newSelectedTasks.push(task);
+      setSelectedTasks(newSelectedTasks);
+    } else if (index > -1) {
+      newSelectedTasks.splice(index, 1);
+      setSelectedTasks(newSelectedTasks);
+    }
+  };
+
+  const selectAllTasks = tasks => {
+    setSelectedTasks(tasks);
+  };
+
+  const createInvoice = () => {
+    // console.log(selectedTasks);
+  };
+
   return (
-    <TaskListContext.Provider value={{ invoiceAll, creatingInvoice }}>
+    <TaskListContext.Provider
+      value={{ tasks, creatingInvoice, selectTask, selectAllTasks, selectedTasks }}>
       <section className="TaskList">
         <header>
           <h4>{header}</h4>
@@ -34,7 +55,7 @@ const TaskList = ({ tasks, header, hasUtility, canInvoice }) => {
             <p>No tasks</p>
           ) : (
             <>
-              <TaskRowHeader setInvoiceAll={setInvoiceAll} />
+              <TaskRowHeader />
               {tasks.map(({ id, description, hours, price }) => (
                 <TaskRow
                   key={id}
@@ -61,9 +82,15 @@ const TaskList = ({ tasks, header, hasUtility, canInvoice }) => {
               onClick={() => setCreatingInvoice(false)}>
               Cancel
             </button>
-            <button className="action-primary" onClick={() => setCreatingInvoice(true)}>
-              {creatingInvoice ? 'Create' : 'Start'} Invoice
-            </button>
+            {creatingInvoice ? (
+              <button className="action-primary" onClick={createInvoice}>
+                Create Invoice
+              </button>
+            ) : (
+              <button className="action-primary" onClick={() => setCreatingInvoice(true)}>
+                Start Invoice
+              </button>
+            )}
           </div>
         )}
       </section>

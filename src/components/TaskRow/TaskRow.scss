@@ -10,7 +10,7 @@
   }
 
   &.editing,
-  &.should-invoice,
+  &.selected,
   &.utilMenuActive {
     background-color: $c--gray-fe;
   }
@@ -107,7 +107,7 @@
     }
   }
 
-  .toggle-invoiceable {
+  .row-action {
     position: absolute;
     top: 0;
     right: 0;
@@ -123,7 +123,7 @@
     }
   }
 
-  .invoiceable-control {
+  .toggle-select {
     display: block;
     width: $buttonSize;
     height: $buttonSize;
