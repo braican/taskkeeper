@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
@@ -9,6 +9,7 @@ import computeHours from '../../util/computeHours';
 import formatPrice from '../../util/formatPrice';
 
 import TaskListContext from '../../contexts/TaskListContext';
+import ClientContext from '../../contexts/ClientContext';
 
 import TaskRowHeader from '../TaskRow/TaskRowHeader';
 import TaskRow from '../TaskRow/TaskRow';
@@ -28,6 +29,8 @@ const TaskList = ({ firestore, taskRef, invoiceRef, tasks, header, hasUtility, c
 
   const [creatingInvoice, setCreatingInvoice] = useState(false);
   const [selectedTasks, setSelectedTasks] = useState([]);
+
+  const { clientId } = useContext(ClientContext);
 
   const balance = computeTotal(tasks);
   const hours = computeHours(tasks);
@@ -63,7 +66,10 @@ const TaskList = ({ firestore, taskRef, invoiceRef, tasks, header, hasUtility, c
     batch.commit();
 
     invoiceRef.add({
+      client: clientId,
+      status: 'active',
       tasks: selectedTasks,
+      timestamp: +new Date(),
     });
   };
 

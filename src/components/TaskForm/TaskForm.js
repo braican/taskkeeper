@@ -10,8 +10,8 @@ import './TaskForm.scss';
 
 const mapStateToProps = state => ({ taskRef: state.refs.tasks });
 
-const TaskForm = ({ taskRef, clientId }) => {
-  const { rate } = useContext(ClientContext);
+const TaskForm = ({ taskRef }) => {
+  const { rate, clientId } = useContext(ClientContext);
   const [taskDescription, updateDescription] = useState('');
   const [taskUnit, updatePrice] = useState('');
   const [isFixedRate, updateFlag] = useState(false);
@@ -56,7 +56,6 @@ const TaskForm = ({ taskRef, clientId }) => {
 
 TaskForm.propTypes = {
   taskRef: PropTypes.object,
-  clientId: PropTypes.string.isRequired,
 };
 
 export default connect(mapStateToProps)(TaskForm);
