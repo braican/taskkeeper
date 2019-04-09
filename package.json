@@ -18,7 +18,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint:scripts": "eslint src/*.js src/**/*.js"
   },
   "browserslist": [
     ">0.2%",
@@ -53,12 +54,16 @@
   "devDependencies": {
     "@upstatement/eslint-config": "0.3.1",
     "@upstatement/prettier-config": "^0.3.0",
+    "babel-eslint": "^10.0.1",
+    "eslint": "^5.13.0",
     "eslint-config-prettier": "^3.3.0",
     "eslint-plugin-jsx-a11y": "^6.1.2",
     "eslint-plugin-react": "^7.11.1",
     "husky": "^1.2.0",
     "lint-staged": "^8.1.0",
     "prettier": "^1.15.3",
-    "pretty-quick": "^1.8.0"
+    "pretty-quick": "^1.8.0",
+    "stylelint": "^9.10.1",
+    "stylelint-config-sass-guidelines": "^5.3.0"
   }
 }
