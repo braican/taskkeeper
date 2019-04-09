@@ -1,8 +1,6 @@
 import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
-import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { firestoreConnect } from 'react-redux-firebase';
 
 import ClientContext from '../../contexts/ClientContext';
 
@@ -10,9 +8,9 @@ import Toggler from '../Toggler';
 
 import './TaskForm.scss';
 
-const mapStateToProps = state => ({ uid: state.firebase.auth.uid });
+const mapStateToProps = state => ({ taskRef: state.refs.tasks });
 
-const TaskForm = ({ uid, firestore, clientId }) => {
+const TaskForm = ({ taskRef, clientId }) => {
   const { rate } = useContext(ClientContext);
   const [taskDescription, updateDescription] = useState('');
   const [taskUnit, updatePrice] = useState('');
@@ -31,12 +29,7 @@ const TaskForm = ({ uid, firestore, clientId }) => {
       timestamp: +new Date(),
     };
 
-    firestore
-      .collection('users')
-      .doc(uid)
-      .collection('tasks')
-      .add(taskData);
-
+    taskRef.add(taskData);
     updateDescription('');
     updatePrice('');
   };
@@ -62,14 +55,8 @@ const TaskForm = ({ uid, firestore, clientId }) => {
 };
 
 TaskForm.propTypes = {
-  uid: PropTypes.string,
-  firestore: PropTypes.shape({
-    collection: PropTypes.func,
-  }),
+  taskRef: PropTypes.object,
   clientId: PropTypes.string.isRequired,
 };
 
-export default compose(
-  firestoreConnect(),
-  connect(mapStateToProps),
-)(TaskForm);
+export default connect(mapStateToProps)(TaskForm);

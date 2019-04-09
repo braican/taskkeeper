@@ -15,9 +15,13 @@ import TaskRow from '../TaskRow/TaskRow';
 
 import './TaskList.scss';
 
-const mapStateToProps = state => ({ uid: state.firebase.auth.uid });
+const mapStateToProps = state => ({
+  uid: state.firebase.auth.uid,
+  taskRef: state.refs.tasks,
+  invoiceRef: state.refs.invoices,
+});
 
-const TaskList = ({ uid, firestore, tasks, header, hasUtility, canInvoice }) => {
+const TaskList = ({ firestore, taskRef, invoiceRef, tasks, header, hasUtility, canInvoice }) => {
   if (!tasks) {
     return null;
   }
@@ -52,23 +56,15 @@ const TaskList = ({ uid, firestore, tasks, header, hasUtility, canInvoice }) => 
 
     const batch = firestore.batch();
     selectedTasks.forEach(task => {
-      const taskRef = firestore
-        .collection('users')
-        .doc(uid)
-        .collection('tasks')
-        .doc(task);
-      batch.update(taskRef, { status: 'invoiced' });
+      const singleTaskRef = taskRef.doc(task);
+      batch.update(singleTaskRef, { status: 'invoiced' });
     });
 
     batch.commit();
 
-    firestore
-      .collection('users')
-      .doc(uid)
-      .collection('invoices')
-      .add({
-        tasks: selectedTasks,
-      });
+    invoiceRef.add({
+      tasks: selectedTasks,
+    });
   };
 
   return (
@@ -143,10 +139,9 @@ const TaskList = ({ uid, firestore, tasks, header, hasUtility, canInvoice }) => 
 };
 
 TaskList.propTypes = {
-  uid: PropTypes.string,
-  firestore: PropTypes.shape({
-    collection: PropTypes.func,
-  }),
+  firestore: PropTypes.object,
+  taskRef: PropTypes.object,
+  invoiceRef: PropTypes.object,
   tasks: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string,

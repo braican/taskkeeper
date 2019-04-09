@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { firestoreConnect } from 'react-redux-firebase';
 
 import CompleteIcon from '../../svg/complete';
 import EditIcon from '../../svg/edit';
@@ -11,29 +9,19 @@ import BackIcon from '../../svg/back';
 
 import './TaskUtility.scss';
 
-const mapStateToProps = state => ({ uid: state.firebase.auth.uid });
+const mapStateToProps = state => ({ taskRef: state.refs.tasks });
 
-const TaskUtility = ({ uid, firestore, taskId, setIsEditing, style, active }) => {
+const TaskUtility = ({ taskRef, taskId, setIsEditing, style, active }) => {
   const [promptConfirmDelete, setPromptConfirmDelete] = useState(false);
 
   const completeTask = () => {
-    firestore
-      .collection('users')
-      .doc(uid)
-      .collection('tasks')
-      .doc(taskId)
-      .update({
-        status: 'completed',
-      });
+    taskRef.doc(taskId).update({
+      status: 'completed',
+    });
   };
 
   const deleteTask = () => {
-    firestore
-      .collection('users')
-      .doc(uid)
-      .collection('tasks')
-      .doc(taskId)
-      .delete();
+    taskRef.doc(taskId).delete();
   };
 
   useEffect(() => {
@@ -78,17 +66,11 @@ const TaskUtility = ({ uid, firestore, taskId, setIsEditing, style, active }) =>
 };
 
 TaskUtility.propTypes = {
-  uid: PropTypes.string,
-  firestore: PropTypes.shape({
-    collection: PropTypes.func,
-  }),
+  taskRef: PropTypes.object,
   taskId: PropTypes.string,
   setIsEditing: PropTypes.func,
   active: PropTypes.bool,
   style: PropTypes.object,
 };
 
-export default compose(
-  firestoreConnect(),
-  connect(mapStateToProps),
-)(TaskUtility);
+export default connect(mapStateToProps)(TaskUtility);

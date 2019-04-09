@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { firestoreConnect } from 'react-redux-firebase';
 
 import './ClientForm.scss';
 
-const mapStateToProps = state => ({ uid: state.firebase.auth.uid });
+const mapStateToProps = state => ({ clientRef: state.refs.clients });
 
-const ClientForm = ({ uid, firestore }) => {
+const ClientForm = ({ clientRef }) => {
   const [clientName, updateClientName] = useState('');
   const [clientRate, updateClientRate] = useState('');
   const [clientNameMessage, updateClientNameMessage] = useState('');
@@ -41,11 +39,7 @@ const ClientForm = ({ uid, firestore }) => {
       rate: clientRate,
     };
 
-    firestore
-      .collection('users')
-      .doc(uid)
-      .collection('clients')
-      .add(clientData);
+    clientRef.add(clientData);
 
     updateClientName('');
     updateClientRate('');
@@ -64,13 +58,7 @@ const ClientForm = ({ uid, firestore }) => {
 };
 
 ClientForm.propTypes = {
-  uid: PropTypes.string,
-  firestore: PropTypes.shape({
-    collection: PropTypes.func,
-  }),
+  clientRef: PropTypes.object,
 };
 
-export default compose(
-  firestoreConnect(),
-  connect(mapStateToProps),
-)(ClientForm);
+export default connect(mapStateToProps)(ClientForm);
