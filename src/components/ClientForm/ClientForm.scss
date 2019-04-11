@@ -2,16 +2,87 @@
 
 .ClientForm {
   padding: 1em;
+  position: absolute;
+  background-color: $c--primary-blue;
+  color: $c--white;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transform: translate3d(-100%, 0, 0);
+  transition: all $transition;
+  z-index: 2;
+
+  &.active {
+    transform: translate3d(0, 0, 0);
+  }
+
+  .form-el {
+    margin-bottom: 10px;
+  }
+
+  label {
+    font-size: $fs--xs;
+  }
 
   input[type='text'],
   input[type='number'] {
     display: block;
     width: 100%;
-    margin-bottom: $spacing--sm;
+    background-color: transparent;
+    color: $c--white;
   }
 
   .add {
     width: 100%;
     display: block;
+  }
+
+  .form-actions {
+    margin-top: 2rem;
+
+    .action-primary {
+      margin-bottom: $spacing--sm;
+    }
+  }
+}
+
+.add-new-client {
+  @include uppercase;
+  display: block;
+  width: 100%;
+  padding: 2rem 1rem;
+  text-align: left;
+  transition: all $transition;
+  position: relative;
+
+  &:hover {
+    background-color: $c--gray-d;
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  .action-word {
+    vertical-align: middle;
+    margin-right: 0.5em;
+  }
+
+  svg {
+    display: inline-block;
+    vertical-align: middle;
+    transition: all $transition;
+    transform: translate3d(0, 0, 0);
+    width: 14px;
+    height: 14px;
+    fill: #41acfa;
+    opacity: 0;
+    stroke: $c--light-blue;
+  }
+
+  &:hover svg {
+    opacity: 1;
+    transform: translate3d(6px, 0, 0);
   }
 }

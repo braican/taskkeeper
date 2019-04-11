@@ -17,14 +17,13 @@
 
   &.header {
     @include uppercase;
-    border-bottom: 1px solid $c--gray-a;
+    border-bottom: 1px solid $c--lighter-blue;
   }
 
   .wrapper {
     display: flex;
     width: 100%;
     text-align: left;
-    height: $buttonSize;
     align-items: center;
   }
 
@@ -82,7 +81,7 @@
       padding: 6px;
       border-radius: 50%;
       display: block;
-      transition: all 0.2s;
+      transition: all $transition;
       background-color: transparent;
     }
 

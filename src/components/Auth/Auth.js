@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
@@ -35,12 +35,14 @@ const Auth = ({ auth, firebase, firestore, addClientRef, addTaskRef, addInvoiceR
     );
   }
 
-  if (firestore.collection && auth.uid) {
-    const userRef = firestore.collection('users').doc(auth.uid);
-    addClientRef(userRef.collection('clients'));
-    addTaskRef(userRef.collection('tasks'));
-    addInvoiceRef(userRef.collection('invoices'));
-  }
+  useEffect(() => {
+    if (firestore.collection && auth.uid) {
+      const userRef = firestore.collection('users').doc(auth.uid);
+      addClientRef(userRef.collection('clients'));
+      addTaskRef(userRef.collection('tasks'));
+      addInvoiceRef(userRef.collection('invoices'));
+    }
+  }, []);
 
   return (
     <div className="Auth">

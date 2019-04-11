@@ -2,15 +2,19 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
+import Plus from '../../svg/plus';
+
 import './ClientForm.scss';
 
 const mapStateToProps = state => ({ clientRef: state.refs.clients });
 
 const ClientForm = ({ clientRef }) => {
-  const [clientName, updateClientName] = useState('');
-  const [clientRate, updateClientRate] = useState('');
-  const [clientNameMessage, updateClientNameMessage] = useState('');
-  const [clientRateMessage, updateClientRateMessage] = useState('');
+  const [clientName, setClientName] = useState('');
+  const [clientRate, setClientRate] = useState('');
+  const [clientSymbol, setClientSymbol] = useState('');
+  const [clientNameMessage, setClientNameMessage] = useState('');
+  const [clientRateMessage, setClientRateMessage] = useState('');
+  const [clientFormVisible, setClientFormVisibility] = useState(false);
 
   const handleSubmit = event => {
     event.preventDefault();
@@ -18,16 +22,16 @@ const ClientForm = ({ clientRef }) => {
 
     if (!clientName) {
       invalid = true;
-      updateClientNameMessage('Please enter a name for this client.');
+      setClientNameMessage('Please enter a name for this client.');
     } else {
-      updateClientNameMessage('');
+      setClientNameMessage('');
     }
 
     if (!clientRate) {
       invalid = true;
-      updateClientRateMessage('Please enter an hourly rate for this client.');
+      setClientRateMessage('Please enter an hourly rate for this client.');
     } else {
-      updateClientRateMessage('');
+      setClientRateMessage('');
     }
 
     if (invalid) {
@@ -41,19 +45,70 @@ const ClientForm = ({ clientRef }) => {
 
     clientRef.add(clientData);
 
-    updateClientName('');
-    updateClientRate('');
+    setClientName('');
+    setClientRate('');
   };
 
   return (
-    <form onSubmit={handleSubmit} className="ClientForm">
-      <h4>Add new client</h4>
-      <input type="text" value={clientName} onChange={e => updateClientName(e.target.value)} />
-      {clientNameMessage && <p>{clientNameMessage}</p>}
-      <input type="number" value={clientRate} onChange={e => updateClientRate(e.target.value)} />
-      {clientRateMessage && <p>{clientRateMessage}</p>}
-      <button className="action-primary add">Add</button>
-    </form>
+    <>
+      <button className="add-new-client" onClick={() => setClientFormVisibility(true)}>
+        <span className="action-word">Add new client</span>
+        <Plus />
+      </button>
+
+      <form onSubmit={handleSubmit} className={`ClientForm${clientFormVisible ? ' active' : ''}`}>
+        <h4>Add new client</h4>
+
+        <div className="form-el">
+          <label htmlFor="client-name">Name</label>
+          <input
+            type="text"
+            id="client-name"
+            value={clientName}
+            onChange={e => setClientName(e.target.value)}
+          />
+          {clientNameMessage && <p>{clientNameMessage}</p>}
+        </div>
+
+        <div className="form-el">
+          <label htmlFor="client-rate">Hourly Rate</label>
+          <input
+            type="number"
+            id="client-rate"
+            value={clientRate}
+            onChange={e => setClientRate(e.target.value)}
+          />
+          {clientRateMessage && <p>{clientRateMessage}</p>}
+        </div>
+
+        <div className="form-el">
+          <label
+            htmlFor="client-symbol"
+            title="Add a unique identifying symbol for this client to be used in invoices.">
+            Symbol
+          </label>
+          <input
+            type="text"
+            id="client-symbol"
+            value={clientSymbol}
+            maxLength="3"
+            onChange={e => setClientSymbol(e.target.value)}
+          />
+        </div>
+
+        <div className="form-actions">
+          <button className="action-primary action--white add">Add</button>
+          <button
+            className="action-secondary action--white"
+            onClick={e => {
+              e.preventDefault();
+              setClientFormVisibility(false);
+            }}>
+            Cancel
+          </button>
+        </div>
+      </form>
+    </>
   );
 };
 

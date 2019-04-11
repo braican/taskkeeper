@@ -1,12 +1,10 @@
 @import '../../styles/abstracts/abstracts';
 
 .TaskList {
-  padding: $spacing--md;
-  background-color: $c--gray-e;
   margin-bottom: $spacing--lg;
 
   .footer {
-    border-top: 2px solid $c--gray-2;
+    border-top: 2px solid $c--lighter-blue;
     display: flex;
     justify-content: flex-end;
 
@@ -51,7 +49,7 @@
       opacity: 1;
       height: auto;
       z-index: 2;
-      transition: opacity 0.4s;
+      transition: opacity $transition;
     }
   }
 }

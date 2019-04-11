@@ -5,8 +5,9 @@
 $c--gray-5: #58595b;
 $c--gray-2: #222222;
 $c--gray-a: #a9a9a9;
+$c--gray-d: #dddddd;
 $c--gray-e: #f6f7f8;
-$c--gray-fe: #fefefe;
+$c--gray-fe: #fafafb;
 $c--black: #1a1a1a;
 $c--white: #ffffff;
 
@@ -14,6 +15,7 @@ $c--white: #ffffff;
 $c--dark-blue: #141928;
 $c--primary-blue: #283250;
 $c--light-blue: #73c2fb;
+$c--lighter-blue: #e8f5fe;
 $c--bg-blue: #f9fafd;
 $c--green: #4bb543;
 $c--red: #ff3a38;
@@ -135,7 +137,7 @@ $icon-size: 15px;
 // -------
 
 $spacing--xs: 0.25em;
-$spacing--sm: 0.5em;
+$spacing--sm: 0.5rem;
 $spacing--md: 15px;
 $spacing--lg: 30px;
 $spacing--xl: 45px;
@@ -178,6 +180,7 @@ $timing--ease-out-quint: cubic-bezier(0.23, 1, 0.32, 1);
 // --------
 
 $transition: 0.33s $timing;
+$quick-transition: 0.2s linear;
 
 // Borders
 // --------

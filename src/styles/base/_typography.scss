@@ -14,7 +14,6 @@ body {
 
 a {
   @include link();
-  text-decoration: none;
   transition: $transition;
 }
 
@@ -47,7 +46,17 @@ button {
   &:focus,
   &:hover {
     outline: 0;
-    background-color: darken($c--light-blue, 10%);
+    background-color: $c--primary-blue;
+  }
+
+  &.action--white {
+    background-color: $c--white;
+    color: $c--primary-blue;
+
+    &:focus,
+    &:hover {
+      background-color: $c--light-blue;
+    }
   }
 }
 .action-secondary {
@@ -58,7 +67,15 @@ button {
 
   &:focus,
   &:hover {
-    color: darken($c--light-blue, 10%);
+    color: $c--primary-blue;
+  }
+
+  &.action--white {
+    color: $c--white;
+
+    &:hover {
+      color: $c--light-blue;
+    }
   }
 
   &.action-has-icon {
@@ -67,7 +84,7 @@ button {
 
     .action-word {
       display: inline-block;
-      transition: all $transition;
+      transition: transform $transition;
     }
 
     svg {
@@ -77,7 +94,7 @@ button {
       right: 0;
       top: 50%;
       width: 18px;
-      fill: darken($c--light-blue, 10%);
+      fill: $c--primary-blue;
       opacity: 0;
     }
 
