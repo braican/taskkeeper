@@ -13,6 +13,7 @@ import ClientContext from '../../contexts/ClientContext';
 
 import TaskRowHeader from '../TaskRow/TaskRowHeader';
 import TaskRow from '../TaskRow/TaskRow';
+import InvoiceForm from '../InvoiceForm';
 
 import './TaskList.scss';
 
@@ -108,17 +109,7 @@ const TaskList = ({ firestore, taskRef, invoiceRef, tasks, header, hasUtility, c
         {tasks.length > 0 && canInvoice && (
           <>
             <div className={`invoice-data${creatingInvoice ? ' active' : ''}`}>
-              <label htmlFor="invoice-issue-date">Issue Date</label>
-              <input type="date" id="invoice-issue-date" />
-
-              <label htmlFor="invoice-due-date">Due Date</label>
-              <input type="date" id="invoice-due-date" />
-
-              <label htmlFor="invoice-id">Invoice ID</label>
-              <input type="text" id="invoice-id" />
-
-              <label htmlFor="invoice-project-description">Project Description</label>
-              <textarea id="invoice-project-description" cols="30" rows="2" />
+              <InvoiceForm />
             </div>
 
             <div className="actions">
