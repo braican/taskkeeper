@@ -2,6 +2,10 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
+import formatPrice from '../../util/formatPrice';
+
+import styles from './Invoice.module.scss';
+
 const mapStateToProps = state => ({ taskRef: state.refs.tasks });
 
 const Invoice = ({ invoice, taskRef }) => {
@@ -20,19 +24,22 @@ const Invoice = ({ invoice, taskRef }) => {
   }, []);
 
   return (
-    <div>
+    <div className={styles.Invoice}>
       <header>{invoice.id}</header>
 
       {invoiceTasks && (
-        <ul>
-          {invoiceTasks.map(task => (
-            <li key={task.id}>
-              <span>{task.description}</span>
-              <span>{task.hours}</span>
-              <span>{task.price}</span>
-            </li>
-          ))}
-        </ul>
+        <div>
+          <h6>Tasks</h6>
+          <ul>
+            {invoiceTasks.map(({ id, description, hours, price }) => (
+              <li key={id}>
+                <span className="description">{description}</span>
+                <span className="hours">{hours || '-'}</span>
+                <span className="price">{formatPrice(price)}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
       )}
     </div>
   );

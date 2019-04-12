@@ -54,27 +54,3 @@
   margin-top: $spacing--md;
   text-align: right;
 }
-.actionCancel {
-  margin-right: 1em;
-  opacity: 0;
-  transition: opacity $transition;
-
-  &_active {
-    opacity: 1;
-  }
-}
-
-.invoiceData {
-  position: relative;
-  height: 0;
-  opacity: 0;
-  z-index: -1;
-  margin-top: $spacing--md;
-
-  &_active {
-    opacity: 1;
-    height: auto;
-    z-index: 2;
-    transition: opacity $transition;
-  }
-}

@@ -1,29 +1,19 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { compose } from 'redux';
-import { connect } from 'react-redux';
-import { firestoreConnect } from 'react-redux-firebase';
-
-import computeTotal from '../../util/computeTotal';
-import computeHours from '../../util/computeHours';
-import formatPrice from '../../util/formatPrice';
 
 import TaskListContext from '../../contexts/TaskListContext';
-import ClientContext from '../../contexts/ClientContext';
 
 import TaskRowHeader from '../TaskRow/TaskRowHeader';
 import TaskRow from '../TaskRow/TaskRow';
 import InvoiceForm from '../InvoiceForm';
 
+import computeTotal from '../../util/computeTotal';
+import computeHours from '../../util/computeHours';
+import formatPrice from '../../util/formatPrice';
+
 import styles from './TaskList.module.scss';
 
-const mapStateToProps = state => ({
-  uid: state.firebase.auth.uid,
-  taskRef: state.refs.tasks,
-  invoiceRef: state.refs.invoices,
-});
-
-const TaskList = ({ firestore, taskRef, invoiceRef, tasks, header, hasUtility, canInvoice }) => {
+const TaskList = ({ tasks, header, hasUtility, canInvoice }) => {
   if (!tasks) {
     return null;
   }
@@ -31,14 +21,13 @@ const TaskList = ({ firestore, taskRef, invoiceRef, tasks, header, hasUtility, c
   const [creatingInvoice, setCreatingInvoice] = useState(false);
   const [selectedTasks, setSelectedTasks] = useState([]);
 
-  const { clientId } = useContext(ClientContext);
-
   const balance = computeTotal(tasks);
   const hours = computeHours(tasks);
 
   const selectTask = (selected, task) => {
     const newSelectedTasks = [...selectedTasks];
-    const index = newSelectedTasks.indexOf(task);
+    const index = newSelectedTasks.map(task => task.id).indexOf(task.id);
+
     if (selected) {
       newSelectedTasks.push(task);
       setSelectedTasks(newSelectedTasks);
@@ -52,31 +41,17 @@ const TaskList = ({ firestore, taskRef, invoiceRef, tasks, header, hasUtility, c
     setSelectedTasks(tasks);
   };
 
-  const createInvoice = () => {
-    if (selectedTasks.length === 0) {
-      console.error('You need to select at least one task to invoice.');
-      return;
-    }
-
-    const batch = firestore.batch();
-    selectedTasks.forEach(task => {
-      const singleTaskRef = taskRef.doc(task);
-      batch.update(singleTaskRef, { status: 'invoiced' });
-    });
-
-    batch.commit();
-
-    invoiceRef.add({
-      client: clientId,
-      status: 'active',
-      tasks: selectedTasks,
-      timestamp: +new Date(),
-    });
-  };
-
   return (
     <TaskListContext.Provider
-      value={{ tasks, creatingInvoice, selectTask, selectAllTasks, selectedTasks }}>
+      value={{
+        tasks,
+        creatingInvoice,
+        setCreatingInvoice,
+        selectTask,
+        selectAllTasks,
+        selectedTasks,
+        setSelectedTasks,
+      }}>
       <section className={styles.TaskList}>
         <header className={styles.header}>
           <h4>{header}</h4>
@@ -106,44 +81,23 @@ const TaskList = ({ firestore, taskRef, invoiceRef, tasks, header, hasUtility, c
           )}
         </ul>
 
-        {tasks.length > 0 && canInvoice && (
-          <>
-            <div
-              className={`${styles.invoiceData} ${
-                creatingInvoice ? styles.invoiceData_active : ''
-              }`}>
-              <InvoiceForm />
-            </div>
-
+        {tasks.length > 0 &&
+          canInvoice &&
+          (creatingInvoice ? (
+            <InvoiceForm selectedTasks={selectedTasks} />
+          ) : (
             <div className={styles.actions}>
-              <button
-                className={`${styles.actionCancel} ${
-                  creatingInvoice ? styles.actionCancel_active : ''
-                }`}
-                onClick={() => setCreatingInvoice(false)}>
-                Cancel
+              <button className="action-primary" onClick={() => setCreatingInvoice(true)}>
+                Start Invoice
               </button>
-              {creatingInvoice ? (
-                <button className="action-primary" onClick={createInvoice}>
-                  Create Invoice
-                </button>
-              ) : (
-                <button className="action-primary" onClick={() => setCreatingInvoice(true)}>
-                  Start Invoice
-                </button>
-              )}
             </div>
-          </>
-        )}
+          ))}
       </section>
     </TaskListContext.Provider>
   );
 };
 
 TaskList.propTypes = {
-  firestore: PropTypes.object,
-  taskRef: PropTypes.object,
-  invoiceRef: PropTypes.object,
   tasks: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string,
@@ -158,7 +112,4 @@ TaskList.propTypes = {
   canInvoice: PropTypes.bool,
 };
 
-export default compose(
-  firestoreConnect(),
-  connect(mapStateToProps),
-)(TaskList);
+export default TaskList;

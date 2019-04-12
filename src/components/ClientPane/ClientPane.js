@@ -9,7 +9,8 @@ import ClientContext from '../../contexts/ClientContext';
 import ClientHeader from '../ClientHeader';
 import TaskForm from '../TaskForm';
 import TaskList from '../TaskList';
-import InvoiceList from '../InvoiceList';
+import ActiveInvoices from '../ActiveInvoices';
+import InvoiceArchive from '../InvoiceArchive';
 
 const mapStateToProps = (state, props) => {
   if (!state.firestore.data.userClients) {
@@ -110,8 +111,8 @@ const ClientPane = ({
         <>
           <TaskList tasks={estimatedTasks} header="Estimated Tasks" hasUtility />
           <TaskList tasks={completedTasks} header="Completed Tasks" canInvoice />
-          <InvoiceList invoices={activeInvoices} header="Active Invoices" />
-          <InvoiceList invoices={fulfilledInvoices} header="Fulfilled Invoices" />
+          <ActiveInvoices invoices={activeInvoices} />
+          <InvoiceArchive invoices={fulfilledInvoices} />
         </>
       )}
     </ClientContext.Provider>

@@ -36,17 +36,23 @@ button {
 }
 
 .action-primary {
-  transition: background-color $transition;
   background-color: $c--light-blue;
   font-weight: $fw--bold;
   font-size: $fs--input;
   padding: $spacing--sm 1em;
   color: $c--white;
+  transition: all $transition;
 
   &:focus,
   &:hover {
     outline: 0;
     background-color: $c--primary-blue;
+  }
+
+  &[disabled] {
+    pointer-events: none;
+    background-color: $c--gray-a;
+    opacity: 0.5;
   }
 
   &.action--white {

@@ -3,21 +3,23 @@ import PropTypes from 'prop-types';
 
 import Invoice from '../Invoice';
 
-const InvoiceList = ({ invoices, header }) => {
+import styles from './ActiveInvoices.module.scss';
+
+const ActiveInvoices = ({ invoices }) => {
   return (
     <section>
       <header>
-        <h4>{header}</h4>
+        <h4>Active Invoices</h4>
       </header>
 
-      <div>
+      <div className={styles.ActiveInvoices}>
         {invoices && invoices.map(invoice => <Invoice key={invoice.id} invoice={invoice} />)}
       </div>
     </section>
   );
 };
 
-InvoiceList.propTypes = {
+ActiveInvoices.propTypes = {
   invoices: PropTypes.arrayOf(
     PropTypes.shape({
       client: PropTypes.string,
@@ -27,7 +29,6 @@ InvoiceList.propTypes = {
       timestamp: PropTypes.number,
     }),
   ),
-  header: PropTypes.string,
 };
 
-export default InvoiceList;
+export default ActiveInvoices;

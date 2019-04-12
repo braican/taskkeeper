@@ -68,11 +68,13 @@ const TaskRow = ({ taskRef, taskId, description, hours, price, hasUtility, canIn
   const onSelect = () => {
     const newSelectedState = !isSelected;
     setSelected(newSelectedState);
-    selectTask(newSelectedState, taskId);
+    selectTask(newSelectedState, { id: taskId, price, hours });
   };
 
   useEffect(() => {
-    setSelected(selectedTasks.includes(taskId));
+    if (selectedTasks) {
+      setSelected(selectedTasks.map(task => task.id).includes(taskId));
+    }
 
     document.addEventListener('mousedown', handleOffClick);
 
