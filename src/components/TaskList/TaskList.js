@@ -1,23 +1,19 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { compose } from 'redux';
-import { connect } from 'react-redux';
-import { firestoreConnect } from 'react-redux-firebase';
-
-import computeTotal from '../../util/computeTotal';
-import computeHours from '../../util/computeHours';
-import formatPrice from '../../util/formatPrice';
 
 import TaskListContext from '../../contexts/TaskListContext';
 
 import TaskRowHeader from '../TaskRow/TaskRowHeader';
 import TaskRow from '../TaskRow/TaskRow';
+import InvoiceForm from '../InvoiceForm';
 
-import './TaskList.scss';
+import computeTotal from '../../util/computeTotal';
+import computeHours from '../../util/computeHours';
+import formatPrice from '../../util/formatPrice';
 
-const mapStateToProps = state => ({ uid: state.firebase.auth.uid });
+import styles from './TaskList.module.scss';
 
-const TaskList = ({ uid, firestore, tasks, header, hasUtility, canInvoice }) => {
+const TaskList = ({ tasks, header, hasUtility, canInvoice }) => {
   if (!tasks) {
     return null;
   }
@@ -30,7 +26,8 @@ const TaskList = ({ uid, firestore, tasks, header, hasUtility, canInvoice }) => 
 
   const selectTask = (selected, task) => {
     const newSelectedTasks = [...selectedTasks];
-    const index = newSelectedTasks.indexOf(task);
+    const index = newSelectedTasks.map(task => task.id).indexOf(task.id);
+
     if (selected) {
       newSelectedTasks.push(task);
       setSelectedTasks(newSelectedTasks);
@@ -44,38 +41,21 @@ const TaskList = ({ uid, firestore, tasks, header, hasUtility, canInvoice }) => 
     setSelectedTasks(tasks);
   };
 
-  const createInvoice = () => {
-    if (selectedTasks.length === 0) {
-      console.error('You need to select at least one task to invoice.');
-      return;
-    }
-
-    const batch = firestore.batch();
-    selectedTasks.forEach(task => {
-      const taskRef = firestore
-        .collection('users')
-        .doc(uid)
-        .collection('tasks')
-        .doc(task);
-      batch.update(taskRef, { status: 'invoiced' });
-    });
-
-    batch.commit();
-
-    firestore
-      .collection('users')
-      .doc(uid)
-      .collection('invoices')
-      .add({
-        tasks: selectedTasks,
-      });
-  };
-
   return (
     <TaskListContext.Provider
-      value={{ tasks, creatingInvoice, selectTask, selectAllTasks, selectedTasks }}>
-      <section className="TaskList">
-        <header>
+      value={{
+        tasks,
+        creatingInvoice,
+        setCreatingInvoice,
+        selectTask,
+        selectAllTasks,
+        selectedTasks,
+        setSelectedTasks,
+        hasUtility,
+        canInvoice,
+      }}>
+      <section className="app-section">
+        <header className={styles.header}>
           <h4>{header}</h4>
         </header>
         <ul>
@@ -91,62 +71,33 @@ const TaskList = ({ uid, firestore, tasks, header, hasUtility, canInvoice }) => 
                   description={description}
                   hours={hours || '-'}
                   price={price}
-                  hasUtility={hasUtility}
-                  canInvoice={canInvoice}
                 />
               ))}
-              <li className="footer">
-                <span className="hours">{hours}</span>
-                <span className="price">{formatPrice(balance)}</span>
+              <li className={`${styles.footer} ${creatingInvoice ? styles.footerCanInvoice : ''}`}>
+                <span className={styles.footerHours}>{hours}</span>
+                <span className={styles.footerPrice}>{formatPrice(balance)}</span>
               </li>
             </>
           )}
         </ul>
 
-        {tasks.length > 0 && canInvoice && (
-          <>
-            <div className={`invoice-data${creatingInvoice ? ' active' : ''}`}>
-              <label htmlFor="invoice-issue-date">Issue Date</label>
-              <input type="date" id="invoice-issue-date" />
-
-              <label htmlFor="invoice-due-date">Due Date</label>
-              <input type="date" id="invoice-due-date" />
-
-              <label htmlFor="invoice-id">Invoice ID</label>
-              <input type="text" id="invoice-id" />
-
-              <label htmlFor="invoice-project-description">Project Description</label>
-              <textarea id="invoice-project-description" cols="30" rows="2" />
-            </div>
-
-            <div className="actions">
-              <button
-                className={`action-cancel${creatingInvoice ? ' active' : ''}`}
-                onClick={() => setCreatingInvoice(false)}>
-                Cancel
+        {tasks.length > 0 &&
+          canInvoice &&
+          (creatingInvoice ? (
+            <InvoiceForm selectedTasks={selectedTasks} />
+          ) : (
+            <div className={styles.actions}>
+              <button className="action-primary" onClick={() => setCreatingInvoice(true)}>
+                Start Invoice
               </button>
-              {creatingInvoice ? (
-                <button className="action-primary" onClick={createInvoice}>
-                  Create Invoice
-                </button>
-              ) : (
-                <button className="action-primary" onClick={() => setCreatingInvoice(true)}>
-                  Start Invoice
-                </button>
-              )}
             </div>
-          </>
-        )}
+          ))}
       </section>
     </TaskListContext.Provider>
   );
 };
 
 TaskList.propTypes = {
-  uid: PropTypes.string,
-  firestore: PropTypes.shape({
-    collection: PropTypes.func,
-  }),
   tasks: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string,
@@ -161,7 +112,4 @@ TaskList.propTypes = {
   canInvoice: PropTypes.bool,
 };
 
-export default compose(
-  firestoreConnect(),
-  connect(mapStateToProps),
-)(TaskList);
+export default TaskList;

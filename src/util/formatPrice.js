@@ -19,7 +19,12 @@ export default function formatPrice(price) {
 
   return (
     <span>
-      ${dollars}.<sup className="cents">{cents}</sup>
+      ${dollars}
+      {cents !== '00' && (
+        <>
+          .<sup className="cents">{cents}</sup>
+        </>
+      )}
     </span>
   );
 }

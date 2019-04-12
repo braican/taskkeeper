@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { firebaseConnect, isLoaded, isEmpty } from 'react-redux-firebase';
+import { firebaseConnect, firestoreConnect, isLoaded, isEmpty } from 'react-redux-firebase';
 
 import User from '../User';
 
@@ -11,7 +11,13 @@ import './Auth.scss';
 
 const mapStateToProps = state => ({ auth: state.firebase.auth });
 
-const Auth = ({ auth, firebase }) => {
+const mapDispatchToProps = dispatch => ({
+  addClientRef: ref => dispatch({ type: 'ADD_CLIENT_REF', ref }),
+  addTaskRef: ref => dispatch({ type: 'ADD_TASK_REF', ref }),
+  addInvoiceRef: ref => dispatch({ type: 'ADD_INVOICE_REF', ref }),
+});
+
+const Auth = ({ auth, firebase, firestore, addClientRef, addTaskRef, addInvoiceRef }) => {
   const authSettings = {
     provider: 'google',
     type: 'popup',
@@ -28,6 +34,15 @@ const Auth = ({ auth, firebase }) => {
       </div>
     );
   }
+
+  useEffect(() => {
+    if (firestore.collection && auth.uid) {
+      const userRef = firestore.collection('users').doc(auth.uid);
+      addClientRef(userRef.collection('clients'));
+      addTaskRef(userRef.collection('tasks'));
+      addInvoiceRef(userRef.collection('invoices'));
+    }
+  }, []);
 
   return (
     <div className="Auth">
@@ -46,13 +61,22 @@ const Auth = ({ auth, firebase }) => {
 
 Auth.propTypes = {
   auth: PropTypes.shape({
+    uid: PropTypes.string,
     displayName: PropTypes.string,
     photoURL: PropTypes.string,
   }),
   firebase: PropTypes.object,
+  firestore: PropTypes.object,
+  addClientRef: PropTypes.func,
+  addTaskRef: PropTypes.func,
+  addInvoiceRef: PropTypes.func,
 };
 
 export default compose(
   firebaseConnect(),
-  connect(mapStateToProps),
+  firestoreConnect(),
+  connect(
+    mapStateToProps,
+    mapDispatchToProps,
+  ),
 )(Auth);

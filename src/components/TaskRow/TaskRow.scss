@@ -17,14 +17,13 @@
 
   &.header {
     @include uppercase;
-    border-bottom: 1px solid $c--gray-a;
+    border-bottom: 1px solid $c--gray-fe;
   }
 
   .wrapper {
     display: flex;
     width: 100%;
     text-align: left;
-    height: $buttonSize;
     align-items: center;
   }
 
@@ -41,11 +40,33 @@
   }
 
   .cell {
-    padding: $spacing--xs;
+    padding: 0.8rem $spacing--sm;
 
+    textarea,
     input {
       width: 100%;
+      display: block;
+      border-color: $c--light-blue;
     }
+  }
+
+  &.compact {
+    border-top: 1px solid $c--gray-blue;
+    .cell {
+      padding: $spacing--xs 0;
+    }
+
+    .hours {
+      flex-basis: 40px;
+    }
+    .price {
+      flex-basis: 60px;
+    }
+  }
+
+  &.editing .cell {
+    padding-top: calc(#{$spacing--sm} - 2px);
+    padding-bottom: calc(#{$spacing--sm} - 2px);
   }
 
   .description {
@@ -72,8 +93,9 @@
     @include utility-button;
     background-color: transparent;
     position: absolute;
-    top: 0;
+    top: 50%;
     right: 0;
+    margin-top: -22px;
     opacity: 0;
     transition: all $transition;
     padding: 0.3rem;
@@ -82,7 +104,7 @@
       padding: 6px;
       border-radius: 50%;
       display: block;
-      transition: all 0.2s;
+      transition: all $transition;
       background-color: transparent;
     }
 

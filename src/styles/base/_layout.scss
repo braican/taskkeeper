@@ -5,7 +5,7 @@ $sidebar-width: 240px;
   top: 0;
   left: 0;
   width: $sidebar-width;
-  background-color: $c--gray-e;
+  background-color: $c--gray-fe;
   height: 100vh;
   overflow: auto;
   transition: all $transition;
@@ -25,5 +25,33 @@ $sidebar-width: 240px;
 
   @include mq($bp--tablet-xl) {
     margin-left: $sidebar-width;
+  }
+}
+
+.container {
+  width: 100%;
+  max-width: 800px;
+  margin: auto;
+}
+
+.app-section {
+  position: relative;
+  padding-top: 2rem;
+  margin-top: $spacing--lg;
+
+  &:before {
+    content: '';
+    display: block;
+    position: absolute;
+    left: 0;
+    // left: 50%;
+    // margin-left: -0.5rem;
+    top: 0;
+    width: 1.5rem;
+    height: 1.5rem;
+    background-image: url(data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2019.89%2019.89%22%3E%3Cpath%20fill%3D%22none%22%20stroke%3D%22%2373c2fb%22%20stroke-linejoin%3D%22bevel%22%20stroke-width%3D%223%22%20d%3D%22M19.18.71L.71%2019.18%22%2F%3E%3C%2Fsvg%3E);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
   }
 }

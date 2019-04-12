@@ -53,8 +53,10 @@ const Taskkeeper = ({ auth, sidebarVisible, toggleSidebar }) => {
               <ClientList />
             </aside>
             <div className="main" ref={main}>
-              <Route path="/" exact component={Dashboard} />
-              <Route path="/client/:clientId" component={ClientPane} />
+              <div className="container">
+                <Route path="/" exact component={Dashboard} />
+                <Route path="/client/:clientId" component={ClientPane} />
+              </div>
             </div>
           </div>
         ) : (

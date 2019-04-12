@@ -1,0 +1,88 @@
+@import '../../styles/abstracts/abstracts';
+
+.ClientForm {
+  padding: 1em;
+  position: absolute;
+  background-color: $c--primary-blue;
+  color: $c--white;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transform: translate3d(-100%, 0, 0);
+  transition: all $transition;
+  z-index: 2;
+
+  &_active {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.addNewForm {
+  margin-top: $spacing--md;
+}
+
+.formEl {
+  margin-bottom: 10px;
+
+  input[type='text'],
+  input[type='number'],
+  textarea {
+    display: block;
+    width: 100%;
+    background-color: transparent;
+    color: $c--white;
+    resize: none;
+  }
+}
+
+.formActions {
+  margin-top: 2rem;
+}
+
+.addClientBtn {
+  width: 100%;
+  display: block;
+  margin-bottom: $spacing--sm;
+}
+
+.addNewClient {
+  @include uppercase;
+  display: block;
+  width: 100%;
+  padding: 2rem 1rem;
+  text-align: left;
+  transition: all $transition;
+  position: relative;
+
+  &:hover {
+    background-color: $c--gray-d;
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  span {
+    vertical-align: middle;
+    margin-right: 0.5em;
+  }
+
+  svg {
+    display: inline-block;
+    vertical-align: middle;
+    transition: all $transition;
+    transform: translate3d(0, 0, 0);
+    width: 16px;
+    height: 16px;
+    fill: #41acfa;
+    opacity: 0;
+    stroke: $c--light-blue;
+    margin-top: -3px;
+  }
+
+  &:hover svg {
+    opacity: 1;
+    transform: translate3d(6px, 0, 0);
+  }
+}

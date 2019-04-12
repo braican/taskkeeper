@@ -9,6 +9,8 @@ import ClientContext from '../../contexts/ClientContext';
 import ClientHeader from '../ClientHeader';
 import TaskForm from '../TaskForm';
 import TaskList from '../TaskList';
+import ActiveInvoices from '../ActiveInvoices';
+import InvoiceArchive from '../InvoiceArchive';
 
 const mapStateToProps = (state, props) => {
   if (!state.firestore.data.userClients) {
@@ -23,6 +25,8 @@ const mapStateToProps = (state, props) => {
     client: state.firestore.data.userClients[clientId],
     estimatedTasks: state.firestore.ordered[`${clientId}_estimated_tasks`],
     completedTasks: state.firestore.ordered[`${clientId}_completed_tasks`],
+    activeInvoices: state.firestore.ordered[`${clientId}_active_invoices`],
+    fulfilledInvoices: state.firestore.ordered[`${clientId}_fulfilled_invoices`],
   };
 };
 
@@ -56,24 +60,59 @@ const taskQuery = ({ uid, clientId }) => {
       ],
       storeAs: `${clientId}_completed_tasks`,
     },
+    {
+      collection: 'users',
+      doc: uid,
+      subcollections: [
+        {
+          collection: 'invoices',
+          where: [['client', '==', clientId], ['status', '==', 'active']],
+          orderBy: ['timestamp'],
+        },
+      ],
+      storeAs: `${clientId}_active_invoices`,
+    },
+    {
+      collection: 'users',
+      doc: uid,
+      subcollections: [
+        {
+          collection: 'invoices',
+          where: [['client', '==', clientId], ['status', '==', 'fulfilled']],
+          orderBy: ['timestamp'],
+        },
+      ],
+      storeAs: `${clientId}_fulfilled_invoices`,
+    },
   ];
 };
 
-const ClientPane = ({ match, client, estimatedTasks, completedTasks }) => {
+const ClientPane = ({
+  match,
+  client,
+  estimatedTasks,
+  completedTasks,
+  activeInvoices,
+  fulfilledInvoices,
+}) => {
   if (!client) {
     return null;
   }
 
+  const { clientId } = match.params;
+
   return (
-    <ClientContext.Provider value={{ ...client }}>
+    <ClientContext.Provider value={{ ...client, clientId }}>
       <ClientHeader />
-      <TaskForm clientId={match.params.clientId} />
+      <TaskForm />
       {estimatedTasks === undefined && completedTasks === undefined ? (
         <p>Loading...</p>
       ) : (
         <>
-          <TaskList tasks={estimatedTasks} header="Estimated Tasks" hasUtility />
-          <TaskList tasks={completedTasks} header="Completed Tasks" canInvoice />
+          <ActiveInvoices invoices={activeInvoices} />
+          <TaskList tasks={estimatedTasks} header="Estimated" hasUtility />
+          <TaskList tasks={completedTasks} header="Completed" canInvoice />
+          <InvoiceArchive invoices={fulfilledInvoices} />
         </>
       )}
     </ClientContext.Provider>
@@ -108,6 +147,8 @@ ClientPane.propTypes = {
       price: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     }),
   ),
+  activeInvoices: PropTypes.arrayOf(PropTypes.shape({})),
+  fulfilledInvoices: PropTypes.arrayOf(PropTypes.shape({})),
 };
 
 export default compose(

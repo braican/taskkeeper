@@ -51,7 +51,7 @@
   .confirm-delete-modal {
     opacity: 0;
     visibility: hidden;
-    transition: all 0.2s;
+    transition: all $quick-transition;
     position: absolute;
     top: 0;
     left: 0;
@@ -73,7 +73,7 @@
       display: inline-block;
       padding: 0.5em;
       opacity: 0;
-      transition: opacity 0.2s 0.2s;
+      transition: opacity $quick-transition 0.2s;
     }
 
     &.active span {

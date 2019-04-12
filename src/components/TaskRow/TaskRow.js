@@ -1,8 +1,6 @@
 import React, { useEffect, useState, useRef, useContext } from 'react';
 import PropTypes from 'prop-types';
-import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { firestoreConnect } from 'react-redux-firebase';
 
 import ClientContext from '../../contexts/ClientContext';
 import TaskListContext from '../../contexts/TaskListContext';
@@ -14,11 +12,13 @@ import TaskUtility from './TaskUtility';
 import CompleteIcon from '../../svg/complete';
 import './TaskRow.scss';
 
-const mapStateToProps = state => ({ uid: state.firebase.auth.uid });
+const mapStateToProps = state => ({ taskRef: state.refs.tasks });
 
-const TaskRow = ({ uid, firestore, taskId, description, hours, price, hasUtility, canInvoice }) => {
+const TaskRow = ({ taskRef, taskId, description, hours, price, compact }) => {
   const { rate } = useContext(ClientContext);
-  const { creatingInvoice, selectTask, selectedTasks } = useContext(TaskListContext);
+  const { canInvoice, hasUtility, creatingInvoice, selectTask, selectedTasks } = useContext(
+    TaskListContext,
+  );
 
   const [taskDescription, setDescription] = useState(description);
   const [taskHours, setHours] = useState(hours);
@@ -31,6 +31,20 @@ const TaskRow = ({ uid, firestore, taskId, description, hours, price, hasUtility
   const [utilMenuStyles, setUtilMenuStyles] = useState({ left: '0', top: '0' });
 
   const rowRef = useRef();
+
+  if (compact) {
+    return (
+      <li className="TaskRow row compact">
+        <TaskRowWrapper>
+          <RowData
+            description={{ get: taskDescription }}
+            hours={{ get: taskHours }}
+            price={{ get: taskPrice }}
+          />
+        </TaskRowWrapper>
+      </li>
+    );
+  }
 
   const handleOffClick = event => {
     if (rowRef.current.contains(event.target)) {
@@ -60,26 +74,23 @@ const TaskRow = ({ uid, firestore, taskId, description, hours, price, hasUtility
     setPrice(newPrice);
     setIsEditing(false);
     setUtilMenuActive(false);
-    firestore
-      .collection('users')
-      .doc(uid)
-      .collection('tasks')
-      .doc(taskId)
-      .update({
-        description: taskDescription,
-        hours: taskHours,
-        price: newPrice,
-      });
+    taskRef.doc(taskId).update({
+      description: taskDescription,
+      hours: taskHours,
+      price: newPrice,
+    });
   };
 
   const onSelect = () => {
     const newSelectedState = !isSelected;
     setSelected(newSelectedState);
-    selectTask(newSelectedState, taskId);
+    selectTask(newSelectedState, { id: taskId, price, hours });
   };
 
   useEffect(() => {
-    setSelected(selectedTasks.includes(taskId));
+    if (selectedTasks) {
+      setSelected(selectedTasks.map(task => task.id).includes(taskId));
+    }
 
     document.addEventListener('mousedown', handleOffClick);
 
@@ -137,19 +148,12 @@ const TaskRow = ({ uid, firestore, taskId, description, hours, price, hasUtility
 };
 
 TaskRow.propTypes = {
-  uid: PropTypes.string,
-  firestore: PropTypes.shape({
-    collection: PropTypes.func,
-  }),
+  taskRef: PropTypes.object,
   taskId: PropTypes.string,
   description: PropTypes.string,
   hours: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   price: PropTypes.oneOfType([PropTypes.number, PropTypes.string, PropTypes.element]),
-  hasUtility: PropTypes.bool,
-  canInvoice: PropTypes.bool,
+  compact: PropTypes.bool,
 };
 
-export default compose(
-  firestoreConnect(),
-  connect(mapStateToProps),
-)(TaskRow);
+export default connect(mapStateToProps)(TaskRow);

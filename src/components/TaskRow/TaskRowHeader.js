@@ -10,10 +10,10 @@ const TaskRowHeader = () => {
 
   const toggleSelectAll = () => {
     const newSelectAllStatus = !selectAll;
-    const taskIds = tasks.map(({ id }) => id);
+    const allTasksMapped = tasks.map(({ id, price }) => ({ id, price }));
     setSelectAll(newSelectAllStatus);
     if (newSelectAllStatus) {
-      selectAllTasks(taskIds);
+      selectAllTasks(allTasksMapped);
     } else if (selectedTasks.length === tasks.length) {
       selectAllTasks([]);
     }
