@@ -11,13 +11,15 @@
   border: 1px solid $c--gray-fe;
 }
 
-.header {
+.info {
   position: relative;
-  display: flex;
-  flex-wrap: wrap;
+
+  @include mq($bp--tablet) {
+    display: flex;
+  }
 
   .display-list & {
-    padding-right: 160px;
+    padding-right: 120px;
 
     @include mq($bp--tablet, 'max') {
       padding-right: 0;
@@ -25,6 +27,46 @@
     }
   }
 }
+
+.infoMain {
+  .display-list & {
+    padding-right: $spacing--lg;
+
+    @include mq($bp--desktop) {
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+    }
+  }
+
+  .display-grid & {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+  }
+}
+
+.display-grid {
+  position: relative;
+
+  .price {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+  }
+
+  .invoiceId {
+    width: 100%;
+  }
+}
+
+.infoDates {
+  @include mq($bp--desktop) {
+    min-width: 240px;
+  }
+}
+
 .metadata {
   margin-right: $spacing--lg;
   margin-bottom: $spacing--md;
@@ -38,16 +80,14 @@
   }
 }
 
+.price {
+  font-size: $fs--lg;
+  font-weight: $fw--bold;
+  line-height: 1;
+}
+
 .metadataValue {
   font-size: $fs--sm;
-}
-
-.dates {
-  display: flex;
-}
-
-.date:first-child {
-  margin-right: $spacing--lg;
 }
 
 .action {

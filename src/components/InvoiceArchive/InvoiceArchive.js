@@ -12,10 +12,15 @@ const InvoiceList = ({ invoices }) => {
         <h4>Fulfilled Invoices</h4>
       </header>
 
-      <div className={styles.archiveGrid}>
-        {invoices &&
-          invoices.map(invoice => <Invoice key={invoice.id} invoice={invoice} display="grid" />)}
-      </div>
+      {invoices && invoices.length > 0 ? (
+        <div className={styles.archiveGrid}>
+          {invoices.map(invoice => (
+            <Invoice key={invoice.id} invoice={invoice} display="grid" />
+          ))}
+        </div>
+      ) : (
+        <p>No fulfilled invoices yet.</p>
+      )}
     </section>
   );
 };

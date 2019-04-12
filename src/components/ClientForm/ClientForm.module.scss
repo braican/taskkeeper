@@ -13,37 +13,40 @@
   transition: all $transition;
   z-index: 2;
 
-  &.active {
+  &_active {
     transform: translate3d(0, 0, 0);
   }
+}
 
-  .form-el {
-    margin-bottom: 10px;
-  }
+.addNewForm {
+  margin-top: $spacing--md;
+}
+
+.formEl {
+  margin-bottom: 10px;
 
   input[type='text'],
-  input[type='number'] {
+  input[type='number'],
+  textarea {
     display: block;
     width: 100%;
     background-color: transparent;
     color: $c--white;
-  }
-
-  .add {
-    width: 100%;
-    display: block;
-  }
-
-  .form-actions {
-    margin-top: 2rem;
-
-    .action-primary {
-      margin-bottom: $spacing--sm;
-    }
+    resize: none;
   }
 }
 
-.add-new-client {
+.formActions {
+  margin-top: 2rem;
+}
+
+.addClientBtn {
+  width: 100%;
+  display: block;
+  margin-bottom: $spacing--sm;
+}
+
+.addNewClient {
   @include uppercase;
   display: block;
   width: 100%;
@@ -60,7 +63,7 @@
     outline: none;
   }
 
-  .action-word {
+  span {
     vertical-align: middle;
     margin-right: 0.5em;
   }

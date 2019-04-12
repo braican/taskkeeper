@@ -46,18 +46,24 @@
     input {
       width: 100%;
       display: block;
-      border: 1px solid $c--gray-d;
-      background-color: $c--gray-e;
-
-      &:focus {
-        border-bottom-width: 1px;
-      }
+      border-color: $c--light-blue;
     }
   }
-  &.compact .cell {
-    padding: $spacing--xs 0;
+
+  &.compact {
     border-top: 1px solid $c--gray-blue;
+    .cell {
+      padding: $spacing--xs 0;
+    }
+
+    .hours {
+      flex-basis: 40px;
+    }
+    .price {
+      flex-basis: 60px;
+    }
   }
+
   &.editing .cell {
     padding-top: calc(#{$spacing--sm} - 2px);
     padding-bottom: calc(#{$spacing--sm} - 2px);

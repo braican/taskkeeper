@@ -7,6 +7,7 @@ import TaskRow from '../TaskRow';
 import prettyDate from '../../util/prettyDate';
 import dueDateIn from '../../util/dueDateIn';
 import getDate from '../../util/getDate';
+import formatPrice from '../../util/formatPrice';
 
 import ArrowIcon from '../../svg/arrow';
 import styles from './Invoice.module.scss';
@@ -41,7 +42,7 @@ const Invoice = ({ taskRef, invoiceRef, invoice, active, display }) => {
 
   return (
     <div className={`${styles.Invoice} ${styles[`display-${display}`]}`}>
-      <header className={styles.header}>
+      <div className={styles.info}>
         {active && (
           <div className={styles.action}>
             <button className="action-primary" onClick={markAsPaid}>
@@ -50,35 +51,40 @@ const Invoice = ({ taskRef, invoiceRef, invoice, active, display }) => {
           </div>
         )}
 
-        {invoice.invoiceId && <h5 className={styles.metadata}>{invoice.invoiceId}</h5>}
+        <div className={styles.infoMain}>
+          <p className={`${styles.metadata} ${styles.invoiceId}`}>{invoice.invoiceId}</p>
+          <p className={`${styles.metadata} ${styles.price}`}>{formatPrice(invoice.price)}</p>
 
-        {active ? (
-          <div className={`${styles.metadata} ${styles.dates}`}>
-            <div className={styles.date}>
-              <span className="label">Issue Date</span>
-              <span className={styles.metadataValue}>{prettyDate(invoice.issueDate)}</span>
+          {!active && (
+            <div className={`${styles.metadata} ${styles.fulfilledDate}`}>
+              <span className="label">Fulfilled On</span>
+              <span className={styles.metadataValue}>{prettyDate(invoice.fulfilledDate)}</span>
             </div>
-            <div className={styles.date}>
+          )}
+
+          {invoice.projectDescription && (
+            <div className={`${styles.metadata} ${styles.description}`}>
+              <span className="label">Description</span>
+              <span className={styles.metadataValue}>{invoice.projectDescription}</span>
+            </div>
+          )}
+        </div>
+
+        {active && (
+          <div className={styles.infoDates}>
+            <div className={styles.metadata}>
               <span className="label">Due Date</span>
               <span className={styles.metadataValue}>
                 {prettyDate(invoice.dueDate)} ({dueDateIn(invoice.dueDate)})
               </span>
             </div>
-          </div>
-        ) : (
-          <div className={styles.metadata}>
-            <span className="label">Fulfilled On</span>
-            <span className={styles.metadataValue}>{prettyDate(invoice.fulfilledDate)}</span>
-          </div>
-        )}
-
-        {invoice.projectDescription && (
-          <div className={styles.metadata}>
-            <span className="label">Description</span>
-            <span className={styles.metadataValue}>{invoice.projectDescription}</span>
+            <div className={styles.metadata}>
+              <span className="label">Issue Date</span>
+              <span className={styles.metadataValue}>{prettyDate(invoice.issueDate)}</span>
+            </div>
           </div>
         )}
-      </header>
+      </div>
 
       {invoiceTasks && (
         <div>

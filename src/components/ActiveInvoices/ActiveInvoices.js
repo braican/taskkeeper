@@ -11,12 +11,12 @@ const ActiveInvoices = ({ invoices }) => {
   }
 
   return (
-    <section className="app-section">
-      <header>
+    <section className={styles.ActiveInvoices}>
+      <header className={styles.sectionHeader}>
         <h4>Active Invoices</h4>
       </header>
 
-      <div className={styles.ActiveInvoices}>
+      <div>
         {invoices &&
           invoices.map(invoice => (
             <Invoice key={invoice.id} invoice={invoice} display="list" active />
