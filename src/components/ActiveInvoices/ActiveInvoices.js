@@ -6,14 +6,21 @@ import Invoice from '../Invoice';
 import styles from './ActiveInvoices.module.scss';
 
 const ActiveInvoices = ({ invoices }) => {
+  if (!invoices || invoices.length === 0) {
+    return null;
+  }
+
   return (
-    <section>
+    <section className="app-section">
       <header>
         <h4>Active Invoices</h4>
       </header>
 
       <div className={styles.ActiveInvoices}>
-        {invoices && invoices.map(invoice => <Invoice key={invoice.id} invoice={invoice} />)}
+        {invoices &&
+          invoices.map(invoice => (
+            <Invoice key={invoice.id} invoice={invoice} display="list" active />
+          ))}
       </div>
     </section>
   );

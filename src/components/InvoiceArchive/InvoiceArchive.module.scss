@@ -1,0 +1,11 @@
+@import '../../styles/abstracts/abstracts';
+
+.InvoiceArchive {
+  margin-top: $spacing--xxxxl;
+}
+
+.archiveGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  grid-column-gap: $spacing--md;
+}

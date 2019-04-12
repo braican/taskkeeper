@@ -1,1 +1,100 @@
 @import '../../styles/abstracts/abstracts';
+
+.Invoice {
+  padding: $spacing--md;
+  background-color: $c--gray-fe;
+  margin-top: $spacing--lg;
+}
+
+.display-grid {
+  background-color: transparent;
+  border: 1px solid $c--gray-fe;
+}
+
+.header {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+
+  .display-list & {
+    padding-right: 160px;
+
+    @include mq($bp--tablet, 'max') {
+      padding-right: 0;
+      padding-top: 52px;
+    }
+  }
+}
+.metadata {
+  margin-right: $spacing--lg;
+  margin-bottom: $spacing--md;
+
+  &:last-child {
+    margin-right: 0;
+  }
+
+  span {
+    display: block;
+  }
+}
+
+.metadataValue {
+  font-size: $fs--sm;
+}
+
+.dates {
+  display: flex;
+}
+
+.date:first-child {
+  margin-right: $spacing--lg;
+}
+
+.action {
+  position: absolute;
+  top: 0;
+  right: 0;
+
+  @include mq($bp--tablet, 'max') {
+    left: 0;
+
+    button {
+      width: 100%;
+      display: block;
+    }
+  }
+}
+
+.taskExpander {
+  &:focus {
+    outline: none;
+  }
+  h6,
+  svg {
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  h6 {
+    margin-right: $spacing--sm;
+  }
+
+  svg {
+    width: 14px;
+    height: 14px;
+    transition: transform $transition;
+  }
+
+  &_flipped svg {
+    transform: scale(-1);
+  }
+}
+.taskList {
+  margin-top: $spacing--sm;
+  font-size: $fs--sm;
+  display: none;
+
+  &_expanded {
+    display: block;
+  }
+}

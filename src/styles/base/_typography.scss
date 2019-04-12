@@ -309,6 +309,8 @@ ol ol {
 // Definition Lists
 // --------
 
+.label,
+label,
 dd {
   @include uppercase;
   text-align: left;

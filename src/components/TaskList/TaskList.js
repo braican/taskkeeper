@@ -54,7 +54,7 @@ const TaskList = ({ tasks, header, hasUtility, canInvoice }) => {
         hasUtility,
         canInvoice,
       }}>
-      <section className={styles.TaskList}>
+      <section className="app-section">
         <header className={styles.header}>
           <h4>{header}</h4>
         </header>

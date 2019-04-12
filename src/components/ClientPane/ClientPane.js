@@ -109,9 +109,9 @@ const ClientPane = ({
         <p>Loading...</p>
       ) : (
         <>
-          <TaskList tasks={estimatedTasks} header="Estimated Tasks" hasUtility />
-          <TaskList tasks={completedTasks} header="Completed Tasks" canInvoice />
           <ActiveInvoices invoices={activeInvoices} />
+          <TaskList tasks={estimatedTasks} header="Estimated" hasUtility />
+          <TaskList tasks={completedTasks} header="Completed" canInvoice />
           <InvoiceArchive invoices={fulfilledInvoices} />
         </>
       )}

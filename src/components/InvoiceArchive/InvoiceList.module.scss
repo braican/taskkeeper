@@ -1,7 +1,0 @@
-@import '../../styles/abstracts/abstracts';
-
-.InvoiceList {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-column-gap: $spacing--md;
-}

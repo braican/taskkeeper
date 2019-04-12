@@ -15,7 +15,6 @@ import formatPrice from '../../util/formatPrice';
 import styles from './InvoiceForm.module.scss';
 
 const mapStateToProps = state => ({
-  uid: state.firebase.auth.uid,
   taskRef: state.refs.tasks,
   invoiceRef: state.refs.invoices,
 });
@@ -23,6 +22,8 @@ const mapStateToProps = state => ({
 const InvoiceForm = ({ selectedTasks, firestore, taskRef, invoiceRef }) => {
   const [issueDate, setIssueDate] = useState(getDate());
   const [dueDate, setDueDate] = useState(getDate(30));
+  const [invoiceId, setInvoiceId] = useState('');
+  const [projectDescription, setProjectDescription] = useState('');
   const { clientId } = useContext(ClientContext);
   const { setCreatingInvoice, setSelectedTasks } = useContext(TaskListContext);
   const displayPrice = computeTotal(selectedTasks) || 0;
@@ -41,12 +42,19 @@ const InvoiceForm = ({ selectedTasks, firestore, taskRef, invoiceRef }) => {
     });
     batch.commit();
     invoiceRef.add({
+      invoiceId,
       client: clientId,
       status: 'active',
+      issueDate,
+      dueDate,
+      projectDescription,
+      price: displayPrice,
+      hours: displayHours,
       tasks: selectedTaskIds,
       timestamp: +new Date(),
     });
 
+    setCreatingInvoice(false);
     setSelectedTasks([]);
   };
 
@@ -78,13 +86,25 @@ const InvoiceForm = ({ selectedTasks, firestore, taskRef, invoiceRef }) => {
 
         <div className={styles.formEl}>
           <label htmlFor="invoice-id">Invoice ID</label>
-          <input type="text" id="invoice-id" />
+          <input
+            type="text"
+            id="invoice-id"
+            value={invoiceId}
+            onChange={e => setInvoiceId(e.target.value)}
+          />
         </div>
         <div className={`${styles.formEl} ${styles.formElDescription}`}>
           <label htmlFor="invoice-project-description">Project Description</label>
-          <textarea id="invoice-project-description" cols="30" rows="2" />
+          <textarea
+            id="invoice-project-description"
+            cols="30"
+            rows="2"
+            value={projectDescription}
+            onChange={e => setProjectDescription(e.target.value)}
+          />
         </div>
       </div>
+
       <div className={styles.actions}>
         <button
           className={`${styles.actionCancel} action-secondary`}

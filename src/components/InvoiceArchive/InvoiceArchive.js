@@ -3,17 +3,18 @@ import PropTypes from 'prop-types';
 
 import Invoice from '../Invoice';
 
-import styles from './InvoiceList.module.scss';
+import styles from './InvoiceArchive.module.scss';
 
 const InvoiceList = ({ invoices }) => {
   return (
-    <section>
+    <section className={styles.InvoiceArchive}>
       <header>
         <h4>Fulfilled Invoices</h4>
       </header>
 
-      <div className={styles.InvoiceList}>
-        {invoices && invoices.map(invoice => <Invoice key={invoice.id} invoice={invoice} />)}
+      <div className={styles.archiveGrid}>
+        {invoices &&
+          invoices.map(invoice => <Invoice key={invoice.id} invoice={invoice} display="grid" />)}
       </div>
     </section>
   );

@@ -17,7 +17,7 @@
 
   &.header {
     @include uppercase;
-    border-bottom: 1px solid $c--lighter-blue;
+    border-bottom: 1px solid $c--gray-fe;
   }
 
   .wrapper {
@@ -55,7 +55,8 @@
     }
   }
   &.compact .cell {
-    padding: $spacing--sm 0;
+    padding: $spacing--xs 0;
+    border-top: 1px solid $c--gray-blue;
   }
   &.editing .cell {
     padding-top: calc(#{$spacing--sm} - 2px);
