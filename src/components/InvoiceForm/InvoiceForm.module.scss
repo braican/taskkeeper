@@ -1,0 +1,14 @@
+@import '../../styles/abstracts/abstracts';
+
+.InvoiceForm {
+  display: flex;
+  flex-wrap: wrap;
+
+  label {
+    display: block;
+  }
+}
+.formEl {
+  width: 180px;
+  padding-right: $spacing--md;
+}

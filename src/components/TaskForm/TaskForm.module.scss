@@ -1,0 +1,55 @@
+@import '../../styles/abstracts/abstracts';
+
+.TaskForm {
+  margin-top: $spacing--lg;
+  margin-bottom: $spacing--lg;
+
+  form {
+    display: flex;
+    align-items: center;
+
+    @include mq('max', $bp--tablet-xxl) {
+      flex-wrap: wrap;
+    }
+  }
+
+  label {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+}
+
+.formEl {
+  flex: 1;
+  position: relative;
+  padding-top: 1.25rem;
+
+  input {
+    width: 100%;
+    display: block;
+  }
+}
+.formElNumber {
+  flex: 0 0 100px;
+  width: 100px;
+}
+
+.toggler {
+  margin-left: 1em;
+  margin-right: 1em;
+  flex: 0;
+}
+
+.actionPrimary {
+  margin-left: 1em;
+  white-space: nowrap;
+  flex: 0;
+
+  @include mq('max', $bp--tablet-xxl) {
+    margin-left: 0;
+    width: 100%;
+    flex: 0 0 100%;
+    margin-top: $spacing--md;
+  }
+}

@@ -15,7 +15,7 @@ import TaskRowHeader from '../TaskRow/TaskRowHeader';
 import TaskRow from '../TaskRow/TaskRow';
 import InvoiceForm from '../InvoiceForm';
 
-import './TaskList.scss';
+import styles from './TaskList.module.scss';
 
 const mapStateToProps = state => ({
   uid: state.firebase.auth.uid,
@@ -77,8 +77,8 @@ const TaskList = ({ firestore, taskRef, invoiceRef, tasks, header, hasUtility, c
   return (
     <TaskListContext.Provider
       value={{ tasks, creatingInvoice, selectTask, selectAllTasks, selectedTasks }}>
-      <section className="TaskList">
-        <header>
+      <section className={styles.TaskList}>
+        <header className={styles.header}>
           <h4>{header}</h4>
         </header>
         <ul>
@@ -98,9 +98,9 @@ const TaskList = ({ firestore, taskRef, invoiceRef, tasks, header, hasUtility, c
                   canInvoice={canInvoice}
                 />
               ))}
-              <li className="footer">
-                <span className="hours">{hours}</span>
-                <span className="price">{formatPrice(balance)}</span>
+              <li className={styles.footer}>
+                <span className={styles.footerHours}>{hours}</span>
+                <span className={styles.footerPrice}>{formatPrice(balance)}</span>
               </li>
             </>
           )}
@@ -108,13 +108,18 @@ const TaskList = ({ firestore, taskRef, invoiceRef, tasks, header, hasUtility, c
 
         {tasks.length > 0 && canInvoice && (
           <>
-            <div className={`invoice-data${creatingInvoice ? ' active' : ''}`}>
+            <div
+              className={`${styles.invoiceData} ${
+                creatingInvoice ? styles.invoiceData_active : ''
+              }`}>
               <InvoiceForm />
             </div>
 
-            <div className="actions">
+            <div className={styles.actions}>
               <button
-                className={`action-cancel${creatingInvoice ? ' active' : ''}`}
+                className={`${styles.actionCancel} ${
+                  creatingInvoice ? styles.actionCancel_active : ''
+                }`}
                 onClick={() => setCreatingInvoice(false)}>
                 Cancel
               </button>

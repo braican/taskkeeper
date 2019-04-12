@@ -6,7 +6,7 @@ import ClientContext from '../../contexts/ClientContext';
 
 import Toggler from '../Toggler';
 
-import './TaskForm.scss';
+import styles from './TaskForm.module.scss';
 
 const mapStateToProps = state => ({ taskRef: state.refs.tasks });
 
@@ -35,20 +35,31 @@ const TaskForm = ({ taskRef }) => {
   };
 
   return (
-    <div className="TaskForm">
+    <div className={styles.TaskForm}>
       <h4>Add a new task</h4>
       <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          value={taskDescription}
-          onChange={e => updateDescription(e.target.value)}
-        />
+        <div className={styles.formEl}>
+          <label htmlFor="task-description">Description</label>
+          <input
+            id="task-description"
+            type="text"
+            value={taskDescription}
+            onChange={e => updateDescription(e.target.value)}
+          />
+        </div>
 
-        <Toggler onLabel="Hours" offLabel="Cost" onChange={updateFlag} isOn={isFixedRate} />
+        <div className={`${styles.toggler} ${styles.formEl}`}>
+          <Toggler onLabel="Hours" offLabel="Cost" onChange={updateFlag} isOn={isFixedRate} />
+        </div>
 
-        <input type="number" value={taskUnit} onChange={e => updatePrice(e.target.value)} />
+        <div className={`${styles.formEl} ${styles.formElNumber}`}>
+          <label htmlFor="task-number">{isFixedRate ? 'Cost' : 'Hours'}</label>
+          <input type="number" value={taskUnit} onChange={e => updatePrice(e.target.value)} />
+        </div>
 
-        <button className="action-primary">Add task</button>
+        <div className={`${styles.formEl} ${styles.actionPrimary}`}>
+          <button className="action-primary">Add task</button>
+        </div>
       </form>
     </div>
   );
