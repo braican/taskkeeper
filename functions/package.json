@@ -14,9 +14,10 @@
     "firebase-functions": "^2.2.0"
   },
   "devDependencies": {
+    "@upstatement/eslint-config": "0.3.1",
     "eslint": "^5.12.0",
-    "eslint-plugin-promise": "^4.0.1",
-    "@upstatement/eslint-config": "0.3.1"
+    "eslint-plugin-jsx-a11y": "^6.2.1",
+    "eslint-plugin-promise": "^4.0.1"
   },
   "private": true
 }
