@@ -13,6 +13,9 @@ install:
   - yarn install
 script:
   - yarn lint:scripts
+before_deploy:
+  - cd functions && npm install
+  - cd ../
 deploy:
   provider: firebase
   token:
