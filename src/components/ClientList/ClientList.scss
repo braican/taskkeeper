@@ -9,7 +9,7 @@
     transition: all $transition;
 
     &:hover:not(.client-link--active) {
-      // background-color: $c--light-blue;
+      background-color: $c--gray-d;
     }
   }
   .client-link--active {

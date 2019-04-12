@@ -74,11 +74,12 @@
     vertical-align: middle;
     transition: all $transition;
     transform: translate3d(0, 0, 0);
-    width: 14px;
-    height: 14px;
+    width: 16px;
+    height: 16px;
     fill: #41acfa;
     opacity: 0;
     stroke: $c--light-blue;
+    margin-top: -3px;
   }
 
   &:hover svg {

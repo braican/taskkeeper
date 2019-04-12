@@ -13,6 +13,6 @@
 
   &:focus {
     outline: none;
-    background-color: darken($c--gray-e, 4%);
+    background-color: $c--gray-e;
   }
 }

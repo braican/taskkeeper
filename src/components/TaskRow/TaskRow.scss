@@ -40,11 +40,23 @@
   }
 
   .cell {
-    padding: $spacing--xs;
+    padding: 0.8rem $spacing--sm;
 
+    textarea,
     input {
       width: 100%;
+      display: block;
+      border: 1px solid $c--gray-d;
+      background-color: $c--gray-e;
+
+      &:focus {
+        border-bottom-width: 1px;
+      }
     }
+  }
+  &.editing .cell {
+    padding-top: calc(#{$spacing--sm} - 2px);
+    padding-bottom: calc(#{$spacing--sm} - 2px);
   }
 
   .description {
@@ -71,8 +83,9 @@
     @include utility-button;
     background-color: transparent;
     position: absolute;
-    top: 0;
+    top: 50%;
     right: 0;
+    margin-top: -22px;
     opacity: 0;
     transition: all $transition;
     padding: 0.3rem;
