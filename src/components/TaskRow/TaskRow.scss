@@ -54,6 +54,9 @@
       }
     }
   }
+  &.compact .cell {
+    padding: $spacing--sm 0;
+  }
   &.editing .cell {
     padding-top: calc(#{$spacing--sm} - 2px);
     padding-bottom: calc(#{$spacing--sm} - 2px);

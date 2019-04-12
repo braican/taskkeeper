@@ -14,9 +14,11 @@ import './TaskRow.scss';
 
 const mapStateToProps = state => ({ taskRef: state.refs.tasks });
 
-const TaskRow = ({ taskRef, taskId, description, hours, price, hasUtility, canInvoice }) => {
+const TaskRow = ({ taskRef, taskId, description, hours, price, compact }) => {
   const { rate } = useContext(ClientContext);
-  const { creatingInvoice, selectTask, selectedTasks } = useContext(TaskListContext);
+  const { canInvoice, hasUtility, creatingInvoice, selectTask, selectedTasks } = useContext(
+    TaskListContext,
+  );
 
   const [taskDescription, setDescription] = useState(description);
   const [taskHours, setHours] = useState(hours);
@@ -29,6 +31,20 @@ const TaskRow = ({ taskRef, taskId, description, hours, price, hasUtility, canIn
   const [utilMenuStyles, setUtilMenuStyles] = useState({ left: '0', top: '0' });
 
   const rowRef = useRef();
+
+  if (compact) {
+    return (
+      <li className="TaskRow row compact">
+        <TaskRowWrapper>
+          <RowData
+            description={{ get: taskDescription }}
+            hours={{ get: taskHours }}
+            price={{ get: taskPrice }}
+          />
+        </TaskRowWrapper>
+      </li>
+    );
+  }
 
   const handleOffClick = event => {
     if (rowRef.current.contains(event.target)) {
@@ -137,8 +153,7 @@ TaskRow.propTypes = {
   description: PropTypes.string,
   hours: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   price: PropTypes.oneOfType([PropTypes.number, PropTypes.string, PropTypes.element]),
-  hasUtility: PropTypes.bool,
-  canInvoice: PropTypes.bool,
+  compact: PropTypes.bool,
 };
 
 export default connect(mapStateToProps)(TaskRow);

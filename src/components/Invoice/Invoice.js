@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import formatPrice from '../../util/formatPrice';
+import TaskRow from '../TaskRow';
 
 import styles from './Invoice.module.scss';
 
@@ -32,11 +32,7 @@ const Invoice = ({ invoice, taskRef }) => {
           <h6>Tasks</h6>
           <ul>
             {invoiceTasks.map(({ id, description, hours, price }) => (
-              <li key={id}>
-                <span className="description">{description}</span>
-                <span className="hours">{hours || '-'}</span>
-                <span className="price">{formatPrice(price)}</span>
-              </li>
+              <TaskRow key={id} description={description} hours={hours} price={price} compact />
             ))}
           </ul>
         </div>

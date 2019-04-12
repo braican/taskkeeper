@@ -51,6 +51,8 @@ const TaskList = ({ tasks, header, hasUtility, canInvoice }) => {
         selectAllTasks,
         selectedTasks,
         setSelectedTasks,
+        hasUtility,
+        canInvoice,
       }}>
       <section className={styles.TaskList}>
         <header className={styles.header}>
@@ -69,8 +71,6 @@ const TaskList = ({ tasks, header, hasUtility, canInvoice }) => {
                   description={description}
                   hours={hours || '-'}
                   price={price}
-                  hasUtility={hasUtility}
-                  canInvoice={canInvoice}
                 />
               ))}
               <li className={`${styles.footer} ${creatingInvoice ? styles.footerCanInvoice : ''}`}>
