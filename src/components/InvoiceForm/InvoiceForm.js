@@ -27,7 +27,7 @@ const InvoiceForm = () => {
         <label htmlFor="invoice-id">Invoice ID</label>
         <input type="text" id="invoice-id" />
       </div>
-      <div className={styles.formEl}>
+      <div className={`${styles.formEl} ${styles.formElDescription}`}>
         <label htmlFor="invoice-project-description">Project Description</label>
         <textarea id="invoice-project-description" cols="30" rows="2" />
       </div>

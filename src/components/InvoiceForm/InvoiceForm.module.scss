@@ -3,12 +3,38 @@
 .InvoiceForm {
   display: flex;
   flex-wrap: wrap;
+  background-color: $c--gray-fe;
+  padding-top: ($spacing--md / 2);
+  padding-bottom: ($spacing--md / 2);
 
   label {
     display: block;
   }
+
+  input[type='text'],
+  input[type='number'],
+  input[type='date'],
+  textarea {
+    background-color: $c--gray-e;
+  }
 }
 .formEl {
-  width: 180px;
-  padding-right: $spacing--md;
+  width: 100%;
+  padding: ($spacing--md / 2) $spacing--md;
+
+  @include mq($bp--phablet) {
+    width: 33.333%;
+    min-width: 200px;
+  }
+
+  input,
+  textarea {
+    display: block;
+    width: 100%;
+  }
+}
+
+.formElDescription {
+  width: 100%;
+  flex: 1;
 }

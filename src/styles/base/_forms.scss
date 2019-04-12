@@ -8,12 +8,25 @@ textarea {
   border: 0;
   border-bottom: 1px solid $c--gray-a;
   background-color: $c--gray-fe;
-  height: 38px;
 
   &:focus {
     outline: none;
     border-color: $c--light-blue;
     border-bottom-width: 2px;
+  }
+}
+
+input[type='text'],
+input[type='number'],
+input[type='date'] {
+  height: 38px;
+}
+
+textarea {
+  margin-bottom: 1px;
+
+  &:focus {
+    margin-bottom: 0;
   }
 }
 

@@ -98,7 +98,7 @@ const TaskList = ({ firestore, taskRef, invoiceRef, tasks, header, hasUtility, c
                   canInvoice={canInvoice}
                 />
               ))}
-              <li className={styles.footer}>
+              <li className={`${styles.footer} ${creatingInvoice ? styles.footerCanInvoice : ''}`}>
                 <span className={styles.footerHours}>{hours}</span>
                 <span className={styles.footerPrice}>{formatPrice(balance)}</span>
               </li>
