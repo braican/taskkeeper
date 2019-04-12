@@ -15,6 +15,7 @@
   },
   "devDependencies": {
     "@upstatement/eslint-config": "0.3.1",
+    "babel-eslint": "^10.0.1",
     "eslint": "^5.12.0",
     "eslint-plugin-jsx-a11y": "^6.2.1",
     "eslint-plugin-promise": "^4.0.1"
