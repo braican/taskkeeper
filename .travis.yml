@@ -1,26 +1,22 @@
 language: node_js
-
 notifications:
   email:
     on_success: never
     on_failure: always
-
 cache:
   yarn: true
   directories:
     - node_modules
-
 before_install:
   - nvm install
-
 install:
   - yarn install
-
 script:
   - yarn lint:scripts
-# deploy:
-#   skip_cleanup: true
-#   provider: script
-#   script: bash bin/deploy.sh
-#   on:
-#     branch: develop
+deploy:
+  provider: firebase
+  token:
+    secure: TRv/GsApYTlhli0WwbsqiWDjJFme+lKQZ3UBtQYJF8yStCU23lFeHFAG/8/mu+nQpAUkZI4w8ip3DFu+gD/T2rEbgo+GspJ+Um7YymSwZJu5iuRa0q0Fd/aM5WWucfNmWbbOHClVGDIntFtG5GgF+j3TUcUrSSqWn7Kga7CBgwoK5lwWksSyBU6f4Fb0NaUzMP/ZX2HQnzINDB7kMH8XMg4jbTF0UUfXu2KUrdll6PQ8th9L0KW0pO2wgaXJeJ52aZ/v+4P5lzgJzuRCN+VO0DLLLvp3PKvrav3SO/gJy6KVbX1Izmsdd4iCjsmPH+oStPIxCNsh1Id8mAyuQcP1OB6YyCGOZv4IMIMhevIVmG4NRpZCHEQ3YoyB7kzh93hTzzk+IK+M4k6IXomYlZWE8GqdcbM8cjkJ20i8xvOIloJFDnEcjO8sjnV6/Wi4//iHDrSr3BzrFVOxoVQ8TSAnPYWtj52fLVTJyCRxY2ie4EsWeY2nWp5mQrny7zaCiqlBxU21ojLBwTpJUuk1oShio/C4TYsXXCTjiUqh175BkR5x9HG6/MXqFhNo8P53LCSxJAjmstOgz1BWr0D7X337tSS3RigXq0Ph1GlkOYWH3W3xa/E1UyIkFnqK2eoIyx26Q8mFzyCCztuIo9SZvZZCP6yEomPxiclajakSNguDWjI=
+  project: 'taskkeeper-v2-759a9'
+  on:
+    branch: develop
