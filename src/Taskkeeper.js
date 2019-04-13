@@ -33,6 +33,10 @@ const Taskkeeper = ({ auth, sidebarVisible, toggleSidebar }) => {
   };
 
   useEffect(() => {
+    if (!main || !main.current) {
+      return;
+    }
+
     main.current.addEventListener('mousedown', handleOffClick);
 
     return () => {
