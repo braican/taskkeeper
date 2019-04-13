@@ -22,5 +22,4 @@ deploy:
   project: 'taskkeeper-v2-759a9'
   on:
     branch:
-      - develop
       - master
