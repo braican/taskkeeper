@@ -13,6 +13,8 @@ install:
   - yarn install
 script:
   - yarn lint:scripts
+before_deploy:
+  - yarn build
 deploy:
   provider: firebase
   token:
