@@ -14,3 +14,6 @@ yarn-error.log*
 
 # build dir
 build/
+
+# Firebase
+.firebase

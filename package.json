@@ -13,7 +13,6 @@
   "bugs": {
     "url": "https://github.com/braican/taskkeeper/issues"
   },
-  "homepage": ".",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
