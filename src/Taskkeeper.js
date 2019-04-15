@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { firebaseConnect, isLoaded, isEmpty } from 'react-redux-firebase';
+import { CSSTransition } from 'react-transition-group';
 
 import { BrowserRouter, Route } from 'react-router-dom';
 
@@ -48,25 +49,28 @@ const Taskkeeper = ({ auth, sidebarVisible, toggleSidebar }) => {
   return (
     <BrowserRouter>
       <>
-        <Auth />
-        <SidebarTrigger />
-
-        {!isEmpty(auth) ? (
-          <div className={`layout${sidebarVisible ? ' layout--sidebar-visible' : ''}`}>
-            <aside className="sidebar">
-              <ClientForm />
-              <ClientList />
-            </aside>
-            <div className="main" ref={main}>
-              <div className="container">
-                <Route path="/" exact component={Dashboard} />
-                <Route path="/client/:clientId" component={ClientPane} />
+        {!isEmpty(auth) && (
+          <>
+            <Auth />
+            <SidebarTrigger />
+            <div className={`layout${sidebarVisible ? ' layout--sidebar-visible' : ''}`}>
+              <aside className="sidebar">
+                <ClientForm />
+                <ClientList />
+              </aside>
+              <div className="main" ref={main}>
+                <div className="container">
+                  <Route path="/" exact component={Dashboard} />
+                  <Route path="/client/:clientId" component={ClientPane} />
+                </div>
               </div>
             </div>
-          </div>
-        ) : (
-          <Welcome />
+          </>
         )}
+
+        <CSSTransition in={isEmpty(auth)} classNames="trs-fadein" timeout={400} unmountOnExit>
+          <Welcome />
+        </CSSTransition>
       </>
     </BrowserRouter>
   );
