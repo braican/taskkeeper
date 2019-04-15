@@ -3,9 +3,11 @@ import PropTypes from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { firebaseConnect, isLoaded, isEmpty } from 'react-redux-firebase';
+import { CSSTransition } from 'react-transition-group';
 
 import { BrowserRouter, Route } from 'react-router-dom';
 
+import Welcome from './components/Welcome';
 import Dashboard from './components/Dashboard';
 import DashboardButton from './components/Dashboard/DashboardButton';
 import SidebarTrigger from './components/SidebarTrigger';
@@ -48,26 +50,29 @@ const Taskkeeper = ({ auth, sidebarVisible, toggleSidebar }) => {
   return (
     <BrowserRouter>
       <>
-        <Auth />
-        <SidebarTrigger />
-
-        {!isEmpty(auth) ? (
-          <div className={`layout${sidebarVisible ? ' layout--sidebar-visible' : ''}`}>
-            <aside className="sidebar">
-              <DashboardButton />
-              <ClientForm />
-              <ClientList />
-            </aside>
-            <div className="main" ref={main}>
-              <div className="container">
-                <Route path="/" exact component={Dashboard} />
-                <Route path="/client/:clientId" component={ClientPane} />
+        {!isEmpty(auth) && (
+          <>
+            <Auth />
+            <SidebarTrigger />
+            <div className={`layout${sidebarVisible ? ' layout--sidebar-visible' : ''}`}>
+              <aside className="sidebar">
+                <DashboardButton />
+                <ClientForm />
+                <ClientList />
+              </aside>
+              <div className="main" ref={main}>
+                <div className="container">
+                  <Route path="/" exact component={Dashboard} />
+                  <Route path="/client/:clientId" component={ClientPane} />
+                </div>
               </div>
             </div>
-          </div>
-        ) : (
-          <div>Log in</div>
+          </>
         )}
+
+        <CSSTransition in={isEmpty(auth)} classNames="trs-fadein" timeout={400} unmountOnExit>
+          <Welcome />
+        </CSSTransition>
       </>
     </BrowserRouter>
   );

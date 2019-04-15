@@ -18,21 +18,8 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const Auth = ({ auth, firebase, firestore, addClientRef, addTaskRef, addInvoiceRef }) => {
-  const authSettings = {
-    provider: 'google',
-    type: 'popup',
-  };
-
-  if (!isLoaded(auth)) {
+  if (!isLoaded(auth) || isEmpty(auth)) {
     return null;
-  }
-
-  if (isEmpty(auth)) {
-    return (
-      <div className="Auth">
-        <button onClick={() => firebase.login(authSettings)}>Log in with Google</button>
-      </div>
-    );
   }
 
   useEffect(() => {

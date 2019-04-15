@@ -64,6 +64,21 @@ button {
       background-color: $c--light-blue;
     }
   }
+
+  &.action--blue {
+    background-color: $c--white;
+    color: $c--primary-blue;
+
+    &:focus,
+    &:hover {
+      color: $c--white;
+      background-color: $c--primary-blue;
+    }
+  }
+
+  &.action--big {
+    font-size: $fs--lg;
+  }
 }
 .action-secondary {
   transition: color $transition;
