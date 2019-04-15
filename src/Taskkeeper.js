@@ -6,6 +6,7 @@ import { firebaseConnect, isLoaded, isEmpty } from 'react-redux-firebase';
 
 import { BrowserRouter, Route } from 'react-router-dom';
 
+import Welcome from './components/Welcome';
 import Dashboard from './components/Dashboard';
 import SidebarTrigger from './components/SidebarTrigger';
 import Auth from './components/Auth';
@@ -64,7 +65,7 @@ const Taskkeeper = ({ auth, sidebarVisible, toggleSidebar }) => {
             </div>
           </div>
         ) : (
-          <div>Log in</div>
+          <Welcome />
         )}
       </>
     </BrowserRouter>
