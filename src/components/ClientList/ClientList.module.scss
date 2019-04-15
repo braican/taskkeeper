@@ -1,0 +1,37 @@
+@import '../../styles/abstracts/abstracts';
+
+.clientLink {
+  display: block;
+  line-height: 1;
+  color: $c--black;
+  transition: all $transition;
+  padding: $spacing--md;
+
+  &:focus {
+    color: $c--white;
+  }
+  &:hover:not(.clientLink__active) {
+    color: $c--black;
+    background-color: $c--gray-d;
+  }
+}
+
+.clientLink__active {
+  background-color: $c--light-blue;
+  color: $c--white;
+}
+
+.info {
+  transition: transform $transition;
+}
+
+.clientLink:hover .info,
+.clientLink__active .info {
+  transform: translateX(4px);
+}
+
+.name {
+  font-weight: $fw--bold;
+  display: block;
+  margin-bottom: $spacing--xs;
+}

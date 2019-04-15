@@ -1,0 +1,11 @@
+@import '../../styles/abstracts/abstracts';
+
+.invoiceGroup {
+  margin-top: $spacing--xxl;
+}
+
+.billedTotal {
+  color: $c--light-blue;
+  font-size: $fs--xl;
+  font-weight: $fw--bold;
+}
