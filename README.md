@@ -44,7 +44,7 @@ See the section about [deployment](#deployment) for more information.
 
 ## Changelog
 
-\*\*2.0.1 `4/15/2019`
+**2.0.1** `4/15/2019`
 
 - Fixes bug with pathing on built applications. ([#9](https://github.com/braican/taskkeeper/issues/9))
 
