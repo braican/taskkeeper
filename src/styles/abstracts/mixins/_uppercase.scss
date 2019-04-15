@@ -1,0 +1,6 @@
+@mixin uppercase {
+  font-size: $fs--xs;
+  text-transform: uppercase;
+  letter-spacing: $ls--base;
+  font-weight: $fw--bold;
+}

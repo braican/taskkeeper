@@ -1,0 +1,34 @@
+@import '../../styles/abstracts/abstracts';
+
+.ClientList {
+  .client-link {
+    display: block;
+    padding: 1em;
+    line-height: 1;
+    color: inherit;
+    transition: all $transition;
+
+    &:hover:not(.client-link--active) {
+      background-color: $c--gray-d;
+    }
+  }
+  .client-link--active {
+    background-color: $c--light-blue;
+    color: $c--white;
+  }
+
+  .client-info {
+    transition: transform $transition;
+  }
+
+  .client-link:hover .client-info,
+  .client-link--active .client-info {
+    transform: translateX(4px);
+  }
+
+  .client-name {
+    font-weight: $fw--bold;
+    display: block;
+    margin-bottom: $spacing--xs;
+  }
+}

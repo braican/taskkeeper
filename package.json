@@ -1,43 +1,69 @@
 {
-  "name": "taskkeeper",
+  "name": "@braican/taskkeeper",
   "version": "2.0.0",
-  "description": "App to keep track of projects and invoices.",
+  "description": "",
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/braican/taskkeeper.git"
+    "url": "https://github.com/braican/taskkeeper"
   },
-  "author": "braican",
+  "keywords": [],
+  "author": "Nick Braica",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/braican/taskkeeper/issues"
   },
-  "homepage": "http://taskkeeper.braican.com",
-  "dependencies": {
-    "copyfiles": "^2.0.0",
-    "firebase": "^4.13.1",
-    "hoek": "^5.0.3",
-    "node-sass-chokidar": "0.0.3",
-    "npm-run-all": "^4.1.2",
-    "prop-types": "^15.6.1",
-    "re-base": "^3.2.2",
-    "react": "^16.3.2",
-    "react-dom": "^16.3.2",
-    "react-router": "^4.2.0",
-    "react-router-dom": "^4.2.2",
-    "react-scripts": "1.0.17"
-  },
+  "homepage": ".",
   "scripts": {
-    "start-js": "react-scripts start",
-    "start": "npm-run-all -p build-css watch-css start-js",
-    "build-js": "react-scripts build",
-    "build": "npm-run-all build-css build-js",
-    "test": "react-scripts test --env=jsdom",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "build-css": "node-sass-chokidar src/ -o public/ --source-map true --source-map-contents sass",
-    "watch-css": "node-sass-chokidar src/ -o public/ --watch --source-map true --source-map-contents sass"
+    "lint:scripts": "eslint src/*.js src/**/*.js"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ],
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix",
+      "git add"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged && lint-staged"
+    }
+  },
+  "dependencies": {
+    "firebase": "^5.8.5",
+    "moment": "^2.24.0",
+    "node-sass": "^4.11.0",
+    "prop-types": "^15.7.2",
+    "react": "^16.8.3",
+    "react-dom": "^16.8.3",
+    "react-redux": "^6.0.1",
+    "react-redux-firebase": "^3.0.0-alpha.10",
+    "react-router-dom": "^4.3.1",
+    "react-scripts": "2.1.5",
+    "redux": "^4.0.1",
+    "redux-firestore": "^0.7.0"
   },
   "devDependencies": {
-    "eslint-config-airbnb": "^16.1.0"
+    "@upstatement/eslint-config": "0.3.1",
+    "@upstatement/prettier-config": "^0.3.0",
+    "eslint-config-prettier": "^3.3.0",
+    "eslint-plugin-jsx-a11y": "^6.1.2",
+    "eslint-plugin-promise": "^4.1.1",
+    "eslint-plugin-react": "^7.11.1",
+    "husky": "^1.2.0",
+    "lint-staged": "^8.1.0",
+    "prettier": "^1.15.3",
+    "pretty-quick": "^1.8.0",
+    "stylelint": "^9.10.1",
+    "stylelint-config-sass-guidelines": "^5.3.0"
   }
 }

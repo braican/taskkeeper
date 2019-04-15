@@ -1,0 +1,57 @@
+@import '../../styles/abstracts/abstracts';
+
+.InvoiceForm {
+  background-color: $c--gray-fe;
+  margin-top: $spacing--md;
+}
+
+.invoiceData {
+  padding: $spacing--md;
+  text-align: right;
+}
+.invoicedPrice {
+  font-size: $fs--xxl;
+  font-weight: $fw--bold;
+  line-height: 1;
+  margin-bottom: $spacing--sm;
+}
+
+.formInputs {
+  display: flex;
+  flex-wrap: wrap;
+  padding-top: ($spacing--md / 2);
+  padding-bottom: ($spacing--md / 2);
+
+  label {
+    display: block;
+  }
+}
+.formEl {
+  width: 100%;
+  padding: ($spacing--md / 2) $spacing--md;
+
+  @include mq($bp--phablet) {
+    width: 33.333%;
+    min-width: 200px;
+  }
+
+  input,
+  textarea {
+    display: block;
+    width: 100%;
+  }
+}
+
+.formElDescription {
+  width: 100%;
+  flex: 1;
+}
+
+.actions {
+  text-align: right;
+  padding: $spacing--md;
+}
+
+.actionCancel {
+  margin-right: 1em;
+}

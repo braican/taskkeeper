@@ -1,0 +1,330 @@
+// Body
+// ------
+
+html {
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  @include font($sans, $fs--base, $lh--base);
+}
+
+// Links
+// -------
+
+a {
+  @include link();
+  transition: $transition;
+}
+
+// Improve readability when focused and also mouse hovered in all browsers.
+a:active,
+a:hover {
+  text-decoration: none;
+}
+
+.base-body a {
+  text-decoration: none;
+}
+
+// Buttons
+// -------
+
+button {
+  cursor: pointer;
+  background-color: transparent;
+}
+
+.action-primary {
+  background-color: $c--light-blue;
+  font-weight: $fw--bold;
+  font-size: $fs--input;
+  padding: $spacing--sm 1em;
+  color: $c--white;
+  transition: all $transition;
+
+  &:focus,
+  &:hover {
+    outline: 0;
+    background-color: $c--primary-blue;
+  }
+
+  &[disabled] {
+    pointer-events: none;
+    background-color: $c--gray-a;
+    opacity: 0.5;
+  }
+
+  &.action--white {
+    background-color: $c--white;
+    color: $c--primary-blue;
+
+    &:focus,
+    &:hover {
+      background-color: $c--light-blue;
+    }
+  }
+}
+.action-secondary {
+  transition: color $transition;
+  color: $c--light-blue;
+  font-weight: $fw--bold;
+  font-size: $fs--input;
+
+  &:focus,
+  &:hover {
+    color: $c--primary-blue;
+  }
+
+  &.action--white {
+    color: $c--white;
+
+    &:hover {
+      color: $c--light-blue;
+    }
+  }
+
+  &.action-has-icon {
+    position: relative;
+    padding-right: 10px;
+
+    .action-word {
+      display: inline-block;
+      transition: transform $transition;
+    }
+
+    svg {
+      transition: all $transition;
+      transform: translate(0%, -50%);
+      position: absolute;
+      right: 0;
+      top: 50%;
+      width: 18px;
+      fill: $c--primary-blue;
+      opacity: 0;
+    }
+
+    &:hover {
+      .action-word {
+        transform: translateX(-6px);
+      }
+      svg {
+        transform: translate(6px, -50%);
+        opacity: 1;
+      }
+    }
+  }
+}
+
+.action-cancel {
+  font-size: $fs--input;
+  &:focus {
+    outline: none;
+  }
+}
+
+// Typography
+// -------
+// Address font sizes and margins set differently in IE 6/7.
+// Address font sizes within `section` and `article` in Firefox 4+, Safari 5, and Chrome.
+
+h1,
+.h1 {
+  @include font($sans, $fs--h1, $lh--h1, $fw--bold);
+  @include fluid-size($tween-start: $fs--xl $bp--mobile, $tween-end: $fs--xxxxl $bp--desktop-xl);
+}
+
+h2,
+.h2 {
+  @include font($ff--heading, $fs--h2, $lh--h2, $fw--bold);
+}
+
+h3,
+.h3 {
+  @include font($ff--heading, $fs--h3, $lh--h3, $fw--bold);
+}
+
+h4,
+.h4 {
+  @include font($ff--heading, $fs--h4, $lh--h4, $fw--bold);
+}
+
+h5,
+.h5 {
+  @include font($ff--heading, $fs--h5, $lh--h5, $fw--bold);
+}
+
+h6,
+.h6 {
+  @include font($ff--heading, $fs--h6, $lh--h6, $fw--bold);
+}
+
+h1 small,
+h2 small,
+h3 small,
+h4 small,
+h5 small,
+h6 small {
+  font-size: 0.75em;
+  font-weight: normal;
+}
+
+hgroup {
+  margin: $margin--hgroup 0 0;
+}
+
+// remove margins from headings within hgroup
+hgroup h1,
+hgroup h2,
+hgroup h3,
+hgroup h4,
+hgroup h5,
+hgroup h6,
+hgroup p {
+  margin: 0;
+}
+
+// Address styling not present in IE 7/8/9, Safari 5, and Chrome.
+abbr[title] {
+  border-bottom: 1px dotted;
+  cursor: help;
+}
+// Address style set to `bolder` in Firefox 3+, Safari 4/5, and Chrome.
+b,
+strong {
+  font-weight: $fw--bold;
+}
+
+blockquote {
+  margin: $margin--blockquote;
+}
+
+// Address styling not present in Safari 5 and Chrome.
+dfn {
+  font-style: italic;
+}
+
+// Address differences between Firefox and other browsers. Known issue:no IE 6/7 normalization.
+hr {
+  background: $gradient--horiz;
+  border: 0;
+  box-sizing: content-box;
+  display: block;
+  height: 1px;
+  margin: $spacing--xxl 0;
+  padding: 0;
+}
+
+// Address styling not present in IE 6/7/8/9.
+mark {
+  background-color: $c--base-tint-5;
+  color: $c--text;
+}
+
+// Correct font family set oddly in IE 6, Safari 4/5, and Chrome.
+code,
+kbd,
+pre,
+samp {
+  font-family: $mono;
+  font-size: $fs--base;
+}
+
+// Improve readability of pre-formatted text in all browsers.
+pre {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+// Address CSS quotes not supported in IE 6/7.
+q {
+  quotes: none;
+}
+
+// Address `quotes` property not supported in Safari 4.
+q::before,
+q::after {
+  content: '';
+}
+
+// Address inconsistent and variable font size in all browsers.
+small {
+  font-size: 80%;
+}
+
+// Prevent `sub` and `sup` affecting `line-height` in all browsers.
+sub,
+sup {
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+sup {
+  top: -$spacing--xs;
+  font-size: 0.8em;
+}
+
+sub {
+  bottom: -0.25em;
+}
+
+// Always hide an element when it has the `hidden` HTML attribute.
+[hidden] {
+  display: none !important;
+}
+
+// Lists
+// -------
+
+dd {
+  margin: $margin--dd;
+
+  &:first-child {
+    margin-top: 0;
+  }
+}
+
+// Correct list images handled incorrectly in IE 7.
+nav ul,
+nav ol {
+  list-style: none;
+  list-style-image: none;
+  margin: 0;
+  padding: 0;
+}
+
+nav li a {
+  text-decoration: none;
+}
+
+// remove margin from nested lists
+ul ul,
+ul ol,
+ol ul,
+ol ol {
+  margin: 0;
+}
+
+// Definition Lists
+// --------
+
+.label,
+label,
+dd {
+  @include uppercase;
+  text-align: left;
+  margin: 0;
+}
+
+// Code
+// -------
+
+.highlight {
+  background-color: $c--highlight-tag;
+}
+
+// Paragraph styles
+p {
+  line-height: $lh--base;
+}

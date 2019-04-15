@@ -1,0 +1,11 @@
+@import '../../styles/abstracts/abstracts';
+
+.ActiveInvoices {
+  margin: #{$spacing--lg} #{-$spacing--lg} $spacing--xxl;
+  padding: $spacing--lg;
+  background-color: $c--primary-blue;
+}
+
+.sectionHeader {
+  color: $c--white;
+}

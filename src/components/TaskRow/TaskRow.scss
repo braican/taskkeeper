@@ -1,0 +1,183 @@
+@import '../../styles/abstracts/abstracts';
+
+.TaskRow {
+  position: relative;
+  transition: background-color $transition, padding-right $transition;
+
+  &.can-invoice,
+  &.editing {
+    padding-right: 48px;
+  }
+
+  &.editing,
+  &.selected,
+  &.utilMenuActive {
+    background-color: $c--gray-fe;
+  }
+
+  &.header {
+    @include uppercase;
+    border-bottom: 1px solid $c--gray-fe;
+  }
+
+  .wrapper {
+    display: flex;
+    width: 100%;
+    text-align: left;
+    align-items: center;
+  }
+
+  .wrapper-clickable {
+    transition: background-color $transition;
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  &:not(.utilMenuActive):not(.editing) .wrapper-clickable:hover {
+    background-color: $c--gray-fe;
+  }
+
+  .cell {
+    padding: 0.8rem $spacing--sm;
+
+    textarea,
+    input {
+      width: 100%;
+      display: block;
+      border-color: $c--light-blue;
+    }
+  }
+
+  &.compact {
+    border-top: 1px solid $c--gray-blue;
+    .cell {
+      padding: $spacing--xs 0;
+    }
+
+    .hours {
+      flex-basis: 40px;
+    }
+    .price {
+      flex-basis: 60px;
+    }
+  }
+
+  &.editing .cell {
+    padding-top: calc(#{$spacing--sm} - 2px);
+    padding-bottom: calc(#{$spacing--sm} - 2px);
+  }
+
+  .description {
+    flex: 1 1 auto;
+  }
+  .hours,
+  .price {
+    flex: 0 0 auto;
+    padding-left: 1em;
+    text-align: right;
+
+    input {
+      text-align: right;
+    }
+  }
+  .hours {
+    flex-basis: 80px;
+  }
+  .price {
+    flex-basis: 100px;
+  }
+
+  .save-edits {
+    @include utility-button;
+    background-color: transparent;
+    position: absolute;
+    top: 50%;
+    right: 0;
+    margin-top: -22px;
+    opacity: 0;
+    transition: all $transition;
+    padding: 0.3rem;
+
+    span {
+      padding: 6px;
+      border-radius: 50%;
+      display: block;
+      transition: all $transition;
+      background-color: transparent;
+    }
+
+    &:focus,
+    &:hover {
+      span {
+        background-color: $c--green;
+      }
+
+      svg {
+        fill: $c--white;
+      }
+    }
+
+    svg {
+      fill: $c--green;
+    }
+
+    &.active {
+      opacity: 1;
+      transition-delay: 0.2s;
+    }
+  }
+
+  .row-action {
+    position: absolute;
+    top: 0;
+    right: 0;
+    opacity: 0;
+    transition: all $transition;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &.active {
+      opacity: 1;
+      transition-delay: 0.2s;
+    }
+  }
+
+  .toggle-select {
+    display: block;
+    width: $buttonSize;
+    height: $buttonSize;
+    padding: 8px;
+
+    &:focus {
+      outline: none;
+    }
+
+    span {
+      display: block;
+      border-radius: 50%;
+      border: 2px solid lighten($c--gray-a, 20%);
+      transition: all $transition;
+      padding: 2px;
+
+      svg {
+        display: block;
+        width: 100%;
+        fill: $c--gray-a;
+        opacity: 0.2;
+        transition: all $transition;
+      }
+    }
+
+    &.selected span {
+      border-color: $c--green;
+      background-color: $c--green;
+      svg {
+        opacity: 1;
+        fill: $c--white;
+      }
+    }
+  }
+}

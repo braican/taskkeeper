@@ -1,0 +1,18 @@
+@mixin utility-button($size: 44px) {
+  background-color: $c--gray-e;
+  width: $size;
+  height: $size;
+  padding: 0.7rem;
+  transition: background-color $quick-transition;
+
+  svg {
+    display: block;
+    width: 100%;
+    transition: fill $quick-transition;
+  }
+
+  &:focus {
+    outline: none;
+    background-color: $c--gray-e;
+  }
+}

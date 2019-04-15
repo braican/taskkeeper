@@ -1,0 +1,140 @@
+@import '../../styles/abstracts/abstracts';
+
+.Invoice {
+  padding: $spacing--md;
+  background-color: $c--gray-fe;
+  margin-top: $spacing--lg;
+}
+
+.display-grid {
+  background-color: transparent;
+  border: 1px solid $c--gray-fe;
+}
+
+.info {
+  position: relative;
+
+  @include mq($bp--tablet) {
+    display: flex;
+  }
+
+  .display-list & {
+    padding-right: 120px;
+
+    @include mq($bp--tablet, 'max') {
+      padding-right: 0;
+      padding-top: 52px;
+    }
+  }
+}
+
+.infoMain {
+  .display-list & {
+    padding-right: $spacing--lg;
+
+    @include mq($bp--desktop) {
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+    }
+  }
+
+  .display-grid & {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+  }
+}
+
+.display-grid {
+  position: relative;
+
+  .price {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+  }
+
+  .invoiceId {
+    width: 100%;
+  }
+}
+
+.infoDates {
+  @include mq($bp--desktop) {
+    min-width: 240px;
+  }
+}
+
+.metadata {
+  margin-right: $spacing--lg;
+  margin-bottom: $spacing--md;
+
+  &:last-child {
+    margin-right: 0;
+  }
+
+  span {
+    display: block;
+  }
+}
+
+.price {
+  font-size: $fs--lg;
+  font-weight: $fw--bold;
+  line-height: 1;
+}
+
+.metadataValue {
+  font-size: $fs--sm;
+}
+
+.action {
+  position: absolute;
+  top: 0;
+  right: 0;
+
+  @include mq($bp--tablet, 'max') {
+    left: 0;
+
+    button {
+      width: 100%;
+      display: block;
+    }
+  }
+}
+
+.taskExpander {
+  &:focus {
+    outline: none;
+  }
+  h6,
+  svg {
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  h6 {
+    margin-right: $spacing--sm;
+  }
+
+  svg {
+    width: 14px;
+    height: 14px;
+    transition: transform $transition;
+  }
+
+  &_flipped svg {
+    transform: scale(-1);
+  }
+}
+.taskList {
+  margin-top: $spacing--sm;
+  font-size: $fs--sm;
+  display: none;
+
+  &_expanded {
+    display: block;
+  }
+}

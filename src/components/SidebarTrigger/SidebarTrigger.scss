@@ -1,0 +1,60 @@
+@import '../../styles/abstracts/abstracts';
+
+.SidebarTrigger {
+  @include uppercase;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: $c--primary-blue;
+  color: $c--white;
+  padding: $app--padding $app--padding $app--padding 28px;
+  transition: background-color $transition;
+
+  @include mq($bp--tablet-xl) {
+    display: none;
+  }
+
+  &:focus {
+    outline: none;
+    background-color: $c--primary-blue;
+  }
+
+  &:hover {
+    background-color: $c--primary-blue;
+    span {
+      width: 19px;
+    }
+  }
+
+  span {
+    position: relative;
+
+    &,
+    &:before,
+    &:after {
+      transition: width $transition;
+      display: block;
+      position: absolute;
+      left: 0;
+      height: 4px;
+      width: 16px;
+      top: 50%;
+      margin-top: -2px;
+      background-color: $c--white;
+    }
+
+    &:before,
+    &:after {
+      content: '';
+      width: 100%;
+    }
+
+    &:before {
+      top: -6px;
+    }
+
+    &:after {
+      top: 10px;
+    }
+  }
+}

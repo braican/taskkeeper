@@ -1,0 +1,31 @@
+input[type='text'],
+input[type='number'],
+input[type='date'],
+textarea {
+  font-family: $ff--sans;
+  padding: $spacing--sm;
+  font-size: $fs--input;
+  border: 0;
+  border-bottom: 1px solid $c--gray-a;
+  background-color: $c--gray-fe;
+
+  &:focus {
+    outline: none;
+    border-color: $c--light-blue;
+    border-bottom-width: 2px;
+  }
+}
+
+input[type='text'],
+input[type='number'],
+input[type='date'] {
+  height: 38px;
+}
+
+textarea {
+  margin-bottom: 1px;
+
+  &:focus {
+    margin-bottom: 0;
+  }
+}
