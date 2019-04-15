@@ -44,6 +44,10 @@ See the section about [deployment](#deployment) for more information.
 
 ## Changelog
 
+\*\*2.0.1 `4/15/2019`
+
+- Fixes bug with pathing on built applications. ([#9](https://github.com/braican/taskkeeper/issues/9))
+
 ### 2.0.0 `4/12/2019`
 
 - Full rewrite of the application using React 16.8.
