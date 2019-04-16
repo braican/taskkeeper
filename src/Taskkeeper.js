@@ -9,6 +9,7 @@ import { BrowserRouter, Route } from 'react-router-dom';
 
 import Welcome from './components/Welcome';
 import Dashboard from './components/Dashboard';
+import DashboardButton from './components/Dashboard/DashboardButton';
 import SidebarTrigger from './components/SidebarTrigger';
 import Auth from './components/Auth';
 import ClientForm from './components/ClientForm';
@@ -26,7 +27,7 @@ const mapDispatchToProps = dispatch => ({
 
 const Taskkeeper = ({ auth, sidebarVisible, toggleSidebar }) => {
   if (!isLoaded(auth)) {
-    return <div>Loading</div>;
+    return <div className="app-loading">Loading...</div>;
   }
   const main = useRef();
 
@@ -55,6 +56,7 @@ const Taskkeeper = ({ auth, sidebarVisible, toggleSidebar }) => {
             <SidebarTrigger />
             <div className={`layout${sidebarVisible ? ' layout--sidebar-visible' : ''}`}>
               <aside className="sidebar">
+                <DashboardButton />
                 <ClientForm />
                 <ClientList />
               </aside>

@@ -8,7 +8,7 @@ import { NavLink, withRouter } from 'react-router-dom';
 
 import formatPrice from '../../util/formatPrice';
 
-import './ClientList.scss';
+import styles from './ClientList.module.scss';
 
 const mapStateToProps = state => ({
   uid: state.firebase.auth.uid,
@@ -37,34 +37,33 @@ const clientQuery = ({ uid }) => {
   ];
 };
 
-const ClientList = ({ clients }) => {
-  return (
-    <div className="ClientList">
-      {clients ? (
-        <ul className="list">
-          {clients.map(client => (
-            <li key={client.id} className="client">
-              <NavLink
-                to={`/client/${client.id}`}
-                className="client-link"
-                activeClassName="client-link--active">
-                <div className="client-info">
-                  <span className="client-name">{client.name}</span>
-                  <span className="client-rate">{formatPrice(client.rate)}</span>
-                </div>
-              </NavLink>
-            </li>
-          ))}
-        </ul>
-      ) : null}
-    </div>
-  );
-};
+const ClientList = ({ clients }) => (
+  <nav>
+    {clients && (
+      <ul>
+        {clients.map(client => (
+          <li key={client.id}>
+            <NavLink
+              to={`/client/${client.id}`}
+              className={styles.clientLink}
+              activeClassName={styles.clientLink__active}>
+              <div className={styles.info}>
+                <span className={styles.name}>{client.name}</span>
+                <span>{formatPrice(client.rate)}</span>
+              </div>
+            </NavLink>
+          </li>
+        ))}
+      </ul>
+    )}
+  </nav>
+);
 
 ClientList.propTypes = {
   clients: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string,
+      address: PropTypes.string,
       name: PropTypes.string,
       rate: PropTypes.string,
     }),

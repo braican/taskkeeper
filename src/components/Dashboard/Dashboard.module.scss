@@ -1,0 +1,64 @@
+@import '../../styles/abstracts/abstracts';
+
+.section {
+  margin-bottom: $spacing--xxl;
+}
+
+.invoiceGroup {
+  margin-top: $spacing--xl;
+}
+
+.billedTotal {
+  color: $c--light-blue;
+  font-size: $fs--xl;
+  font-weight: $fw--bold;
+}
+
+.openTasks {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  grid-column-gap: $spacing--lg;
+  grid-row-gap: $spacing--lg;
+  margin-top: $spacing--lg;
+}
+
+.taskGroup {
+  padding: $spacing--md;
+  background-color: $c--light-blue;
+  color: $c--white;
+  position: relative;
+
+  h4 {
+    line-height: $lh--micro;
+    padding-right: 100px;
+  }
+}
+
+.linkToClient {
+  position: absolute;
+  top: $spacing--md;
+  right: $spacing--md;
+  color: $c--white;
+  font-weight: $fw--bold;
+
+  span,
+  svg {
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  svg {
+    fill: currentColor;
+    width: 16px;
+    margin-left: 0.25em;
+    transition: transform $transition;
+  }
+
+  &:hover {
+    color: $c--primary-blue;
+
+    svg {
+      transform: translate3d(2px, 0, 0);
+    }
+  }
+}
