@@ -3,17 +3,20 @@ import PropTypes from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
+import { NavLink } from 'react-router-dom';
 
 import Invoice from '../Invoice';
 
 import computeTotal from '../../util/computeTotal';
 
+import RightArrow from '../../svg/arrow-right';
 import styles from './Dashboard.module.scss';
 
 const mapStateToProps = state => ({
   uid: state.firebase.auth.uid,
   clients: state.firestore.ordered.userClients,
   invoices: state.firestore.ordered.openInvoices,
+  tasks: state.firestore.ordered.activeTasks,
 });
 
 /**
@@ -47,74 +50,146 @@ const invoiceQuery = ({ uid }) => {
       ],
       storeAs: 'openInvoices',
     },
+    {
+      collection: 'users',
+      doc: uid,
+      subcollections: [
+        {
+          collection: 'tasks',
+          where: [['status', '==', 'estimated']],
+          orderBy: [['client'], ['timestamp']],
+        },
+      ],
+      storeAs: 'activeTasks',
+    },
   ];
 };
 
 /**
- * Maps out an organized object containing invoices grouped by associated client.
+ * Maps out an organized object containing invoices and tasks grouped by associated client.
  *
  * @param {array} clients  List of clients.
  * @param {array} invoices List of invoices.
+ * @param {array} tasks    List of tasks.
  *
  * @return object
  */
-const buildInvoiceMap = (clients, invoices) => {
-  const invoiceMap = {};
+const buildClientMap = (clients, invoices, tasks) => {
+  const map = {};
   invoices.forEach(invoice => {
     const invoiceClient = invoice.client;
 
-    if (invoiceMap[invoiceClient]) {
-      invoiceMap[invoiceClient].invoices.push(invoice);
+    if (map[invoiceClient]) {
+      map[invoiceClient].invoices.push(invoice);
     } else {
       const foundClient = clients.find(client => client.id === invoiceClient);
-      invoiceMap[invoiceClient] = {
+      map[invoiceClient] = {
         clientName: foundClient ? foundClient.name : invoiceClient,
         invoices: [invoice],
+        tasks: [],
       };
     }
   });
 
-  return invoiceMap;
+  tasks.forEach(task => {
+    const taskClient = task.client;
+
+    if (map[taskClient]) {
+      map[taskClient].tasks.push(task);
+    } else {
+      const foundClient = clients.find(client => client.id === taskClient);
+      map[taskClient] = {
+        clientName: foundClient ? foundClient.name : taskClient,
+        invoices: [],
+        tasks: [task],
+      };
+    }
+  });
+
+  return map;
 };
 
-const Dashboard = ({ clients, invoices }) => {
-  if (!invoices || !clients) {
+const Dashboard = ({ clients, invoices, tasks }) => {
+  if (!invoices || !clients || !tasks) {
     return <div>Loading...</div>;
   }
 
-  if (!invoices || invoices.length === 0) {
-    return (
-      <div>
-        <header>
-          <p>No outstanding invoices.</p>
-        </header>
-      </div>
-    );
-  }
+  invoices = invoices || [];
+  tasks = tasks || [];
 
-  const invoiceMap = buildInvoiceMap(clients, invoices);
+  const clientMap = buildClientMap(clients, invoices, tasks);
   const billedTotal = computeTotal(invoices, true);
 
   return (
     <div>
-      <header>
-        <h1>Outstanding Invoices</h1>
+      <section className={`app-section ${styles.section}`}>
+        {invoices.length > 0 ? (
+          <>
+            <header>
+              <h2>Outstanding Invoices</h2>
 
-        <span className={styles.billedTotal}>{billedTotal}</span>
-      </header>
+              <span className={styles.billedTotal}>{billedTotal}</span>
+            </header>
 
-      <ul>
-        {Object.keys(invoiceMap).map(clientId => (
-          <li key={clientId} className={styles.invoiceGroup}>
-            <h4>{invoiceMap[clientId].clientName}</h4>
             <ul>
-              {invoiceMap[clientId].invoices.map(invoice => (
-                <Invoice key={invoice.id} invoice={invoice} display="list" active />
-              ))}
+              {Object.keys(clientMap).map(clientId => {
+                if (clientMap[clientId].invoices.length === 0) {
+                  return null;
+                }
+
+                return (
+                  <li key={clientId} className={styles.invoiceGroup}>
+                    <h5>{clientMap[clientId].clientName}</h5>
+                    <ul>
+                      {clientMap[clientId].invoices.map(invoice => (
+                        <Invoice key={invoice.id} invoice={invoice} display="list" active />
+                      ))}
+                    </ul>
+                  </li>
+                );
+              })}
             </ul>
-          </li>
-        ))}
-      </ul>
+          </>
+        ) : (
+          <p>No outstanding invoices</p>
+        )}
+      </section>
+
+      <section className={`app-section ${styles.section}`}>
+        {tasks.length > 0 ? (
+          <>
+            <header>
+              <h2>Open Tasks</h2>
+            </header>
+
+            <ul className={styles.openTasks}>
+              {Object.keys(clientMap).map(clientId => {
+                const taskCount = clientMap[clientId].tasks.length;
+
+                if (taskCount === 0) {
+                  return null;
+                }
+
+                return (
+                  <li key={clientId} className={styles.taskGroup}>
+                    <h5>{clientMap[clientId].clientName}</h5>
+                    <p>
+                      {taskCount} open task{taskCount > 1 ? 's' : ''}
+                    </p>
+
+                    <NavLink to={`/client/${clientId}`} className={styles.linkToClient}>
+                      <span>To client</span>
+                      <RightArrow />
+                    </NavLink>
+                  </li>
+                );
+              })}
+            </ul>
+          </>
+        ) : (
+          <p>Great job, you have no open tasks!</p>
+        )}
+      </section>
     </div>
   );
 };
@@ -128,7 +203,31 @@ Dashboard.propTypes = {
       rate: PropTypes.string,
     }),
   ),
-  invoices: PropTypes.array,
+  invoices: PropTypes.arrayOf(
+    PropTypes.shape({
+      client: PropTypes.string,
+      dueDate: PropTypes.string,
+      hours: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+      id: PropTypes.string,
+      invoiceId: PropTypes.string,
+      issueDate: PropTypes.string,
+      price: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+      projectDescription: PropTypes.string,
+      tasks: PropTypes.arrayOf(PropTypes.string),
+      timestamp: PropTypes.number,
+    }),
+  ),
+  tasks: PropTypes.arrayOf(
+    PropTypes.shape({
+      client: PropTypes.string,
+      description: PropTypes.string,
+      hours: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+      id: PropTypes.string,
+      price: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+      status: PropTypes.string,
+      timestamp: PropTypes.number,
+    }),
+  ),
 };
 
 export default compose(
