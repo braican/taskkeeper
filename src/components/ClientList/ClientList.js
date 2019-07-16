@@ -15,6 +15,10 @@ const mapStateToProps = state => ({
   clients: state.firestore.ordered.userClients,
 });
 
+const mapDispatchToProps = dispatch => ({
+  toggleSidebar: isOpen => dispatch({ type: 'TOGGLE_CLIENT_SIDEBAR', isOpen }),
+});
+
 /**
  * Query the "client" subcollection for the current user.
  *
@@ -37,7 +41,7 @@ const clientQuery = ({ uid }) => {
   ];
 };
 
-const ClientList = ({ clients }) => (
+const ClientList = ({ clients, toggleSidebar }) => (
   <nav>
     {clients && (
       <ul>
@@ -46,7 +50,8 @@ const ClientList = ({ clients }) => (
             <NavLink
               to={`/client/${client.id}`}
               className={styles.clientLink}
-              activeClassName={styles.clientLink__active}>
+              activeClassName={styles.clientLink__active}
+              onClick={() => toggleSidebar(false)}>
               <div className={styles.info}>
                 <span className={styles.name}>{client.name}</span>
                 <span>{formatPrice(client.rate)}</span>
@@ -68,10 +73,14 @@ ClientList.propTypes = {
       rate: PropTypes.string,
     }),
   ),
+  toggleSidebar: PropTypes.func,
 };
 
 export default compose(
   withRouter,
-  connect(mapStateToProps),
+  connect(
+    mapStateToProps,
+    mapDispatchToProps,
+  ),
   firestoreConnect(clientQuery),
 )(ClientList);

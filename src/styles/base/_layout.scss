@@ -1,4 +1,4 @@
-$sidebar-width: 240px;
+$sidebar-width: 280px;
 
 .sidebar {
   position: fixed;
@@ -13,15 +13,16 @@ $sidebar-width: 240px;
 
   @include mq('max', $bp--tablet-xl) {
     left: -$sidebar-width;
-    box-shadow: -8px 0px 60px rgba(0, 0, 0, 0.2);
+
     .layout--sidebar-visible & {
+      box-shadow: -8px 0px 60px rgba(0, 0, 0, 0.2);
       transform: translateX($sidebar-width);
     }
   }
 }
 
 .main {
-  padding: 80px 8vw 8vw 8vw;
+  padding: 80px $spacing--xxxl $spacing--xxxl $spacing--xxxl;
 
   @include mq($bp--tablet-xl) {
     margin-left: $sidebar-width;

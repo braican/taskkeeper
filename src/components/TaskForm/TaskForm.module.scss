@@ -1,57 +1,56 @@
 @import '../../styles/abstracts/abstracts';
 
 .TaskForm {
-  margin: #{$spacing--lg} #{-$spacing--lg};
-  padding: $spacing--lg;
+  @include placard;
   background-color: $c--gray-fe;
+}
 
-  form {
+.formRow {
+  margin-top: $spacing--md;
+
+  @include mq($bp--tablet-xxl) {
     display: flex;
     align-items: center;
-    margin-top: $spacing--md;
-
-    @include mq('max', $bp--tablet-xxl) {
-      flex-wrap: wrap;
-    }
-  }
-
-  label {
-    position: absolute;
-    top: 0;
-    left: 0;
   }
 }
 
 .formEl {
   flex: 1;
-  position: relative;
-  padding-top: 1.25rem;
 
   input {
     width: 100%;
     display: block;
   }
+
+  @include mq('max', $bp--tablet-xxl) {
+    margin-top: 0.5em;
+  }
 }
+
 .formElNumber {
-  flex: 0 0 100px;
-  width: 100px;
+  @include mq($bp--tablet-xxl) {
+    flex: 0 0 100px;
+    width: 100px;
+    order: 2;
+  }
 }
 
 .toggler {
-  margin-left: 1em;
-  margin-right: 1em;
-  flex: 0;
+  margin-top: 1em;
+
+  @include mq($bp--tablet-xxl) {
+    order: 1;
+    margin: 1.55rem 1em 0 1em;
+    flex: 0;
+  }
 }
 
 .actionPrimary {
-  margin-left: 1em;
-  white-space: nowrap;
-  flex: 0;
+  width: 100%;
+  margin-top: $spacing--lg;
 
-  @include mq('max', $bp--tablet-xxl) {
-    margin-left: 0;
+  button {
     width: 100%;
-    flex: 0 0 100%;
-    margin-top: $spacing--md;
+    display: block;
   }
 }
