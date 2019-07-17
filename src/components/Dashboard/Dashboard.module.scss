@@ -28,10 +28,14 @@
   color: $c--white;
   position: relative;
 
-  h4 {
+  h5 {
     line-height: $lh--micro;
     padding-right: 100px;
   }
+}
+
+.completedTaskGroup {
+  background-color: $c--orange;
 }
 
 .linkToClient {

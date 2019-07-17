@@ -3,9 +3,11 @@ import PropTypes from 'prop-types';
 
 import formatPrice from '../../util/formatPrice';
 
+import styles from './TaskRow.module.scss';
+
 const RowData = ({ description, hours, price, isEditing }) => (
   <>
-    <span className="cell description">
+    <span className={`${styles.cell} ${styles.description}`}>
       {isEditing ? (
         <input
           type="text"
@@ -16,14 +18,14 @@ const RowData = ({ description, hours, price, isEditing }) => (
         description.get
       )}
     </span>
-    <span className="cell hours">
+    <span className={`${styles.cell} ${styles.hours}`}>
       {isEditing && hours.get !== '-' ? (
         <input type="number" defaultValue={hours.get} onChange={e => hours.set(e.target.value)} />
       ) : (
         hours.get
       )}
     </span>
-    <span className="cell price">
+    <span className={`${styles.cell} ${styles.price}`}>
       {isEditing && hours.get === '-' ? (
         <input type="number" defaultValue={price.get} onChange={e => price.set(e.target.value)} />
       ) : (

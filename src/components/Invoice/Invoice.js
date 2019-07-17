@@ -105,7 +105,7 @@ const Invoice = ({ taskRef, invoiceRef, invoice, active, display }) => {
           </button>
           <ul className={`${styles.taskList} ${tasksExpanded ? styles.taskList_expanded : ''}`}>
             {invoiceTasks.map(({ id, description, hours, price }) => (
-              <TaskRow key={id} description={description} hours={hours} price={price} compact />
+              <TaskRow key={id} description={description} hours={hours} price={price} />
             ))}
           </ul>
         </div>

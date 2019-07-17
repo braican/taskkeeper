@@ -63,7 +63,7 @@ const TaskList = ({ tasks, header, hasUtility, canInvoice }) => {
             <p>No tasks</p>
           ) : (
             <>
-              <TaskRowHeader />
+              <TaskRowHeader hasAction={canInvoice} />
               {tasks.map(({ id, description, hours, price }) => (
                 <TaskRow
                   key={id}

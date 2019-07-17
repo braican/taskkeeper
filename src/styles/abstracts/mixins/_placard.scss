@@ -1,0 +1,11 @@
+@mixin placard {
+  margin: $spacing--lg #{-$spacing--lg} $spacing--xxl;
+  padding: $spacing--lg;
+
+  @include mq('max', $bp--tablet-xxl) {
+    margin-left: -$spacing--xxxl;
+    margin-right: -$spacing--xxxl;
+    padding-left: $spacing--xxxl;
+    padding-right: $spacing--xxxl;
+  }
+}

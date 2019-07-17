@@ -30,7 +30,7 @@
   textarea {
     display: block;
     width: 100%;
-    background-color: transparent;
+    background-color: rgba($c--white, 0.2);
     color: $c--white;
     resize: none;
   }
