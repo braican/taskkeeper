@@ -7,6 +7,7 @@
   transition: padding-right $transition;
   font-weight: $fw--bold;
 }
+
 .footerCanInvoice {
   padding-right: 48px;
 }
@@ -16,6 +17,7 @@
   padding: $spacing--xs;
   flex: 0 0 auto;
   padding-left: 1em;
+  padding-right: 0.5em;
   text-align: right;
 }
 

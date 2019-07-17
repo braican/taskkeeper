@@ -18,19 +18,28 @@ const mapStateToProps = state => ({
 });
 
 const Invoice = ({ taskRef, invoiceRef, invoice, active, display }) => {
+  let _isMounted = false;
   const [invoiceTasks, setInvoiceTasks] = useState([]);
   const [tasksExpanded, setTasksExpanded] = useState(false);
 
   useEffect(() => {
+    _isMounted = true;
+
     if (!invoice.tasks) {
       return;
     }
 
     const taskPromises = invoice.tasks.map(taskId => taskRef.doc(taskId).get());
     Promise.all(taskPromises).then(taskDocs => {
-      const localTasks = taskDocs.map(snap => ({ id: snap.id, ...snap.data() }));
-      setInvoiceTasks(localTasks);
+      if (_isMounted) {
+        const localTasks = taskDocs.map(snap => ({ id: snap.id, ...snap.data() }));
+        setInvoiceTasks(localTasks);
+      }
     });
+
+    return () => {
+      _isMounted = false;
+    };
   }, []);
 
   const markAsPaid = () => {
@@ -96,7 +105,7 @@ const Invoice = ({ taskRef, invoiceRef, invoice, active, display }) => {
           </button>
           <ul className={`${styles.taskList} ${tasksExpanded ? styles.taskList_expanded : ''}`}>
             {invoiceTasks.map(({ id, description, hours, price }) => (
-              <TaskRow key={id} description={description} hours={hours} price={price} compact />
+              <TaskRow key={id} description={description} hours={hours} price={price} />
             ))}
           </ul>
         </div>

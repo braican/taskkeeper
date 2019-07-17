@@ -1,0 +1,84 @@
+@import '../../styles/abstracts/abstracts';
+
+.clientLink {
+  position: relative;
+  display: block;
+  line-height: 1;
+  color: $c--black;
+  transition: all $transition;
+  padding: $spacing--lg;
+  margin-top: -1px;
+
+  &:hover:not(.clientLink__active) {
+    color: $c--black;
+    background-color: $c--gray-d;
+  }
+
+  &:before {
+    content: '';
+    display: block;
+    position: absolute;
+    left: $spacing--lg;
+    width: 33%;
+    top: 0;
+    height: 1px;
+    background-color: $c--gray-d;
+  }
+
+  &.clientLink__active:before {
+    background-color: transparent;
+  }
+
+  &:focus,
+  &.clientLink__active {
+    background-color: $c--gray-blue;
+    color: $c--black;
+    z-index: 2;
+  }
+}
+
+.info {
+  transition: transform $transition;
+}
+
+.clientLink:hover .info,
+.clientLink__active .info {
+  transform: translateX(4px);
+}
+
+.name {
+  font-weight: $fw--bold;
+  display: block;
+  margin-bottom: $spacing--xs;
+}
+
+// Status
+// -----------
+
+.status {
+  position: absolute;
+  left: calc(#{$spacing--lg / 2} - 5px);
+  top: 50%;
+  transform: translate3d(0, -50%, 0);
+
+  span {
+    display: block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+
+    + span {
+      margin-top: 0.5em;
+    }
+
+    &.hasInvoice {
+      background-color: $c--green;
+    }
+    &.hasTask {
+      background-color: $c--gray-a;
+    }
+    &.hasCompleted {
+      background-color: $c--orange;
+    }
+  }
+}

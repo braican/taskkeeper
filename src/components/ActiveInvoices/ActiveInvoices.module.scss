@@ -1,8 +1,7 @@
 @import '../../styles/abstracts/abstracts';
 
 .ActiveInvoices {
-  margin: #{$spacing--lg} #{-$spacing--lg} $spacing--xxl;
-  padding: $spacing--lg;
+  @include placard;
   background-color: $c--primary-blue;
 }
 

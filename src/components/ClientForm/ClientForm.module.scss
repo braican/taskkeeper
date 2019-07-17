@@ -30,7 +30,7 @@
   textarea {
     display: block;
     width: 100%;
-    background-color: transparent;
+    background-color: rgba($c--white, 0.2);
     color: $c--white;
     resize: none;
   }
@@ -50,7 +50,7 @@
   @include uppercase;
   display: block;
   width: 100%;
-  padding: 2rem 1rem;
+  padding: $spacing--lg $spacing--md;
   text-align: left;
   transition: all $transition;
   position: relative;

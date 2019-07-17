@@ -1,10 +1,13 @@
 import React, { useState, useContext, useEffect } from 'react';
+import PropTypes from 'prop-types';
 
 import TaskListContext from '../../contexts/TaskListContext';
 
 import CompleteIcon from '../../svg/complete';
 
-const TaskRowHeader = () => {
+import styles from './TaskRow.module.scss';
+
+const TaskRowHeader = ({ hasAction }) => {
   const [selectAll, setSelectAll] = useState(false);
   const { tasks, creatingInvoice, selectAllTasks, selectedTasks } = useContext(TaskListContext);
 
@@ -28,24 +31,31 @@ const TaskRowHeader = () => {
   }, [selectedTasks]);
 
   return (
-    <li className={`TaskRow row header${creatingInvoice ? ' can-invoice' : ''}`}>
-      <div className="wrapper">
-        <span className="cell description">Description</span>
-        <span className="cell hours">Hours</span>
-        <span className="cell price">Price</span>
+    <li
+      className={`${styles.TaskRow} ${styles.header} ${creatingInvoice ? styles.canInvoice : ''}`}>
+      <div className={styles.wrapper}>
+        <span className={`${styles.cell} ${styles.description}`}>Description</span>
+        <span className={`${styles.cell} ${styles.hours}`}>Hours</span>
+        <span className={`${styles.cell} ${styles.price}`}>Price</span>
       </div>
 
-      <div className={`row-action${creatingInvoice ? ' active' : ''}`}>
-        <button
-          className={`toggle-select${selectAll ? ' selected' : ''}`}
-          onClick={toggleSelectAll}>
-          <span>
-            <CompleteIcon />
-          </span>
-        </button>
-      </div>
+      {hasAction && (
+        <div className={`${styles.rowAction} ${creatingInvoice ? styles.active : ''}`}>
+          <button
+            className={`${styles.toggleSelect} ${selectAll ? styles.selected : ''}`}
+            onClick={toggleSelectAll}>
+            <span>
+              <CompleteIcon />
+            </span>
+          </button>
+        </div>
+      )}
     </li>
   );
+};
+
+TaskRowHeader.propTypes = {
+  hasAction: PropTypes.bool,
 };
 
 export default TaskRowHeader;

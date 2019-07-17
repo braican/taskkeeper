@@ -1,0 +1,33 @@
+@import '../../styles/abstracts/abstracts';
+
+.dashboardLink {
+  display: block;
+  line-height: 1;
+  color: $c--black;
+  transition: all $transition;
+  padding: $spacing--xl $spacing--md;
+  font-weight: $fw--bold;
+  margin-bottom: $spacing--lg;
+  background-color: $c--gray-d;
+
+  &:focus,
+  &:hover,
+  &__active {
+    background-color: $c--light-blue;
+    color: $c--white;
+  }
+
+  span,
+  svg {
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  svg {
+    fill: currentColor;
+    width: 20px;
+    height: 20px;
+    margin-left: 1em;
+    margin-top: -2px;
+  }
+}

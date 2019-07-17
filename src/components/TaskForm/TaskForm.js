@@ -38,23 +38,36 @@ const TaskForm = ({ taskRef }) => {
     <div className={styles.TaskForm}>
       <h4>Add a new task</h4>
       <form onSubmit={handleSubmit}>
-        <div className={styles.formEl}>
-          <label htmlFor="task-description">Description</label>
-          <input
-            id="task-description"
-            type="text"
-            value={taskDescription}
-            onChange={e => updateDescription(e.target.value)}
-          />
-        </div>
+        <div className={styles.formRow}>
+          <div className={styles.formEl}>
+            <label className={styles.textInputLabel} htmlFor="task-description">
+              Description
+            </label>
+            <input
+              id="task-description"
+              type="text"
+              value={taskDescription}
+              placeholder="Setting something up..."
+              onChange={e => updateDescription(e.target.value)}
+            />
+          </div>
 
-        <div className={`${styles.toggler} ${styles.formEl}`}>
-          <Toggler onLabel="Hours" offLabel="Cost" onChange={updateFlag} isOn={isFixedRate} />
-        </div>
+          <div className={`${styles.toggler} ${styles.formEl}`}>
+            <Toggler onLabel="Hours" offLabel="Cost" onChange={updateFlag} isOn={isFixedRate} />
+          </div>
 
-        <div className={`${styles.formEl} ${styles.formElNumber}`}>
-          <label htmlFor="task-number">{isFixedRate ? 'Cost' : 'Hours'}</label>
-          <input type="number" value={taskUnit} onChange={e => updatePrice(e.target.value)} />
+          <div className={`${styles.formEl} ${styles.formElNumber}`}>
+            <label className={styles.textInputLabel} htmlFor="task-number">
+              {isFixedRate ? 'Cost' : 'Hours'}
+            </label>
+            <input
+              type="number"
+              value={taskUnit}
+              onChange={e => updatePrice(e.target.value)}
+              placeholder="0"
+              min="0"
+            />
+          </div>
         </div>
 
         <div className={`${styles.formEl} ${styles.actionPrimary}`}>
