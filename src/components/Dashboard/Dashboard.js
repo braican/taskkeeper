@@ -17,6 +17,7 @@ const mapStateToProps = state => ({
   clients: state.firestore.ordered.userClients,
   invoices: state.firestore.ordered.openInvoices,
   tasks: state.firestore.ordered.activeTasks,
+  completed: state.firestore.ordered.completedTasks,
 });
 
 /**
@@ -61,6 +62,18 @@ const invoiceQuery = ({ uid }) => {
         },
       ],
       storeAs: 'activeTasks',
+    },
+    {
+      collection: 'users',
+      doc: uid,
+      subcollections: [
+        {
+          collection: 'tasks',
+          where: [['status', '==', 'completed']],
+          orderBy: [['client'], ['timestamp']],
+        },
+      ],
+      storeAs: 'completedTasks',
     },
   ];
 };
