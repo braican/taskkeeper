@@ -1,5 +1,9 @@
 $sidebar-width: 280px;
 
+.layout {
+  overflow: hidden;
+}
+
 .sidebar {
   position: fixed;
   top: 0;
@@ -37,8 +41,8 @@ $sidebar-width: 280px;
 
 .app-section {
   position: relative;
-  padding-top: 2rem;
-  margin-bottom: $spacing--lg;
+  padding-top: $spacing--xl;
+  margin-bottom: $spacing--xl;
 
   &:before {
     content: '';

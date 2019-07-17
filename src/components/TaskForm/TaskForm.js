@@ -47,9 +47,13 @@ const TaskForm = ({ taskRef }) => {
               id="task-description"
               type="text"
               value={taskDescription}
-              placeholder="&nbsp;"
+              placeholder="Setting something up..."
               onChange={e => updateDescription(e.target.value)}
             />
+          </div>
+
+          <div className={`${styles.toggler} ${styles.formEl}`}>
+            <Toggler onLabel="Hours" offLabel="Cost" onChange={updateFlag} isOn={isFixedRate} />
           </div>
 
           <div className={`${styles.formEl} ${styles.formElNumber}`}>
@@ -60,13 +64,9 @@ const TaskForm = ({ taskRef }) => {
               type="number"
               value={taskUnit}
               onChange={e => updatePrice(e.target.value)}
-              placeholder="&nbsp;"
+              placeholder="0"
               min="0"
             />
-          </div>
-
-          <div className={`${styles.toggler} ${styles.formEl}`}>
-            <Toggler onLabel="Hours" offLabel="Cost" onChange={updateFlag} isOn={isFixedRate} />
           </div>
         </div>
 

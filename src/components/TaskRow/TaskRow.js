@@ -10,11 +10,12 @@ import RowData from './RowData';
 import TaskUtility from './TaskUtility';
 
 import CompleteIcon from '../../svg/complete';
-import './TaskRow.scss';
+
+import styles from './TaskRow.module.scss';
 
 const mapStateToProps = state => ({ taskRef: state.refs.tasks });
 
-const TaskRow = ({ taskRef, taskId, description, hours, price, compact }) => {
+const TaskRow = ({ taskRef, taskId, description, hours, price }) => {
   const { rate } = useContext(ClientContext);
   const { canInvoice, hasUtility, creatingInvoice, selectTask, selectedTasks } = useContext(
     TaskListContext,
@@ -31,20 +32,6 @@ const TaskRow = ({ taskRef, taskId, description, hours, price, compact }) => {
   const [utilMenuStyles, setUtilMenuStyles] = useState({ left: '0', top: '0' });
 
   const rowRef = useRef();
-
-  if (compact) {
-    return (
-      <li className="TaskRow row compact">
-        <TaskRowWrapper>
-          <RowData
-            description={{ get: taskDescription }}
-            hours={{ get: taskHours }}
-            price={{ get: taskPrice }}
-          />
-        </TaskRowWrapper>
-      </li>
-    );
-  }
 
   const handleOffClick = event => {
     if (rowRef.current.contains(event.target)) {
@@ -102,12 +89,12 @@ const TaskRow = ({ taskRef, taskId, description, hours, price, compact }) => {
   return (
     <li
       className={`
-        TaskRow row
-        ${utilMenuActive ? ' utilMenuActive' : ''}
-        ${isEditing ? ' editing' : ''}
-        ${creatingInvoice ? ' can-invoice' : ''}
-        ${isSelected && creatingInvoice ? ' selected' : ''}
-      `}
+        ${styles.TaskRow}
+        ${utilMenuActive ? ` ${styles.utilMenuActive}` : ''}
+        ${isEditing ? ` ${styles.editing}` : ''}
+        ${creatingInvoice ? ` ${styles.canInvoice}` : ''}
+        ${isSelected && creatingInvoice ? ` ${styles.selected}` : ''}
+      `.trim()}
       ref={rowRef}>
       <TaskRowWrapper clickable={hasUtility} onClick={triggerUtilMenu}>
         <RowData
@@ -127,7 +114,9 @@ const TaskRow = ({ taskRef, taskId, description, hours, price, compact }) => {
         />
       )}
       {hasUtility && (
-        <button className={`save-edits${isEditing ? ' active' : ''}`} onClick={saveEdits}>
+        <button
+          className={`${styles.saveEdits} ${isEditing ? styles.active : ''}`}
+          onClick={saveEdits}>
           <span>
             <CompleteIcon />
           </span>
@@ -135,7 +124,7 @@ const TaskRow = ({ taskRef, taskId, description, hours, price, compact }) => {
       )}
 
       {canInvoice && (
-        <div className={`row-action${creatingInvoice ? ' active' : ''}`}>
+        <div className={`${styles.rowAction} ${creatingInvoice ? styles.active : ''}`}>
           <button className={`toggle-select${isSelected ? ' selected' : ''}`} onClick={onSelect}>
             <span>
               <CompleteIcon />
@@ -153,7 +142,6 @@ TaskRow.propTypes = {
   description: PropTypes.string,
   hours: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   price: PropTypes.oneOfType([PropTypes.number, PropTypes.string, PropTypes.element]),
-  compact: PropTypes.bool,
 };
 
 export default connect(mapStateToProps)(TaskRow);

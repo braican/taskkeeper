@@ -31,7 +31,6 @@
   @include mq($bp--tablet-xxl) {
     flex: 0 0 100px;
     width: 100px;
-    order: 2;
   }
 }
 
@@ -39,7 +38,6 @@
   margin-top: 1em;
 
   @include mq($bp--tablet-xxl) {
-    order: 1;
     margin: 1.55rem 1em 0 1em;
     flex: 0;
   }
