@@ -34,6 +34,10 @@
   }
 }
 
+.completedTaskGroup {
+  background-color: $c--orange;
+}
+
 .linkToClient {
   position: absolute;
   top: $spacing--md;

@@ -125,7 +125,9 @@ const TaskRow = ({ taskRef, taskId, description, hours, price }) => {
 
       {canInvoice && (
         <div className={`${styles.rowAction} ${creatingInvoice ? styles.active : ''}`}>
-          <button className={`toggle-select${isSelected ? ' selected' : ''}`} onClick={onSelect}>
+          <button
+            className={`${styles.toggleSelect} ${isSelected ? styles.selected : ''}`}
+            onClick={onSelect}>
             <span>
               <CompleteIcon />
             </span>

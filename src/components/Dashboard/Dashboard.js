@@ -81,13 +81,14 @@ const invoiceQuery = ({ uid }) => {
 /**
  * Maps out an organized object containing invoices and tasks grouped by associated client.
  *
- * @param {array} clients  List of clients.
- * @param {array} invoices List of invoices.
- * @param {array} tasks    List of tasks.
+ * @param {array} clients   List of clients.
+ * @param {array} invoices  List of invoices.
+ * @param {array} tasks     List of estimated tasks.
+ * @param {array} completed List of completed tasks.
  *
  * @return object
  */
-const buildClientMap = (clients, invoices, tasks) => {
+const buildClientMap = (clients, invoices, tasks, completed) => {
   const map = {};
   invoices.forEach(invoice => {
     const invoiceClient = invoice.client;
@@ -100,6 +101,7 @@ const buildClientMap = (clients, invoices, tasks) => {
         clientName: foundClient ? foundClient.name : invoiceClient,
         invoices: [invoice],
         tasks: [],
+        completed: [],
       };
     }
   });
@@ -115,6 +117,23 @@ const buildClientMap = (clients, invoices, tasks) => {
         clientName: foundClient ? foundClient.name : taskClient,
         invoices: [],
         tasks: [task],
+        completed: [],
+      };
+    }
+  });
+
+  completed.forEach(task => {
+    const taskClient = task.client;
+
+    if (map[taskClient]) {
+      map[taskClient].completed.push(task);
+    } else {
+      const foundClient = clients.find(client => client.id === taskClient);
+      map[taskClient] = {
+        clientName: foundClient ? foundClient.name : taskClient,
+        invoices: [],
+        tasks: [],
+        completed: [task],
       };
     }
   });
@@ -122,16 +141,18 @@ const buildClientMap = (clients, invoices, tasks) => {
   return map;
 };
 
-const Dashboard = ({ clients, invoices, tasks }) => {
+const Dashboard = ({ clients, invoices, tasks, completed }) => {
   if (!invoices || !clients || !tasks) {
     return <div>Loading...</div>;
   }
 
   invoices = invoices || [];
   tasks = tasks || [];
+  completed = completed || [];
 
-  const clientMap = buildClientMap(clients, invoices, tasks);
+  const clientMap = buildClientMap(clients, invoices, tasks, completed);
   const billedTotal = computeTotal(invoices, true);
+  const completedTotal = computeTotal(completed, true);
 
   return (
     <div>
@@ -140,7 +161,6 @@ const Dashboard = ({ clients, invoices, tasks }) => {
           <>
             <header>
               <h2>Outstanding Invoices</h2>
-
               <span className={styles.billedTotal}>{billedTotal}</span>
             </header>
 
@@ -165,6 +185,46 @@ const Dashboard = ({ clients, invoices, tasks }) => {
           </>
         ) : (
           <p>No outstanding invoices</p>
+        )}
+      </section>
+
+      <section className={`app-section ${styles.section}`}>
+        {completed.length > 0 ? (
+          <>
+            <header>
+              <h2>Completed Tasks</h2>
+              <span className={styles.billedTotal}>{completedTotal}</span>
+            </header>
+
+            <ul className={styles.openTasks}>
+              {Object.keys(clientMap).map(clientId => {
+                const tasks = clientMap[clientId].completed;
+                const taskCount = tasks.length;
+
+                if (taskCount === 0) {
+                  return null;
+                }
+
+                return (
+                  <li key={clientId} className={`${styles.taskGroup} ${styles.completedTaskGroup}`}>
+                    <h5>{clientMap[clientId].clientName}</h5>
+                    <p>
+                      {taskCount} completed task{taskCount > 1 ? 's' : ''}
+                    </p>
+
+                    <p>{computeTotal(tasks, true)}</p>
+
+                    <NavLink to={`/client/${clientId}`} className={styles.linkToClient}>
+                      <span>To client</span>
+                      <RightArrow />
+                    </NavLink>
+                  </li>
+                );
+              })}
+            </ul>
+          </>
+        ) : (
+          <p>Great job, you have no open tasks!</p>
         )}
       </section>
 
@@ -231,6 +291,17 @@ Dashboard.propTypes = {
     }),
   ),
   tasks: PropTypes.arrayOf(
+    PropTypes.shape({
+      client: PropTypes.string,
+      description: PropTypes.string,
+      hours: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+      id: PropTypes.string,
+      price: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+      status: PropTypes.string,
+      timestamp: PropTypes.number,
+    }),
+  ),
+  completed: PropTypes.arrayOf(
     PropTypes.shape({
       client: PropTypes.string,
       description: PropTypes.string,
