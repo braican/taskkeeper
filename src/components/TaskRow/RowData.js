@@ -22,7 +22,7 @@ const RowData = ({ description, hours, price, isEditing }) => (
       {isEditing && hours.get !== '-' ? (
         <input type="number" defaultValue={hours.get} onChange={e => hours.set(e.target.value)} />
       ) : (
-        hours.get
+        parseFloat(hours.get)
       )}
     </span>
     <span className={`${styles.cell} ${styles.price}`}>
