@@ -2,14 +2,14 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { firebaseConnect, firestoreConnect, isLoaded, isEmpty } from 'react-redux-firebase';
+import { firestoreConnect, isLoaded, isEmpty } from 'react-redux-firebase';
 
 import User from '../User';
 
 import Exit from '../../svg/exit';
 import './Auth.scss';
 
-const mapStateToProps = state => ({ auth: state.firebase.auth });
+const mapStateToProps = state => ({ auth: state.firebase.auth, fb: state.firebase });
 
 const mapDispatchToProps = dispatch => ({
   addClientRef: ref => dispatch({ type: 'ADD_CLIENT_REF', ref }),
@@ -17,7 +17,7 @@ const mapDispatchToProps = dispatch => ({
   addInvoiceRef: ref => dispatch({ type: 'ADD_INVOICE_REF', ref }),
 });
 
-const Auth = ({ auth, firebase, firestore, addClientRef, addTaskRef, addInvoiceRef }) => {
+const Auth = ({ logout, auth, firestore, addClientRef, addTaskRef, addInvoiceRef }) => {
   if (!isLoaded(auth) || isEmpty(auth)) {
     return null;
   }
@@ -34,9 +34,7 @@ const Auth = ({ auth, firebase, firestore, addClientRef, addTaskRef, addInvoiceR
   return (
     <div className="Auth">
       <div>
-        <button
-          className="action-secondary action-has-icon logout"
-          onClick={() => firebase.logout()}>
+        <button className="action-secondary action-has-icon logout" onClick={() => logout()}>
           <span className="action-word">Logout</span>
           <Exit />
         </button>
@@ -47,6 +45,7 @@ const Auth = ({ auth, firebase, firestore, addClientRef, addTaskRef, addInvoiceR
 };
 
 Auth.propTypes = {
+  logout: PropTypes.func.isRequired,
   auth: PropTypes.shape({
     uid: PropTypes.string,
     displayName: PropTypes.string,
@@ -60,7 +59,6 @@ Auth.propTypes = {
 };
 
 export default compose(
-  firebaseConnect(),
   firestoreConnect(),
   connect(
     mapStateToProps,
