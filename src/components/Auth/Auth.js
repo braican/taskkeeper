@@ -9,7 +9,7 @@ import User from '../User';
 import Exit from '../../svg/exit';
 import './Auth.scss';
 
-const mapStateToProps = state => ({ auth: state.firebase.auth, fb: state.firebase });
+const mapStateToProps = state => ({ auth: state.firebase.auth });
 
 const mapDispatchToProps = dispatch => ({
   addClientRef: ref => dispatch({ type: 'ADD_CLIENT_REF', ref }),
