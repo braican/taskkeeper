@@ -34,7 +34,7 @@ const Auth = ({ logout, auth, firestore, addClientRef, addTaskRef, addInvoiceRef
   return (
     <div className="Auth">
       <div>
-        <button className="action-secondary action-has-icon logout" onClick={() => logout()}>
+        <button className="action-secondary action-has-icon logout" onClick={logout}>
           <span className="action-word">Logout</span>
           <Exit />
         </button>
