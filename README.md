@@ -44,6 +44,18 @@ See the section about [deployment](#deployment) for more information.
 
 ## Changelog
 
+**2.1.1** `7/24/2019`
+
+- Fixes a bug where task hours wouldn't allow fractional numbers.
+
+**2.1.0** `7/16/2019`
+
+- Adds a better login page.
+- Introduces a new dashboard for quick access to open tasks and invoices.
+- Adds indicators to client nav to indicate open tasks and invoices.
+- Various style tweaks.
+- Updates node dependencies to fix security vulnerabilities.
+
 **2.0.1** `4/15/2019`
 
 - Fixes bug with pathing on built applications. ([#9](https://github.com/braican/taskkeeper/issues/9))
