@@ -66,6 +66,7 @@ const TaskForm = ({ taskRef }) => {
               onChange={e => updatePrice(e.target.value)}
               placeholder="0"
               min="0"
+              step="0.01"
             />
           </div>
         </div>
