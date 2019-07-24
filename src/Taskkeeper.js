@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { firebaseConnect, isLoaded, isEmpty } from 'react-redux-firebase';
 import { CSSTransition } from 'react-transition-group';
 
-import { BrowserRouter, Route } from 'react-router-dom';
+import { Router, Route } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import ReactGA from 'react-ga';
 
@@ -58,7 +58,7 @@ const Taskkeeper = ({ firebase, auth, sidebarVisible, toggleSidebar }) => {
   }, []);
 
   return (
-    <BrowserRouter history={history}>
+    <Router history={history}>
       <>
         {!isEmpty(auth) && (
           <>
@@ -84,7 +84,7 @@ const Taskkeeper = ({ firebase, auth, sidebarVisible, toggleSidebar }) => {
           <Welcome />
         </CSSTransition>
       </>
-    </BrowserRouter>
+    </Router>
   );
 };
 
