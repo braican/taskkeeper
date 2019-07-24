@@ -1,5 +1,11 @@
 # Taskkeeper Changelog
 
+**2.1.2** `7/24/2019`
+
+- Fixes a bug where fixed-price tasks were returning `NaN`. ([#46](https://github.com/braican/taskkeeper/pull/46))
+- Add Google Analytics.
+- Fixes an error originating from upgrading react-redux-firebase to version 3.0.0-alpha.13 where the `firebase` prop was reserved and conflicting with other internals. Probably related to [this issue](https://github.com/prescottprue/react-redux-firebase/issues/700) in the react-redux-firebase project.
+
 **2.1.1** `7/24/2019`
 
 - Fixes a bug where task hours wouldn't allow fractional numbers.
