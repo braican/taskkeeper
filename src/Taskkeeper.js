@@ -35,7 +35,7 @@ const mapDispatchToProps = dispatch => ({
   toggleSidebar: isOpen => dispatch({ type: 'TOGGLE_CLIENT_SIDEBAR', isOpen }),
 });
 
-const Taskkeeper = ({ auth, sidebarVisible, toggleSidebar }) => {
+const Taskkeeper = ({ firebase, auth, sidebarVisible, toggleSidebar }) => {
   if (!isLoaded(auth)) {
     return <div className="app-loading">Loading...</div>;
   }
@@ -62,7 +62,7 @@ const Taskkeeper = ({ auth, sidebarVisible, toggleSidebar }) => {
       <>
         {!isEmpty(auth) && (
           <>
-            <Auth />
+            <Auth logout={firebase.logout} />
             <SidebarTrigger />
             <div className={`layout${sidebarVisible ? ' layout--sidebar-visible' : ''}`}>
               <aside className="sidebar">
@@ -89,6 +89,7 @@ const Taskkeeper = ({ auth, sidebarVisible, toggleSidebar }) => {
 };
 
 Taskkeeper.propTypes = {
+  firebase: PropTypes.object,
   auth: PropTypes.object,
   sidebarVisible: PropTypes.bool,
   toggleSidebar: PropTypes.func,
