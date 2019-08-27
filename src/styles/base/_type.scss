@@ -1,0 +1,9 @@
+@import url('https://fonts.googleapis.com/css?family=Work+Sans:400,800&display=swap');
+
+html,
+body,
+button,
+input {
+  font-size: $fs--base;
+  font-family: $ff--sans;
+}

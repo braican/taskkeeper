@@ -3,16 +3,6 @@
    License: none (public domain)
 */
 
-*,
-*:after,
-*:before {
-  box-sizing: inherit;
-}
-
-html {
-  box-sizing: border-box;
-}
-
 html,
 body,
 div,
@@ -93,8 +83,7 @@ summary,
 time,
 mark,
 audio,
-video,
-button {
+video {
   margin: 0;
   padding: 0;
   border: 0;
@@ -118,7 +107,6 @@ section {
 }
 body {
   line-height: 1;
-  font-family: serif;
 }
 ol,
 ul {
