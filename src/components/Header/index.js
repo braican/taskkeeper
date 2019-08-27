@@ -1,13 +1,13 @@
 import React from 'react';
-import AuthButton from './AuthButton';
+import User from './User';
 
 import styles from './Header.module.scss';
 
 const Header = () => {
   return (
-    <header>
-      <h1 className={styles.brand}>Taskkeeper</h1>
-      <AuthButton />
+    <header className={styles.header}>
+      <span className={styles.brand}>Taskkeeper</span>
+      <User />
     </header>
   );
 };

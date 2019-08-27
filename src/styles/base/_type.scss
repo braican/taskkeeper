@@ -2,8 +2,32 @@
 
 html,
 body,
-button,
 input {
   font-size: $fs--base;
   font-family: $ff--sans;
+}
+
+button {
+  appearance: none;
+  cursor: pointer;
+  color: inherit;
+  font-size: inherit;
+  font-family: inherit;
+  font: inherit;
+  text-align: center;
+  background-color: transparent;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.button {
+  @include transition(background-color);
+  padding: 0.5em 1em;
+  border-radius: $border-radius;
+  background-color: $c--blue;
+
+  &:hover {
+    background-color: $c--blue-dark;
+  }
 }

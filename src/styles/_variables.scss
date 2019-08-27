@@ -1,0 +1,51 @@
+// Colors
+// -----------
+
+$c--blue: #0066ff;
+$c--blue-dark: darken(#0066ff, 4%);
+$c--black: #222222;
+$c--gray-a: #ab9e9e;
+$c--gray-c: #cccccc;
+$c--white: #ffffff;
+
+// Type
+// -----------
+
+$fs--base: 16px;
+$fs--lg: 1.25rem;
+$fs--xl: 2rem;
+
+$fw--normal: 400;
+$fw--bold: 800;
+
+$ff--sans: 'Work Sans', sans-serif;
+
+// Spacing
+// -----------
+
+$spacing--base: 1rem;
+
+// Layout
+// -----------
+
+$sidebar-width: 100px;
+
+// Elements
+// -----------
+
+$border-radius: 4px;
+
+// Transitions
+// -----------
+
+// Easings
+// In ascending order of accelaration.
+$in-out-sine: cubic-bezier(0.445, 0.05, 0.55, 0.95);
+$in-out-quad: cubic-bezier(0.455, 0.03, 0.515, 0.955);
+$in-out-cubic: cubic-bezier(0.645, 0.045, 0.355, 1);
+$in-out-quart: cubic-bezier(0.77, 0, 0.175, 1);
+
+// Transition Durations
+$t-duration: 0.2s;
+$t-duration-fast: $t-duration / 2;
+$t-duration-slow: $t-duration * 2;

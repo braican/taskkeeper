@@ -50,7 +50,7 @@
     "react-redux-firebase": "^3.0.0-alpha.10",
     "react-router-dom": "^5.0.1",
     "react-scripts": "2.1.5",
-    "react-transition-group": "^3.0.0",
+    "react-transition-group": "^4.2.2",
     "redux": "^4.0.1",
     "redux-firestore": "^0.8.0"
   },

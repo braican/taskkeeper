@@ -1,5 +1,24 @@
+@import '../../styles/abstracts';
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
 .brand {
+  position: absolute;
+  top: 0;
+  left: 0;
   transform-origin: left top;
-  transform: rotate(90deg) translateY(-100%);
-  color: $c--blue;
+  width: 100vh;
+  padding: spacing() ($sidebar-width + 20px) spacing() spacing();
+  transform: rotate(-90deg) translateX(-100%);
+  text-align: right;
+  font-size: $fs--xl;
+  font-weight: $fw--bold;
+  letter-spacing: 4px;
+  color: $c--gray-a;
+  opacity: 0.2;
+  text-transform: uppercase;
 }

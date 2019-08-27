@@ -12,27 +12,30 @@ import Welcome from './components/Welcome';
 
 const Taskkeeper = ({ auth }) => {
   return (
-    <div>
+    <div className="app">
       <Header />
-      {isLoaded(auth) ? (
-        <Router>
-          <ProtectedRoute
-            path="/"
-            exact
-            component={Welcome}
-            condition={isEmpty(auth)}
-            redirect="/dashboard"
-          />
-          <ProtectedRoute
-            path="/dashboard"
-            component={Dashboard}
-            condition={!isEmpty(auth)}
-            redirect="/"
-          />
-        </Router>
-      ) : (
-        <h2>loading...</h2>
-      )}
+
+      <main className="app__main">
+        {isLoaded(auth) ? (
+          <Router>
+            <ProtectedRoute
+              path="/"
+              exact
+              component={Welcome}
+              condition={isEmpty(auth)}
+              redirect="/dashboard"
+            />
+            <ProtectedRoute
+              path="/dashboard"
+              component={Dashboard}
+              condition={!isEmpty(auth)}
+              redirect="/"
+            />
+          </Router>
+        ) : (
+          <h2>loading...</h2>
+        )}
+      </main>
     </div>
   );
 };
