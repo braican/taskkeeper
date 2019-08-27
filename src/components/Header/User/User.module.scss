@@ -35,22 +35,6 @@
 // Utility menu
 // -----------
 
-.utilsEnter {
-  opacity: 0;
-  transform: translateY(10px);
-}
-
-.utilsEnterActive,
-.utilsExit {
-  @include transition;
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.utilsExitActive {
-  opacity: 0;
-}
-
 .utils {
   @include box-shadow();
   position: absolute;

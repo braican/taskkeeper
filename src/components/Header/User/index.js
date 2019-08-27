@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
@@ -6,9 +6,27 @@ import { withFirebase, isEmpty, isLoaded } from 'react-redux-firebase';
 import { CSSTransition } from 'react-transition-group';
 
 import styles from './User.module.scss';
+import utilTrsStyles from './UtilTransition.module.scss';
 
 const User = ({ firebase, auth, profile }) => {
   const [utilsVisible, setUtilsVisibility] = useState(false);
+  const utilBox = useRef();
+
+  const clickHandler = event => {
+    if (utilBox && utilBox.current && !utilBox.current.contains(event.target)) {
+      setUtilsVisibility(false);
+    }
+  };
+
+  useEffect(() => {
+    if (utilsVisible) {
+      document.addEventListener('click', clickHandler);
+    }
+
+    return () => {
+      document.removeEventListener('click', clickHandler);
+    };
+  }, [utilsVisible]);
 
   return (
     <div className={styles.user__wrapper}>
@@ -21,15 +39,9 @@ const User = ({ firebase, auth, profile }) => {
           <CSSTransition
             in={utilsVisible}
             timeout={200}
-            classNames={{
-              enter: styles.utilsEnter,
-              enterActive: styles.utilsEnterActive,
-              enterDone: styles.utilsEnterDone,
-              exit: styles.utilsExit,
-              exitActive: styles.utilsExitActive,
-            }}
+            classNames={{ ...utilTrsStyles }}
             unmountOnExit>
-            <div className={styles.utils}>
+            <div className={styles.utils} ref={utilBox}>
               <h6>{profile.displayName}</h6>
               <ul className={styles.util__menu}>
                 <li>
