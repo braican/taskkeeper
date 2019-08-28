@@ -10,13 +10,13 @@ import Header from './components/Header';
 import Dashboard from './components/Dashboard';
 import Welcome from './components/Welcome';
 
-const Taskkeeper = ({ auth }) => {
+const Taskkeeper = ({ auth, profile }) => {
   return (
     <div className="app">
       <Header />
 
       <main className="app__main">
-        {isLoaded(auth) ? (
+        {isLoaded(auth) && isLoaded(profile) ? (
           <Router>
             <ProtectedRoute
               path="/"
@@ -33,18 +33,24 @@ const Taskkeeper = ({ auth }) => {
             />
           </Router>
         ) : (
-          <h2>loading...</h2>
+          <h2>Loading...</h2>
         )}
       </main>
     </div>
   );
 };
 
+Taskkeeper.defaultProps = {
+  auth: null,
+  profile: null,
+};
+
 Taskkeeper.propTypes = {
   auth: PropTypes.object,
+  profile: PropTypes.object,
 };
 
 export default compose(
   withFirebase,
-  connect(({ firebase: { auth } }) => ({ auth })),
+  connect(({ firebase: { auth, profile } }) => ({ auth, profile })),
 )(Taskkeeper);

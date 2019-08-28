@@ -29,6 +29,7 @@ $spacing--base: 1rem;
 // -----------
 
 $sidebar-width: 100px;
+$sidebar-with-padding: calc(#{$sidebar-width} + #{$spacing--base});
 
 // Elements
 // -----------

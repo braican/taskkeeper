@@ -26,8 +26,16 @@ button {
   padding: 0.5em 1em;
   border-radius: $border-radius;
   background-color: $c--blue;
+  color: $c--white;
 
   &:hover {
     background-color: $c--blue-dark;
   }
+}
+
+// Stack
+// -----------
+
+.stack > * + * {
+  margin-top: 1em;
 }

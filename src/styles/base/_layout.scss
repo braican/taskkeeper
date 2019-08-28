@@ -1,4 +1,4 @@
 .app__main {
   margin-left: $sidebar-width;
-  padding: spacing();
+  padding: $sidebar-with-padding spacing(2) spacing(2) spacing(2);
 }

@@ -7,18 +7,23 @@
 }
 
 .brand {
+  @include transition(opacity);
   position: absolute;
   top: 0;
-  left: 0;
+  left: 50%;
   transform-origin: left top;
   width: 100vh;
-  padding: spacing() ($sidebar-width + 20px) spacing() spacing();
-  transform: rotate(-90deg) translateX(-100%);
+  padding: spacing() $sidebar-with-padding spacing() spacing();
+  transform: rotate(-90deg) translate(-100%, -50%);
   text-align: right;
-  font-size: $fs--xl;
+  font-size: $fs--lg;
   font-weight: $fw--bold;
   letter-spacing: 4px;
   color: $c--gray-a;
   opacity: 0.2;
   text-transform: uppercase;
+
+  .header:hover & {
+    opacity: 0.6;
+  }
 }

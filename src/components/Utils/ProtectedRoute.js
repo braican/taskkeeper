@@ -10,7 +10,7 @@ const ProtectedRoute = ({ component: Component, condition, redirect, ...rest }) 
 );
 
 ProtectedRoute.propTypes = {
-  component: PropTypes.func.isRequired,
+  component: PropTypes.oneOfType([PropTypes.func, PropTypes.object]).isRequired,
   condition: PropTypes.bool.isRequired,
   redirect: PropTypes.string.isRequired,
 };

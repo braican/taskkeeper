@@ -9,12 +9,12 @@ const authSettings = {
 
 const Welcome = ({ firebase }) => {
   return (
-    <>
-      <h1>Welcome</h1>
+    <div className="stack">
       <p>You should know what you're owe.</p>
-
-      <button onClick={() => firebase.login(authSettings)}>Log in</button>
-    </>
+      <button className="button" onClick={() => firebase.login(authSettings)}>
+        Log in
+      </button>
+    </div>
   );
 };
 
