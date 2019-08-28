@@ -28,6 +28,11 @@ const User = ({ firebase, auth, profile }) => {
     };
   }, [utilsVisible]);
 
+  const logout = () => {
+    setUtilsVisibility(false);
+    firebase.logout();
+  };
+
   return (
     <div className={styles.user__wrapper}>
       {isLoaded(auth) && !isEmpty(auth) && profile.avatarUrl && (
@@ -45,7 +50,7 @@ const User = ({ firebase, auth, profile }) => {
               <h6>{profile.displayName}</h6>
               <ul className={styles.util__menu}>
                 <li>
-                  <button className="button" onClick={firebase.logout}>
+                  <button className="button" onClick={logout}>
                     Log out
                   </button>
                 </li>
