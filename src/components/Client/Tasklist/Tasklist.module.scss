@@ -1,0 +1,12 @@
+@import '../../../styles/abstracts';
+
+.tasklist {
+  padding: spacing(2);
+  background-color: rgba($c--blue, 0.03);
+  border-radius: $border-radius;
+  margin-top: spacing(4);
+}
+.header {
+  font-size: $fs--lg;
+  font-weight: $fw--bold;
+}

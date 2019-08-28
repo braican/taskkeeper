@@ -6,27 +6,29 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import FormattedPrice from '../Utils/FormattedPrice';
 import EstimatedTasks from './EstimatedTasks';
+import CompletedTasks from './CompletedTasks';
 
 import styles from './Client.module.scss';
 
 export const ClientContext = React.createContext();
 
-const Client = ({ client, completedTasks, estimatedTasks, invoices }) => (
-  <ClientContext.Provider value={{ id: client.id, completedTasks, estimatedTasks, invoices }}>
+const Client = ({ client: { name, rate, id }, completedTasks, estimatedTasks, invoices }) => (
+  <ClientContext.Provider value={{ id, rate, invoices }}>
     <section className={styles.client}>
       <Link className={styles.dashLink} to="/dashboard">
         Dashboard
       </Link>
 
       <header>
-        <h2>{client.name}</h2>
+        <h2 className={styles.client__name}>{name}</h2>
         <p>
-          <FormattedPrice price={client.rate} />
+          <FormattedPrice price={rate} />
         </p>
       </header>
 
       <div>
-        <EstimatedTasks />
+        <EstimatedTasks tasks={estimatedTasks} />
+        <CompletedTasks tasks={completedTasks} />
       </div>
     </section>
   </ClientContext.Provider>

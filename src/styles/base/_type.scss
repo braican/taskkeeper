@@ -2,9 +2,11 @@
 
 html,
 body,
+textarea,
 input {
   font-size: $fs--base;
   font-family: $ff--sans;
+  line-height: $lh--base;
 }
 
 button {
@@ -31,6 +33,13 @@ button {
   &:hover {
     background-color: $c--blue-dark;
   }
+}
+
+// Emoji
+// -----------
+
+.emoji {
+  font-size: $fs--xl;
 }
 
 // Stack

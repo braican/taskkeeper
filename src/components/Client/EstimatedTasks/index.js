@@ -1,12 +1,37 @@
-import React, { useContext } from 'react';
-import { ClientContext } from '../index';
+import React from 'react';
+import PropTypes from 'prop-types';
 
-const EstimatedTasks = () => {
-  const { estimatedTasks } = useContext(ClientContext);
+import Tasklist from '../Tasklist';
+import CompleteButton from '../../Buttons/Complete';
 
-  console.log(estimatedTasks);
+const EstimatedTasks = ({ tasks }) => {
+  const noTasks = (
+    <p>
+      No estimated tasks{' '}
+      <span className="emoji" role="img" aria-label="Nice work">
+        🤘
+      </span>
+      .
+    </p>
+  );
+  const taskUtility = <CompleteButton onClick={() => console.log('test')} />;
 
-  return <h2>all tasks</h2>;
+  return (
+    <Tasklist
+      headline="Estimated Tasks"
+      tasks={tasks}
+      noTasksMessage={noTasks}
+      taskUtility={taskUtility}
+    />
+  );
+};
+
+EstimatedTasks.defaultProps = {
+  tasks: [],
+};
+
+EstimatedTasks.propTypes = {
+  tasks: PropTypes.array,
 };
 
 export default EstimatedTasks;

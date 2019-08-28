@@ -1,3 +1,5 @@
+@import '../../styles/abstracts';
+
 .client {
   position: relative;
 }
@@ -6,4 +8,10 @@
   position: absolute;
   left: 0;
   top: calc(-50px - 1.5rem);
+}
+
+.client__name {
+  @include fluid-font($fs--base * 1.5 620px, $fs--base * 4 1200px);
+  font-weight: $fw--bold;
+  line-height: 1;
 }

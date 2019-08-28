@@ -1,0 +1,103 @@
+@import '../../styles/abstracts';
+
+$input-padding: 0.3rem;
+
+.task {
+  display: flex;
+  align-items: center;
+  margin-top: 1em;
+
+  input {
+    display: block;
+    width: 100%;
+    background-color: transparent;
+  }
+
+  input[type='number']::-webkit-inner-spin-button,
+  input[type='number']::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  + .task .task__wrapper:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: -0.5em;
+    width: 100%;
+    border-top: 1px solid $c--gray-e;
+  }
+}
+
+.task__wrapper {
+  display: flex;
+  align-items: flex-start;
+  position: relative;
+  flex: 1;
+
+  > * + * {
+    margin-left: spacing();
+  }
+}
+
+// Cells.
+.task__description,
+.task__hours input,
+.task__price {
+  padding: $input-padding;
+  border: 1px solid transparent;
+}
+
+// Editable content.
+.task__hours input,
+.task__description {
+  border-radius: $border-radius;
+
+  .task__hours:hover &,
+  &:hover {
+    border-style: dashed;
+    border-color: $c--gray-c;
+  }
+
+  &:focus {
+    outline: none;
+    border-style: solid;
+    border-color: $c--blue;
+  }
+}
+
+.task__description {
+  flex: 1;
+  margin-left: -$input-padding;
+}
+
+.task__hours {
+  width: 120px;
+  display: flex;
+  align-items: center;
+
+  input {
+    text-align: right;
+    flex: 1;
+  }
+
+  .task__hoursLabel {
+    flex: 0 1 auto;
+  }
+}
+
+.task__price {
+  text-align: right;
+  width: 100px;
+}
+
+.task__util {
+  @include transition(opacity);
+  opacity: 0;
+  flex: 0 1 100px;
+  margin-left: spacing(2);
+
+  .task:hover & {
+    opacity: 1;
+  }
+}
