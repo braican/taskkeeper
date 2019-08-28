@@ -9,6 +9,7 @@ import ProtectedRoute from './components/Utils/ProtectedRoute';
 import Header from './components/Header';
 import Dashboard from './components/Dashboard';
 import Welcome from './components/Welcome';
+import Client from './components/Client';
 
 const Taskkeeper = ({ auth, profile }) => (
   <div className="app">
@@ -27,6 +28,12 @@ const Taskkeeper = ({ auth, profile }) => (
           <ProtectedRoute
             path="/dashboard"
             component={Dashboard}
+            condition={!isEmpty(auth)}
+            redirect="/"
+          />
+          <ProtectedRoute
+            path="/client/:clientId"
+            component={Client}
             condition={!isEmpty(auth)}
             redirect="/"
           />
