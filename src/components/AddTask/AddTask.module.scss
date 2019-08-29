@@ -1,0 +1,60 @@
+@import '../../styles/abstracts';
+
+.form {
+  @include bg-section($c--green-xdark);
+  color: $c--white;
+  position: relative;
+
+  input {
+    display: block;
+    width: 100%;
+    background-color: rgba($c--white, 0.96);
+
+    &:focus {
+      background-color: $c--white;
+    }
+  }
+}
+
+.formWrapper {
+  display: flex;
+  align-items: center;
+  padding-top: spacing();
+
+  > div + div {
+    margin-left: spacing();
+  }
+}
+
+.description {
+  flex: 1;
+  max-width: 680px;
+}
+
+.unit {
+  flex: 0 0 100px;
+  width: 100px;
+}
+
+.close {
+  position: absolute;
+  width: 48px;
+  top: -36px;
+  right: 0;
+  background-color: $c--green-xdark;
+  border-radius: $border-radius;
+  padding: 8px;
+
+  &:focus {
+    outline: none;
+    svg {
+      stroke: $c--gray-c;
+    }
+  }
+
+  svg {
+    display: block;
+    width: 100%;
+    stroke: $c--white;
+  }
+}

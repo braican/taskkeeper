@@ -7,7 +7,12 @@
 .dashLink {
   position: absolute;
   left: 0;
-  top: calc(-50px - 1.5rem);
+  top: calc(-#{$sidebar-width / 2} - 1.5rem);
+  color: $c--blue;
+}
+
+.client__header {
+  margin-bottom: spacing(2);
 }
 
 .client__name {

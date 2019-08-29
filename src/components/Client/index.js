@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 
-import { Link } from 'react-router-dom';
 import FormattedPrice from '../Utils/FormattedPrice';
+import BackLink from '../Buttons/BackLink';
+import AddTask from '../AddTask';
 import EstimatedTasks from './EstimatedTasks';
 import CompletedTasks from './CompletedTasks';
 
@@ -14,23 +15,25 @@ export const ClientContext = React.createContext();
 
 const Client = ({ client: { name, rate, id }, completedTasks, estimatedTasks, invoices }) => (
   <ClientContext.Provider value={{ id, rate, invoices }}>
-    <section className={styles.client}>
-      <Link className={styles.dashLink} to="/dashboard">
+    <div className={styles.client}>
+      <BackLink className={styles.dashLink} to="/dashboard">
         Dashboard
-      </Link>
+      </BackLink>
 
-      <header>
+      <header className={styles.client__header}>
         <h2 className={styles.client__name}>{name}</h2>
         <p>
           <FormattedPrice price={rate} />
         </p>
       </header>
 
+      <AddTask />
+
       <div>
         <EstimatedTasks tasks={estimatedTasks} />
         <CompletedTasks tasks={completedTasks} />
       </div>
-    </section>
+    </div>
   </ClientContext.Provider>
 );
 

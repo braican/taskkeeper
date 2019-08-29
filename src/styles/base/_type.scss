@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Work+Sans:400,800&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Work+Sans:400,600,800&display=swap');
 
 html,
 body,
@@ -30,8 +30,19 @@ button {
   background-color: $c--blue;
   color: $c--white;
 
+  &:focus,
   &:hover {
+    outline: none;
     background-color: $c--blue-dark;
+  }
+
+  &--green {
+    background-color: $c--green;
+
+    &:focus,
+    &:hover {
+      background-color: $c--green-dark;
+    }
   }
 }
 

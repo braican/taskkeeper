@@ -37,6 +37,7 @@
 .utils {
   @include box-shadow();
   position: absolute;
+  z-index: 3;
   top: spacing();
   left: 100%;
   width: 160px;

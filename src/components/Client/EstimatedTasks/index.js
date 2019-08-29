@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Tasklist from '../Tasklist';
-import CompleteButton from '../../Buttons/Complete';
+import CircleButton from '../../Buttons/Circle';
+import CompleteIcon from '../../../svg/Complete';
 
 const EstimatedTasks = ({ tasks }) => {
   const noTasks = (
@@ -14,7 +15,7 @@ const EstimatedTasks = ({ tasks }) => {
       .
     </p>
   );
-  const taskUtility = <CompleteButton onClick={() => console.log('test')} />;
+  const taskUtility = <CircleButton onClick={() => console.log('test')} icon={CompleteIcon} />;
 
   return (
     <Tasklist

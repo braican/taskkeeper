@@ -1,7 +1,5 @@
 @import '../../styles/abstracts';
 
-$input-padding: 0.3rem;
-
 .task {
   display: flex;
   align-items: center;
@@ -10,7 +8,6 @@ $input-padding: 0.3rem;
   input {
     display: block;
     width: 100%;
-    background-color: transparent;
   }
 
   input[type='number']::-webkit-inner-spin-button,
@@ -40,33 +37,15 @@ $input-padding: 0.3rem;
   }
 }
 
-// Cells.
-.task__description,
-.task__hours input,
-.task__price {
-  padding: $input-padding;
-  border: 1px solid transparent;
-}
-
-// Editable content.
-.task__hours input,
-.task__description {
-  border-radius: $border-radius;
-
-  .task__hours:hover &,
-  &:hover {
-    border-style: dashed;
-    border-color: $c--gray-c;
-  }
-
-  &:focus {
-    outline: none;
-    border-style: solid;
-    border-color: $c--blue;
-  }
+.task__hours:hover input:not(:focus),
+.task__description:hover:not(:focus) {
+  border-style: dashed;
+  border-color: $c--gray-c;
 }
 
 .task__description {
+  @include input;
+  border-color: transparent;
   flex: 1;
   margin-left: -$input-padding;
 }
@@ -77,6 +56,7 @@ $input-padding: 0.3rem;
   align-items: center;
 
   input {
+    border-color: transparent;
     text-align: right;
     flex: 1;
   }
@@ -87,6 +67,8 @@ $input-padding: 0.3rem;
 }
 
 .task__price {
+  border-color: 1px solid transparent; // to stay consistent with the rest of the cells
+  padding-top: $input-padding;
   text-align: right;
   width: 100px;
 }

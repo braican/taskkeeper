@@ -6,7 +6,7 @@ import { withFirebase, isEmpty, isLoaded } from 'react-redux-firebase';
 import { CSSTransition } from 'react-transition-group';
 
 import styles from './User.module.scss';
-import utilTrsStyles from './UtilTransition.module.scss';
+import trsStyles from './UtilTransition.module.scss';
 
 const User = ({ firebase, auth, profile }) => {
   const [utilsVisible, setUtilsVisibility] = useState(false);
@@ -44,7 +44,7 @@ const User = ({ firebase, auth, profile }) => {
           <CSSTransition
             in={utilsVisible}
             timeout={200}
-            classNames={{ ...utilTrsStyles }}
+            classNames={{ ...trsStyles }}
             unmountOnExit>
             <div className={styles.utils} ref={utilBox}>
               <h6>{profile.displayName}</h6>
