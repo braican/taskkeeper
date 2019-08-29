@@ -1,21 +1,49 @@
-import React, { useState } from 'react';
-import FormEl from '../Forms/FormEl';
-import { CSSTransition } from 'react-transition-group';
+import React, { useState, useContext } from 'react';
+import PropTypes from 'prop-types';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
 
+import { ClientContext } from '../Client';
+
+import FadeInUp from '../Transitions/FadeInUp';
+import FormEl from '../Forms/FormEl';
 import Toggler from '../Forms/Toggler';
 import CircleButton from '../Buttons/Circle';
 import PlusIcon from '../../svg/Plus';
 import CloseIcon from '../../svg/Close';
 
 import styles from './AddTask.module.scss';
-import trsStyles from './FormTransition.module.scss';
 
-const AddTask = () => {
+const AddTask = ({ userRef }) => {
   const [addingTask, setAddingTask] = useState(false);
-  const [unitLabel, setUnitLabel] = useState('Hours');
+  const [isFixedPrice, setIsFixedPrice] = useState(false);
+  const [description, setDescription] = useState('');
+  const [value, setValue] = useState(0);
+  const { rate, id } = useContext(ClientContext);
 
   const handleUnitChange = isFixed => {
-    setUnitLabel(isFixed ? 'Price' : 'Hours');
+    setIsFixedPrice(isFixed);
+  };
+
+  const handleSubmit = event => {
+    event.preventDefault();
+
+    const subtotal = isFixedPrice ? value : value * rate;
+    const taskData = {
+      client: id,
+      status: 'estimated',
+      description,
+      price: parseFloat(subtotal),
+      timestamp: +new Date(),
+    };
+
+    if (!isFixedPrice) {
+      taskData.hours = value;
+    }
+
+    userRef.collection('tasks').add(taskData);
+    setDescription('');
+    setValue('');
   };
 
   return (
@@ -25,12 +53,9 @@ const AddTask = () => {
           Add task
         </button>
       )}
-      <CSSTransition
-        in={addingTask}
-        timeout={{ enter: 200, exit: 0 }}
-        classNames={{ ...trsStyles }}
-        unmountOnExit>
-        <form className={styles.form}>
+
+      <FadeInUp in={addingTask} timeout={{ enter: 200, exit: 0 }} immediateOut>
+        <form className={styles.form} onSubmit={handleSubmit}>
           <div className={styles.formWrapper}>
             <FormEl
               className={styles.description}
@@ -38,18 +63,22 @@ const AddTask = () => {
               type="text"
               label="Description"
               inputConfig={{ placeholder: 'Add the task description...' }}
+              value={description}
+              onChange={e => setDescription(e.target.value)}
             />
 
             <div className={styles.toggler}>
-              <Toggler off="Hours" on="Cost" onChange={handleUnitChange} />
+              <Toggler off="Hours" on="Fixed Price" onChange={handleUnitChange} />
             </div>
 
             <FormEl
               className={styles.unit}
               id="newTask-unit"
+              label={isFixedPrice ? 'Price' : 'Hours'}
               type="number"
-              label={unitLabel}
               inputConfig={{ min: '0', step: '0.01' }}
+              value={value}
+              onChange={e => setValue(e.target.value)}
             />
 
             <div className={styles.actions}>
@@ -61,9 +90,17 @@ const AddTask = () => {
             <CloseIcon />
           </button>
         </form>
-      </CSSTransition>
+      </FadeInUp>
     </section>
   );
 };
 
-export default AddTask;
+AddTask.propTypes = {
+  userRef: PropTypes.object,
+};
+
+AddTask.defaultProps = {
+  userRef: null,
+};
+
+export default compose(connect(({ userRef }) => ({ userRef })))(AddTask);

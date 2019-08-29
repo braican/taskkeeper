@@ -3,17 +3,19 @@ import PropTypes from 'prop-types';
 
 import styles from './FormEl.module.scss';
 
-const FormEl = ({ type, label, id, className, inputConfig }) => (
+const FormEl = ({ id, type, label, value, onChange, className, inputConfig }) => (
   <div className={`${className ? className : ''} ${styles.formEl}`}>
     <label htmlFor={id}>{label}</label>
-    <input type={type} id={id} {...inputConfig} />
+    <input type={type} id={id} {...inputConfig} value={value} onChange={onChange} />
   </div>
 );
 
 FormEl.propTypes = {
+  id: PropTypes.string.isRequired,
   type: PropTypes.string,
   label: PropTypes.string,
-  id: PropTypes.string.isRequired,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  onChange: PropTypes.func,
   className: PropTypes.string,
   children: PropTypes.node,
   inputConfig: PropTypes.object,
@@ -22,6 +24,8 @@ FormEl.propTypes = {
 FormEl.defaultProps = {
   type: 'text',
   label: null,
+  value: undefined,
+  onChange: null,
   children: null,
   className: null,
   inputConfig: {},

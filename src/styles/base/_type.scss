@@ -25,6 +25,7 @@ button {
 
 .button {
   @include transition(background-color);
+  @include box-shadow;
   padding: 0.5em 1em;
   border-radius: $border-radius;
   background-color: $c--blue;

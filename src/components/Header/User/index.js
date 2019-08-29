@@ -3,12 +3,11 @@ import PropTypes from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withFirebase, isEmpty, isLoaded } from 'react-redux-firebase';
-import { CSSTransition } from 'react-transition-group';
 
+import FadeInUp from '../../Transitions/FadeInUp';
 import styles from './User.module.scss';
-import trsStyles from './UtilTransition.module.scss';
 
-const User = ({ firebase, auth, profile }) => {
+const User = ({ firebase, auth, profile, removeUserRef }) => {
   const [utilsVisible, setUtilsVisibility] = useState(false);
   const utilBox = useRef();
 
@@ -30,6 +29,7 @@ const User = ({ firebase, auth, profile }) => {
 
   const logout = () => {
     setUtilsVisibility(false);
+    removeUserRef();
     firebase.logout();
   };
 
@@ -41,11 +41,7 @@ const User = ({ firebase, auth, profile }) => {
             <img src={profile.avatarUrl} alt={`Avatar for ${profile.displayName}`} />
           </button>
 
-          <CSSTransition
-            in={utilsVisible}
-            timeout={200}
-            classNames={{ ...trsStyles }}
-            unmountOnExit>
+          <FadeInUp in={utilsVisible}>
             <div className={styles.utils} ref={utilBox}>
               <h6>{profile.displayName}</h6>
               <ul className={styles.util__menu}>
@@ -56,30 +52,31 @@ const User = ({ firebase, auth, profile }) => {
                 </li>
               </ul>
             </div>
-          </CSSTransition>
+          </FadeInUp>
         </>
       )}
     </div>
   );
 };
 
-User.defaultProps = {
-  auth: null,
-  profile: null,
-};
-
 User.propTypes = {
   firebase: PropTypes.shape({
     logout: PropTypes.func,
   }).isRequired,
-  auth: PropTypes.object,
+  auth: PropTypes.object.isRequired,
   profile: PropTypes.shape({
     avatarUrl: PropTypes.string,
     displayName: PropTypes.string,
-  }),
+  }).isRequired,
+  removeUserRef: PropTypes.func.isRequired,
 };
 
 export default compose(
   withFirebase,
-  connect(({ firebase: { auth, profile } }) => ({ auth, profile })),
+  connect(
+    ({ firebase: { auth, profile } }) => ({ auth, profile }),
+
+    // Dispatch to props.
+    dispatch => ({ removeUserRef: () => dispatch({ type: 'REMOVE_USER_REF' }) }),
+  ),
 )(User);
