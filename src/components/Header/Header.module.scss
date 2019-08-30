@@ -4,11 +4,24 @@
   position: fixed;
   top: 0;
   left: 0;
+  height: 100vh;
   z-index: 999;
 }
 
-.brand {
-  @include transition(opacity);
+.logo {
+  padding: spacing();
+  width: $sidebar-width;
+  height: $sidebar-width;
+  display: block;
+  padding: 10px;
+
+  svg {
+    display: block;
+    width: 100%;
+  }
+}
+
+.name {
   position: absolute;
   top: 0;
   left: 50%;
@@ -23,8 +36,10 @@
   color: $c--gray-a;
   opacity: 0.2;
   text-transform: uppercase;
+}
 
-  .header:hover & {
-    opacity: 0.6;
-  }
+.user__wrapper {
+  position: absolute;
+  bottom: 0;
+  left: 0;
 }

@@ -38,7 +38,7 @@
   @include box-shadow();
   position: absolute;
   z-index: 3;
-  top: spacing();
+  bottom: spacing();
   left: 100%;
   width: 160px;
   background-color: $c--black;

@@ -1,4 +1,6 @@
-@mixin bg-section($bg-color: rgba($c--blue, 0.03), $margin-top: spacing(2)) {
+// @mixin bg-section($bg-color: rgba($c--blue, 0.03), $margin-top: spacing(2)) {
+@mixin bg-section($bg-color: $c--blue-transparent, $margin-top: spacing(2)) {
+  @include box-shadow($blur: 14px, $color: rgba(darken($c--blue-dark, 24%), 0.1));
   padding: spacing(2);
   background-color: $bg-color;
   border-radius: $border-radius;
