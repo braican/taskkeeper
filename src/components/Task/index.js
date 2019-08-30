@@ -1,12 +1,13 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 
 import { ClientContext } from '../Client';
 
-import FormattedPrice from '../Utils/FormattedPrice';
 import Description from './Description';
+import Hours from './Hours';
+import Price from './Price';
 
 import styles from './Task.module.scss';
 
@@ -14,37 +15,32 @@ export const TaskContext = React.createContext();
 
 const Task = ({ task, tag: Tag, userRef, children }) => {
   const { rate } = useContext(ClientContext);
+  const isFixedPrice = !task.hours || task.hours === 0;
   const taskRef = userRef.collection('tasks').doc(task.id);
+  const [price, setPrice] = useState(isFixedPrice ? task.price : task.hours * rate);
+
+  console.log(price);
 
   const handleSave = () => {
     console.log('saved');
   };
 
+  const updatePrice = newHours => {
+    const newPrice = newHours * rate;
+    console.log(newPrice);
+
+    setPrice(newPrice);
+  };
+
   return (
-    <TaskContext.Provider value={{ taskRef, handleSave }}>
+    <TaskContext.Provider value={{ taskRef, handleSave, price, setPrice }}>
       <Tag className={styles.task}>
         <div className={styles.task__wrapper}>
           <Description value={task.description} className={styles.task__description} />
 
-          <span className={styles.task__hours}>
-            {task.hours !== 0 && (
-              <>
-                <input
-                  type="number"
-                  className={styles.task__hoursInput}
-                  defaultValue={task.hours}
-                  min="0"
-                  step="0.01"
-                />
-                <span className={styles.task__hoursLabel}>&nbsp;hours</span>
-              </>
-            )}
-          </span>
+          <Hours className={styles.task__hours} value={task.hours} onChange={updatePrice} />
 
-          <span className={styles.task__price}>
-            <FormattedPrice price={task.hours === 0 ? task.price : task.hours * rate} />
-            {task.hours === 0 && <input defaultValue={task.price} />}
-          </span>
+          <Price isFixed={isFixedPrice} className={styles.task__price} />
         </div>
 
         <div className={styles.task__util}>{children}</div>

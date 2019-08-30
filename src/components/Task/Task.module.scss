@@ -6,7 +6,7 @@
   margin-top: 1em;
 
   input {
-    display: block;
+    // display: block;
     width: 100%;
   }
 
@@ -52,25 +52,15 @@
 
 .task__hours {
   width: 120px;
-  display: flex;
-  align-items: center;
-
-  input {
-    border-color: transparent;
-    text-align: right;
-    flex: 1;
-  }
-
-  .task__hoursLabel {
-    flex: 0 1 auto;
-  }
 }
 
+// Subtotal price
+// -----------
+
 .task__price {
-  border-color: 1px solid transparent; // to stay consistent with the rest of the cells
-  padding-top: $input-padding;
   text-align: right;
   width: 100px;
+  position: relative;
 }
 
 .task__util {
