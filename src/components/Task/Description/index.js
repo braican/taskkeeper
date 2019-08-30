@@ -5,6 +5,7 @@ import ContentEditable from 'react-contenteditable';
 import { TaskContext } from '../index';
 
 const Description = ({ value, className }) => {
+  const initialValue = value;
   const { taskRef, handleSave } = useContext(TaskContext);
   const [isSaving, setIsSaving] = useState(false);
   const [description, setDescription] = useState(value);
@@ -14,9 +15,14 @@ const Description = ({ value, className }) => {
       return;
     }
 
-    setIsSaving(true);
-
     const newDescription = event.target.innerHTML;
+
+    // Don't need to save if the value didn't change.
+    if (newDescription === initialValue) {
+      return;
+    }
+
+    setIsSaving(true);
 
     taskRef.update({ description: newDescription }).then(() => {
       setIsSaving(false);
