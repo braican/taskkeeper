@@ -19,16 +19,12 @@ const Task = ({ task, tag: Tag, userRef, children }) => {
   const taskRef = userRef.collection('tasks').doc(task.id);
   const [price, setPrice] = useState(isFixedPrice ? task.price : task.hours * rate);
 
-  console.log(price);
-
   const handleSave = () => {
     console.log('saved');
   };
 
   const updatePrice = newHours => {
     const newPrice = newHours * rate;
-    console.log(newPrice);
-
     setPrice(newPrice);
   };
 
