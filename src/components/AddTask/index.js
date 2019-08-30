@@ -28,6 +28,10 @@ const AddTask = ({ userRef }) => {
   const handleSubmit = event => {
     event.preventDefault();
 
+    if (!userRef) {
+      return;
+    }
+
     const subtotal = isFixedPrice ? value : value * rate;
     const taskData = {
       client: id,
