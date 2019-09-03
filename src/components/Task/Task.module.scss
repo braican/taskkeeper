@@ -3,11 +3,11 @@
 .task {
   display: flex;
   align-items: center;
-  margin-top: 1em;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
   position: relative;
 
   input {
-    // display: block;
     width: 100%;
   }
 
@@ -22,6 +22,7 @@
     position: absolute;
     left: 0;
     top: -0.5em;
+    top: calc(-0.5em - 1px);
     width: 100%;
     border-top: 1px solid $c--gray-e;
   }
@@ -29,12 +30,16 @@
 
 .task__wrapper {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   position: relative;
   flex: 1;
 
   > * + * {
     margin-left: spacing();
+  }
+
+  .isFocused & > * {
+    pointer-events: none;
   }
 }
 
@@ -64,17 +69,30 @@
 .task__util {
   @include transition(opacity);
   opacity: 0;
-  flex: 0 1 100px;
+  flex: 0 1 auto;
   margin-left: spacing(2);
 
-  .task:not(.editing):hover & {
+  .task:not(.editing):hover &,
+  .isFocused & {
     opacity: 1;
   }
 
   .task.editing & {
     visibility: hidden;
   }
+
+  > * {
+    display: inline-block;
+    vertical-align: middle;
+
+    + * {
+      margin-left: spacing();
+    }
+  }
 }
+
+// Status
+// -----------
 
 .task__status {
   position: absolute;

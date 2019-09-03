@@ -6,7 +6,7 @@ import { TaskContext } from '../index';
 
 const Description = ({ value, className }) => {
   const initialValue = value;
-  const { handleSave, handleFocus } = useContext(TaskContext);
+  const { handleSave, handleInputFocus } = useContext(TaskContext);
   const [isSaving, setIsSaving] = useState(false);
   const [description, setDescription] = useState(value);
 
@@ -31,7 +31,7 @@ const Description = ({ value, className }) => {
       disabled={isSaving}
       className={className}
       tagName="p"
-      onFocus={handleFocus}
+      onFocus={handleInputFocus}
       onChange={event => setDescription(event.target.value)}
       onBlur={handleBlur}
     />

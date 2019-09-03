@@ -22,6 +22,7 @@
 }
 
 .name {
+  @include uppercase;
   position: absolute;
   top: 0;
   left: 50%;
@@ -35,7 +36,6 @@
   letter-spacing: 4px;
   color: $c--gray-a;
   opacity: 0.2;
-  text-transform: uppercase;
 }
 
 .user__wrapper {

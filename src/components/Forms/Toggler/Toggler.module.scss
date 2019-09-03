@@ -61,10 +61,7 @@ $dot-move: $track-width - ($dot + $track-border * 2);
 
 .label {
   @include transition(opacity);
-  font-size: $fs--sm;
-  font-weight: $fw--semibold;
-  letter-spacing: 1px;
-  text-transform: uppercase;
+  @include uppercase;
 
   &:focus {
     outline: none;

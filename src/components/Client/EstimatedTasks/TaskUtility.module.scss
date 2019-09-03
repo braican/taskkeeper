@@ -1,0 +1,54 @@
+@import '../../../styles/abstracts';
+
+.delete {
+  position: relative;
+}
+
+.delete__confirmWrapper {
+  position: absolute;
+  top: 50%;
+  right: 0;
+}
+
+.delete__confirm {
+  @include box-shadow;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  // top: spacing(-1);
+  right: 0;
+  transform: translateY(-50%);
+  width: 278px;
+  background-color: $c--red;
+  border-radius: $border-radius;
+  padding: 0.5rem spacing();
+  color: $c--white;
+  font-size: $fs--sm;
+
+  .delete__actions {
+    margin-left: spacing();
+  }
+
+  .confirm {
+    background-color: $c--red-dark;
+    box-shadow: none;
+    padding-top: 0.4em;
+    padding-bottom: 0.4em;
+
+    &:focus,
+    &:hover {
+      background-color: darken($c--red-dark, 6%);
+    }
+  }
+
+  .cancel {
+    @include transition;
+    @include uppercase($fs--xs);
+    margin-left: spacing();
+
+    &:hover,
+    &:focus {
+      color: $c--gray-e;
+    }
+  }
+}

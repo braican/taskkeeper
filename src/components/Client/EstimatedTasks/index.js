@@ -2,8 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Tasklist from '../Tasklist';
-import CircleButton from '../../Buttons/Circle';
-import CompleteIcon from '../../../svg/Complete';
+import TaskUtility from './TaskUtility';
 
 const EstimatedTasks = ({ tasks }) => {
   const noTasks = (
@@ -15,24 +14,23 @@ const EstimatedTasks = ({ tasks }) => {
       .
     </p>
   );
-  const taskUtility = <CircleButton onClick={() => console.log('test')} icon={CompleteIcon} />;
 
   return (
     <Tasklist
       headline="Estimated Tasks"
       tasks={tasks}
       noTasksMessage={noTasks}
-      taskUtility={taskUtility}
+      utility={TaskUtility}
     />
   );
 };
 
-EstimatedTasks.defaultProps = {
-  tasks: [],
-};
-
 EstimatedTasks.propTypes = {
   tasks: PropTypes.array,
+};
+
+EstimatedTasks.defaultProps = {
+  tasks: [],
 };
 
 export default EstimatedTasks;

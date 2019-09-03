@@ -2,19 +2,19 @@
 
 .enter {
   opacity: 0;
-  transform: translateY(10px);
+  transform: translateX(10px);
 }
 
 .enterActive,
 .exit {
   @include transition;
   opacity: 1;
-  transform: translateY(0);
+  transform: translateX(0);
 }
 
 .enterDone {
   opacity: 1;
-  transform: translateY(0);
+  transform: translateX(0);
 }
 
 .exitActive {

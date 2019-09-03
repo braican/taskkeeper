@@ -7,6 +7,8 @@ $c--blue-transparent: #f8faff;
 $c--green: #00d00e;
 $c--green-dark: darken($c--green, 4%);
 $c--green-xdark: darken($c--green-dark, 14%);
+$c--red: #ff0000;
+$c--red-dark: #cc0000;
 $c--black: #222222;
 $c--gray-4: #444444;
 $c--gray-a: #ab9e9e;
@@ -17,6 +19,7 @@ $c--white: #ffffff;
 // Type
 // -----------
 
+$fs--xs: 0.625rem;
 $fs--sm: 0.875rem;
 $fs--base: 16px;
 $fs--lg: 1.25rem;

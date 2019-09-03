@@ -16,14 +16,17 @@ import styles from './Task.module.scss';
 
 export const TaskContext = React.createContext();
 
-const Task = ({ task, tag: Tag, userRef, children }) => {
+const Task = ({ task, tag: Tag, userRef, utility: Utility }) => {
+  const { id, hours, price: taskPrice, description } = task;
+  const isFixedPrice = !hours || hours === 0;
+  const taskRef = userRef.collection('tasks').doc(id);
+
   const { rate } = useContext(ClientContext);
-  const isFixedPrice = !task.hours || task.hours === 0;
-  const taskRef = userRef.collection('tasks').doc(task.id);
   const [isEditing, setIsEditing] = useState(false);
   const [showSaveAnimation, setShowSaveAnimation] = useState(false);
   const [statusMessage, setStatusMessage] = useState('Editing');
-  const [price, setPrice] = useState(isFixedPrice ? task.price : task.hours * rate);
+  const [isFocused, setFocus] = useState(false);
+  const [price, setPrice] = useState(isFixedPrice ? taskPrice : hours * rate);
 
   const handleSave = (newData, shouldSave) => {
     if (!taskRef || !shouldSave) {
@@ -42,7 +45,7 @@ const Task = ({ task, tag: Tag, userRef, children }) => {
     });
   };
 
-  const handleFocus = () => {
+  const handleInputFocus = () => {
     setShowSaveAnimation(false);
     setStatusMessage('Editing');
     setIsEditing(true);
@@ -55,17 +58,17 @@ const Task = ({ task, tag: Tag, userRef, children }) => {
 
   return (
     <TaskContext.Provider
-      value={{ taskRef, handleSave, price, setPrice, setIsEditing, handleFocus }}>
-      <Tag {...className(styles.task, isEditing && styles.editing)}>
+      value={{ taskRef, handleSave, price, setPrice, setIsEditing, handleInputFocus, setFocus }}>
+      <Tag {...className(styles.task, isEditing && styles.editing, isFocused && styles.isFocused)}>
         <div className={styles.task__wrapper}>
-          <Description value={task.description} className={styles.task__description} />
+          <Description value={description} className={styles.task__description} />
 
-          <Hours className={styles.task__hours} value={task.hours} onChange={updatePrice} />
+          <Hours className={styles.task__hours} value={hours} onChange={updatePrice} />
 
           <Price isFixed={isFixedPrice} className={styles.task__price} />
         </div>
 
-        <div className={styles.task__util}>{children}</div>
+        <div className={styles.task__util}>{Utility && <Utility taskRef={taskRef} />}</div>
 
         <FadeIn in={isEditing}>
           <div {...className(styles.task__status, showSaveAnimation && styles.task__statusSaved)}>
@@ -89,13 +92,13 @@ Task.propTypes = {
   }).isRequired,
   tag: PropTypes.string,
   userRef: PropTypes.object,
-  children: PropTypes.node,
+  utility: PropTypes.func,
 };
 
 Task.defaultProps = {
   tag: 'div',
   userRef: null,
-  children: null,
+  utility: null,
 };
 
 export default compose(connect(({ userRef }) => ({ userRef })))(Task);

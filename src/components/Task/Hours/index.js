@@ -7,7 +7,7 @@ import styles from './Hours.module.scss';
 
 const Hours = ({ value, onChange, className: wrapperClassName }) => {
   const initialValue = parseFloat(value);
-  const { handleSave, handleFocus } = useContext(TaskContext);
+  const { handleSave, handleInputFocus } = useContext(TaskContext);
   const [isSaving, setIsSaving] = useState(false);
   const [hours, setHours] = useState(value);
 
@@ -46,7 +46,7 @@ const Hours = ({ value, onChange, className: wrapperClassName }) => {
             defaultValue={value}
             min="0"
             step="0.01"
-            onFocus={handleFocus}
+            onFocus={handleInputFocus}
             onChange={handleChange}
             onBlur={handleBlur}
             disabled={isSaving}
