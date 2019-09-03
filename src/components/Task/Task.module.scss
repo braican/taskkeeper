@@ -4,6 +4,7 @@
   display: flex;
   align-items: center;
   margin-top: 1em;
+  position: relative;
 
   input {
     // display: block;
@@ -54,9 +55,6 @@
   width: 120px;
 }
 
-// Subtotal price
-// -----------
-
 .task__price {
   text-align: right;
   width: 100px;
@@ -69,7 +67,60 @@
   flex: 0 1 100px;
   margin-left: spacing(2);
 
-  .task:hover & {
+  .task:not(.editing):hover & {
+    opacity: 1;
+  }
+
+  .task.editing & {
+    visibility: hidden;
+  }
+}
+
+.task__status {
+  position: absolute;
+  right: 0;
+  width: 100px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.savingStatus {
+  @include transition(opacity);
+  opacity: 1;
+  font-size: $fs--sm;
+  font-weight: $fw--semibold;
+  color: $c--green;
+
+  .task__statusSaved & {
+    opacity: 0;
+  }
+}
+
+.savedSuccess {
+  @include transition(opacity);
+  width: 28px;
+  height: 2px;
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  margin-top: -14px;
+  opacity: 0;
+
+  svg {
+    @include transition(stroke-dashoffset, $duration: 0.2s, $delay: $t-duration);
+    width: 100%;
+    display: block;
+    stroke: $c--green;
+    stroke-dasharray: 24;
+    stroke-dashoffset: 24;
+
+    .task__statusSaved & {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  .task__statusSaved & {
     opacity: 1;
   }
 }

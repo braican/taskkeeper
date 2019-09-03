@@ -6,30 +6,22 @@ import { TaskContext } from '../index';
 
 const Description = ({ value, className }) => {
   const initialValue = value;
-  const { taskRef, handleSave } = useContext(TaskContext);
+  const { handleSave, handleFocus } = useContext(TaskContext);
   const [isSaving, setIsSaving] = useState(false);
   const [description, setDescription] = useState(value);
 
-  const handleUpdate = event => {
-    if (!taskRef) {
+  const handleBlur = event => {
+    if (typeof handleSave !== 'function') {
       return;
     }
 
     const newDescription = event.target.innerHTML;
-
-    // Don't need to save if the value didn't change.
-    if (newDescription === initialValue) {
-      return;
-    }
+    const shouldSave = newDescription !== initialValue;
 
     setIsSaving(true);
 
-    taskRef.update({ description: newDescription }).then(() => {
+    handleSave({ description: newDescription }, shouldSave).then(() => {
       setIsSaving(false);
-
-      if (typeof handleSave === 'function') {
-        handleSave();
-      }
     });
   };
 
@@ -39,8 +31,9 @@ const Description = ({ value, className }) => {
       disabled={isSaving}
       className={className}
       tagName="p"
+      onFocus={handleFocus}
       onChange={event => setDescription(event.target.value)}
-      onBlur={handleUpdate}
+      onBlur={handleBlur}
     />
   );
 };

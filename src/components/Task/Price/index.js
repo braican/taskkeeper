@@ -8,22 +8,23 @@ import FormattedPrice from '../../Utils/FormattedPrice';
 import styles from './Price.module.scss';
 
 const Price = ({ isFixed, className: wrapperClassName }) => {
-  const { taskRef, price, setPrice, handleSave } = useContext(TaskContext);
+  const { price, setPrice, handleSave, handleFocus } = useContext(TaskContext);
   const [isSaving, setIsSaving] = useState(false);
   const [editing, setEditing] = useState(false);
 
-  const handleChange = () => {
+  const handleInputFocus = () => {
+    handleFocus();
+    setEditing(true);
+  };
+
+  const handleBlur = () => {
     setEditing(false);
+    setIsSaving(true);
 
     const newPrice = parseFloat(price);
 
-    setIsSaving(true);
-    taskRef.update({ price: newPrice }).then(() => {
+    handleSave({ price: newPrice }, true).then(() => {
       setIsSaving(false);
-
-      if (typeof handleSave === 'function') {
-        handleSave();
-      }
     });
   };
 
@@ -42,8 +43,8 @@ const Price = ({ isFixed, className: wrapperClassName }) => {
           min="0"
           step="0.01"
           onChange={event => setPrice(event.target.value)}
-          onFocus={() => setEditing(true)}
-          onBlur={handleChange}
+          onFocus={handleInputFocus}
+          onBlur={handleBlur}
           disabled={isSaving}
         />
       )}

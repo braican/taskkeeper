@@ -7,23 +7,22 @@ import styles from './Hours.module.scss';
 
 const Hours = ({ value, onChange, className: wrapperClassName }) => {
   const initialValue = parseFloat(value);
-  const { taskRef, handleSave } = useContext(TaskContext);
+  const { handleSave, handleFocus } = useContext(TaskContext);
   const [isSaving, setIsSaving] = useState(false);
   const [hours, setHours] = useState(value);
 
   const handleBlur = () => {
-    const newHours = parseFloat(hours);
-
-    if (initialValue === newHours) {
+    if (typeof handleSave !== 'function') {
       return;
     }
 
+    const newHours = parseFloat(hours);
+    const shouldSave = newHours !== initialValue;
+
     setIsSaving(true);
-    taskRef.update({ hours: newHours }).then(() => {
+
+    handleSave({ hours: newHours }, shouldSave).then(() => {
       setIsSaving(false);
-      if (typeof handleSave === 'function') {
-        handleSave();
-      }
     });
   };
 
@@ -47,6 +46,7 @@ const Hours = ({ value, onChange, className: wrapperClassName }) => {
             defaultValue={value}
             min="0"
             step="0.01"
+            onFocus={handleFocus}
             onChange={handleChange}
             onBlur={handleBlur}
             disabled={isSaving}

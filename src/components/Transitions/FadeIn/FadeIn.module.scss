@@ -1,0 +1,15 @@
+@import '../../../styles/abstracts';
+
+.enter {
+  opacity: 0;
+}
+
+.enterActive,
+.exit {
+  @include transition(opacity);
+  opacity: 1;
+}
+
+.exitActive {
+  opacity: 0;
+}
