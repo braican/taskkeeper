@@ -4,6 +4,7 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 
 import { ClientContext } from '../Client';
+import { task } from '../../utils/status';
 
 import FadeInUp from '../Transitions/FadeInUp';
 import FormEl from '../Forms/FormEl';
@@ -35,7 +36,7 @@ const AddTask = ({ userRef }) => {
     const subtotal = isFixedPrice ? value : value * rate;
     const taskData = {
       client: id,
-      status: 'estimated',
+      status: task.ESTIMATED,
       description,
       price: parseFloat(subtotal),
       timestamp: +new Date(),

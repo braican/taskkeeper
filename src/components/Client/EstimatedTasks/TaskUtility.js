@@ -3,6 +3,7 @@ import React, { useState, useContext } from 'react';
 import { TaskContext } from '../../Task';
 
 import { className } from '../../../utils';
+import { task } from '../../../utils/status';
 import FadeInLeft from '../../Transitions/FadeInLeft';
 
 import CircleButton from '../../Buttons/Circle';
@@ -20,7 +21,7 @@ const TaskUtility = () => {
       return;
     }
 
-    taskRef.update({ status: 'completed' });
+    taskRef.update({ status: task.COMPLETED });
   };
 
   const handlePromptDelete = () => {

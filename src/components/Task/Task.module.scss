@@ -1,5 +1,7 @@
 @import '../../styles/abstracts';
 
+$select-button-size: 48px;
+
 .task {
   display: flex;
   align-items: center;
@@ -29,6 +31,7 @@
 }
 
 .task__wrapper {
+  @include transition(transform);
   display: flex;
   align-items: center;
   position: relative;
@@ -38,8 +41,13 @@
     margin-left: spacing();
   }
 
-  .isFocused & > * {
+  .isInvoicing &,
+  .isFocused & {
     pointer-events: none;
+  }
+
+  .isInvoicing & {
+    transform: translateX(#{$select-button-size + 16px});
   }
 }
 
@@ -80,13 +88,15 @@
 }
 
 .task__actions {
-  @include transition(opacity);
+  @include transition;
   opacity: 0;
+  visibility: hidden;
   flex: 0 1 auto;
 
-  .task:not(.editing):hover &,
+  .task:not(.editing):not(.isInvoicing):hover &,
   .isFocused & {
     opacity: 1;
+    visibility: visible;
   }
 
   .task.editing & {
@@ -152,5 +162,50 @@
 
   .task__statusSaved & {
     opacity: 1;
+  }
+}
+
+// Select
+// -----------
+
+.select {
+  position: absolute;
+  width: $select-button-size;
+  height: $select-button-size;
+  top: 50%;
+  left: 0;
+  margin-top: #{$select-button-size / -2};
+  padding: 6px;
+
+  &:focus {
+    outline: none;
+  }
+
+  span {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 2px solid $c--gray-c;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+  }
+
+  svg {
+    width: 100%;
+    display: block;
+    stroke: $c--gray-c;
+  }
+
+  &.selectSelected {
+    span {
+      border-color: $c--green;
+      background-color: $c--green;
+    }
+
+    svg {
+      stroke: $c--white;
+    }
   }
 }

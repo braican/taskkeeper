@@ -16,7 +16,7 @@ import styles from './Task.module.scss';
 
 export const TaskContext = React.createContext();
 
-const Task = ({ task, tag: Tag, userRef, utility: Utility }) => {
+const Task = ({ task, tag: Tag, userRef, isInvoicing, utility: Utility }) => {
   const { id, hours, price: taskPrice, description } = task;
   const isFixedPrice = !hours || hours === 0;
   const taskRef = userRef.collection('tasks').doc(id);
@@ -27,6 +27,7 @@ const Task = ({ task, tag: Tag, userRef, utility: Utility }) => {
   const [statusMessage, setStatusMessage] = useState('Editing');
   const [isFocused, setFocus] = useState(false);
   const [price, setPrice] = useState(isFixedPrice ? taskPrice : hours * rate);
+  const [selected, setSelected] = useState(false);
 
   const handleSave = (newData, shouldSave) => {
     if (!taskRef || !shouldSave) {
@@ -56,10 +57,30 @@ const Task = ({ task, tag: Tag, userRef, utility: Utility }) => {
     setPrice(newPrice);
   };
 
+  const handleSelect = () => {
+    setSelected(!selected);
+  };
+
   return (
     <TaskContext.Provider
       value={{ taskRef, handleSave, price, setPrice, setIsEditing, handleInputFocus, setFocus }}>
-      <Tag {...className(styles.task, isEditing && styles.editing, isFocused && styles.isFocused)}>
+      <Tag
+        {...className(
+          styles.task,
+          isEditing && styles.editing,
+          isFocused && styles.isFocused,
+          isInvoicing && styles.isInvoicing,
+        )}>
+        <FadeIn in={isInvoicing}>
+          <button
+            {...className(styles.select, selected && styles.selectSelected)}
+            onClick={handleSelect}>
+            <span>
+              <CheckmarkIcon />
+            </span>
+          </button>
+        </FadeIn>
+
         <div className={styles.task__wrapper}>
           <Description value={description} className={styles.task__description} />
 
@@ -94,12 +115,14 @@ Task.propTypes = {
   }).isRequired,
   tag: PropTypes.string,
   userRef: PropTypes.object,
+  isInvoicing: PropTypes.bool,
   utility: PropTypes.func,
 };
 
 Task.defaultProps = {
   tag: 'div',
   userRef: null,
+  isInvoicing: false,
   utility: null,
 };
 

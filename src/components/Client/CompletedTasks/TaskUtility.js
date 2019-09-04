@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 
 import { TaskContext } from '../../Task';
+import { task } from '../../../utils/status';
 
 import CircleButton from '../../Buttons/Circle';
 import MinusIcon from '../../../svg/Minus';
@@ -13,7 +14,7 @@ const TaskUtility = () => {
       return;
     }
 
-    taskRef.update({ status: 'estimated' });
+    taskRef.update({ status: task.ESTIMATED });
   };
 
   return (

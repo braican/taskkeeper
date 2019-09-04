@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { withFirebase, isEmpty, isLoaded, firestoreConnect } from 'react-redux-firebase';
 
+import { task } from './utils/status';
+
 import ProtectedRoute from './components/Utils/ProtectedRoute';
 import Header from './components/Header';
 import Dashboard from './components/Dashboard';
@@ -110,7 +112,7 @@ export default compose(
         subcollections: [
           {
             collection: 'tasks',
-            where: [['status', '==', 'estimated']],
+            where: [['status', '==', task.ESTIMATED]],
             orderBy: [['client'], ['timestamp']],
           },
         ],
@@ -122,11 +124,23 @@ export default compose(
         subcollections: [
           {
             collection: 'tasks',
-            where: [['status', '==', 'completed']],
+            where: [['status', '==', task.COMPLETED]],
             orderBy: [['client'], ['timestamp']],
           },
         ],
         storeAs: 'completedTasks',
+      },
+      {
+        collection: 'users',
+        doc: auth.uid,
+        subcollections: [
+          {
+            collection: 'tasks',
+            where: [['status', '==', task.INVOICED]],
+            orderBy: [['client'], ['timestamp']],
+          },
+        ],
+        storeAs: 'invoicedTasks',
       },
     ];
   }),

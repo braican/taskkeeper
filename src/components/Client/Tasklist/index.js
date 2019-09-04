@@ -4,7 +4,7 @@ import Task from '../../Task';
 
 import styles from './Tasklist.module.scss';
 
-const Tasklist = ({ headline, tasks, noTasksMessage, utility: Utility }) => (
+const Tasklist = ({ headline, tasks, noTasksMessage, isInvoicing, utility: Utility }) => (
   <section className={styles.tasklist}>
     {headline && (
       <header>
@@ -15,7 +15,7 @@ const Tasklist = ({ headline, tasks, noTasksMessage, utility: Utility }) => (
     {tasks && tasks.length > 0 ? (
       <ul>
         {tasks.map(task => (
-          <Task task={task} tag="li" key={task.id} utility={Utility} />
+          <Task task={task} tag="li" key={task.id} utility={Utility} isInvoicing={isInvoicing} />
         ))}
       </ul>
     ) : (
@@ -28,6 +28,7 @@ Tasklist.propTypes = {
   headline: PropTypes.string,
   tasks: PropTypes.array,
   noTasksMessage: PropTypes.node,
+  isInvoicing: PropTypes.bool,
   utility: PropTypes.func,
 };
 
@@ -35,6 +36,7 @@ Tasklist.defaultProps = {
   headline: null,
   tasks: [],
   noTasksMessage: null,
+  isInvoicing: false,
   utility: null,
 };
 
