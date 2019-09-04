@@ -43,6 +43,9 @@
   }
 }
 
+// Inputs
+// -----------
+
 .task__hours:hover input:not(:focus),
 .task__description:hover:not(:focus) {
   border-style: dashed;
@@ -66,11 +69,20 @@
   position: relative;
 }
 
+// Util
+// -----------
+
 .task__util {
+  flex: 0 1 auto;
+  margin-left: spacing(2);
+  position: relative;
+  min-width: 80px;
+}
+
+.task__actions {
   @include transition(opacity);
   opacity: 0;
   flex: 0 1 auto;
-  margin-left: spacing(2);
 
   .task:not(.editing):hover &,
   .isFocused & {
@@ -96,8 +108,8 @@
 
 .task__status {
   position: absolute;
-  right: 0;
-  width: 100px;
+  left: 0;
+  width: 100%;
   top: 50%;
   transform: translateY(-50%);
 }

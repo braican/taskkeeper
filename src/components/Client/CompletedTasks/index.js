@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Tasklist from '../Tasklist';
+import TaskUtility from './TaskUtility';
 
 const CompletedTasks = ({ tasks }) => {
   const noTasks = (
@@ -13,7 +14,14 @@ const CompletedTasks = ({ tasks }) => {
     </p>
   );
 
-  return <Tasklist headline="Completed Tasks" tasks={tasks} noTasksMessage={noTasks} />;
+  return (
+    <Tasklist
+      headline="Completed Tasks"
+      tasks={tasks}
+      noTasksMessage={noTasks}
+      utility={TaskUtility}
+    />
+  );
 };
 
 CompletedTasks.defaultProps = {

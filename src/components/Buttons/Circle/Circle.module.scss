@@ -37,6 +37,21 @@
   }
 }
 
+.buttonRed {
+  background-color: $c--red;
+  border-color: $c--red;
+
+  &:focus,
+  &:hover {
+    background-color: $c--red-dark;
+    transform: translateY(-1px);
+  }
+
+  &:hover {
+    border-color: $c--red-dark;
+  }
+}
+
 .label {
   @include uppercase($fs--xs);
   @include transition(opacity);

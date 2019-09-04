@@ -38,7 +38,7 @@ const Hours = ({ value, onChange, className: wrapperClassName }) => {
 
   return (
     <div {...className(wrapperClassName, styles.hours)}>
-      {value && value !== 0 && (
+      {value && value !== 0 ? (
         <>
           <input
             type="number"
@@ -53,7 +53,7 @@ const Hours = ({ value, onChange, className: wrapperClassName }) => {
           />
           <span className={styles.hours__label}>&nbsp;hours</span>
         </>
-      )}
+      ) : null}
     </div>
   );
 };

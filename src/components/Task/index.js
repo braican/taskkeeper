@@ -68,16 +68,18 @@ const Task = ({ task, tag: Tag, userRef, utility: Utility }) => {
           <Price isFixed={isFixedPrice} className={styles.task__price} />
         </div>
 
-        <div className={styles.task__util}>{Utility && <Utility taskRef={taskRef} />}</div>
+        <div className={styles.task__util}>
+          <div className={styles.task__actions}>{Utility && <Utility taskRef={taskRef} />}</div>
 
-        <FadeIn in={isEditing}>
-          <div {...className(styles.task__status, showSaveAnimation && styles.task__statusSaved)}>
-            <p className={styles.savingStatus}>{statusMessage}...</p>
-            <span className={styles.savedSuccess}>
-              <CheckmarkIcon />
-            </span>
-          </div>
-        </FadeIn>
+          <FadeIn in={isEditing}>
+            <div {...className(styles.task__status, showSaveAnimation && styles.task__statusSaved)}>
+              <p className={styles.savingStatus}>{statusMessage}...</p>
+              <span className={styles.savedSuccess}>
+                <CheckmarkIcon />
+              </span>
+            </div>
+          </FadeIn>
+        </div>
       </Tag>
     </TaskContext.Provider>
   );
