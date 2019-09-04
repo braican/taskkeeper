@@ -1,12 +1,16 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
 
 import Tasklist from '../Tasklist';
 import TaskUtility from './TaskUtility';
+import AddInvoice from '../../AddInvoice';
+import FadeInUp from '../../Transitions/FadeInUp';
 
-const CompletedTasks = ({ tasks }) => {
-  const [isInvoicing, setIsInvoicing] = useState(false);
+import styles from './CompletedTasks.module.scss';
 
+const CompletedTasks = ({ tasks, isInvoicing, setInvoicing }) => {
   const noTasks = (
     <p>
       No outstanding tasks{' '}
@@ -23,24 +27,38 @@ const CompletedTasks = ({ tasks }) => {
         tasks={tasks}
         noTasksMessage={noTasks}
         utility={TaskUtility}
-        isInvoicing={isInvoicing}
+        canInvoice
       />
 
-      <div>
-        <button type="button" className="button" onClick={() => setIsInvoicing(true)}>
-          Start an invoice
-        </button>
-      </div>
+      <FadeInUp in={isInvoicing}>
+        <AddInvoice />
+      </FadeInUp>
+
+      {!isInvoicing && (
+        <div className={styles.actions}>
+          <button type="button" className="button" onClick={setInvoicing}>
+            Start an invoice
+          </button>
+        </div>
+      )}
     </>
   );
 };
 
-CompletedTasks.defaultProps = {
-  tasks: [],
-};
-
 CompletedTasks.propTypes = {
   tasks: PropTypes.array,
+  isInvoicing: PropTypes.bool,
+  setInvoicing: PropTypes.func.isRequired,
 };
 
-export default CompletedTasks;
+CompletedTasks.defaultProps = {
+  tasks: [],
+  isInvoicing: false,
+};
+
+export default compose(
+  connect(
+    ({ invoice: { isInvoicing } }) => ({ isInvoicing }),
+    dispatch => ({ setInvoicing: () => dispatch({ type: 'SET_INVOICING' }) }),
+  ),
+)(CompletedTasks);

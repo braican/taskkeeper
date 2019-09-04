@@ -16,7 +16,16 @@ import styles from './Task.module.scss';
 
 export const TaskContext = React.createContext();
 
-const Task = ({ task, tag: Tag, userRef, isInvoicing, utility: Utility }) => {
+const Task = ({
+  task,
+  canInvoice,
+  tag: Tag,
+  utility: Utility,
+  userRef,
+  isInvoicing,
+  addInvoiceTask,
+  removeInvoiceTask,
+}) => {
   const { id, hours, price: taskPrice, description } = task;
   const isFixedPrice = !hours || hours === 0;
   const taskRef = userRef.collection('tasks').doc(id);
@@ -58,7 +67,14 @@ const Task = ({ task, tag: Tag, userRef, isInvoicing, utility: Utility }) => {
   };
 
   const handleSelect = () => {
-    setSelected(!selected);
+    const newSelectState = !selected;
+    setSelected(newSelectState);
+
+    if (newSelectState) {
+      addInvoiceTask(id, price, hours || 0);
+    } else {
+      removeInvoiceTask(id, price, hours || 0);
+    }
   };
 
   return (
@@ -69,17 +85,19 @@ const Task = ({ task, tag: Tag, userRef, isInvoicing, utility: Utility }) => {
           styles.task,
           isEditing && styles.editing,
           isFocused && styles.isFocused,
-          isInvoicing && styles.isInvoicing,
+          canInvoice && isInvoicing && styles.isInvoicing,
         )}>
-        <FadeIn in={isInvoicing}>
-          <button
-            {...className(styles.select, selected && styles.selectSelected)}
-            onClick={handleSelect}>
-            <span>
-              <CheckmarkIcon />
-            </span>
-          </button>
-        </FadeIn>
+        {canInvoice && (
+          <FadeIn in={isInvoicing}>
+            <button
+              {...className(styles.select, selected && styles.selectSelected)}
+              onClick={handleSelect}>
+              <span>
+                <CheckmarkIcon />
+              </span>
+            </button>
+          </FadeIn>
+        )}
 
         <div className={styles.task__wrapper}>
           <Description value={description} className={styles.task__description} />
@@ -113,17 +131,31 @@ Task.propTypes = {
     hours: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     price: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   }).isRequired,
+  canInvoice: PropTypes.bool,
   tag: PropTypes.string,
+  utility: PropTypes.func,
   userRef: PropTypes.object,
   isInvoicing: PropTypes.bool,
-  utility: PropTypes.func,
+  addInvoiceTask: PropTypes.func.isRequired,
+  removeInvoiceTask: PropTypes.func.isRequired,
 };
 
 Task.defaultProps = {
+  canInvoice: false,
   tag: 'div',
+  utility: null,
   userRef: null,
   isInvoicing: false,
-  utility: null,
 };
 
-export default compose(connect(({ userRef }) => ({ userRef })))(Task);
+export default compose(
+  connect(
+    ({ userRef, invoice: { isInvoicing } }) => ({ userRef, isInvoicing }),
+    dispatch => ({
+      addInvoiceTask: (taskId, cost, hours) =>
+        dispatch({ type: 'ADD_INVOICE_TASK', taskId, cost, hours }),
+      removeInvoiceTask: (taskId, cost, hours) =>
+        dispatch({ type: 'REMOVE_INVOICE_TASK', taskId, cost, hours }),
+    }),
+  ),
+)(Task);
