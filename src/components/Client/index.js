@@ -2,12 +2,16 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
+import { firestoreConnect, isLoaded, isEmpty } from 'react-redux-firebase';
+
+import { task } from '../../utils/status';
 
 import FormattedPrice from '../Utils/FormattedPrice';
 import BackLink from '../Buttons/BackLink';
 import AddTask from '../AddTask';
 import EstimatedTasks from './EstimatedTasks';
 import CompletedTasks from './CompletedTasks';
+import FadeIn from '../Transitions/FadeIn';
 
 import styles from './Client.module.scss';
 
@@ -21,6 +25,7 @@ const Client = ({
   unsetInvoicing,
 }) => {
   const [nextInvoiceId, setNextInvoiceId] = useState('');
+
   return (
     <ClientContext.Provider
       value={{
@@ -47,8 +52,12 @@ const Client = ({
         <AddTask />
 
         <div>
-          <EstimatedTasks tasks={estimatedTasks} />
-          <CompletedTasks tasks={completedTasks} />
+          <FadeIn in={estimatedTasks !== null}>
+            <EstimatedTasks tasks={estimatedTasks} />
+          </FadeIn>
+          <FadeIn in={completedTasks !== null}>
+            <CompletedTasks tasks={completedTasks} />
+          </FadeIn>
         </div>
       </div>
     </ClientContext.Provider>
@@ -81,20 +90,59 @@ Client.defaultProps = {
 
 export default compose(
   connect(
-    ({ firestore }, props) => {
+    ({ firestore, firebase: { auth } }, props) => {
       const { clientId: id } = props.match.params;
-      const {
-        completedTasks: allCompleted,
-        estimatedTasks: allEstimated,
-        invoices: allInvoices,
+      let {
+        // completedTasks: allCompleted,
+
+        [`${id}_estimatedTasks`]: estimatedTasks,
+        [`${id}_completedTasks`]: completedTasks,
+        // invoices: allInvoices,
       } = firestore.ordered;
       const client = { id, ...firestore.data.clients[id] };
-      const completedTasks = allCompleted ? allCompleted.filter(task => task.client === id) : [];
-      const estimatedTasks = allEstimated ? allEstimated.filter(task => task.client === id) : [];
-      const invoices = allInvoices ? allInvoices.filter(invoice => invoice.client === id) : [];
 
-      return { client, completedTasks, estimatedTasks, invoices };
+      // const completedTasks = allCompleted ? allCompleted.filter(task => task.client === id) : [];
+      // const estimatedTasks = allEstimated ? allEstimated.filter(task => task.client === id) : [];
+      // const invoices = allInvoices ? allInvoices.filter(invoice => invoice.client === id) : [];
+
+      estimatedTasks = isLoaded(estimatedTasks) ? estimatedTasks : null;
+      completedTasks = isLoaded(completedTasks) ? completedTasks : null;
+
+      // return { client, completedTasks, estimatedTasks, invoices, auth };
+      return { auth, client, estimatedTasks, completedTasks };
     },
     dispatch => ({ unsetInvoicing: () => dispatch({ type: 'UNSET_INVOICING' }) }),
   ),
+  firestoreConnect(({ client: { id }, auth }) => {
+    if (!auth || !auth.uid) {
+      return [];
+    }
+
+    return [
+      {
+        collection: 'users',
+        doc: auth.uid,
+        subcollections: [
+          {
+            collection: 'tasks',
+            where: [['status', '==', task.ESTIMATED], ['client', '==', id]],
+            orderBy: [['timestamp']],
+          },
+        ],
+        storeAs: `${id}_estimatedTasks`,
+      },
+      {
+        collection: 'users',
+        doc: auth.uid,
+        subcollections: [
+          {
+            collection: 'tasks',
+            where: [['status', '==', task.COMPLETED], ['client', '==', id]],
+            orderBy: [['timestamp']],
+          },
+        ],
+        storeAs: `${id}_completedTasks`,
+      },
+    ];
+  }),
 )(Client);

@@ -94,54 +94,54 @@ export default compose(
         ],
         storeAs: 'clients',
       },
-      {
-        collection: 'users',
-        doc: auth.uid,
-        subcollections: [
-          {
-            collection: 'invoices',
-            where: [['status', '==', 'active']],
-            orderBy: [['client'], ['dueDate']],
-          },
-        ],
-        storeAs: 'invoices',
-      },
-      {
-        collection: 'users',
-        doc: auth.uid,
-        subcollections: [
-          {
-            collection: 'tasks',
-            where: [['status', '==', task.ESTIMATED]],
-            orderBy: [['client'], ['timestamp']],
-          },
-        ],
-        storeAs: 'estimatedTasks',
-      },
-      {
-        collection: 'users',
-        doc: auth.uid,
-        subcollections: [
-          {
-            collection: 'tasks',
-            where: [['status', '==', task.COMPLETED]],
-            orderBy: [['client'], ['timestamp']],
-          },
-        ],
-        storeAs: 'completedTasks',
-      },
-      {
-        collection: 'users',
-        doc: auth.uid,
-        subcollections: [
-          {
-            collection: 'tasks',
-            where: [['status', '==', task.INVOICED]],
-            orderBy: [['client'], ['timestamp']],
-          },
-        ],
-        storeAs: 'invoicedTasks',
-      },
+      // {
+      //   collection: 'users',
+      //   doc: auth.uid,
+      //   subcollections: [
+      //     {
+      //       collection: 'invoices',
+      //       where: [['status', '==', 'active']],
+      //       orderBy: [['client'], ['dueDate']],
+      //     },
+      //   ],
+      //   storeAs: 'invoices',
+      // },
+      // {
+      //   collection: 'users',
+      //   doc: auth.uid,
+      //   subcollections: [
+      //     {
+      //       collection: 'tasks',
+      //       where: [['status', '==', task.ESTIMATED]],
+      //       orderBy: [['client'], ['timestamp']],
+      //     },
+      //   ],
+      //   storeAs: 'estimatedTasks',
+      // },
+      // {
+      //   collection: 'users',
+      //   doc: auth.uid,
+      //   subcollections: [
+      //     {
+      //       collection: 'tasks',
+      //       where: [['status', '==', task.COMPLETED]],
+      //       orderBy: [['client'], ['timestamp']],
+      //     },
+      //   ],
+      //   storeAs: 'completedTasks',
+      // },
+      // {
+      //   collection: 'users',
+      //   doc: auth.uid,
+      //   subcollections: [
+      //     {
+      //       collection: 'tasks',
+      //       where: [['status', '==', task.INVOICED]],
+      //       orderBy: [['client'], ['timestamp']],
+      //     },
+      //   ],
+      //   storeAs: 'invoicedTasks',
+      // },
     ];
   }),
 )(Taskkeeper);
