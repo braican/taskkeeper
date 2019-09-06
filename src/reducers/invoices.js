@@ -1,3 +1,5 @@
+import { arrayRemove } from '../utils';
+
 export const initialState = {
   isInvoicing: false,
   tasks: [],
@@ -18,16 +20,10 @@ export const invoiceReducer = (state = initialState, action) => {
         return state;
       }
 
-      const newTasks = [...state.tasks];
+      const newTasks = arrayRemove([...state.tasks], taskId);
       const newSubtotal = state.subtotal - parseFloat(cost);
       const newHours = state.hours - parseFloat(hours);
-      const taskIndex = newTasks.indexOf(taskId);
 
-      if (taskIndex === -1) {
-        return state;
-      }
-
-      newTasks.splice(taskIndex, 1);
       return { ...state, tasks: newTasks, subtotal: newSubtotal, hours: newHours };
     }
     case 'ADD_INVOICE_TASK': {

@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
+import { className } from '../../../utils';
 
 import Tasklist from '../Tasklist';
 import TaskUtility from './TaskUtility';
@@ -34,13 +35,11 @@ const CompletedTasks = ({ tasks, isInvoicing, setInvoicing }) => {
         <AddInvoice />
       </FadeInUp>
 
-      {!isInvoicing && (
-        <div className={styles.actions}>
-          <button type="button" className="button" onClick={setInvoicing}>
-            Start an invoice
-          </button>
-        </div>
-      )}
+      <div {...className(styles.actions, isInvoicing && styles.actionHidden)}>
+        <button type="button" className="button" onClick={setInvoicing}>
+          Start an invoice
+        </button>
+      </div>
     </>
   );
 };

@@ -1,3 +1,8 @@
-input {
+input,
+textarea {
   @include input;
+}
+
+textarea {
+  resize: none;
 }

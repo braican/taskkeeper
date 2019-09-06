@@ -1,15 +1,19 @@
 @import '../../../styles/abstracts';
 
-.formEl {
+.label {
+  line-height: 1;
+  display: block;
+  font-size: $fs--sm;
+  font-weight: $fw--semibold;
+  margin-bottom: 0.5em;
+}
+
+.absoluteLabel {
   position: relative;
 
-  label {
-    line-height: 1;
-    display: block;
+  .label {
     position: absolute;
     left: 0;
     top: -1.5em;
-    font-size: $fs--sm;
-    font-weight: $fw--semibold;
   }
 }

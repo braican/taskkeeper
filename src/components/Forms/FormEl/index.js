@@ -1,12 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
+import { className } from '../../../utils';
 import styles from './FormEl.module.scss';
 
-const FormEl = ({ id, type, label, value, onChange, className, inputConfig }) => (
-  <div className={`${className ? className : ''} ${styles.formEl}`}>
-    <label htmlFor={id}>{label}</label>
-    <input type={type} id={id} {...inputConfig} value={value} onChange={onChange} />
+const FormEl = ({
+  id,
+  type,
+  label,
+  value,
+  onChange,
+  absoluteLabel,
+  className: propClassName,
+  inputConfig,
+}) => (
+  <div {...className(styles.formEl, propClassName, absoluteLabel && styles.absoluteLabel)}>
+    <label className={styles.label} htmlFor={id}>
+      {label}
+    </label>
+    {'textarea' === type ? (
+      <textarea id={id} {...inputConfig} value={value} onChange={onChange} />
+    ) : (
+      <input type={type} id={id} {...inputConfig} value={value} onChange={onChange} />
+    )}
   </div>
 );
 
@@ -16,8 +31,8 @@ FormEl.propTypes = {
   label: PropTypes.string,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   onChange: PropTypes.func,
+  absoluteLabel: PropTypes.bool,
   className: PropTypes.string,
-  children: PropTypes.node,
   inputConfig: PropTypes.object,
 };
 
@@ -26,7 +41,7 @@ FormEl.defaultProps = {
   label: null,
   value: undefined,
   onChange: null,
-  children: null,
+  absoluteLabel: false,
   className: null,
   inputConfig: {},
 };

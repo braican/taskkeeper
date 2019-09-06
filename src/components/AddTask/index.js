@@ -70,6 +70,7 @@ const AddTask = ({ userRef }) => {
               inputConfig={{ placeholder: 'Add the task description...' }}
               value={description}
               onChange={e => setDescription(e.target.value)}
+              absoluteLabel
             />
 
             <div className={styles.toggler}>
@@ -84,6 +85,7 @@ const AddTask = ({ userRef }) => {
               inputConfig={{ min: '0', step: '0.01' }}
               value={value}
               onChange={e => setValue(e.target.value)}
+              absoluteLabel
             />
 
             <div className={styles.actions}>

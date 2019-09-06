@@ -1,5 +1,14 @@
 @import '../../../styles/abstracts';
 
 .actions {
+  @include transition(opacity);
   margin-top: spacing();
+  opacity: 1;
+  transition-delay: $t-duration;
+}
+
+.actionHidden {
+  transition-duration: 0s;
+  transition-delay: 0s;
+  opacity: 0;
 }

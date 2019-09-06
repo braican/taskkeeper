@@ -6,9 +6,9 @@ import ArrowIcon from '../../../svg/Arrow';
 
 import styles from './BackLink.module.scss';
 
-const BackLink = ({ to, className, children }) => {
+const BackLink = ({ to, className, onClick, children }) => {
   return (
-    <Link to={to} className={`${styles.backlink} ${className}`}>
+    <Link to={to} className={`${styles.backlink} ${className}`} onClick={onClick}>
       <span className={styles.icon}>
         <ArrowIcon dir="left" />
       </span>
@@ -17,15 +17,17 @@ const BackLink = ({ to, className, children }) => {
   );
 };
 
-BackLink.defaultProps = {
-  children: null,
-  className: null,
-};
-
 BackLink.propTypes = {
   to: PropTypes.string.isRequired,
   className: PropTypes.string,
+  onClick: PropTypes.func,
   children: PropTypes.node,
+};
+
+BackLink.defaultProps = {
+  className: null,
+  onClick: null,
+  children: null,
 };
 
 export default BackLink;

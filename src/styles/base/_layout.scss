@@ -1,6 +1,6 @@
 .app__main {
   margin-left: $sidebar-width;
-  padding: $sidebar-with-padding spacing(2) spacing(2) spacing(2);
+  padding: $sidebar-with-padding spacing(2) spacing(10) spacing(2);
   max-width: 1280px;
 
   &:after {
@@ -13,7 +13,6 @@
     opacity: 0.06;
     z-index: -1;
     pointer-events: none;
-    // You may need the xmlns: xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22
     background-image: url(data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20116%20102%22%3E%3Cpath%20d%3D%22M54.46%2047.81L94.77%207.5a3%203%200%200%201%204.23%200l9.9%209.9a3%203%200%200%201%200%204.25L68.61%2062%2087.7%2081a3%203%200%200%201%200%204.24l-9.9%209.9a3%203%200%200%201-4.24%200L21.23%2042.86a3%203%200%200%201%200-4.24l9.9-9.9a3%203%200%200%201%204.24%200z%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M7.09%2042.86a3%203%200%200%201%200-4.24l9.9-9.9a3%203%200%200%201%204.24%200l19.09%2019.09L80.63%207.5a3%203%200%200%201%204.24%200l9.9%209.9a3%203%200%200%201%200%204.25L42.44%2074a3%203%200%200%201-4.24%200z%22%20fill%3D%22%23ff6e0b%22%2F%3E%3C%2Fsvg%3E);
     background-repeat: no-repeat;
     background-position: center center;

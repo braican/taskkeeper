@@ -47,7 +47,7 @@ $select-button-size: 48px;
   }
 
   .isInvoicing & {
-    transform: translateX(#{$select-button-size + 16px});
+    transform: translateX($select-button-size);
   }
 }
 
@@ -173,9 +173,9 @@ $select-button-size: 48px;
   width: $select-button-size;
   height: $select-button-size;
   top: 50%;
-  left: 0;
+  left: -8px;
   margin-top: #{$select-button-size / -2};
-  padding: 6px;
+  padding: 8px;
 
   &:focus {
     outline: none;
@@ -187,7 +187,7 @@ $select-button-size: 48px;
     height: 100%;
     border-radius: 50%;
     border: 2px solid $c--gray-c;
-    padding: 8px;
+    padding: 6px;
     display: flex;
     align-items: center;
   }
