@@ -4433,7 +4433,7 @@ hoek@4.x.x:
   version "4.2.1"
   resolved "https://registry.yarnpkg.com/hoek/-/hoek-4.2.1.tgz#9634502aa12c445dd5a7c5734b572bb8738aacbb"
 
-hoist-non-react-statics@^3.1.0, hoist-non-react-statics@^3.2.1, hoist-non-react-statics@^3.3.0:
+hoist-non-react-statics@^3.1.0, hoist-non-react-statics@^3.3.0:
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-3.3.0.tgz#b09178f0122184fb95acf525daaecb4d8f45958b"
   dependencies:
@@ -8121,12 +8121,12 @@ react-is@^16.6.0, react-is@^16.7.0, react-is@^16.8.1, react-is@^16.9.0:
   version "16.9.0"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.9.0.tgz#21ca9561399aad0ff1a7701c01683e8ca981edcb"
 
-react-redux-firebase@^3.0.0-alpha.10:
-  version "3.0.0-alpha.16"
-  resolved "https://registry.yarnpkg.com/react-redux-firebase/-/react-redux-firebase-3.0.0-alpha.16.tgz#d3ad02a43d126d9843d9134702fdcbf691ad3186"
+react-redux-firebase@^3.0.0-beta:
+  version "3.0.0-beta"
+  resolved "https://registry.yarnpkg.com/react-redux-firebase/-/react-redux-firebase-3.0.0-beta.tgz#3c9b0f96a56619a5df62ccf5eb1337fc9e916e80"
   dependencies:
-    hoist-non-react-statics "^3.2.1"
-    lodash "^4.17.11"
+    hoist-non-react-statics "^3.3.0"
+    lodash "^4.17.15"
     prop-types "^15.7.2"
 
 react-redux@^7.1.1:
