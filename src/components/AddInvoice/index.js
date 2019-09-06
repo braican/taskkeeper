@@ -11,7 +11,7 @@ import FormEl from '../Forms/FormEl';
 
 import styles from './AddInvoice.module.scss';
 
-const AddInvoice = ({ subtotal, hours, unsetInvoicing, userRef }) => {
+const AddInvoice = ({ subtotal, hours, tasks, unsetInvoicing, userRef }) => {
   const { id, symbol, nextInvoiceId, setNextInvoiceId } = useContext(ClientContext);
   const [invoiceIdIsEditable, setInvoiceIdEditability] = useState(false);
   const [issueDate, setIssueDate] = useState(getDate());
@@ -53,6 +53,10 @@ const AddInvoice = ({ subtotal, hours, unsetInvoicing, userRef }) => {
     const newDue = getFutureDate(30, date);
     setIssueDate(date);
     setDueDate(newDue);
+  };
+
+  const handleCreate = () => {
+    console.log(tasks);
   };
 
   return (
@@ -103,7 +107,7 @@ const AddInvoice = ({ subtotal, hours, unsetInvoicing, userRef }) => {
         </div>
       </div>
 
-      <button type="button" className="button button--green">
+      <button type="button" className="button button--green" onClick={handleCreate}>
         Create Invoice
       </button>
       <button type="button" className={styles.cancel} onClick={unsetInvoicing}>
@@ -116,13 +120,20 @@ const AddInvoice = ({ subtotal, hours, unsetInvoicing, userRef }) => {
 AddInvoice.propTypes = {
   subtotal: PropTypes.number,
   hours: PropTypes.number,
+  tasks: PropTypes.array,
   unsetInvoicing: PropTypes.func.isRequired,
   userRef: PropTypes.object.isRequired,
 };
 
+AddInvoice.defaultProps = {
+  subtotal: 0,
+  hours: 0,
+  tasks: [],
+};
+
 export default compose(
   connect(
-    ({ invoice: { subtotal, hours }, userRef }) => ({ subtotal, hours, userRef }),
+    ({ invoice: { subtotal, hours, tasks }, userRef }) => ({ subtotal, hours, tasks, userRef }),
     dispatch => ({ unsetInvoicing: () => dispatch({ type: 'UNSET_INVOICING' }) }),
   ),
 )(AddInvoice);
