@@ -51,3 +51,18 @@ export const getFutureDate = (future, date = null) => {
   date.setDate(date.getDate() + future);
   return date.toISOString().substr(0, 10);
 };
+
+/**
+ * Function to be used in callbacks to filter things that belong to a specific client.
+ *
+ * @param {array} things A list of things that have a client ID attached to them.
+ * @param {string} clientId The client to filter for.
+ *
+ * @return array
+ */
+export const clientFilter = (things, clientId) => {
+  if (!things) {
+    return [];
+  }
+  return things.filter(thing => thing.client === clientId);
+};

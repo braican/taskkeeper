@@ -2,17 +2,19 @@ import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
+import { firestoreConnect } from 'react-redux-firebase';
 
 import { ClientContext } from '../Client';
 import FormattedPrice from '../Utils/FormattedPrice';
 import { getDate, getFutureDate } from '../../utils';
+import { invoice as invoiceStatus, task as taskStatus } from '../../utils/status';
 
 import FormEl from '../Forms/FormEl';
 
 import styles from './AddInvoice.module.scss';
 
-const AddInvoice = ({ subtotal, hours, tasks, unsetInvoicing, userRef }) => {
-  const { id, symbol, nextInvoiceId, setNextInvoiceId } = useContext(ClientContext);
+const AddInvoice = ({ subtotal, hours, tasks, unsetInvoicing, userRef, firestore }) => {
+  const { id: clientId, symbol, nextInvoiceId, setNextInvoiceId } = useContext(ClientContext);
   const [invoiceIdIsEditable, setInvoiceIdEditability] = useState(false);
   const [issueDate, setIssueDate] = useState(getDate());
   const [dueDate, setDueDate] = useState(getFutureDate(30));
@@ -26,14 +28,14 @@ const AddInvoice = ({ subtotal, hours, tasks, unsetInvoicing, userRef }) => {
 
     userRef
       .collection('invoices')
-      .where('client', '==', id)
+      .where('client', '==', clientId)
       .get()
       .then(snapshot => {
         let invoiceCount = 0;
         snapshot.forEach(doc => {
-          const { invoiceId: invId } = doc.data();
-          if (invId) {
-            const invNumber = parseInt(invId.replace(`${symbol}-`, '', invId));
+          const { invoiceId: id } = doc.data();
+          if (id) {
+            const invNumber = parseInt(id.replace(`${symbol}-`, '', id));
 
             if (!isNaN(invNumber) && invNumber > invoiceCount) {
               invoiceCount = invNumber;
@@ -56,7 +58,27 @@ const AddInvoice = ({ subtotal, hours, tasks, unsetInvoicing, userRef }) => {
   };
 
   const handleCreate = () => {
-    console.log(tasks);
+    const batch = firestore.batch();
+
+    tasks.forEach(task => {
+      const taskRef = userRef.collection('tasks').doc(task);
+      batch.update(taskRef, { status: taskStatus.INVOICED });
+    });
+
+    batch.commit();
+
+    const invoiceData = {
+      client: clientId,
+      invoiceId: nextInvoiceId,
+      dueDate,
+      issueDate,
+      description,
+      tasks,
+      status: invoiceStatus.ACTIVE,
+      timestamp: +new Date(),
+    };
+
+    userRef.collection('invoices').add(invoiceData);
   };
 
   return (
@@ -123,6 +145,7 @@ AddInvoice.propTypes = {
   tasks: PropTypes.array,
   unsetInvoicing: PropTypes.func.isRequired,
   userRef: PropTypes.object.isRequired,
+  firestore: PropTypes.object.isRequired,
 };
 
 AddInvoice.defaultProps = {
@@ -132,6 +155,7 @@ AddInvoice.defaultProps = {
 };
 
 export default compose(
+  firestoreConnect(),
   connect(
     ({ invoice: { subtotal, hours, tasks }, userRef }) => ({ subtotal, hours, tasks, userRef }),
     dispatch => ({ unsetInvoicing: () => dispatch({ type: 'UNSET_INVOICING' }) }),

@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { withFirebase, isEmpty, isLoaded, firestoreConnect } from 'react-redux-firebase';
 
-import { task } from './utils/status';
+import { task, invoice } from './utils/status';
 
 import ProtectedRoute from './components/Utils/ProtectedRoute';
 import Header from './components/Header';
@@ -94,54 +94,54 @@ export default compose(
         ],
         storeAs: 'clients',
       },
-      // {
-      //   collection: 'users',
-      //   doc: auth.uid,
-      //   subcollections: [
-      //     {
-      //       collection: 'invoices',
-      //       where: [['status', '==', 'active']],
-      //       orderBy: [['client'], ['dueDate']],
-      //     },
-      //   ],
-      //   storeAs: 'invoices',
-      // },
-      // {
-      //   collection: 'users',
-      //   doc: auth.uid,
-      //   subcollections: [
-      //     {
-      //       collection: 'tasks',
-      //       where: [['status', '==', task.ESTIMATED]],
-      //       orderBy: [['client'], ['timestamp']],
-      //     },
-      //   ],
-      //   storeAs: 'estimatedTasks',
-      // },
-      // {
-      //   collection: 'users',
-      //   doc: auth.uid,
-      //   subcollections: [
-      //     {
-      //       collection: 'tasks',
-      //       where: [['status', '==', task.COMPLETED]],
-      //       orderBy: [['client'], ['timestamp']],
-      //     },
-      //   ],
-      //   storeAs: 'completedTasks',
-      // },
-      // {
-      //   collection: 'users',
-      //   doc: auth.uid,
-      //   subcollections: [
-      //     {
-      //       collection: 'tasks',
-      //       where: [['status', '==', task.INVOICED]],
-      //       orderBy: [['client'], ['timestamp']],
-      //     },
-      //   ],
-      //   storeAs: 'invoicedTasks',
-      // },
+      {
+        collection: 'users',
+        doc: auth.uid,
+        subcollections: [
+          {
+            collection: 'invoices',
+            where: [['status', '==', invoice.ACTIVE]],
+            orderBy: [['client'], ['dueDate']],
+          },
+        ],
+        storeAs: 'activeInvoices',
+      },
+      {
+        collection: 'users',
+        doc: auth.uid,
+        subcollections: [
+          {
+            collection: 'tasks',
+            where: [['status', '==', task.ESTIMATED]],
+            orderBy: [['client'], ['timestamp']],
+          },
+        ],
+        storeAs: 'estimatedTasks',
+      },
+      {
+        collection: 'users',
+        doc: auth.uid,
+        subcollections: [
+          {
+            collection: 'tasks',
+            where: [['status', '==', task.COMPLETED]],
+            orderBy: [['client'], ['timestamp']],
+          },
+        ],
+        storeAs: 'completedTasks',
+      },
+      {
+        collection: 'users',
+        doc: auth.uid,
+        subcollections: [
+          {
+            collection: 'tasks',
+            where: [['status', '==', task.INVOICED]],
+            orderBy: [['client'], ['timestamp']],
+          },
+        ],
+        storeAs: 'invoicedTasks',
+      },
     ];
   }),
 )(Taskkeeper);

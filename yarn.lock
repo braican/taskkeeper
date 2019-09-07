@@ -8121,9 +8121,9 @@ react-is@^16.6.0, react-is@^16.7.0, react-is@^16.8.1, react-is@^16.9.0:
   version "16.9.0"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.9.0.tgz#21ca9561399aad0ff1a7701c01683e8ca981edcb"
 
-react-redux-firebase@^3.0.0-beta:
-  version "3.0.0-beta"
-  resolved "https://registry.yarnpkg.com/react-redux-firebase/-/react-redux-firebase-3.0.0-beta.tgz#3c9b0f96a56619a5df62ccf5eb1337fc9e916e80"
+react-redux-firebase@^3.0.0-beta.2:
+  version "3.0.0-beta.2"
+  resolved "https://registry.yarnpkg.com/react-redux-firebase/-/react-redux-firebase-3.0.0-beta.2.tgz#03a5b04e0c96481a8759b01180a3c76b272957b5"
   dependencies:
     hoist-non-react-statics "^3.3.0"
     lodash "^4.17.15"
