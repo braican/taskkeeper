@@ -8,6 +8,8 @@ $price-cell: 80px;
 }
 
 .invoiceWithTasks {
+  border-top: 4px solid $c--black;
+  margin-top: -4px;
 }
 
 .data {
@@ -59,20 +61,24 @@ $price-cell: 80px;
   transform: translate3d(120%, -50%, 0);
 }
 
-.taskWrapper {
-  margin-top: spacing(0.5);
+.details {
+  margin-top: spacing();
+  margin-bottom: spacing();
   padding-left: spacing(0.5);
 }
+
+.taskWrapper {
+  margin-top: spacing();
+}
+
 .tasks {
   width: 100%;
+  box-sizing: content-box;
 
   td {
     font-size: $fs--sm;
     padding-top: 0.3em;
     padding-bottom: 0.3em;
-  }
-
-  tr + tr td {
     border-top: 1px solid $c--gray-e;
   }
 

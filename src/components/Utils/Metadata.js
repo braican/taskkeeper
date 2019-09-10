@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 const Metadata = ({ value, label }) => (
   <div>
-    <span className="label label--nomargin">{label}</span>
+    <span className="label">{label}</span>
     <p>{value}</p>
   </div>
 );

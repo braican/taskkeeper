@@ -6,6 +6,7 @@ import { firestoreConnect } from 'react-redux-firebase';
 
 import { prettyDate, computeTaskSubtotal, className } from '../../../utils';
 import FormattedPrice from '../../Utils/FormattedPrice';
+import Metadata from '../../Utils/Metadata';
 import { ClientContext } from '../../Client';
 
 import FadeIn from '../../Transitions/FadeIn';
@@ -56,25 +57,30 @@ const ArchivedInvoice = ({ invoice, userRef }) => {
           type="button"
           onClick={handleTaskToggler}
           {...className(styles.showTasks, tasksVisible && styles.showTasksFixed)}>
-          {tasksVisible ? 'Hide' : 'Show'} tasks
+          {tasksVisible ? 'Hide' : 'Show'} details
         </button>
       </div>
 
-      <FadeIn in={tasksLoaded && tasksVisible} immediateOut>
-        <div className={styles.taskWrapper}>
-          <table className={styles.tasks}>
-            <tbody>
-              {tasks.map(task => (
-                <tr key={`${invoice.invoiceId}_${task.id}`}>
-                  <td>{task.description}</td>
-                  <td className={styles.hoursCell}>{task.hours ? `${task.hours} hours` : ' '}</td>
-                  <td className={styles.subtotalCell}>
-                    <FormattedPrice price={computeTaskSubtotal(task, rate)} />
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+      <FadeIn in={tasksVisible} immediateOut>
+        <div className={styles.details}>
+          {invoice.description && <Metadata value={invoice.description} label="Description" />}
+
+          <div className={styles.taskWrapper}>
+            <span className="label">Tasks</span>
+            <table className={styles.tasks}>
+              <tbody>
+                {tasks.map(task => (
+                  <tr key={`${invoice.invoiceId}_${task.id}`}>
+                    <td>{task.description}</td>
+                    <td className={styles.hoursCell}>{task.hours ? `${task.hours} hours` : ' '}</td>
+                    <td className={styles.subtotalCell}>
+                      <FormattedPrice price={computeTaskSubtotal(task, rate)} />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       </FadeIn>
     </div>
@@ -88,6 +94,7 @@ ArchivedInvoice.propTypes = {
     price: PropTypes.number,
     hours: PropTypes.number,
     tasks: PropTypes.array,
+    description: PropTypes.string,
   }).isRequired,
   userRef: PropTypes.object,
 };
