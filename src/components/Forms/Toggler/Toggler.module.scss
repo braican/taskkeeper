@@ -9,16 +9,15 @@ $dot-move: $track-width - ($dot + $track-border * 2);
 .toggler {
   display: flex;
   align-items: center;
-}
 
-.control {
-  position: absolute;
-  left: -999px;
-  top: -999px;
-  opacity: 0;
-  // visibility: hidden;
-  width: 0;
-  height: 0;
+  .control {
+    position: absolute;
+    z-index: -1;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+  }
 }
 
 .track {
@@ -50,7 +49,7 @@ $dot-move: $track-width - ($dot + $track-border * 2);
     border-radius: 50%;
 
     .control:focus + & {
-      background-color: $c--green;
+      background-color: $c--green-xdark;
     }
 
     .control:checked + & {
