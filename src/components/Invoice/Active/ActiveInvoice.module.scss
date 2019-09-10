@@ -5,21 +5,40 @@
   position: relative;
   overflow: hidden;
   padding: 0;
+  max-width: 620px;
 }
 
 .header {
-  padding: spacing(2);
+  padding: spacing();
   color: $c--white;
   background-color: $c--green-xdark;
   box-shadow: 0 0 16px rgba($c--black, 0.6);
   display: grid;
-  grid-template-rows: auto auto;
-  grid-template-columns: auto auto;
+
+  @include mq($bp--mobile-sm) {
+    padding: spacing(2);
+    grid-template-rows: auto auto;
+    grid-template-columns: auto auto;
+  }
 }
 
 .metadata {
-  grid-row: 1 / 3;
-  margin-right: spacing();
+  margin-top: spacing();
+
+  @include mq($bp--mobile-sm) {
+    grid-row: 1 / 3;
+    margin-right: spacing();
+    margin-top: 0;
+  }
+}
+
+.invoiceId {
+  @include mq($bp--mobile-sm, max) {
+    position: absolute;
+    top: spacing();
+    right: spacing();
+    font-weight: $fw--semibold;
+  }
 }
 
 .subtotal {

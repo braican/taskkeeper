@@ -1,3 +1,5 @@
+import sanitizeHtml from 'sanitize-html';
+
 export * from './dates';
 
 /**
@@ -117,4 +119,21 @@ export const parseInvoiceId = (id, symbol) => parseInt(id.replace(`${symbol}-`, 
 export const incrementInvoiceId = (invoiceNumber, symbol) => {
   const newId = `${invoiceNumber + 1}`.padStart(4, '0');
   return `${symbol}-${newId}`;
+};
+
+/**
+ * Sanitize input strings of all html.
+ *
+ * @param {string} value Some input string.
+ *
+ * @return string
+ */
+export const sanitizeInput = value => {
+  return sanitizeHtml(value, {
+    allowedTags: ['br'],
+    allowedAttributes: {},
+    transformTags: {
+      div: 'br',
+    },
+  });
 };

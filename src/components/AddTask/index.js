@@ -20,7 +20,7 @@ const AddTask = ({ userRef }) => {
   const [isFixedPrice, setIsFixedPrice] = useState(false);
   const [description, setDescription] = useState('');
   const [value, setValue] = useState(0);
-  const { id } = useContext(ClientContext);
+  const { client } = useContext(ClientContext);
 
   const handleUnitChange = isFixed => {
     setIsFixedPrice(isFixed);
@@ -34,7 +34,7 @@ const AddTask = ({ userRef }) => {
     }
 
     const taskData = {
-      client: id,
+      client: client.id,
       status: task.ESTIMATED,
       description,
       timestamp: +new Date(),

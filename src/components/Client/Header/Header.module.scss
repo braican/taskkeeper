@@ -1,0 +1,115 @@
+@import '../../../styles/abstracts';
+
+.header {
+  margin-bottom: spacing(2);
+
+  @include mq($bp--tablet) {
+    padding-right: 100px;
+    display: flex;
+  }
+}
+
+.header__left,
+.header__right {
+  @include mq($bp--tablet) {
+    width: 50%;
+  }
+}
+
+.header__right {
+  display: none;
+
+  @include mq($bp--tablet) {
+    display: block;
+    padding-left: spacing(2);
+  }
+
+  @include mq($bp--tablet, max) {
+    margin-top: spacing(2);
+
+    &.editingClient {
+      display: block;
+    }
+  }
+}
+
+.client__name {
+  @include fluid-font($fs--base * 1.5 620px, $fs--base * 4 1200px);
+  font-weight: $fw--bold;
+  line-height: 1;
+}
+
+.address {
+  position: relative;
+  max-width: 300px;
+}
+
+.address__label {
+  @include label;
+
+  @include mq($bp--tablet) {
+    @include transition(opacity);
+    opacity: 0;
+
+    position: absolute;
+    left: 0;
+    top: -1.5em;
+
+    .editingClient & {
+      opacity: 1;
+    }
+  }
+}
+
+.address__input {
+  @include transition(border-color);
+  @include input;
+  border-style: dashed;
+  min-height: calc(3.5em + 0.6rem);
+
+  .header__right:not(.editingClient) & {
+    border-color: transparent;
+  }
+
+  .editingClient & {
+    transition-duration: 0s;
+  }
+}
+
+.symbol__input {
+  @include transition(opacity);
+  opacity: 0;
+
+  .editingClient & {
+    opacity: 1;
+  }
+
+  input {
+    border-style: dashed;
+  }
+}
+
+.edit__actions {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.edit__button {
+  @include transition(background-color);
+  width: 48px;
+  height: 48px;
+  padding: 12px;
+  border-radius: 50%;
+
+  &:focus,
+  &:hover {
+    outline: none;
+    background-color: $c--gray-c;
+  }
+
+  svg {
+    width: 100%;
+    display: block;
+  }
+}

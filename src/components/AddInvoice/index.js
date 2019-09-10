@@ -22,7 +22,7 @@ const AddInvoice = ({
   userRef,
   firestore,
 }) => {
-  const { id: clientId, symbol, nextInvoiceId, setNextInvoiceId } = useContext(ClientContext);
+  const { client, nextInvoiceId, setNextInvoiceId } = useContext(ClientContext);
   const [invoiceIdIsEditable, setInvoiceIdEditability] = useState(false);
   const [issueDate, setIssueDate] = useState(getDate());
   const [dueDate, setDueDate] = useState(getFutureDate(30));
@@ -40,14 +40,14 @@ const AddInvoice = ({
 
     userRef
       .collection('invoices')
-      .where('client', '==', clientId)
+      .where('client', '==', client.id)
       .get()
       .then(snapshot => {
         let invoiceCount = 0;
         snapshot.forEach(doc => {
           const { invoiceId: id } = doc.data();
           if (id) {
-            const invNumber = parseInvoiceId(id, symbol);
+            const invNumber = parseInvoiceId(id, client.symbol);
 
             if (!isNaN(invNumber) && invNumber > invoiceCount) {
               invoiceCount = invNumber;
@@ -55,7 +55,7 @@ const AddInvoice = ({
           }
         });
 
-        setNextInvoiceId(incrementInvoiceId(invoiceCount, symbol));
+        setNextInvoiceId(incrementInvoiceId(invoiceCount, client.symbol));
       })
       .catch(err => console.error('Error getting client invoices.', err))
       .finally(() => setInvoiceIdEditability(true));
@@ -83,7 +83,7 @@ const AddInvoice = ({
     batch.commit();
 
     const invoiceData = {
-      client: clientId,
+      client: client.id,
       invoiceId: nextInvoiceId,
       dueDate,
       issueDate,
@@ -95,8 +95,11 @@ const AddInvoice = ({
 
     userRef.collection('invoices').add(invoiceData);
 
-    const nextInvoiceNumber = parseInvoiceId(nextInvoiceId, symbol);
-    setNextInvoiceId(incrementInvoiceId(nextInvoiceNumber, symbol));
+    const nextInvoiceNumber = parseInvoiceId(nextInvoiceId, client.symbol);
+    setNextInvoiceId(incrementInvoiceId(nextInvoiceNumber, client.symbol));
+
+    // Redux delay the UI of adding an invoice so that the values don't clear before the invoice
+    // form is hidden.
     pauseInvoicing();
     setTimeout(unsetInvoicing, 400);
   };

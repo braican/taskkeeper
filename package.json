@@ -53,7 +53,8 @@
     "react-scripts": "2.1.5",
     "react-transition-group": "^4.2.2",
     "redux": "^4.0.1",
-    "redux-firestore": "^0.8.0"
+    "redux-firestore": "^0.8.0",
+    "sanitize-html": "^1.20.1"
   },
   "devDependencies": {
     "@upstatement/eslint-config": "0.3.1",

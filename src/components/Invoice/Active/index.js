@@ -24,7 +24,9 @@ import ListIcon from '../../../svg/List';
 import styles from './ActiveInvoice.module.scss';
 
 const Invoice = ({ invoice, tasks, userRef, firestore }) => {
-  const { rate } = useContext(ClientContext);
+  const {
+    client: { rate },
+  } = useContext(ClientContext);
   const [showTasks, setShowTasks] = useState(false);
 
   const subtotal = computeTotal(tasks, parseFloat(rate));
@@ -56,21 +58,21 @@ const Invoice = ({ invoice, tasks, userRef, firestore }) => {
   return (
     <div className={styles.invoice}>
       <div className={styles.header}>
+        <div>
+          <p>
+            <FormattedPrice className={styles.subtotal} price={subtotal} />
+          </p>
+          <p>{hours} hours</p>
+        </div>
+
         <div {...className('stack', styles.metadata)}>
-          <p>{invoice.invoiceId}</p>
+          <p className={styles.invoiceId}>{invoice.invoiceId}</p>
           <Metadata value={prettyDate(invoice.issueDate)} label="Issued" />
           <Metadata
             value={`${prettyDate(invoice.dueDate)} (${dueDateIn(invoice.dueDate)})`}
             label="Due"
           />
           {invoice.description && <Metadata value={invoice.description} label="Description" />}
-        </div>
-
-        <div>
-          <p>
-            <FormattedPrice className={styles.subtotal} price={subtotal} />
-          </p>
-          <p>{hours} hours</p>
         </div>
 
         <div className={styles.actions}>

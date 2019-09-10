@@ -30,7 +30,9 @@ const Task = ({
   const isFixedPrice = !hours || hours === 0;
   const taskRef = userRef.collection('tasks').doc(id);
 
-  const { rate } = useContext(ClientContext);
+  const {
+    client: { rate },
+  } = useContext(ClientContext);
   const [isEditing, setIsEditing] = useState(false);
   const [showSaveAnimation, setShowSaveAnimation] = useState(false);
   const [statusMessage, setStatusMessage] = useState('Editing');
