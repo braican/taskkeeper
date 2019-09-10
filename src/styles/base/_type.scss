@@ -45,6 +45,11 @@ button {
       background-color: $c--green-dark;
     }
   }
+
+  &[disabled] {
+    background-color: $c--gray-c;
+    cursor: default;
+  }
 }
 
 // Headers

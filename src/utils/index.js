@@ -141,3 +141,26 @@ export const dueDateIn = dueDate => moment(dueDate, 'YYYY-MM-DD').fromNow();
  */
 export const prettyDate = (date, format = 'MMMM D, YYYY') =>
   moment(date, 'YYYY-MM-DD').format(format);
+
+/**
+ * Strip the client abbreviation from the invoice ID.
+ *
+ * @param {string} id Full invoice ID, including the symbol.
+ * @param {string} symbol The client abbreviation.
+ *
+ * @return int
+ */
+export const parseInvoiceId = (id, symbol) => parseInt(id.replace(`${symbol}-`, '', id));
+
+/**
+ * Increment the invoice ID.
+ *
+ * @param {int} invoiceNumber The count of invoices for a client.
+ * @param {string} symbol The client abbreviation
+ *
+ * @return string The full invoice ID.
+ */
+export const incrementInvoiceId = (invoiceNumber, symbol) => {
+  const newId = `${invoiceNumber + 1}`.padStart(4, '0');
+  return `${symbol}-${newId}`;
+};

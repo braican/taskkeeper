@@ -13,6 +13,8 @@ export const invoiceReducer = (state = initialState, action) => {
       return { ...state, isInvoicing: true };
     case 'UNSET_INVOICING':
       return { ...state, isInvoicing: false, tasks: [], subtotal: 0, hours: 0 };
+    case 'PAUSE_INVOICING':
+      return { ...state, isInvoicing: false };
     case 'REMOVE_INVOICE_TASK': {
       const { taskId, cost, hours } = action;
 

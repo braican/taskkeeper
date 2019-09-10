@@ -6,14 +6,22 @@ import { firestoreConnect } from 'react-redux-firebase';
 
 import { ClientContext } from '../Client';
 import FormattedPrice from '../Utils/FormattedPrice';
-import { getDate, getFutureDate } from '../../utils';
+import { getDate, getFutureDate, parseInvoiceId, incrementInvoiceId } from '../../utils';
 import { invoice as invoiceStatus, task as taskStatus } from '../../utils/status';
 
 import FormEl from '../Forms/FormEl';
 
 import styles from './AddInvoice.module.scss';
 
-const AddInvoice = ({ subtotal, hours, tasks, unsetInvoicing, userRef, firestore }) => {
+const AddInvoice = ({
+  subtotal,
+  hours,
+  tasks,
+  unsetInvoicing,
+  pauseInvoicing,
+  userRef,
+  firestore,
+}) => {
   const { id: clientId, symbol, nextInvoiceId, setNextInvoiceId } = useContext(ClientContext);
   const [invoiceIdIsEditable, setInvoiceIdEditability] = useState(false);
   const [issueDate, setIssueDate] = useState(getDate());
@@ -35,7 +43,7 @@ const AddInvoice = ({ subtotal, hours, tasks, unsetInvoicing, userRef, firestore
         snapshot.forEach(doc => {
           const { invoiceId: id } = doc.data();
           if (id) {
-            const invNumber = parseInt(id.replace(`${symbol}-`, '', id));
+            const invNumber = parseInvoiceId(id, symbol);
 
             if (!isNaN(invNumber) && invNumber > invoiceCount) {
               invoiceCount = invNumber;
@@ -43,8 +51,7 @@ const AddInvoice = ({ subtotal, hours, tasks, unsetInvoicing, userRef, firestore
           }
         });
 
-        const newInvoiceNumber = `${invoiceCount + 1}`.padStart(4, '0');
-        setNextInvoiceId(`${symbol}-${newInvoiceNumber}`);
+        setNextInvoiceId(incrementInvoiceId(invoiceCount, symbol));
       })
       .catch(err => console.error('Error getting client invoices.', err))
       .finally(() => setInvoiceIdEditability(true));
@@ -58,6 +65,10 @@ const AddInvoice = ({ subtotal, hours, tasks, unsetInvoicing, userRef, firestore
   };
 
   const handleCreate = () => {
+    if (tasks.length === 0) {
+      return;
+    }
+
     const batch = firestore.batch();
 
     tasks.forEach(task => {
@@ -79,6 +90,11 @@ const AddInvoice = ({ subtotal, hours, tasks, unsetInvoicing, userRef, firestore
     };
 
     userRef.collection('invoices').add(invoiceData);
+
+    const nextInvoiceNumber = parseInvoiceId(nextInvoiceId, symbol);
+    setNextInvoiceId(incrementInvoiceId(nextInvoiceNumber, symbol));
+    pauseInvoicing();
+    setTimeout(unsetInvoicing, 400);
   };
 
   return (
@@ -129,7 +145,11 @@ const AddInvoice = ({ subtotal, hours, tasks, unsetInvoicing, userRef, firestore
         </div>
       </div>
 
-      <button type="button" className="button button--green" onClick={handleCreate}>
+      <button
+        type="button"
+        className="button button--green"
+        onClick={handleCreate}
+        disabled={tasks.length < 1}>
         Create Invoice
       </button>
       <button type="button" className={styles.cancel} onClick={unsetInvoicing}>
@@ -144,6 +164,7 @@ AddInvoice.propTypes = {
   hours: PropTypes.number,
   tasks: PropTypes.array,
   unsetInvoicing: PropTypes.func.isRequired,
+  pauseInvoicing: PropTypes.func.isRequired,
   userRef: PropTypes.object.isRequired,
   firestore: PropTypes.object.isRequired,
 };
@@ -158,6 +179,9 @@ export default compose(
   firestoreConnect(),
   connect(
     ({ invoice: { subtotal, hours, tasks }, userRef }) => ({ subtotal, hours, tasks, userRef }),
-    dispatch => ({ unsetInvoicing: () => dispatch({ type: 'UNSET_INVOICING' }) }),
+    dispatch => ({
+      unsetInvoicing: () => dispatch({ type: 'UNSET_INVOICING' }),
+      pauseInvoicing: () => dispatch({ type: 'PAUSE_INVOICING' }),
+    }),
   ),
 )(AddInvoice);

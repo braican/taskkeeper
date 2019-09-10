@@ -31,6 +31,10 @@ const Invoice = ({ invoice, tasks, userRef, firestore }) => {
   const hours = computeHours(tasks);
 
   const handleMarkAsPaid = () => {
+    if (!userRef) {
+      return;
+    }
+
     const batch = firestore.batch();
     const invoiceRef = userRef.collection('invoices').doc(invoice.id);
 
@@ -119,12 +123,13 @@ Invoice.propTypes = {
     description: PropTypes.string,
   }).isRequired,
   tasks: PropTypes.array,
-  userRef: PropTypes.object.isRequired,
+  userRef: PropTypes.object,
   firestore: PropTypes.object.isRequired,
 };
 
 Invoice.defaultProps = {
   tasks: [],
+  userRef: null,
 };
 
 export default compose(
