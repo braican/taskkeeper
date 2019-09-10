@@ -1,15 +1,21 @@
 import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
+import { firestoreConnect } from 'react-redux-firebase';
 
 import { ClientContext } from '../Client';
 import {
   computeTaskSubtotal,
   computeHours,
   computeTotal,
+  getDate,
   className,
   prettyDate,
   dueDateIn,
 } from '../../utils';
+import { invoice as invoiceStatus, task as taskStatus } from '../../utils/status';
+
 import FormattedPrice from '../Utils/FormattedPrice';
 import Metadata from '../Utils/Metadata';
 import FadeIn from '../Transitions/FadeIn';
@@ -17,12 +23,31 @@ import FadeIn from '../Transitions/FadeIn';
 import ListIcon from '../../svg/List';
 import styles from './Invoice.module.scss';
 
-const Invoice = ({ invoice, tasks }) => {
+const Invoice = ({ invoice, tasks, userRef, firestore }) => {
   const { rate } = useContext(ClientContext);
   const [showTasks, setShowTasks] = useState(false);
 
   const subtotal = computeTotal(tasks, parseFloat(rate));
   const hours = computeHours(tasks);
+
+  const handleMarkAsPaid = () => {
+    const batch = firestore.batch();
+    const invoiceRef = userRef.collection('invoices').doc(invoice.id);
+
+    batch.update(invoiceRef, {
+      price: subtotal,
+      hours,
+      fulfilledDate: getDate(),
+      status: invoiceStatus.FULFILLED,
+    });
+
+    tasks.forEach(task => {
+      const taskRef = userRef.collection('tasks').doc(task.id);
+      batch.update(taskRef, { status: taskStatus.ARCHIVED });
+    });
+
+    batch.commit();
+  };
 
   return (
     <div className={styles.invoice}>
@@ -78,7 +103,7 @@ const Invoice = ({ invoice, tasks }) => {
         </FadeIn>
       )}
 
-      <button className={styles.markPaid} type="button">
+      <button className={styles.markPaid} type="button" onClick={handleMarkAsPaid}>
         Mark as Paid
       </button>
     </div>
@@ -87,16 +112,22 @@ const Invoice = ({ invoice, tasks }) => {
 
 Invoice.propTypes = {
   invoice: PropTypes.shape({
+    id: PropTypes.string,
     invoiceId: PropTypes.string,
     issueDate: PropTypes.string,
     dueDate: PropTypes.string,
     description: PropTypes.string,
   }).isRequired,
   tasks: PropTypes.array,
+  userRef: PropTypes.object.isRequired,
+  firestore: PropTypes.object.isRequired,
 };
 
 Invoice.defaultProps = {
   tasks: [],
 };
 
-export default Invoice;
+export default compose(
+  firestoreConnect(),
+  connect(({ userRef }) => ({ userRef })),
+)(Invoice);
