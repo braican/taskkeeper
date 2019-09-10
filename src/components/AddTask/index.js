@@ -20,7 +20,7 @@ const AddTask = ({ userRef }) => {
   const [isFixedPrice, setIsFixedPrice] = useState(false);
   const [description, setDescription] = useState('');
   const [value, setValue] = useState(0);
-  const { rate, id } = useContext(ClientContext);
+  const { id } = useContext(ClientContext);
 
   const handleUnitChange = isFixed => {
     setIsFixedPrice(isFixed);
@@ -33,17 +33,17 @@ const AddTask = ({ userRef }) => {
       return;
     }
 
-    const subtotal = isFixedPrice ? value : value * rate;
     const taskData = {
       client: id,
       status: task.ESTIMATED,
       description,
-      price: parseFloat(subtotal),
       timestamp: +new Date(),
     };
 
     if (!isFixedPrice) {
-      taskData.hours = value;
+      taskData.hours = parseFloat(value);
+    } else {
+      taskData.price = parseFloat(value);
     }
 
     userRef.collection('tasks').add(taskData);
