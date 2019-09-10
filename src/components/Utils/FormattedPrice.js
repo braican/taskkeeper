@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const FormattedPrice = ({ price }) => {
+const FormattedPrice = ({ price, className }) => {
   const priceNumber = parseFloat(price);
 
   if (isNaN(priceNumber)) {
@@ -13,7 +13,7 @@ const FormattedPrice = ({ price }) => {
   const cents = priceString.slice(-2);
 
   return (
-    <span>
+    <span className={className}>
       ${dollars}
       {cents !== '00' && (
         <>
@@ -26,6 +26,11 @@ const FormattedPrice = ({ price }) => {
 
 FormattedPrice.propTypes = {
   price: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  className: PropTypes.string,
+};
+
+FormattedPrice.defaultProps = {
+  className: null,
 };
 
 export default FormattedPrice;

@@ -10,6 +10,7 @@ import BackLink from '../Buttons/BackLink';
 import AddTask from '../AddTask';
 import EstimatedTasks from './EstimatedTasks';
 import CompletedTasks from './CompletedTasks';
+import ActiveInvoices from './ActiveInvoices';
 import FadeIn from '../Transitions/FadeIn';
 
 import styles from './Client.module.scss';
@@ -25,8 +26,6 @@ const Client = ({
   unsetInvoicing,
 }) => {
   const [nextInvoiceId, setNextInvoiceId] = useState('');
-
-  console.log(activeInvoices);
 
   return (
     <ClientContext.Provider
@@ -50,16 +49,19 @@ const Client = ({
           </p>
         </header>
 
+        <FadeIn in={activeInvoices && activeInvoices.length > 0}>
+          <ActiveInvoices invoices={activeInvoices} tasks={invoicedTasks} />
+        </FadeIn>
+
         <AddTask />
 
-        <div>
-          <FadeIn in={estimatedTasks !== null}>
-            <EstimatedTasks tasks={estimatedTasks} />
-          </FadeIn>
-          <FadeIn in={completedTasks !== null}>
-            <CompletedTasks tasks={completedTasks} />
-          </FadeIn>
-        </div>
+        <FadeIn in={estimatedTasks !== null}>
+          <EstimatedTasks tasks={estimatedTasks} />
+        </FadeIn>
+
+        <FadeIn in={completedTasks !== null}>
+          <CompletedTasks tasks={completedTasks} />
+        </FadeIn>
       </div>
     </ClientContext.Provider>
   );
@@ -80,7 +82,7 @@ Client.propTypes = {
   activeInvoices: PropTypes.array,
   estimatedTasks: PropTypes.array,
   completedTasks: PropTypes.array,
-  invoicedTasks: PropTypes.array,
+  invoicedTasks: PropTypes.object,
   unsetInvoicing: PropTypes.func.isRequired,
 };
 
@@ -88,7 +90,7 @@ Client.defaultProps = {
   activeInvoices: [],
   estimatedTasks: [],
   completedTasks: [],
-  invoicedTasks: [],
+  invoicedTasks: {},
 };
 
 export default compose(
@@ -106,7 +108,12 @@ export default compose(
       const activeInvoices = clientFilter(allActiveInvoices, id);
       const estimatedTasks = clientFilter(allEstimated, id);
       const completedTasks = clientFilter(allCompleted, id);
-      const invoicedTasks = clientFilter(allInvoicedTasks, id);
+
+      // Make the invoiced tasks just a map of tasks.
+      const invoicedTasks = clientFilter(allInvoicedTasks, id).reduce((acc, item) => {
+        acc[item.id] = item;
+        return acc;
+      }, {});
 
       return { client, activeInvoices, estimatedTasks, completedTasks, invoicedTasks };
     },

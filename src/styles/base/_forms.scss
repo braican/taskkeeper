@@ -6,3 +6,11 @@ textarea {
 textarea {
   resize: none;
 }
+
+.label {
+  @include label;
+}
+
+.label--nomargin {
+  margin-bottom: 0;
+}

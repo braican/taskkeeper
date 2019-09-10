@@ -61,7 +61,7 @@ const Task = ({
     setIsEditing(true);
   };
 
-  const updatePrice = newHours => {
+  const updateHours = newHours => {
     const newPrice = newHours * rate;
     setPrice(newPrice);
   };
@@ -102,7 +102,7 @@ const Task = ({
         <div className={styles.task__wrapper}>
           <Description value={description} className={styles.task__description} />
 
-          <Hours className={styles.task__hours} value={hours} onChange={updatePrice} />
+          <Hours className={styles.task__hours} value={hours} onChange={updateHours} />
 
           <Price isFixed={isFixedPrice} className={styles.task__price} />
         </div>

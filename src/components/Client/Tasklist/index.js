@@ -8,7 +8,7 @@ const Tasklist = ({ headline, tasks, noTasksMessage, canInvoice, utility: Utilit
   <section className={styles.tasklist}>
     {headline && (
       <header>
-        <h3 className={styles.header}>{headline}</h3>
+        <h3 className="section-header">{headline}</h3>
       </header>
     )}
 

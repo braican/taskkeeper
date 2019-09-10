@@ -1,11 +1,7 @@
 @import '../../../styles/abstracts';
 
 .label {
-  line-height: 1;
-  display: block;
-  font-size: $fs--sm;
-  font-weight: $fw--semibold;
-  margin-bottom: 0.5em;
+  @include label;
 }
 
 .absoluteLabel {
