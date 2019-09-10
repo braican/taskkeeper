@@ -3,6 +3,8 @@
 
 $c--blue: #0066ff;
 $c--blue-dark: darken($c--blue, 4%);
+$c--blue-xdark: darken($c--blue-dark, 14%);
+
 $c--blue-transparent: #f8faff;
 $c--green: #00d00e;
 $c--green-dark: darken($c--green, 4%);
@@ -67,3 +69,11 @@ $in-out-quart: cubic-bezier(0.77, 0, 0.175, 1);
 $t-duration: 0.2s;
 $t-duration-fast: $t-duration / 2;
 $t-duration-slow: $t-duration * 2;
+
+// Breakpoints
+// -----------
+
+$bp--mobile-sm: 560px;
+$bp--mobile: 660px;
+$bp--tablet: 800px;
+$bp--desktop: 980px;

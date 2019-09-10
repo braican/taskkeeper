@@ -3,11 +3,20 @@
 $select-button-size: 48px;
 
 .task {
-  display: flex;
-  align-items: center;
-  padding-top: 0.5em;
-  padding-bottom: 0.5em;
+  padding-top: spacing(2);
+  padding-bottom: spacing();
   position: relative;
+
+  @include mq($bp--tablet) {
+    display: flex;
+    align-items: center;
+    padding-top: spacing(0.5);
+    padding-bottom: spacing(0.5);
+  }
+
+  @include mq($bp--tablet, max) {
+    min-height: 148px;
+  }
 
   input {
     width: 100%;
@@ -23,10 +32,16 @@ $select-button-size: 48px;
     content: '';
     position: absolute;
     left: 0;
-    top: -0.5em;
-    top: calc(-0.5em - 1px);
+    top: spacing(-2);
     width: 100%;
-    border-top: 1px solid $c--gray-e;
+    border-top: 2px solid rgba($c--blue-xdark, 0.3);
+
+    @include mq($bp--tablet) {
+      border-width: 1px;
+      border-color: $c--gray-e;
+      top: -0.5em;
+      top: calc(-0.5em - 1px);
+    }
   }
 }
 
@@ -35,7 +50,15 @@ $select-button-size: 48px;
   display: flex;
   align-items: center;
   position: relative;
-  flex: 1;
+
+  @include mq($bp--tablet) {
+    flex: 1;
+  }
+
+  @include mq($bp--tablet, max) {
+    flex-wrap: wrap;
+    padding-right: 60px;
+  }
 
   > * + * {
     margin-left: spacing();
@@ -60,55 +83,101 @@ $select-button-size: 48px;
   border-color: $c--gray-c;
 }
 
+@include mq($bp--tablet, max) {
+  .task__hours input:not(:focus),
+  .task__description:not(:focus) {
+    border-style: dashed;
+    border-color: $c--gray-c;
+  }
+}
+
 .task__description {
   @include input;
   border-color: transparent;
   flex: 1;
   margin-left: -$input-padding;
+
+  @include mq($bp--tablet, max) {
+    width: 100%;
+    flex-basis: 100%;
+    margin-bottom: spacing();
+    margin-left: 0;
+  }
 }
 
 .task__hours {
   width: 120px;
+
+  @include mq($bp--tablet, max) {
+    margin-left: 0;
+  }
 }
 
 .task__price {
   text-align: right;
   width: 100px;
   position: relative;
+
+  @include mq($bp--tablet, max) {
+    flex: 1;
+  }
 }
 
 // Util
 // -----------
 
 .task__util {
-  flex: 0 1 auto;
-  margin-left: spacing(2);
-  position: relative;
-  min-width: 80px;
+  @include mq($bp--tablet) {
+    position: relative;
+    flex: 0 1 auto;
+    margin-left: spacing(2);
+    min-width: 80px;
+  }
+
+  @include mq($bp--tablet, max) {
+    position: absolute;
+    right: 0;
+    top: spacing(2);
+  }
 }
 
 .task__actions {
   @include transition;
-  opacity: 0;
-  visibility: hidden;
-  flex: 0 1 auto;
 
-  .task:not(.editing):not(.isInvoicing):hover &,
-  .isFocused & {
-    opacity: 1;
-    visibility: visible;
-  }
-
-  .task.editing & {
+  @include mq($bp--tablet) {
+    opacity: 0;
     visibility: hidden;
+    flex: 0 1 auto;
+
+    .task:not(.editing):not(.isInvoicing):hover &,
+    .isFocused & {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .task.editing & {
+      visibility: hidden;
+    }
+
+    > * {
+      display: inline-block;
+      vertical-align: middle;
+
+      + * {
+        margin-left: spacing();
+      }
+    }
   }
 
-  > * {
-    display: inline-block;
-    vertical-align: middle;
+  @include mq($bp--tablet, max) {
+    .task.editing &,
+    .task.isInvoicing & {
+      opacity: 0;
+      visibility: hidden;
+    }
 
-    + * {
-      margin-left: spacing();
+    > * + * {
+      margin-top: spacing();
     }
   }
 }

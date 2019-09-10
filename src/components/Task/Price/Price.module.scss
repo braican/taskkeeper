@@ -5,10 +5,18 @@
   border: 1px solid transparent; // to stay consistent with the rest of the cells
   padding: $input-padding;
   border-radius: $border-radius;
+  font-weight: $fw--semibold;
 
   .price__wrapper.price__isEditable:hover & {
     border-style: dashed;
     border-color: $c--gray-c;
+  }
+
+  @include mq($bp--tablet, max) {
+    .price__wrapper.price__isEditable & {
+      border-style: dashed;
+      border-color: $c--gray-c;
+    }
   }
 }
 

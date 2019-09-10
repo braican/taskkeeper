@@ -38,13 +38,21 @@
   @include box-shadow();
   position: absolute;
   z-index: 3;
-  bottom: spacing();
-  left: 100%;
   width: 160px;
   background-color: $c--black;
   border-radius: $border-radius;
   padding: spacing();
   color: $c--white;
+
+  @include mq($bp--mobile) {
+    bottom: spacing();
+    left: 100%;
+  }
+
+  @include mq($bp--mobile, max) {
+    right: spacing();
+    top: 100%;
+  }
 }
 
 .util__menu {

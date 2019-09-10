@@ -1,6 +1,6 @@
 @import '../../../styles/abstracts';
 
-$price-cell: 80px;
+$price-cell: 72px;
 
 .invoice {
   padding-top: spacing(0.5);
@@ -16,22 +16,43 @@ $price-cell: 80px;
   position: relative;
   display: flex;
   align-items: center;
+
+  @include mq($bp--mobile-sm, max) {
+    flex-wrap: wrap;
+  }
 }
 
 .invoiceId {
   flex: 1;
+
+  @include mq($bp--mobile-sm, max) {
+    width: 50%;
+    flex-basis: 50%;
+    flex-grow: 0;
+  }
 }
 
 .fulfilledDate {
-  margin-left: spacing();
   font-size: $fs--sm;
+  margin-left: spacing();
+
+  @include mq($bp--mobile-sm, max) {
+    width: 50%;
+    flex-basis: 50%;
+    margin-left: 0;
+    text-align: right;
+  }
 }
 
 .hours {
   text-align: right;
   margin-left: spacing();
-  width: 100px;
+  width: 80px;
   font-size: $fs--sm;
+
+  @include mq($bp--mobile-sm, max) {
+    display: none;
+  }
 }
 
 .price {
@@ -39,16 +60,28 @@ $price-cell: 80px;
   width: $price-cell;
   font-weight: $fw--semibold;
   margin-left: spacing();
+
+  @include mq($bp--mobile-sm, max) {
+    margin-left: 0;
+    text-align: left;
+  }
 }
 
 .showTasks {
-  @include transition;
-  position: absolute;
-  top: 50%;
-  right: 0;
   font-size: $fs--sm;
-  opacity: 0;
-  transform: translate3d(100%, -50%, 0);
+  margin-left: spacing();
+  text-align: right;
+  flex: 1;
+
+  @include mq($bp--desktop) {
+    @include transition;
+    position: absolute;
+    top: 50%;
+    right: 0;
+    opacity: 0;
+    margin-left: 0;
+    transform: translate3d(100%, -50%, 0);
+  }
 
   &:focus {
     outline: none;
@@ -57,8 +90,10 @@ $price-cell: 80px;
 
 .invoice:hover .showTasks,
 .showTasksFixed {
-  opacity: 1;
-  transform: translate3d(120%, -50%, 0);
+  @include mq($bp--desktop) {
+    opacity: 1;
+    transform: translate3d(120%, -50%, 0);
+  }
 }
 
 .details {
@@ -90,7 +125,7 @@ $price-cell: 80px;
 
   .hoursCell {
     text-align: right;
-    width: 100px;
+    width: 80px;
     padding-left: spacing();
   }
 }

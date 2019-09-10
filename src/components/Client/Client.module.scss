@@ -5,10 +5,16 @@
 }
 
 .dashLink {
-  position: absolute;
-  left: 0;
-  top: calc(-#{$sidebar-width / 2} - 1.5rem);
+  display: block;
   color: $c--blue;
+  margin-bottom: spacing(2);
+
+  @include mq($bp--mobile) {
+    position: absolute;
+    left: 0;
+    top: calc(-#{$sidebar-width / 2} - 1.5rem);
+    margin-bottom: 0;
+  }
 }
 
 .client__header {
