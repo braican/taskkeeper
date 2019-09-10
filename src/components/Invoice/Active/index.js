@@ -4,7 +4,7 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
 
-import { ClientContext } from '../Client';
+import { ClientContext } from '../../Client';
 import {
   computeTaskSubtotal,
   computeHours,
@@ -13,15 +13,15 @@ import {
   className,
   prettyDate,
   dueDateIn,
-} from '../../utils';
-import { invoice as invoiceStatus, task as taskStatus } from '../../utils/status';
+} from '../../../utils';
+import { invoice as invoiceStatus, task as taskStatus } from '../../../utils/status';
 
-import FormattedPrice from '../Utils/FormattedPrice';
-import Metadata from '../Utils/Metadata';
-import FadeIn from '../Transitions/FadeIn';
+import FormattedPrice from '../../Utils/FormattedPrice';
+import Metadata from '../../Utils/Metadata';
+import FadeIn from '../../Transitions/FadeIn';
 
-import ListIcon from '../../svg/List';
-import styles from './Invoice.module.scss';
+import ListIcon from '../../../svg/List';
+import styles from './ActiveInvoice.module.scss';
 
 const Invoice = ({ invoice, tasks, userRef, firestore }) => {
   const { rate } = useContext(ClientContext);

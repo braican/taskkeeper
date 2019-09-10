@@ -31,8 +31,6 @@ const Client = ({
 }) => {
   const [nextInvoiceId, setNextInvoiceId] = useState('');
 
-  console.log(archivedInvoices);
-
   return (
     <ClientContext.Provider
       value={{

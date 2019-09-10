@@ -11,7 +11,6 @@ const EstimatedTasks = ({ tasks }) => {
       <span className="emoji" role="img" aria-label="Nice work">
         🤘
       </span>
-      .
     </p>
   );
 

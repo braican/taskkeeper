@@ -34,6 +34,10 @@ const AddInvoice = ({
       return;
     }
 
+    if (!userRef) {
+      return;
+    }
+
     userRef
       .collection('invoices')
       .where('client', '==', clientId)
@@ -65,7 +69,7 @@ const AddInvoice = ({
   };
 
   const handleCreate = () => {
-    if (tasks.length === 0) {
+    if (tasks.length === 0 || !userRef) {
       return;
     }
 
@@ -165,7 +169,7 @@ AddInvoice.propTypes = {
   tasks: PropTypes.array,
   unsetInvoicing: PropTypes.func.isRequired,
   pauseInvoicing: PropTypes.func.isRequired,
-  userRef: PropTypes.object.isRequired,
+  userRef: PropTypes.object,
   firestore: PropTypes.object.isRequired,
 };
 
@@ -173,6 +177,7 @@ AddInvoice.defaultProps = {
   subtotal: 0,
   hours: 0,
   tasks: [],
+  userRef: null,
 };
 
 export default compose(

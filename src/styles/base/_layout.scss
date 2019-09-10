@@ -1,7 +1,8 @@
 .app__main {
+  box-sizing: content-box;
   margin-left: $sidebar-width;
   padding: $sidebar-with-padding spacing(2) spacing(10) spacing(2);
-  max-width: 1280px;
+  max-width: $container-max;
 
   &:after {
     content: '';

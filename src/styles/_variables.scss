@@ -42,6 +42,7 @@ $spacing--base: 1rem;
 // Layout
 // -----------
 
+$container-max: 1280px;
 $sidebar-width: 80px;
 $sidebar-with-padding: calc(#{$sidebar-width} + #{$spacing--base});
 

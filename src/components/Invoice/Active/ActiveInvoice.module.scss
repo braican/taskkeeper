@@ -1,4 +1,4 @@
-@import '../../styles/abstracts';
+@import '../../../styles/abstracts';
 
 .invoice {
   @include bg-section($bg-color: $c--green-light);

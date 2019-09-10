@@ -1,0 +1,90 @@
+@import '../../../styles/abstracts';
+
+$price-cell: 80px;
+
+.invoice {
+  padding-top: spacing(0.5);
+  padding-bottom: spacing(0.5);
+}
+
+.invoiceWithTasks {
+}
+
+.data {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.invoiceId {
+  flex: 1;
+}
+
+.fulfilledDate {
+  margin-left: spacing();
+  font-size: $fs--sm;
+}
+
+.hours {
+  text-align: right;
+  margin-left: spacing();
+  width: 100px;
+  font-size: $fs--sm;
+}
+
+.price {
+  text-align: right;
+  width: $price-cell;
+  font-weight: $fw--semibold;
+  margin-left: spacing();
+}
+
+.showTasks {
+  @include transition;
+  position: absolute;
+  top: 50%;
+  right: 0;
+  font-size: $fs--sm;
+  opacity: 0;
+  transform: translate3d(100%, -50%, 0);
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.invoice:hover .showTasks,
+.showTasksFixed {
+  opacity: 1;
+  transform: translate3d(120%, -50%, 0);
+}
+
+.taskWrapper {
+  margin-top: spacing(0.5);
+  padding-left: spacing(0.5);
+}
+.tasks {
+  width: 100%;
+
+  td {
+    font-size: $fs--sm;
+    padding-top: 0.3em;
+    padding-bottom: 0.3em;
+  }
+
+  tr + tr td {
+    border-top: 1px solid $c--gray-e;
+  }
+
+  .subtotalCell {
+    text-align: right;
+    width: $price-cell;
+    padding-left: spacing();
+  }
+
+  .hoursCell {
+    text-align: right;
+    width: 100px;
+    padding-left: spacing();
+  }
+}

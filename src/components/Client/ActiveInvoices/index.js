@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Invoice from '../../Invoice';
+import Invoice from '../../Invoice/Active';
 
 import styles from './ActiveInvoices.module.scss';
 
