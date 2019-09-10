@@ -1,0 +1,18 @@
+@import '../../styles/abstracts';
+
+.welcome {
+  font-size: $fs--xl;
+  font-weight: $fw--bold;
+}
+
+.dashboard {
+  margin-top: spacing(2);
+
+  @include mq($bp--desktop) {
+    display: flex;
+  }
+}
+
+.activity {
+  margin-left: spacing(2);
+}

@@ -1,10 +1,10 @@
 @import '../../../styles/abstracts';
 
 .invoice {
-  @include bg-section($bg-color: $c--green-light);
-  padding: 0;
+  @include bg-section($bg-color: $c--green-light, $padding: 0);
   position: relative;
   overflow: hidden;
+  padding: 0;
 }
 
 .header {
