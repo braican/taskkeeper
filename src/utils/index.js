@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 /**
  * React helper to aid in adding classes for css modules.
  *
@@ -66,3 +68,76 @@ export const clientFilter = (things, clientId) => {
   }
   return things.filter(thing => thing.client === clientId);
 };
+
+/**
+ * Gets the subtotal of an individual task.
+ *
+ * @param {object} task Task data.
+ * @param {float} rate Client hourly rate.
+ *
+ * @return float
+ */
+export const computeTaskSubtotal = (task, rate) => {
+  if (task.hours === undefined && task.price) {
+    return parseFloat(task.price);
+  }
+
+  if (task.hours !== undefined) {
+    return parseFloat(task.hours) * parseFloat(rate);
+  }
+
+  return 0;
+};
+
+/**
+ * Calculates the total number of billable hours on of a list of tasks.
+ *
+ * @param {array} tasks List of tasks with associated hours.
+ *
+ * @return float
+ */
+export const computeHours = tasks => {
+  if (!tasks || tasks.length === 0) {
+    return 0;
+  }
+  return tasks
+    .filter(task => task.hours && task.hours !== '-')
+    .reduce((acc, cur) => acc + parseFloat(cur.hours), 0);
+};
+
+/**
+ * Calculates the total price of a list of tasks.
+ *
+ * @param {array} tasks List of tasks with associated individual cost.
+ * @param {float} rate Client hourly rate.
+ *
+ * @return float
+ */
+export const computeTotal = (tasks, rate) => {
+  if (!tasks || tasks.length === 0) {
+    return 0;
+  }
+
+  const total = tasks.reduce((acc, task) => acc + computeTaskSubtotal(task, rate), 0);
+  return total;
+};
+
+/**
+ * Gets the amount of time until the given due date.
+ *
+ * @param {string} dueDate The due date.
+ *
+ * @return string
+ */
+export const dueDateIn = dueDate => moment(dueDate, 'YYYY-MM-DD').fromNow();
+
+/**
+ * Format a date.
+ *
+ * @param {string} date   The date to format.
+ * @param {string} format Template to format the date.
+ *
+ * @return string
+ */
+export const prettyDate = (date, format = 'MMMM D, YYYY') =>
+  moment(date, 'YYYY-MM-DD').format(format);
