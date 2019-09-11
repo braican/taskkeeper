@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
@@ -30,15 +30,20 @@ const Task = ({
   const isFixedPrice = !hours || hours === 0;
   const taskRef = userRef.collection('tasks').doc(id);
 
-  const {
-    client: { rate },
-  } = useContext(ClientContext);
+  const { rate } = useContext(ClientContext);
   const [isEditing, setIsEditing] = useState(false);
   const [showSaveAnimation, setShowSaveAnimation] = useState(false);
   const [statusMessage, setStatusMessage] = useState('Editing');
   const [isFocused, setFocus] = useState(false);
   const [price, setPrice] = useState(isFixedPrice ? taskPrice : hours * rate);
   const [selected, setSelected] = useState(false);
+
+  useEffect(() => {
+    if (isFixedPrice) {
+      return;
+    }
+    setPrice(hours * rate);
+  }, [rate]);
 
   const handleSave = (newData, shouldSave) => {
     if (!taskRef || !shouldSave) {

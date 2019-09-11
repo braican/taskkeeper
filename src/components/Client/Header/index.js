@@ -15,20 +15,15 @@ import GearIcon from '../../../svg/Gear';
 import styles from './Header.module.scss';
 
 const Header = ({ userRef }) => {
-  const { client } = useContext(ClientContext);
+  const { client, rate, setRate } = useContext(ClientContext);
   const [isEditing, setIsEditing] = useState(false);
   const [address, setAddress] = useState(client.address);
   const [symbol, setSymbol] = useState(client.symbol);
-  const [updated, setUpdated] = useState(false);
+  const [localRate, setLocalRate] = useState(rate);
 
   const handleSave = () => {
     setIsEditing(false);
 
-    if (!userRef || !updated) {
-      return;
-    }
-
-    setUpdated(false);
     const update = {};
 
     if (address) {
@@ -39,6 +34,11 @@ const Header = ({ userRef }) => {
       update.symbol = symbol;
     }
 
+    if (rate !== localRate) {
+      setRate(localRate);
+      update.rate = parseFloat(localRate);
+    }
+
     userRef
       .collection('clients')
       .doc(client.id)
@@ -46,12 +46,25 @@ const Header = ({ userRef }) => {
   };
 
   return (
-    <header className={styles.header}>
+    <header {...className(styles.header, isEditing && styles.editing)}>
       <div className={styles.header__left}>
         <h2 className={styles.client__name}>{client.name}</h2>
 
-        <p>
-          <FormattedPrice price={client.rate} />
+        <p className={styles.rate}>
+          {isEditing ? (
+            <input
+              className={styles.rate__input}
+              type="number"
+              step="1"
+              value={localRate}
+              onChange={event => setLocalRate(event.target.value)}
+            />
+          ) : (
+            <span className={styles.rate__display}>
+              <FormattedPrice price={rate} />
+            </span>
+          )}
+          &nbsp;/ hour
         </p>
       </div>
 
@@ -63,10 +76,7 @@ const Header = ({ userRef }) => {
           <ContentEditable
             html={address || ''}
             disabled={!isEditing}
-            onChange={event => {
-              setAddress(event.target.value);
-              setUpdated(true);
-            }}
+            onChange={event => setAddress(event.target.value)}
             tagName="p"
             className={styles.address__input}
           />
@@ -77,10 +87,7 @@ const Header = ({ userRef }) => {
           label="Symbol"
           className={styles.symbol__input}
           value={symbol}
-          onChange={event => {
-            setSymbol(event.target.value);
-            setUpdated(true);
-          }}
+          onChange={event => setSymbol(event.target.value)}
         />
       </div>
 

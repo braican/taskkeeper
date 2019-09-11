@@ -24,9 +24,7 @@ import ListIcon from '../../../svg/List';
 import styles from './ActiveInvoice.module.scss';
 
 const Invoice = ({ invoice, tasks, userRef, firestore }) => {
-  const {
-    client: { rate },
-  } = useContext(ClientContext);
+  const { rate } = useContext(ClientContext);
   const [showTasks, setShowTasks] = useState(false);
 
   const subtotal = computeTotal(tasks, parseFloat(rate));

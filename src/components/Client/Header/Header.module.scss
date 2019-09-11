@@ -16,6 +16,31 @@
   }
 }
 
+.rate {
+  position: relative;
+
+  .editing &:before {
+    content: '$';
+    display: inline-block;
+    position: absolute;
+    left: -1em;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
+
+.rate__display {
+  display: inline-block;
+  padding: 0.3em;
+  margin-left: -0.3em;
+  border: 1px solid transparent;
+}
+
+.rate__input {
+  width: 60px;
+  border-style: dashed;
+}
+
 .header__right {
   display: none;
 
@@ -27,7 +52,7 @@
   @include mq($bp--tablet, max) {
     margin-top: spacing(2);
 
-    &.editingClient {
+    .editingClient & {
       display: block;
     }
   }
@@ -55,7 +80,7 @@
     left: 0;
     top: -1.5em;
 
-    .editingClient & {
+    .editing & {
       opacity: 1;
     }
   }
@@ -67,11 +92,11 @@
   border-style: dashed;
   min-height: calc(3.5em + 0.6rem);
 
-  .header__right:not(.editingClient) & {
+  .header:not(.editing) & {
     border-color: transparent;
   }
 
-  .editingClient & {
+  .editing & {
     transition-duration: 0s;
   }
 }
@@ -80,7 +105,7 @@
   @include transition(opacity);
   opacity: 0;
 
-  .editingClient & {
+  .editing & {
     opacity: 1;
   }
 

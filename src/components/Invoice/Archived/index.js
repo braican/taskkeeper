@@ -17,9 +17,7 @@ const ArchivedInvoice = ({ invoice, userRef }) => {
   const [tasksVisible, setTasksVisible] = useState(false);
   const [tasksLoaded, setTasksLoaded] = useState(false);
   const [tasks, setTasks] = useState([]);
-  const {
-    client: { rate },
-  } = useContext(ClientContext);
+  const { rate } = useContext(ClientContext);
 
   const handleTaskToggler = () => {
     if (tasksLoaded) {

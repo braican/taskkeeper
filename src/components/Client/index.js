@@ -30,9 +30,10 @@ const Client = ({
   unsetInvoicing,
 }) => {
   const [nextInvoiceId, setNextInvoiceId] = useState('');
+  const [rate, setRate] = useState(client.rate);
 
   return (
-    <ClientContext.Provider value={{ client, nextInvoiceId, setNextInvoiceId }}>
+    <ClientContext.Provider value={{ client, rate, setRate, nextInvoiceId, setNextInvoiceId }}>
       <div className={styles.client}>
         <BackLink className={styles.dashLink} to="/dashboard" onClick={unsetInvoicing}>
           Dashboard
@@ -71,7 +72,7 @@ Client.propTypes = {
   client: PropTypes.shape({
     symbol: PropTypes.string,
     name: PropTypes.string,
-    rate: PropTypes.string,
+    rate: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     id: PropTypes.string,
     address: PropTypes.string,
   }).isRequired,
