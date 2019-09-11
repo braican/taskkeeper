@@ -1,0 +1,36 @@
+@import '../../../styles/abstracts';
+
+.button {
+  @include transition;
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  width: 44px;
+  padding: 6px;
+  background-color: transparent;
+
+  svg {
+    width: 100%;
+    display: block;
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.label {
+  @include transition(opacity);
+  @include uppercase($fs--xs);
+  opacity: 0;
+  position: absolute;
+  font-size: $fs--xs;
+  top: -2em;
+  color: $c--gray-a;
+  transform: translateX(-50%);
+
+  .button:hover &,
+  .button:focus & {
+    opacity: 1;
+  }
+}

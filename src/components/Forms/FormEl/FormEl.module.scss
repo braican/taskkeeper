@@ -1,0 +1,15 @@
+@import '../../../styles/abstracts';
+
+.label {
+  @include label;
+}
+
+.absoluteLabel {
+  position: relative;
+
+  .label {
+    position: absolute;
+    left: 0;
+    top: -1.5em;
+  }
+}

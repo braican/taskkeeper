@@ -17,3 +17,6 @@ build/
 
 # Firebase
 .firebase
+
+# old
+src--old/

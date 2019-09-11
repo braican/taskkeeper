@@ -1,0 +1,17 @@
+@import '../../../styles/abstracts';
+
+.enter {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.enterActive {
+  @include transition;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.exit,
+.exitActive {
+  display: none;
+}

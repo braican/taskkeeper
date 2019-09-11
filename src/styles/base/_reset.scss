@@ -4,8 +4,8 @@
 */
 
 *,
-*:after,
-*:before {
+*:before,
+*:after {
   box-sizing: inherit;
 }
 
@@ -93,8 +93,7 @@ summary,
 time,
 mark,
 audio,
-video,
-button {
+video {
   margin: 0;
   padding: 0;
   border: 0;
@@ -118,7 +117,6 @@ section {
 }
 body {
   line-height: 1;
-  font-family: serif;
 }
 ol,
 ul {

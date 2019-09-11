@@ -1,62 +1,36 @@
-$sidebar-width: 280px;
-
-.layout {
+.app {
   overflow: hidden;
+  max-width: 100%;
+  min-height: 100vh;
 }
 
-.sidebar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: $sidebar-width;
-  background-color: $c--gray-fe;
-  height: 100vh;
-  overflow: auto;
-  transition: all $transition;
-  z-index: 10;
+.app__main {
+  padding: spacing() spacing() spacing(6) spacing();
+  max-width: $container-max;
+  min-height: 100vh;
+  margin-top: spacing(2);
+  overflow: hidden;
 
-  @include mq('max', $bp--tablet-xl) {
-    left: -$sidebar-width;
-
-    .layout--sidebar-visible & {
-      box-shadow: -8px 0px 60px rgba(0, 0, 0, 0.2);
-      transform: translateX($sidebar-width);
-    }
-  }
-}
-
-.main {
-  padding: 80px $spacing--xxxl $spacing--xxxl $spacing--xxxl;
-
-  @include mq($bp--tablet-xl) {
+  @include mq($bp--mobile) {
     margin-left: $sidebar-width;
+    padding: $sidebar-with-padding spacing(2) spacing(10) spacing(2);
+    margin-top: 0;
   }
-}
 
-.container {
-  width: 100%;
-  max-width: 800px;
-  margin: auto;
-}
-
-.app-section {
-  position: relative;
-  padding-top: $spacing--xl;
-  margin-bottom: $spacing--xl;
-
-  &:before {
+  &:after {
     content: '';
-    display: block;
-    position: absolute;
-    left: 0;
-    // left: 50%;
-    // margin-left: -0.5rem;
-    top: 0;
-    width: 1.5rem;
-    height: 1.5rem;
-    background-image: url(data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2019.89%2019.89%22%3E%3Cpath%20fill%3D%22none%22%20stroke%3D%22%2373c2fb%22%20stroke-linejoin%3D%22bevel%22%20stroke-width%3D%223%22%20d%3D%22M19.18.71L.71%2019.18%22%2F%3E%3C%2Fsvg%3E);
+    position: fixed;
+    bottom: -22vw;
+    left: -26vw;
+    width: 80vw;
+    height: 80vw;
+    opacity: 0.06;
+    z-index: -1;
+    pointer-events: none;
+    background-image: url(data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20116%20102%22%3E%3Cpath%20d%3D%22M54.46%2047.81L94.77%207.5a3%203%200%200%201%204.23%200l9.9%209.9a3%203%200%200%201%200%204.25L68.61%2062%2087.7%2081a3%203%200%200%201%200%204.24l-9.9%209.9a3%203%200%200%201-4.24%200L21.23%2042.86a3%203%200%200%201%200-4.24l9.9-9.9a3%203%200%200%201%204.24%200z%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M7.09%2042.86a3%203%200%200%201%200-4.24l9.9-9.9a3%203%200%200%201%204.24%200l19.09%2019.09L80.63%207.5a3%203%200%200%201%204.24%200l9.9%209.9a3%203%200%200%201%200%204.25L42.44%2074a3%203%200%200%201-4.24%200z%22%20fill%3D%22%23ff6e0b%22%2F%3E%3C%2Fsvg%3E);
     background-repeat: no-repeat;
-    background-position: center;
-    background-size: contain;
+    background-position: center center;
+    background-size: 100%;
+    transform: scaleY(-1) rotate(-180deg);
   }
 }

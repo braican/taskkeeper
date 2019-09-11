@@ -1,0 +1,13 @@
+@mixin input {
+  font: inherit;
+  background-color: transparent;
+  padding: $input-padding;
+  border-radius: $border-radius;
+  border: 1px solid $c--gray-c;
+
+  &:focus {
+    outline: none;
+    border-style: solid;
+    border-color: $c--blue;
+  }
+}

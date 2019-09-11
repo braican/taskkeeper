@@ -1,68 +1,33 @@
-@import '../../styles/abstracts/abstracts';
+@import '../../styles/abstracts';
 
-.section {
-  margin-bottom: $spacing--xxl;
-}
-
-.invoiceGroup {
-  margin-top: $spacing--xl;
-}
-
-.billedTotal {
-  color: $c--light-blue;
+.welcome {
   font-size: $fs--xl;
   font-weight: $fw--bold;
 }
 
-.openTasks {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  grid-column-gap: $spacing--lg;
-  grid-row-gap: $spacing--lg;
-  margin-top: $spacing--lg;
-}
+.dashboard {
+  margin-top: spacing(2);
 
-.taskGroup {
-  padding: $spacing--md;
-  background-color: $c--light-blue;
-  color: $c--white;
-  position: relative;
-
-  h5 {
-    line-height: $lh--micro;
-    padding-right: 100px;
+  @include mq($bp--desktop) {
+    margin-top: spacing(4);
+    display: flex;
   }
 }
 
-.completedTaskGroup {
-  background-color: $c--orange;
-}
+.activity {
+  flex: 1;
+  margin-top: spacing(4);
 
-.linkToClient {
-  position: absolute;
-  top: $spacing--md;
-  right: $spacing--md;
-  color: $c--white;
-  font-weight: $fw--bold;
-
-  span,
-  svg {
-    display: inline-block;
-    vertical-align: middle;
+  @include mq($bp--desktop) {
+    margin-left: spacing(6);
+    margin-top: 0;
   }
 
-  svg {
-    fill: currentColor;
-    width: 16px;
-    margin-left: 0.25em;
-    transition: transform $transition;
+  > div + div {
+    margin-top: spacing(4);
   }
 
-  &:hover {
-    color: $c--primary-blue;
-
-    svg {
-      transform: translate3d(2px, 0, 0);
-    }
+  strong {
+    font-weight: $fw--semibold;
   }
 }

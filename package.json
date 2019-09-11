@@ -44,15 +44,17 @@
     "node-sass": "^4.11.0",
     "prop-types": "^15.7.2",
     "react": "^16.8.3",
+    "react-contenteditable": "^3.3.2",
     "react-dom": "^16.8.3",
     "react-ga": "^2.6.0",
-    "react-redux": "^6.0.1",
-    "react-redux-firebase": "^3.0.0-alpha.10",
-    "react-router-dom": "^4.3.1",
+    "react-redux": "^7.1.1",
+    "react-redux-firebase": "^3.0.0-beta.2",
+    "react-router-dom": "^5.0.1",
     "react-scripts": "2.1.5",
-    "react-transition-group": "^3.0.0",
+    "react-transition-group": "^4.2.2",
     "redux": "^4.0.1",
-    "redux-firestore": "^0.7.0"
+    "redux-firestore": "^0.8.0",
+    "sanitize-html": "^1.20.1"
   },
   "devDependencies": {
     "@upstatement/eslint-config": "0.3.1",
