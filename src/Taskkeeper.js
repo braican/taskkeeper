@@ -12,6 +12,8 @@ import Header from './components/Header';
 import Dashboard from './components/Dashboard';
 import Welcome from './components/Welcome';
 import Client from './components/Client';
+import FadeInUp from './components/Transitions/FadeInUp';
+import Loading from './components/Loading';
 
 const Taskkeeper = ({ auth, profile, firestore, addUserRef }) => {
   // Add the firestore ref to the current user's collection to the store for easy access elsewhere.
@@ -25,35 +27,79 @@ const Taskkeeper = ({ auth, profile, firestore, addUserRef }) => {
 
   return (
     <div className="app">
-      <Header />
+      <FadeInUp in={isLoaded(auth) && isLoaded(profile) && isEmpty(auth)}>
+        <Welcome />
+      </FadeInUp>
 
-      <main className="app__main">
-        {isLoaded(auth) && isLoaded(profile) ? (
-          <Router>
-            <ProtectedRoute
-              path="/"
-              exact
-              component={Welcome}
-              condition={isEmpty(auth)}
-              redirect="/dashboard"
-            />
-            <ProtectedRoute
-              path="/dashboard"
-              component={Dashboard}
-              condition={!isEmpty(auth)}
-              redirect="/"
-            />
-            <ProtectedRoute
-              path="/client/:clientId"
-              component={Client}
-              condition={!isEmpty(auth)}
-              redirect="/"
-            />
-          </Router>
+      <FadeInUp in={isLoaded(auth) && isLoaded(profile) && !isEmpty(auth)}>
+        <div className="authenticated">
+          <Header />
+
+          <main className="app__main">
+            <Router>
+              <ProtectedRoute
+                path="/"
+                exact
+                component={Welcome}
+                condition={isEmpty(auth)}
+                redirect="/dashboard"
+              />
+              <ProtectedRoute
+                path="/dashboard"
+                component={Dashboard}
+                condition={!isEmpty(auth)}
+                redirect="/"
+              />
+              <ProtectedRoute
+                path="/client/:clientId"
+                component={Client}
+                condition={!isEmpty(auth)}
+                redirect="/"
+              />
+            </Router>
+          </main>
+        </div>
+      </FadeInUp>
+
+      <FadeInUp in={!isLoaded(auth) || !isLoaded(profile)}>
+        <Loading />
+      </FadeInUp>
+
+      {/* {isLoaded(auth) && isLoaded(profile) ? (
+        isEmpty(auth) ? (
+          <Welcome />
         ) : (
-          <h2>Loading...</h2>
-        )}
-      </main>
+          <div className="authenticated">
+            <Header />
+
+            <main className="app__main">
+              <Router>
+                <ProtectedRoute
+                  path="/"
+                  exact
+                  component={Welcome}
+                  condition={isEmpty(auth)}
+                  redirect="/dashboard"
+                />
+                <ProtectedRoute
+                  path="/dashboard"
+                  component={Dashboard}
+                  condition={!isEmpty(auth)}
+                  redirect="/"
+                />
+                <ProtectedRoute
+                  path="/client/:clientId"
+                  component={Client}
+                  condition={!isEmpty(auth)}
+                  redirect="/"
+                />
+              </Router>
+            </main>
+          </div>
+        )
+      ) : (
+        <h2>Loading...</h2>
+      )} */}
     </div>
   );
 };

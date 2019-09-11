@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withFirebase } from 'react-redux-firebase';
 
+import Logo from '../../svg/Logo';
+
 import styles from './Welcome.module.scss';
 
 const authSettings = {
@@ -15,7 +17,13 @@ const Welcome = ({ firebase }) => {
   };
 
   return (
-    <div className="stack">
+    <div className={styles.welcome}>
+      <div className={styles.branding}>
+        <span className={styles.logo}>
+          <Logo />
+        </span>
+        <span className={styles.name}>Taskkeeper</span>
+      </div>
       <p className={styles.intro}>Know what you're owe.</p>
       <button className="button" onClick={handleLogin}>
         Log in with Google

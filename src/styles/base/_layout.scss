@@ -1,6 +1,13 @@
+.app {
+  overflow: hidden;
+  max-width: 100%;
+  min-height: 100vh;
+}
+
 .app__main {
   padding: spacing() spacing() spacing(6) spacing();
   max-width: $container-max;
+  min-height: 100vh;
   overflow: hidden;
 
   @include mq($bp--mobile) {
