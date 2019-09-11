@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "firebase-admin": "~7.0.0",
-    "firebase-functions": "^2.2.0"
+    "firebase-functions": "^3.2.0"
   },
   "devDependencies": {
     "@upstatement/eslint-config": "0.3.1",
@@ -23,5 +23,8 @@
     "eslint-plugin-react": "^7.12.4",
     "prettier": "^1.17.0"
   },
-  "private": true
+  "private": true,
+  "engines": {
+    "node": "8"
+  }
 }
