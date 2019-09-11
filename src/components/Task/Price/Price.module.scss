@@ -1,0 +1,38 @@
+@import '../../../styles/abstracts';
+
+.price__val {
+  display: block;
+  border: 1px solid transparent; // to stay consistent with the rest of the cells
+  padding: $input-padding;
+  border-radius: $border-radius;
+  font-weight: $fw--semibold;
+
+  .price__wrapper.price__isEditable:hover & {
+    border-style: dashed;
+    border-color: $c--gray-c;
+  }
+
+  @include mq($bp--tablet, max) {
+    .price__wrapper.price__isEditable & {
+      border-style: dashed;
+      border-color: $c--gray-c;
+    }
+  }
+}
+
+.price__valHide {
+  visibility: hidden;
+}
+
+.fixedPriceInput {
+  text-align: right;
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  left: 0;
+  width: 100%;
+
+  &:focus {
+    opacity: 1;
+  }
+}

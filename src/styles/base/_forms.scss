@@ -1,29 +1,16 @@
-input[type='text'],
-input[type='number'],
-input[type='date'],
+input,
 textarea {
-  font-family: $ff--sans;
-  padding: $spacing--sm;
-  font-size: $fs--input;
-  border: 1px solid $c--gray-a;
-  background-color: $c--white;
-
-  &:focus {
-    outline: none;
-    border-color: $c--light-blue;
-  }
-}
-
-input[type='text'],
-input[type='number'],
-input[type='date'] {
-  height: 38px;
+  @include input;
 }
 
 textarea {
-  margin-bottom: 1px;
+  resize: none;
+}
 
-  &:focus {
-    margin-bottom: 0;
-  }
+.label {
+  @include label;
+}
+
+.label--nomargin {
+  margin-bottom: 0;
 }

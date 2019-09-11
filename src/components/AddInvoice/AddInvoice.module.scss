@@ -1,0 +1,94 @@
+@import '../../styles/abstracts';
+
+.form {
+  @include bg-section($bg-color: $c--gray-4, $margin-top: spacing(-1));
+  margin-left: spacing();
+  margin-right: spacing();
+  color: $c--white;
+  overflow: hidden;
+
+  input,
+  textarea {
+    color: inherit;
+
+    @include mq($bp--mobile-sm, max) {
+      width: 100%;
+    }
+  }
+
+  @include mq($bp--mobile-sm) {
+    margin-left: spacing(2);
+    margin-right: spacing(2);
+  }
+}
+
+.form__main {
+  margin-bottom: spacing(2);
+
+  @include mq($bp--desktop) {
+    display: flex;
+
+    > div {
+      flex: 1;
+    }
+
+    > div + div {
+      margin-left: spacing(2);
+    }
+  }
+}
+
+.subtotal {
+  display: block;
+  font-size: $fs--xl;
+  font-weight: $fw--semibold;
+}
+
+.hours {
+  font-size: $fs--lg;
+}
+
+.cancel {
+  margin-left: spacing();
+}
+
+.invoiceId {
+  margin-top: spacing();
+
+  @include mq($bp--desktop) {
+    margin-top: spacing(2);
+    input {
+      border-color: transparent;
+      margin-left: -0.3em;
+      &:hover {
+        border-color: $c--gray-c;
+        border-style: dashed;
+      }
+
+      &:focus {
+        border-color: $c--gray-c;
+        border-style: solid;
+      }
+    }
+  }
+}
+
+.dates {
+  @include mq($bp--desktop, max) {
+    margin-top: spacing();
+  }
+
+  > * + * {
+    margin-top: spacing();
+  }
+}
+
+.description {
+  @include mq($bp--desktop, max) {
+    margin-top: spacing();
+  }
+
+  textarea {
+    width: 100%;
+  }
+}

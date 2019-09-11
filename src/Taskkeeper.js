@@ -1,104 +1,135 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { firebaseConnect, isLoaded, isEmpty } from 'react-redux-firebase';
-import { CSSTransition } from 'react-transition-group';
+import { BrowserRouter as Router } from 'react-router-dom';
+import { withFirebase, isEmpty, isLoaded, firestoreConnect } from 'react-redux-firebase';
 
-import { Router, Route } from 'react-router-dom';
-import { createBrowserHistory } from 'history';
-import ReactGA from 'react-ga';
+import { task, invoice } from './utils/status';
 
-import Welcome from './components/Welcome';
-import Dashboard from './components/Dashboard';
-import DashboardButton from './components/Dashboard/DashboardButton';
-import SidebarTrigger from './components/SidebarTrigger';
-import Auth from './components/Auth';
-import ClientForm from './components/ClientForm';
-import ClientList from './components/ClientList';
-import ClientPane from './components/ClientPane';
+import Header from './components/Header';
+import FadeInUp from './components/Transitions/FadeInUp';
+import Loading from './components/Loading';
 
-const history = createBrowserHistory();
+import Welcome from './views/Welcome';
+import Authenticated from './views/Authenticated';
 
-// Initialize google analytics page view tracking
-history.listen(location => {
-  ReactGA.set({ page: location.pathname }); // Update the user's current page
-  ReactGA.pageview(location.pathname); // Record a pageview for the given page
-});
-
-const mapStateToProps = state => ({
-  auth: state.firebase.auth,
-  sidebarVisible: state.views.sidebarVisible,
-});
-
-const mapDispatchToProps = dispatch => ({
-  toggleSidebar: isOpen => dispatch({ type: 'TOGGLE_CLIENT_SIDEBAR', isOpen }),
-});
-
-const Taskkeeper = ({ firebase, auth, sidebarVisible, toggleSidebar }) => {
-  if (!isLoaded(auth)) {
-    return <div className="app-loading">Loading...</div>;
-  }
-  const main = useRef();
-
-  const handleOffClick = () => {
-    toggleSidebar(false);
-  };
-
+const Taskkeeper = ({ auth, profile, firestore, addUserRef }) => {
+  // Add the firestore ref to the current user's collection to the store for easy access elsewhere.
   useEffect(() => {
-    if (!main || !main.current) {
+    if (isEmpty(auth) || !auth.uid) {
       return;
     }
 
-    main.current.addEventListener('mousedown', handleOffClick);
-
-    return () => {
-      main.current.removeEventListener('mousedown', handleOffClick);
-    };
-  }, []);
+    addUserRef(firestore.collection('users').doc(auth.uid));
+  }, [auth]);
 
   return (
-    <Router history={history}>
-      <>
-        {!isEmpty(auth) && (
-          <>
-            <Auth logout={firebase.logout} />
-            <SidebarTrigger />
-            <div className={`layout${sidebarVisible ? ' layout--sidebar-visible' : ''}`}>
-              <aside className="sidebar">
-                <DashboardButton />
-                <ClientForm />
-                <ClientList />
-              </aside>
-              <div className="main" ref={main}>
-                <div className="container">
-                  <Route path="/" exact component={Dashboard} />
-                  <Route path="/client/:clientId" component={ClientPane} />
-                </div>
-              </div>
-            </div>
-          </>
-        )}
+    <div className="app">
+      <FadeInUp in={isLoaded(auth) && isLoaded(profile) && isEmpty(auth)}>
+        <Welcome />
+      </FadeInUp>
 
-        <CSSTransition in={isEmpty(auth)} classNames="trs-fadein" timeout={400} unmountOnExit>
-          <Welcome />
-        </CSSTransition>
-      </>
-    </Router>
+      <FadeInUp in={isLoaded(auth) && isLoaded(profile) && !isEmpty(auth)}>
+        <div>
+          <Header />
+
+          <main className="app__main">
+            <Router>
+              <Authenticated auth={auth} />
+            </Router>
+          </main>
+        </div>
+      </FadeInUp>
+
+      <FadeInUp in={!isLoaded(auth) || !isLoaded(profile)}>
+        <Loading />
+      </FadeInUp>
+    </div>
   );
 };
 
 Taskkeeper.propTypes = {
-  firebase: PropTypes.object,
-  auth: PropTypes.object,
-  sidebarVisible: PropTypes.bool,
-  toggleSidebar: PropTypes.func,
+  auth: PropTypes.object.isRequired,
+  profile: PropTypes.object.isRequired,
+  firestore: PropTypes.object.isRequired,
+  addUserRef: PropTypes.func.isRequired,
 };
 
 export default compose(
-  firebaseConnect(),
+  withFirebase,
   connect(
-    mapStateToProps,
-    mapDispatchToProps,
+    // State to props.
+    ({ firebase: { auth, profile }, firestore }) => ({ auth, profile, firestore }),
+
+    // Dispatch to props.
+    dispatch => ({ addUserRef: ref => dispatch({ type: 'ADD_USER_REF', ref }) }),
   ),
+  firestoreConnect(({ auth }) => {
+    if (!auth || !auth.uid) {
+      return [];
+    }
+
+    return [
+      {
+        collection: 'users',
+        doc: auth.uid,
+        subcollections: [
+          {
+            collection: 'clients',
+            orderBy: 'name',
+          },
+        ],
+        storeAs: 'clients',
+      },
+      {
+        collection: 'users',
+        doc: auth.uid,
+        subcollections: [
+          {
+            collection: 'invoices',
+            where: [['status', '==', invoice.ACTIVE]],
+            orderBy: [['client'], ['dueDate']],
+          },
+        ],
+        storeAs: 'activeInvoices',
+      },
+      {
+        collection: 'users',
+        doc: auth.uid,
+        subcollections: [
+          {
+            collection: 'tasks',
+            where: [['status', '==', task.ESTIMATED]],
+            orderBy: [['client'], ['timestamp']],
+          },
+        ],
+        storeAs: 'estimatedTasks',
+      },
+      {
+        collection: 'users',
+        doc: auth.uid,
+        subcollections: [
+          {
+            collection: 'tasks',
+            where: [['status', '==', task.COMPLETED]],
+            orderBy: [['client'], ['timestamp']],
+          },
+        ],
+        storeAs: 'completedTasks',
+      },
+      {
+        collection: 'users',
+        doc: auth.uid,
+        subcollections: [
+          {
+            collection: 'tasks',
+            where: [['status', '==', task.INVOICED]],
+            orderBy: [['client'], ['timestamp']],
+          },
+        ],
+        storeAs: 'invoicedTasks',
+      },
+    ];
+  }),
 )(Taskkeeper);

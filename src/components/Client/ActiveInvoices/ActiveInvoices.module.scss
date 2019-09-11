@@ -1,0 +1,13 @@
+@import '../../../styles/abstracts';
+
+.section {
+  margin-bottom: spacing(4);
+}
+
+.invoiceList {
+  @include mq($bp--mobile-sm) {
+    display: grid;
+    grid-column-gap: spacing(2);
+    grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+  }
+}

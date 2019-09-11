@@ -1,0 +1,15 @@
+.hours {
+  display: flex;
+  align-items: center;
+}
+
+.hours__input {
+  border-color: transparent;
+  text-align: right;
+  flex: 1;
+  min-width: 32px;
+}
+
+.hours__label {
+  flex: 0 1 auto;
+}

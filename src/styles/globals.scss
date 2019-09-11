@@ -1,3 +1,4 @@
-@import 'abstracts/abstracts';
-@import 'base/base';
-@import 'specifics/specifics';
+@import 'abstracts';
+
+@import 'base/index';
+@import 'components/index';

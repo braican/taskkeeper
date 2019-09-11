@@ -1,0 +1,155 @@
+@import '../../../styles/abstracts';
+
+.header {
+  margin-bottom: spacing(4);
+
+  @include mq($bp--tablet) {
+    padding-right: 100px;
+    display: flex;
+  }
+}
+
+.header__left {
+  @include mq($bp--tablet) {
+    width: 60%;
+  }
+}
+
+.header__right {
+  @include mq($bp--tablet) {
+    width: 40%;
+    padding-left: spacing(2);
+  }
+
+  @include mq($bp--tablet, max) {
+    margin-top: spacing(2);
+    display: none;
+
+    .editing & {
+      display: block;
+    }
+  }
+}
+
+// Fields
+// -----------
+
+.name__display {
+  @include fluid-font($fs--base * 2.5 620px, $fs--base * 4 1200px);
+  font-weight: $fw--bold;
+  line-height: 1;
+}
+
+.name__input {
+  font-size: $fs--xl;
+  font-weight: $fw--semibold;
+  position: relative;
+  width: 100%;
+  border-style: dashed;
+}
+
+.rate {
+  position: relative;
+  margin-top: spacing();
+
+  .editing & {
+    left: 12px;
+
+    &:before {
+      content: '$';
+      display: inline-block;
+      position: absolute;
+      left: -12px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  }
+}
+
+.rate__display {
+  display: inline-block;
+  padding: 0.3em;
+  margin-left: -0.3em;
+  border: 1px solid transparent;
+}
+
+.rate__input {
+  width: 60px;
+  border-style: dashed;
+  margin-right: 10px;
+}
+
+.address {
+  position: relative;
+  max-width: 300px;
+}
+
+.address__label {
+  @include label;
+
+  @include mq($bp--tablet) {
+    @include transition(opacity);
+    opacity: 0;
+
+    position: absolute;
+    left: 0;
+    top: -1.5em;
+
+    .editing & {
+      opacity: 1;
+    }
+  }
+}
+
+.address__input {
+  @include transition(border-color);
+  @include input;
+  border-style: dashed;
+  min-height: calc(3.5em + 0.6rem);
+
+  .header:not(.editing) & {
+    border-color: transparent;
+  }
+
+  .editing & {
+    transition-duration: 0s;
+  }
+}
+
+.symbol__input {
+  @include transition(opacity);
+  opacity: 0;
+
+  .editing & {
+    opacity: 1;
+  }
+
+  input {
+    border-style: dashed;
+  }
+}
+
+.edit__actions {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.edit__button {
+  @include transition(background-color);
+  width: 48px;
+  height: 48px;
+  padding: 12px;
+  border-radius: 50%;
+
+  &:focus,
+  &:hover {
+    outline: none;
+    background-color: $c--gray-c;
+  }
+
+  svg {
+    width: 100%;
+    display: block;
+  }
+}
