@@ -7,13 +7,12 @@ import { withFirebase, isEmpty, isLoaded, firestoreConnect } from 'react-redux-f
 
 import { task, invoice } from './utils/status';
 
-import ProtectedRoute from './components/Utils/ProtectedRoute';
 import Header from './components/Header';
-import Dashboard from './components/Dashboard';
-import Welcome from './components/Welcome';
-import Client from './components/Client';
 import FadeInUp from './components/Transitions/FadeInUp';
 import Loading from './components/Loading';
+
+import Welcome from './views/Welcome';
+import Authenticated from './views/Authenticated';
 
 const Taskkeeper = ({ auth, profile, firestore, addUserRef }) => {
   // Add the firestore ref to the current user's collection to the store for easy access elsewhere.
@@ -32,30 +31,12 @@ const Taskkeeper = ({ auth, profile, firestore, addUserRef }) => {
       </FadeInUp>
 
       <FadeInUp in={isLoaded(auth) && isLoaded(profile) && !isEmpty(auth)}>
-        <div className="authenticated">
+        <div>
           <Header />
 
           <main className="app__main">
             <Router>
-              <ProtectedRoute
-                path="/"
-                exact
-                component={Welcome}
-                condition={isEmpty(auth)}
-                redirect="/dashboard"
-              />
-              <ProtectedRoute
-                path="/dashboard"
-                component={Dashboard}
-                condition={!isEmpty(auth)}
-                redirect="/"
-              />
-              <ProtectedRoute
-                path="/client/:clientId"
-                component={Client}
-                condition={!isEmpty(auth)}
-                redirect="/"
-              />
+              <Authenticated auth={auth} />
             </Router>
           </main>
         </div>
@@ -64,42 +45,6 @@ const Taskkeeper = ({ auth, profile, firestore, addUserRef }) => {
       <FadeInUp in={!isLoaded(auth) || !isLoaded(profile)}>
         <Loading />
       </FadeInUp>
-
-      {/* {isLoaded(auth) && isLoaded(profile) ? (
-        isEmpty(auth) ? (
-          <Welcome />
-        ) : (
-          <div className="authenticated">
-            <Header />
-
-            <main className="app__main">
-              <Router>
-                <ProtectedRoute
-                  path="/"
-                  exact
-                  component={Welcome}
-                  condition={isEmpty(auth)}
-                  redirect="/dashboard"
-                />
-                <ProtectedRoute
-                  path="/dashboard"
-                  component={Dashboard}
-                  condition={!isEmpty(auth)}
-                  redirect="/"
-                />
-                <ProtectedRoute
-                  path="/client/:clientId"
-                  component={Client}
-                  condition={!isEmpty(auth)}
-                  redirect="/"
-                />
-              </Router>
-            </main>
-          </div>
-        )
-      ) : (
-        <h2>Loading...</h2>
-      )} */}
     </div>
   );
 };
@@ -115,10 +60,7 @@ export default compose(
   withFirebase,
   connect(
     // State to props.
-    ({ firebase, firestore }) => {
-      const { auth, profile } = firebase;
-      return { auth, profile, firestore };
-    },
+    ({ firebase: { auth, profile }, firestore }) => ({ auth, profile, firestore }),
 
     // Dispatch to props.
     dispatch => ({ addUserRef: ref => dispatch({ type: 'ADD_USER_REF', ref }) }),
