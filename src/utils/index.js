@@ -147,8 +147,13 @@ export const sanitizeInput = value => {
  *
  * @return object Map of things with IDs as keys.
  */
-export const setupIdMap = list =>
-  list.reduce((acc, item) => {
+export const setupIdMap = list => {
+  if (!list) {
+    return {};
+  }
+
+  return list.reduce((acc, item) => {
     acc[item.id] = item;
     return acc;
   }, {});
+};

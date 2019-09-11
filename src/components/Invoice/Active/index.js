@@ -25,7 +25,7 @@ import styles from './ActiveInvoice.module.scss';
 const Invoice = ({ invoice, tasks, userRef, firestore }) => {
   const [showTasks, setShowTasks] = useState(false);
 
-  const subtotal = computeTotal(tasks, invoice.rate);
+  const subtotal = tasks && tasks.length > 0 ? computeTotal(tasks, invoice.rate) : 0;
   const hours = computeHours(tasks);
 
   const handleMarkAsPaid = () => {

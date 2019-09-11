@@ -39,7 +39,10 @@ const Dashboard = ({
             {activeInvoices && activeInvoices.length > 0 ? (
               <ul>
                 {activeInvoices.map(invoice => {
-                  const invoiceTasks = invoice.tasks.map(taskId => invoicedTasks[taskId]);
+                  const invoiceTasks = invoice.tasks
+                    .map(taskId => invoicedTasks[taskId])
+                    .filter(task => typeof task !== 'undefined');
+
                   return (
                     <li key={invoice.id}>
                       <Invoice invoice={invoice} tasks={invoiceTasks} />
@@ -61,7 +64,11 @@ const Dashboard = ({
             <h3 className="dash-header">Estimated</h3>
             {estimatedCount > 0 ? (
               <p>
-                You have estimated <strong>{estimatedCount} tasks</strong>, and they are worth{' '}
+                You have estimated{' '}
+                <strong>
+                  {estimatedCount} task{estimatedCount === 1 ? '' : 's'}
+                </strong>
+                , and {estimatedCount === 1 ? 'it is' : 'they are'} worth{' '}
                 <strong>
                   <FormattedPrice price={estimatedSubtotal} />
                 </strong>
@@ -76,7 +83,11 @@ const Dashboard = ({
             <h3 className="dash-header">Completed</h3>
             {completedCount > 0 ? (
               <p>
-                You have completed <strong>{completedCount}</strong> tasks, and they are worth{' '}
+                You have completed{' '}
+                <strong>
+                  {completedCount} task{completedCount === 1 ? '' : 's'}
+                </strong>
+                , and {completedCount === 1 ? 'it is' : 'they are'} worth{' '}
                 <strong>
                   <FormattedPrice price={completedSubtotal} />
                 </strong>
