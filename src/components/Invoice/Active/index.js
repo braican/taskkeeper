@@ -1,10 +1,9 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
 
-import { ClientContext } from '../../Client';
 import {
   computeTaskSubtotal,
   computeHours,
@@ -24,10 +23,9 @@ import ListIcon from '../../../svg/List';
 import styles from './ActiveInvoice.module.scss';
 
 const Invoice = ({ invoice, tasks, userRef, firestore }) => {
-  const { rate } = useContext(ClientContext);
   const [showTasks, setShowTasks] = useState(false);
 
-  const subtotal = computeTotal(tasks, parseFloat(rate));
+  const subtotal = computeTotal(tasks, invoice.rate);
   const hours = computeHours(tasks);
 
   const handleMarkAsPaid = () => {
@@ -74,12 +72,14 @@ const Invoice = ({ invoice, tasks, userRef, firestore }) => {
         </div>
 
         <div className={styles.actions}>
-          <button
-            {...className(styles.action, showTasks && styles.actionInvert)}
-            type="button"
-            onClick={() => setShowTasks(!showTasks)}>
-            <ListIcon />
-          </button>
+          {tasks && tasks.length > 0 && (
+            <button
+              {...className(styles.action, showTasks && styles.actionInvert)}
+              type="button"
+              onClick={() => setShowTasks(!showTasks)}>
+              <ListIcon />
+            </button>
+          )}
         </div>
       </div>
 
@@ -96,7 +96,7 @@ const Invoice = ({ invoice, tasks, userRef, firestore }) => {
                         {task.hours ? `${task.hours} hours` : ' '}
                       </td>
                       <td className={styles.subtotalCell}>
-                        <FormattedPrice price={computeTaskSubtotal(task, rate)} />
+                        <FormattedPrice price={computeTaskSubtotal(task, invoice.rate)} />
                       </td>
                     </tr>
                   );
@@ -121,6 +121,7 @@ Invoice.propTypes = {
     issueDate: PropTypes.string,
     dueDate: PropTypes.string,
     description: PropTypes.string,
+    rate: PropTypes.number,
   }).isRequired,
   tasks: PropTypes.array,
   userRef: PropTypes.object,

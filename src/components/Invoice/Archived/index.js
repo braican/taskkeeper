@@ -17,7 +17,10 @@ const ArchivedInvoice = ({ invoice, userRef }) => {
   const [tasksVisible, setTasksVisible] = useState(false);
   const [tasksLoaded, setTasksLoaded] = useState(false);
   const [tasks, setTasks] = useState([]);
-  const { rate } = useContext(ClientContext);
+  const clientData = useContext(ClientContext);
+
+  // Legacy code to get a rate if the invoice itself doesn't have a rate.
+  const rate = clientData ? clientData.rate : invoice.rate;
 
   const handleTaskToggler = () => {
     if (tasksLoaded) {
@@ -47,8 +50,10 @@ const ArchivedInvoice = ({ invoice, userRef }) => {
     <div {...className(styles.invoice, tasksVisible && styles.invoiceWithTasks)}>
       <div className={styles.data}>
         <span className={styles.invoiceId}>{invoice.invoiceId}</span>
-        <span className={styles.fulfilledDate}>{prettyDate(invoice.fulfilledDate)}</span>
-        <span className={styles.hours}>{invoice.hours} hours</span>
+        <span className={styles.fulfilledDate}>{prettyDate(invoice.issueDate)}</span>
+        <span className={styles.hours}>
+          {invoice.hours} hour{invoice.hours === 1 ? '' : 's'}
+        </span>
         <span className={styles.price}>
           <FormattedPrice price={invoice.price} />
         </span>
@@ -72,7 +77,11 @@ const ArchivedInvoice = ({ invoice, userRef }) => {
                 {tasks.map(task => (
                   <tr key={`${invoice.invoiceId}_${task.id}`}>
                     <td>{task.description}</td>
-                    <td className={styles.hoursCell}>{task.hours ? `${task.hours} hours` : ' '}</td>
+                    <td className={styles.hoursCell}>
+                      {task.hours
+                        ? `${task.hours} hour${parseFloat(task.hours) === 1 ? '' : 's'}`
+                        : ''}
+                    </td>
                     <td className={styles.subtotalCell}>
                       <FormattedPrice price={computeTaskSubtotal(task, rate)} />
                     </td>
@@ -91,10 +100,12 @@ ArchivedInvoice.propTypes = {
   invoice: PropTypes.shape({
     invoiceId: PropTypes.string,
     fulfilledDate: PropTypes.string,
+    issueDate: PropTypes.string,
     price: PropTypes.number,
     hours: PropTypes.number,
     tasks: PropTypes.array,
     description: PropTypes.string,
+    rate: PropTypes.number,
   }).isRequired,
   userRef: PropTypes.object,
 };

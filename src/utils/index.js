@@ -54,11 +54,11 @@ export const clientFilter = (things, clientId) => {
  * @return float
  */
 export const computeTaskSubtotal = (task, rate) => {
-  if (task.hours === undefined && task.price) {
+  if ((task.hours === undefined || task.hours === 0 || task.hours === '') && task.price) {
     return parseFloat(task.price);
   }
 
-  if (task.hours !== undefined) {
+  if (task.hours !== undefined && task.hours !== '') {
     return parseFloat(task.hours) * parseFloat(rate);
   }
 
@@ -93,6 +93,8 @@ export const computeTotal = (tasks, rate) => {
   if (!tasks || tasks.length === 0) {
     return 0;
   }
+
+  rate = parseFloat(rate);
 
   const total = tasks.reduce((acc, task) => acc + computeTaskSubtotal(task, rate), 0);
   return total;
@@ -137,3 +139,16 @@ export const sanitizeInput = value => {
     },
   });
 };
+
+/**
+ * Sets up a map from a list of passed things from Firebase.
+ *
+ * @param {array} list List of things with IDs.
+ *
+ * @return object Map of things with IDs as keys.
+ */
+export const setupIdMap = list =>
+  list.reduce((acc, item) => {
+    acc[item.id] = item;
+    return acc;
+  }, {});

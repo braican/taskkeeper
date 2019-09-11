@@ -4,7 +4,7 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { isLoaded, firestoreConnect } from 'react-redux-firebase';
 
-import { clientFilter } from '../../utils';
+import { clientFilter, setupIdMap } from '../../utils';
 import { invoice as invoiceStatus } from '../../utils/status';
 
 import BackLink from '../Buttons/BackLink';
@@ -111,10 +111,7 @@ export default compose(
       const archivedInvoices = isLoaded(clientInvoices) ? clientInvoices : null;
 
       // Make the invoiced tasks just a map of tasks.
-      const invoicedTasks = clientFilter(allInvoicedTasks, id).reduce((acc, item) => {
-        acc[item.id] = item;
-        return acc;
-      }, {});
+      const invoicedTasks = setupIdMap(clientFilter(allInvoicedTasks, id));
 
       return {
         auth,

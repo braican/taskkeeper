@@ -84,6 +84,7 @@ const AddInvoice = ({
 
     const invoiceData = {
       client: client.id,
+      rate: client.rate,
       invoiceId: nextInvoiceId,
       dueDate,
       issueDate,

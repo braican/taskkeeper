@@ -14,5 +14,14 @@
 }
 
 .activity {
-  margin-left: spacing(2);
+  flex: 1;
+  margin-left: spacing(6);
+
+  > div + div {
+    margin-top: spacing(4);
+  }
+
+  strong {
+    font-weight: $fw--semibold;
+  }
 }
