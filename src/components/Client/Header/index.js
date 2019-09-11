@@ -17,6 +17,7 @@ import styles from './Header.module.scss';
 const Header = ({ userRef }) => {
   const { client, rate, setRate } = useContext(ClientContext);
   const [isEditing, setIsEditing] = useState(false);
+  const [name, setName] = useState(client.name);
   const [address, setAddress] = useState(client.address);
   const [symbol, setSymbol] = useState(client.symbol);
   const [localRate, setLocalRate] = useState(rate);
@@ -24,15 +25,11 @@ const Header = ({ userRef }) => {
   const handleSave = () => {
     setIsEditing(false);
 
-    const update = {};
-
-    if (address) {
-      update.address = sanitizeInput(address);
-    }
-
-    if (symbol) {
-      update.symbol = symbol;
-    }
+    const update = {
+      address: sanitizeInput(address),
+      symbol,
+      name,
+    };
 
     if (rate !== localRate) {
       setRate(localRate);
@@ -48,7 +45,18 @@ const Header = ({ userRef }) => {
   return (
     <header {...className(styles.header, isEditing && styles.editing)}>
       <div className={styles.header__left}>
-        <h2 className={styles.client__name}>{client.name}</h2>
+        <div className={styles.name}>
+          {isEditing ? (
+            <input
+              className={styles.name__input}
+              type="text"
+              defaultValue={name}
+              onChange={event => setName(event.target.value)}
+            />
+          ) : (
+            <h2 className={styles.name__display}>{name}</h2>
+          )}
+        </div>
 
         <p className={styles.rate}>
           {isEditing ? (
@@ -64,7 +72,7 @@ const Header = ({ userRef }) => {
               <FormattedPrice price={rate} />
             </span>
           )}
-          &nbsp;/ hour
+          / hour
         </p>
       </div>
 

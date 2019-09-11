@@ -15,7 +15,10 @@
   vertical-align: middle;
   padding: spacing();
   width: $sidebar-width;
-  height: $sidebar-width;
+
+  @include mq($bp--mobile) {
+    height: $sidebar-width;
+  }
 
   svg {
     display: block;

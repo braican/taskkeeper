@@ -1,13 +1,21 @@
 @import '../../styles/abstracts';
 
+.clientlist {
+  @include mq($bp--mobile, max) {
+    margin-left: spacing(2);
+  }
+}
+
 .client {
-  margin-top: spacing();
+  margin-top: spacing(0.5);
 }
 
 .client__link {
   position: relative;
   text-decoration: none;
   display: block;
+  padding-top: spacing();
+  padding-bottom: spacing();
 
   .clientHasActivity &:before {
     content: '';
@@ -30,6 +38,7 @@
     font-size: $fs--xl;
     font-weight: $fw--semibold;
     transform: translateX(0);
+    line-height: 1.2;
   }
 
   &:hover span {
@@ -39,6 +48,7 @@
 }
 
 .taskStatus {
+  margin-top: spacing(-1);
   span + span {
     margin-left: spacing(0.5);
 

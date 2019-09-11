@@ -9,13 +9,19 @@
   margin-top: spacing(2);
 
   @include mq($bp--desktop) {
+    margin-top: spacing(4);
     display: flex;
   }
 }
 
 .activity {
   flex: 1;
-  margin-left: spacing(6);
+  margin-top: spacing(4);
+
+  @include mq($bp--desktop) {
+    margin-left: spacing(6);
+    margin-top: 0;
+  }
 
   > div + div {
     margin-top: spacing(4);

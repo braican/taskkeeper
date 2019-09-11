@@ -28,7 +28,7 @@ const Task = ({
 }) => {
   const { id, hours, price: taskPrice, description } = task;
   const isFixedPrice = !hours || hours === 0;
-  const taskRef = userRef.collection('tasks').doc(id);
+  const taskRef = userRef ? userRef.collection('tasks').doc(id) : null;
 
   const { rate } = useContext(ClientContext);
   const [isEditing, setIsEditing] = useState(false);

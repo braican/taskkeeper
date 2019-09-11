@@ -8,11 +8,13 @@
   padding: spacing() spacing() spacing(6) spacing();
   max-width: $container-max;
   min-height: 100vh;
+  margin-top: spacing(2);
   overflow: hidden;
 
   @include mq($bp--mobile) {
     margin-left: $sidebar-width;
     padding: $sidebar-with-padding spacing(2) spacing(10) spacing(2);
+    margin-top: 0;
   }
 
   &:after {

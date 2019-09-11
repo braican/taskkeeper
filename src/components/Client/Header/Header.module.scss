@@ -1,7 +1,7 @@
 @import '../../../styles/abstracts';
 
 .header {
-  margin-bottom: spacing(2);
+  margin-bottom: spacing(4);
 
   @include mq($bp--tablet) {
     padding-right: 100px;
@@ -9,23 +9,60 @@
   }
 }
 
-.header__left,
+.header__left {
+  @include mq($bp--tablet) {
+    width: 60%;
+  }
+}
+
 .header__right {
   @include mq($bp--tablet) {
-    width: 50%;
+    width: 40%;
+    padding-left: spacing(2);
   }
+
+  @include mq($bp--tablet, max) {
+    margin-top: spacing(2);
+    display: none;
+
+    .editing & {
+      display: block;
+    }
+  }
+}
+
+// Fields
+// -----------
+
+.name__display {
+  @include fluid-font($fs--base * 2.5 620px, $fs--base * 4 1200px);
+  font-weight: $fw--bold;
+  line-height: 1;
+}
+
+.name__input {
+  font-size: $fs--xl;
+  font-weight: $fw--semibold;
+  position: relative;
+  width: 100%;
+  border-style: dashed;
 }
 
 .rate {
   position: relative;
+  margin-top: spacing();
 
-  .editing &:before {
-    content: '$';
-    display: inline-block;
-    position: absolute;
-    left: -1em;
-    top: 50%;
-    transform: translateY(-50%);
+  .editing & {
+    left: 12px;
+
+    &:before {
+      content: '$';
+      display: inline-block;
+      position: absolute;
+      left: -12px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
   }
 }
 
@@ -39,29 +76,7 @@
 .rate__input {
   width: 60px;
   border-style: dashed;
-}
-
-.header__right {
-  display: none;
-
-  @include mq($bp--tablet) {
-    display: block;
-    padding-left: spacing(2);
-  }
-
-  @include mq($bp--tablet, max) {
-    margin-top: spacing(2);
-
-    .editingClient & {
-      display: block;
-    }
-  }
-}
-
-.client__name {
-  @include fluid-font($fs--base * 1.5 620px, $fs--base * 4 1200px);
-  font-weight: $fw--bold;
-  line-height: 1;
+  margin-right: 10px;
 }
 
 .address {

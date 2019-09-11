@@ -8,7 +8,7 @@ import { clientFilter, className } from '../../utils';
 import styles from './ClientList.module.scss';
 
 const ClientList = ({ clients, estimatedTasks, completedTasks, activeInvoices }) => (
-  <section>
+  <section className={styles.clientlist}>
     {clients && clients.length > 0 ? (
       <ul>
         {clients.map(client => {
