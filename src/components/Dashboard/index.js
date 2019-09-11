@@ -123,7 +123,7 @@ export default compose(
       clients,
     } = firestore.ordered;
 
-    const clientMap = setupIdMap(clients);
+    const clientMap = isLoaded(clients) && clients ? setupIdMap(clients) : {};
 
     let estimatedSubtotal = 0;
     let estimatedCount = 0;
@@ -132,16 +132,20 @@ export default compose(
     let completedCount = 0;
 
     const reduceTaskPrices = (acc, task) => {
+      if (!clientMap[task.client] || !clientMap[task.client].rate) {
+        return acc;
+      }
+
       const taskRate = clientMap[task.client].rate;
       return acc + computeTaskSubtotal(task, taskRate);
     };
 
-    if (isLoaded(estimatedTasks)) {
+    if (isLoaded(estimatedTasks) && estimatedTasks) {
       estimatedCount = estimatedTasks.length;
       estimatedSubtotal = estimatedTasks.reduce(reduceTaskPrices, 0);
     }
 
-    if (isLoaded(completedTasks)) {
+    if (isLoaded(completedTasks) && completedTasks) {
       completedCount = completedTasks.length;
       completedSubtotal = completedTasks.reduce(reduceTaskPrices, 0);
     }
