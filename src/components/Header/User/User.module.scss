@@ -1,11 +1,17 @@
 @import '../../../styles/abstracts';
 
 .user__wrapper {
-  padding: spacing();
-  width: $sidebar-width;
-  height: $sidebar-width;
+  padding: spacing(0.5);
+  width: 56px;
+  height: 56px;
   position: relative;
   z-index: 2;
+
+  @include mq($bp--mobile) {
+    padding: spacing();
+    width: $sidebar-width;
+    height: $sidebar-width;
+  }
 }
 
 .user__avatar {

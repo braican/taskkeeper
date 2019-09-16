@@ -1,0 +1,97 @@
+@import '../../styles/abstracts';
+
+.wrapper {
+  @include bg-section($bg-color: $c--blue-xdark, $margin-top: 0, $radius: 0, $box-shadow: false);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  color: $c--white;
+  z-index: 10;
+  padding: spacing(2);
+  overflow: auto;
+
+  @include mq($bp--mobile) {
+    top: $sidebar-width;
+    left: $sidebar-width;
+    right: spacing();
+    bottom: spacing(2);
+    border-radius: 24px;
+    padding: spacing(4);
+  }
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.header {
+  margin-bottom: spacing();
+  flex: 0;
+}
+
+.form__main {
+  flex: 1;
+
+  > div {
+    margin-top: spacing();
+  }
+
+  input,
+  textarea {
+    color: $c--white;
+    border-style: dashed;
+    border-color: $c--blue;
+    width: 100%;
+    padding: 0.3em;
+
+    &:focus {
+      border-style: solid;
+      border-color: $c--gray-c;
+    }
+  }
+
+  ::-webkit-input-placeholder {
+    color: $c--blue-dark;
+  }
+
+  :-ms-input-placeholder {
+    color: $c--blue-dark;
+  }
+
+  ::placeholder {
+    color: $c--blue-dark;
+  }
+}
+
+.input__name,
+.input__rate {
+  font-size: $fs--xl;
+}
+.input__address {
+  @include mq($bp--mobile) {
+    font-size: $fs--lg;
+  }
+}
+
+.secondary {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-column-gap: spacing(2);
+
+  > div {
+    margin-top: spacing();
+  }
+}
+
+.actions {
+  margin-top: spacing();
+  flex: 0;
+
+  button + button {
+    margin-left: spacing();
+  }
+}

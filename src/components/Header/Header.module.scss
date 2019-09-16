@@ -1,6 +1,7 @@
 @import '../../styles/abstracts';
 
 .header {
+  position: relative;
   @include mq($bp--mobile) {
     position: fixed;
     top: 0;

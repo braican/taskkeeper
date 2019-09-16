@@ -55,6 +55,11 @@ button {
 // Headers
 // -----------
 
+.page-header {
+  font-size: $fs--xl;
+  font-weight: $fw--semibold;
+}
+
 .section-header {
   font-size: $fs--lg;
   font-weight: $fw--bold;
