@@ -1,14 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { isLoaded } from 'react-redux-firebase';
 
-import { setupIdMap, computeTaskSubtotal } from '../../utils';
+import { setupIdMap, computeTaskSubtotal, className } from '../../utils';
 
 import ClientList from '../ClientList';
 import FormattedPrice from '../Utils/FormattedPrice';
 import Invoice from '../Invoice/Active';
+import CircleButton from '../Buttons/Circle';
+import PlusIcon from '../../svg/Plus';
 
 import styles from './Dashboard.module.scss';
 
@@ -20,20 +21,22 @@ const Dashboard = ({
   estimatedSubtotal,
   completedCount,
   completedSubtotal,
+  showAddClient,
 }) => {
   return (
     <div>
       <h2 className={styles.welcome}>Welcome, {displayName}</h2>
 
       <div className={styles.dashboard}>
-        <div className={styles.clientList}>
-          <header>
-            <h3 className="dash-header">Clients</h3>
+        <section className={styles.list}>
+          <header className={styles.clients__header}>
+            <h3 {...className('dash-header', styles.clients__label)}>Clients</h3>
+            <CircleButton icon={PlusIcon} label="Add client" onClick={showAddClient} />
           </header>
           <ClientList />
-        </div>
+        </section>
 
-        <div className={styles.activity}>
+        <section className={styles.activity}>
           <div>
             <h3 className="dash-header">Active Invoices</h3>
             {activeInvoices && activeInvoices.length > 0 ? (
@@ -97,7 +100,7 @@ const Dashboard = ({
               <p>You have no completed tasks.</p>
             )}
           </div>
-        </div>
+        </section>
       </div>
     </div>
   );
@@ -111,6 +114,7 @@ Dashboard.propTypes = {
   estimatedSubtotal: PropTypes.number,
   completedCount: PropTypes.number,
   completedSubtotal: PropTypes.number,
+  showAddClient: PropTypes.func.isRequired,
 };
 
 Dashboard.defaultProps = {
@@ -123,8 +127,8 @@ Dashboard.defaultProps = {
   completedSubtotal: 0,
 };
 
-export default compose(
-  connect(({ firebase, firestore }) => {
+export default connect(
+  ({ firebase, firestore }) => {
     const displayName = firebase.profile.displayName;
     const {
       activeInvoices,
@@ -170,5 +174,8 @@ export default compose(
       completedCount,
       completedSubtotal,
     };
+  },
+  dispatch => ({
+    showAddClient: () => dispatch({ type: 'SHOW_ADD_CLIENT' }),
   }),
 )(Dashboard);

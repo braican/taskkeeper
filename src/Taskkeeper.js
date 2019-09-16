@@ -5,16 +5,19 @@ import { connect } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { withFirebase, isEmpty, isLoaded, firestoreConnect } from 'react-redux-firebase';
 
+import { className } from './utils';
 import { task, invoice } from './utils/status';
 
 import Header from './components/Header';
 import FadeInUp from './components/Transitions/FadeInUp';
+import FadeIn from './components/Transitions/FadeIn';
 import Loading from './components/Loading';
+import AddClient from './components/AddClient';
 
 import Welcome from './views/Welcome';
 import Authenticated from './views/Authenticated';
 
-const Taskkeeper = ({ auth, profile, firestore, addUserRef }) => {
+const Taskkeeper = ({ auth, profile, firestore, addUserRef, newClientVisible, lockScroll }) => {
   // Add the firestore ref to the current user's collection to the store for easy access elsewhere.
   useEffect(() => {
     if (isEmpty(auth) || !auth.uid) {
@@ -25,25 +28,29 @@ const Taskkeeper = ({ auth, profile, firestore, addUserRef }) => {
   }, [auth]);
 
   return (
-    <div className="app">
+    <div {...className('app', lockScroll && 'app--lock-scroll')}>
       <FadeInUp in={isLoaded(auth) && isLoaded(profile) && isEmpty(auth)}>
         <Welcome />
       </FadeInUp>
 
-      <FadeInUp in={isLoaded(auth) && isLoaded(profile) && !isEmpty(auth)}>
+      <FadeIn in={isLoaded(auth) && isLoaded(profile) && !isEmpty(auth)}>
         <div>
           <Header />
 
-          <main className="app__main">
+          <main {...className('app__main', newClientVisible && 'app__main--hidden')}>
             <Router>
               <Authenticated auth={auth} />
             </Router>
           </main>
         </div>
-      </FadeInUp>
+      </FadeIn>
 
       <FadeInUp in={!isLoaded(auth) || !isLoaded(profile)}>
         <Loading />
+      </FadeInUp>
+
+      <FadeInUp in={newClientVisible}>
+        <AddClient />
       </FadeInUp>
     </div>
   );
@@ -54,13 +61,26 @@ Taskkeeper.propTypes = {
   profile: PropTypes.object.isRequired,
   firestore: PropTypes.object.isRequired,
   addUserRef: PropTypes.func.isRequired,
+  newClientVisible: PropTypes.bool,
+  lockScroll: PropTypes.bool,
+};
+
+Taskkeeper.defaultProps = {
+  newClientVisible: false,
+  lockScroll: false,
 };
 
 export default compose(
   withFirebase,
   connect(
     // State to props.
-    ({ firebase: { auth, profile }, firestore }) => ({ auth, profile, firestore }),
+    ({ firebase: { auth, profile }, firestore, views: { newClientVisible, lockScroll } }) => ({
+      auth,
+      profile,
+      firestore,
+      newClientVisible,
+      lockScroll,
+    }),
 
     // Dispatch to props.
     dispatch => ({ addUserRef: ref => dispatch({ type: 'ADD_USER_REF', ref }) }),

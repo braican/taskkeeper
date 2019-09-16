@@ -4,10 +4,12 @@ import { firestoreReducer } from 'redux-firestore';
 
 import { userRefReducer, initialState as userRef } from './reducers/userRef';
 import { invoiceReducer, initialState as invoice } from './reducers/invoices';
+import { viewsReducer, initialState as views } from './reducers/views';
 
 const initialState = {
   userRef,
   invoice,
+  views,
 };
 
 const rootReducer = combineReducers({
@@ -15,6 +17,7 @@ const rootReducer = combineReducers({
   firestore: firestoreReducer,
   userRef: userRefReducer,
   invoice: invoiceReducer,
+  views: viewsReducer,
 });
 
 const store = createStore(

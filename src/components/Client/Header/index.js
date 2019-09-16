@@ -1,6 +1,5 @@
 import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
-import { compose } from 'redux';
 import { connect } from 'react-redux';
 import ContentEditable from 'react-contenteditable';
 
@@ -122,4 +121,4 @@ Header.defaultProps = {
   userRef: null,
 };
 
-export default compose(connect(({ userRef }) => ({ userRef })))(Header);
+export default connect(({ userRef }) => ({ userRef }))(Header);

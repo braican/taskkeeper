@@ -14,6 +14,25 @@
   }
 }
 
+// Client list column
+// -----------
+
+.list {
+  min-width: 260px;
+}
+
+.clients__header {
+  display: flex;
+  align-items: center;
+}
+
+.clients__label {
+  flex: 1;
+}
+
+// Activity column
+// -----------
+
 .activity {
   flex: 1;
   margin-top: spacing(4);

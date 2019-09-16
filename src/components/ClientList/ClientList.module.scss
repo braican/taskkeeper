@@ -1,6 +1,8 @@
 @import '../../styles/abstracts';
 
 .clientlist {
+  margin-top: spacing();
+
   @include mq($bp--mobile, max) {
     margin-left: spacing(2);
   }

@@ -1,13 +1,17 @@
 .app {
-  overflow: hidden;
+  overflow: auto;
   max-width: 100%;
-  min-height: 100vh;
+  height: 100vh;
+}
+
+.app--lock-scroll {
+  overflow: hidden;
 }
 
 .app__main {
+  @include transition(opacity);
   padding: spacing() spacing() spacing(6) spacing();
   max-width: $container-max;
-  min-height: 100vh;
   margin-top: spacing(2);
   overflow: hidden;
 
@@ -15,6 +19,7 @@
     margin-left: $sidebar-width;
     padding: $sidebar-with-padding spacing(2) spacing(10) spacing(2);
     margin-top: 0;
+    min-height: 100vh;
   }
 
   &:after {
@@ -33,4 +38,8 @@
     background-size: 100%;
     transform: scaleY(-1) rotate(-180deg);
   }
+}
+
+.app__main--hidden {
+  opacity: 0;
 }

@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { className } from '../../../utils';
 
@@ -55,9 +54,7 @@ CompletedTasks.defaultProps = {
   isInvoicing: false,
 };
 
-export default compose(
-  connect(
-    ({ invoice: { isInvoicing } }) => ({ isInvoicing }),
-    dispatch => ({ setInvoicing: () => dispatch({ type: 'SET_INVOICING' }) }),
-  ),
+export default connect(
+  ({ invoice: { isInvoicing } }) => ({ isInvoicing }),
+  dispatch => ({ setInvoicing: () => dispatch({ type: 'SET_INVOICING' }) }),
 )(CompletedTasks);
