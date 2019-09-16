@@ -1,6 +1,5 @@
 import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
-import { compose } from 'redux';
 import { connect } from 'react-redux';
 
 import { ClientContext } from '../Client';
@@ -110,4 +109,4 @@ AddTask.defaultProps = {
   userRef: null,
 };
 
-export default compose(connect(({ userRef }) => ({ userRef })))(AddTask);
+export default connect(({ userRef }) => ({ userRef }))(AddTask);

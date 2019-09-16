@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { clientFilter, className } from '../../utils';
@@ -8,7 +7,7 @@ import { clientFilter, className } from '../../utils';
 import styles from './ClientList.module.scss';
 
 const ClientList = ({ clients, estimatedTasks, completedTasks, activeInvoices }) => (
-  <section className={styles.clientlist}>
+  <div className={styles.clientlist}>
     {clients && clients.length > 0 ? (
       <ul>
         {clients.map(client => {
@@ -46,7 +45,7 @@ const ClientList = ({ clients, estimatedTasks, completedTasks, activeInvoices })
     ) : (
       <p>You haven't added any clients.</p>
     )}
-  </section>
+  </div>
 );
 
 ClientList.propTypes = {
@@ -68,12 +67,7 @@ ClientList.defaultProps = {
   activeInvoices: [],
 };
 
-export default compose(
-  connect(
-    ({
-      firestore: {
-        ordered: { clients, estimatedTasks, completedTasks, activeInvoices },
-      },
-    }) => ({ clients, estimatedTasks, completedTasks, activeInvoices }),
-  ),
-)(ClientList);
+export default connect(({ firestore }) => {
+  const { clients, estimatedTasks, completedTasks, activeInvoices } = firestore.ordered;
+  return { clients, estimatedTasks, completedTasks, activeInvoices };
+})(ClientList);

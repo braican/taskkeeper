@@ -1,6 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { className } from '../../utils';
 
@@ -155,14 +154,12 @@ Task.defaultProps = {
   isInvoicing: false,
 };
 
-export default compose(
-  connect(
-    ({ userRef, invoice: { isInvoicing } }) => ({ userRef, isInvoicing }),
-    dispatch => ({
-      addInvoiceTask: (taskId, cost, hours) =>
-        dispatch({ type: 'ADD_INVOICE_TASK', taskId, cost, hours }),
-      removeInvoiceTask: (taskId, cost, hours) =>
-        dispatch({ type: 'REMOVE_INVOICE_TASK', taskId, cost, hours }),
-    }),
-  ),
+export default connect(
+  ({ userRef, invoice: { isInvoicing } }) => ({ userRef, isInvoicing }),
+  dispatch => ({
+    addInvoiceTask: (taskId, cost, hours) =>
+      dispatch({ type: 'ADD_INVOICE_TASK', taskId, cost, hours }),
+    removeInvoiceTask: (taskId, cost, hours) =>
+      dispatch({ type: 'REMOVE_INVOICE_TASK', taskId, cost, hours }),
+  }),
 )(Task);
