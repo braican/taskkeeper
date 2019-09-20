@@ -105,7 +105,7 @@ ArchivedInvoice.propTypes = {
     hours: PropTypes.number,
     tasks: PropTypes.array,
     description: PropTypes.string,
-    rate: PropTypes.number,
+    rate: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   }).isRequired,
   userRef: PropTypes.object,
 };

@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 
 import {
   computeTaskSubtotal,
@@ -51,6 +53,46 @@ const Invoice = ({ invoice, tasks, userRef, firestore }) => {
     batch.commit();
   };
 
+  const handlePdf = () => {
+    // window.html2canvas = html2canvas;
+    // const doc = new jsPDF(
+    //   'p', 'pt', 'a4'
+    // );
+    // doc.html(document.querySelector('.app__main'), {
+    //   callback: function(pdf) {
+    //     console.log(pdf);
+
+    //     pdf.save('cv-a4.pdf');
+    //   },
+    // });
+
+    // const doc = new jsPDF('p', 'mm', 'a4');
+    const doc = new jsPDF({
+      orientation: 'portrait',
+      unit: 'in',
+      format: 'letter',
+    });
+    html2canvas(document.querySelector('body')).then(canvas => {
+      const x = canvas.toDataURL('image/jpeg', 1);
+      doc.addImage(x, 'JPEG', 30, 30, 148, 150);
+      doc.output('dataurlnewwindow');
+    });
+
+    // const doc = new jsPDF();
+
+    // doc.html(document.body, {
+    //   callback: function(tt) {
+    //     tt.save();
+    //   },
+    // });
+
+    // doc.setFont('Oswald');
+    // doc.text('Hello world!', 10, 10);
+    // doc.output('dataurlnewwindow', 'test.pdf');
+
+    // doc.save('a4.pdf');
+  };
+
   return (
     <div className={styles.invoice}>
       <div className={styles.header}>
@@ -80,6 +122,8 @@ const Invoice = ({ invoice, tasks, userRef, firestore }) => {
               <ListIcon />
             </button>
           )}
+
+          <button onClick={handlePdf}>PDF</button>
         </div>
       </div>
 
@@ -121,7 +165,7 @@ Invoice.propTypes = {
     issueDate: PropTypes.string,
     dueDate: PropTypes.string,
     description: PropTypes.string,
-    rate: PropTypes.number,
+    rate: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   }).isRequired,
   tasks: PropTypes.array,
   userRef: PropTypes.object,
