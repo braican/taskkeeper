@@ -18,9 +18,9 @@ const FormEl = ({
       {label}
     </label>
     {'textarea' === type ? (
-      <textarea id={id} {...inputConfig} defaultValue={value} onChange={onChange} />
+      <textarea id={id} {...inputConfig} value={value} onChange={onChange} />
     ) : (
-      <input type={type} id={id} {...inputConfig} defaultValue={value} onChange={onChange} />
+      <input type={type} id={id} {...inputConfig} value={value} onChange={onChange} />
     )}
   </div>
 );
