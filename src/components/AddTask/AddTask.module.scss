@@ -15,26 +15,77 @@
       background-color: $c--white;
     }
   }
+
+  @include mq($bp--tablet, max) {
+    padding-top: spacing(1.5);
+  }
 }
 
 .formWrapper {
-  display: flex;
-  align-items: center;
   padding-top: spacing();
 
-  > div + div {
-    margin-left: spacing();
+  // @include mq($bp--mobile-sm) {
+  display: flex;
+  align-items: center;
+  // }
+
+  @include mq($bp--tablet, max) {
+    flex-wrap: wrap;
+
+    .toggler {
+      margin-left: 0;
+    }
   }
 }
 
 .description {
   flex: 1;
   max-width: 680px;
+
+  @include mq($bp--tablet, max) {
+    width: 100%;
+    max-width: none;
+    flex-basis: 100%;
+    margin-bottom: spacing();
+  }
+}
+
+.toggler {
+  @include mq($bp--tablet) {
+    margin-left: spacing();
+  }
+
+  @include mq($bp--tablet, max) {
+    padding-top: spacing(1.5);
+    margin-bottom: spacing();
+  }
+  @include mq($bp--mobile-sm, max) {
+    width: 100%;
+    padding-top: spacing();
+    flex-basis: 100%;
+  }
 }
 
 .unit {
   flex: 0 0 100px;
   width: 100px;
+
+  @include mq($bp--tablet, max) {
+    flex: 1;
+    margin-left: 0;
+    margin-top: spacing(1.5);
+  }
+
+  @include mq($bp--mobile-sm) {
+    margin-left: spacing();
+  }
+}
+
+.actions {
+  margin-left: spacing();
+  @include mq($bp--tablet, max) {
+    margin-top: spacing(1.5);
+  }
 }
 
 .close {
