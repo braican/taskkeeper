@@ -44,6 +44,12 @@ const Task = ({
     setPrice(hours * rate);
   }, [rate]);
 
+  useEffect(() => {
+    if (isInvoicing === false) {
+      setSelected(false);
+    }
+  }, [isInvoicing]);
+
   const handleSave = (newData, shouldSave) => {
     if (!taskRef || !shouldSave) {
       setIsEditing(false);

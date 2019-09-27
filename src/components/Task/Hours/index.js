@@ -51,7 +51,7 @@ const Hours = ({ value, onChange, className: wrapperClassName }) => {
             onBlur={handleBlur}
             disabled={isSaving}
           />
-          <span className={styles.hours__label}>&nbsp;hours</span>
+          <span className={styles.hours__label}>&nbsp;hour{hours === 1 ? '' : 's'}</span>
         </>
       ) : null}
     </div>

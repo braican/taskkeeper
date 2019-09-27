@@ -121,7 +121,7 @@ Invoice.propTypes = {
     issueDate: PropTypes.string,
     dueDate: PropTypes.string,
     description: PropTypes.string,
-    rate: PropTypes.number,
+    rate: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   }).isRequired,
   tasks: PropTypes.array,
   userRef: PropTypes.object,
