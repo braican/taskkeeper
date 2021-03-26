@@ -1,6 +1,49 @@
 type User {
+  uid: String!
   name: String!
   email: String!
-  uid: String!
   picture: String
+}
+
+type Client {
+  uid: User!
+  name: String!
+  key: String
+  address: String
+  status: String
+  rate: Float
+}
+
+type Project {
+  uid: User!
+  client: Client
+  name: String!
+  key: String
+  status: String
+}
+
+type Task {
+  uid: User!
+  client: Client
+  project: Project
+  title: String!
+  hours: Float
+  price: Float
+  status: String
+  invoice: Invoice
+}
+
+type Invoice {
+  uid: User!
+  client: Client!
+  project: Project
+  key: String
+  tasks: [Task!] @relation
+  issue_date: Time
+  due_date: Time
+  status: String
+}
+
+type Query {
+  users_by_uid(uid: String!): [User!]
 }
