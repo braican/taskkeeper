@@ -8,6 +8,7 @@ const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
   const [userData, setUserData] = useState(null);
   const [loaded, setLoaded] = useState(false);
+  const [error, setError] = useState(false);
 
   const onSuccess = googleData => {
     post('auth', { token: googleData.tokenId })
@@ -19,7 +20,14 @@ const AuthProvider = ({ children }) => {
   };
 
   const onFailure = error => {
-    console.warn(`[LOGIN FAILURE]: error: ${error}`);
+    if (error.error === 'idpiframe_initialization_failed') {
+      setError(
+        'Unable to authenticate in browsers that have third-party cookies disabled, like a private browser.',
+      );
+      console.warn('[UNABLE TO AUTHENTICATE IN A PRIVATE BROWSER]');
+    } else {
+      console.warn('[LOGIN FAILURE]', error);
+    }
   };
 
   const { signIn } = useGoogleLogin({
@@ -36,7 +44,8 @@ const AuthProvider = ({ children }) => {
   });
 
   return (
-    <AuthContext.Provider value={{ isSignedIn: userData ? true : false, loaded, signIn, userData }}>
+    <AuthContext.Provider
+      value={{ isSignedIn: userData ? true : false, loaded, signIn, userData, error }}>
       {children}
     </AuthContext.Provider>
   );
@@ -58,6 +67,7 @@ AuthProvider.propTypes = {
  *   email   : string
  *   picture : string
  *   secret  : string
+ * error      : false|string
  */
 export const useAuth = () => useContext(AuthContext);
 

@@ -54,7 +54,6 @@ const addUser = async data => {
   try {
     const user = await faunaClient.query(
       q.Create(q.Collection('User'), {
-        credentials: { password: `test` },
         data: { ...data },
       }),
     );
