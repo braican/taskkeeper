@@ -1,13 +1,31 @@
-import React, { useEffect } from 'react';
-// import { useAuth } from '../../hooks';
-// import { post } from '../../util';
+import React, { useEffect, useState } from 'react';
+import { useAuth } from '../../hooks';
+import { post, cancellablePromise } from '../../util';
 
 import styles from './ClientList.module.scss';
 
 const ClientList = () => {
-  // const { userData } = useAuth();
+  // const [clients, setClients] = useState([]);
+  const { userData } = useAuth();
 
-  useEffect(() => {});
+  const fetchClients = async () => {
+    try {
+      return await post('getClients', { secret: userData.secret });
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  useEffect(() => {
+    const cancelFetch = cancellablePromise(function* () {
+      const fetchedClients = yield fetchClients();
+      console.log(fetchedClients);
+    });
+
+    return () => {
+      cancelFetch();
+    };
+  }, []);
 
   return (
     <div className={styles.clientlist}>
