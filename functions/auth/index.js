@@ -18,9 +18,9 @@ const authenticateWithGoogle = async token => {
       audience: process.env.REACT_APP_GOOGLE_OAUTH_CLIENT_ID,
     });
 
-    const { sub: uid, name, picture, email } = ticket.getPayload();
+    const { sub: uid, name, picture, email, given_name: firstName } = ticket.getPayload();
 
-    return { uid, name, picture, email };
+    return { uid, name, picture, email, firstName };
   } catch (error) {
     throw new Error(error);
   }

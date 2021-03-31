@@ -8,13 +8,16 @@ const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
   const [userData, setUserData] = useState(null);
   const [loaded, setLoaded] = useState(false);
+  const [authLoading, setAuthLoading] = useState(false);
   const [error, setError] = useState(false);
 
   const handleLoginSuccess = googleData => {
+    setAuthLoading(true);
     post('auth', { token: googleData.tokenId })
       .then(userData => {
         setUserData(userData);
         setLoaded(true);
+        setAuthLoading(false);
       })
       .catch(console.error);
   };
@@ -55,7 +58,15 @@ const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ isSignedIn: userData ? true : false, loaded, signIn, signOut, userData, error }}>
+      value={{
+        signIn,
+        signOut,
+        loaded,
+        authLoading,
+        error,
+        isSignedIn: userData ? true : false,
+        userData,
+      }}>
       {children}
     </AuthContext.Provider>
   );
@@ -68,17 +79,19 @@ AuthProvider.propTypes = {
 /**
  * @returns object
  *
- * isSignedIn : boolean
- * loaded     : boolean
- * signIn     : function
- * signOut    : function
- * userData   : object
- *   uid     : string
- *   name    : string
- *   email   : string
- *   picture : string
- *   secret  : string
- * error      : false|string
+ * signIn        => function
+ * signOut       => function
+ * loaded        => boolean
+ * authLoading   => boolean
+ * error         => false|string
+ * isSignedIn    => boolean
+ * userData      => object
+ *   uid       => string
+ *   name      => string
+ *   firstName => string
+ *   email     => string
+ *   picture   => string
+ *   secret    => string
  */
 export const useAuth = () => useContext(AuthContext);
 
