@@ -1,5 +1,10 @@
 import React from 'react';
+import ClientList from '../../components/ClientList';
 
-const Dashboard = () => <p>This is the dashboard</p>;
+const Dashboard = () => (
+  <div>
+    <ClientList />
+  </div>
+);
 
 export default Dashboard;

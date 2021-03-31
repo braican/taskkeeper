@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Button from '../Button';
-import { useAuth } from '../../contexts/auth';
+import { useAuth } from '../../hooks';
 import styles from './Header.module.scss';
 
 const Header = () => {

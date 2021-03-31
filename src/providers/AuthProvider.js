@@ -1,9 +1,8 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useGoogleLogin, useGoogleLogout } from 'react-google-login';
+import { AuthContext } from '../contexts';
 import { post } from '../util';
-
-const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
   const [userData, setUserData] = useState(null);
@@ -75,24 +74,5 @@ const AuthProvider = ({ children }) => {
 AuthProvider.propTypes = {
   children: PropTypes.node,
 };
-
-/**
- * @returns object
- *
- * signIn        => function
- * signOut       => function
- * loaded        => boolean
- * authLoading   => boolean
- * error         => false|string
- * isSignedIn    => boolean
- * userData      => object
- *   uid       => string
- *   name      => string
- *   firstName => string
- *   email     => string
- *   picture   => string
- *   secret    => string
- */
-export const useAuth = () => useContext(AuthContext);
 
 export default AuthProvider;

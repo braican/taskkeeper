@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Button from '../Button';
-import { useAuth } from '../../contexts/auth';
+import { useAuth } from '../../hooks';
 
 const LoginButton = ({ className = '' }) => {
   const { signIn, authLoading } = useAuth();
