@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState } from 'react';
 import PropTypes from 'prop-types';
-import { useGoogleLogin } from 'react-google-login';
+import { useGoogleLogin, useGoogleLogout } from 'react-google-login';
 import { post } from '../util';
 
 const AuthContext = createContext();
@@ -10,13 +10,18 @@ const AuthProvider = ({ children }) => {
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
 
-  const onSuccess = googleData => {
+  const handleLoginSuccess = googleData => {
     post('auth', { token: googleData.tokenId })
       .then(userData => {
         setUserData(userData);
         setLoaded(true);
       })
       .catch(console.error);
+  };
+
+  const handleLogoutSuccess = () => {
+    setUserData(null);
+    post('logout', { secret: userData.secret });
   };
 
   const onFailure = error => {
@@ -32,7 +37,7 @@ const AuthProvider = ({ children }) => {
 
   const { signIn } = useGoogleLogin({
     clientId: process.env.REACT_APP_GOOGLE_OAUTH_CLIENT_ID,
-    onSuccess,
+    onSuccess: handleLoginSuccess,
     onFailure,
     onAutoLoadFinished: autoLoaded => {
       if (!autoLoaded) {
@@ -43,9 +48,14 @@ const AuthProvider = ({ children }) => {
     cookiePolicy: 'single_host_origin',
   });
 
+  const { signOut } = useGoogleLogout({
+    clientId: process.env.REACT_APP_GOOGLE_OAUTH_CLIENT_ID,
+    onLogoutSuccess: handleLogoutSuccess,
+  });
+
   return (
     <AuthContext.Provider
-      value={{ isSignedIn: userData ? true : false, loaded, signIn, userData, error }}>
+      value={{ isSignedIn: userData ? true : false, loaded, signIn, signOut, userData, error }}>
       {children}
     </AuthContext.Provider>
   );
@@ -61,6 +71,7 @@ AuthProvider.propTypes = {
  * isSignedIn : boolean
  * loaded     : boolean
  * signIn     : function
+ * signOut    : function
  * userData   : object
  *   uid     : string
  *   name    : string

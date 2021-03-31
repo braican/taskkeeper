@@ -1,12 +1,14 @@
 import React from 'react';
+import UserUtil from '../UserUtil';
 import { useAuth } from '../../contexts/auth';
 
 const Header = () => {
-  const { isSignedIn, userData } = useAuth();
+  const { isSignedIn } = useAuth();
 
   return (
     <header>
-      {isSignedIn && <p>Welcome {userData.name}</p>}
+      {isSignedIn && <UserUtil />}
+
       <h2>Taskkeeper</h2>
     </header>
   );
