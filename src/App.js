@@ -1,45 +1,31 @@
 import React from 'react';
-import Login from './components/Login';
+import AuthenticatedView from './views/Authenticated';
+import AnonymousView from './views/Anonymous';
+import Header from './components/Header';
 import { useAuth } from './contexts/auth';
 
-import { post } from './util';
+const AppLoaded = () => {
+  const { isSignedIn, error } = useAuth();
+
+  if (error) {
+    return <p>{error}</p>;
+  }
+
+  if (isSignedIn) {
+    return <AuthenticatedView />;
+  }
+
+  return <AnonymousView />;
+};
 
 const App = () => {
-  const { loaded, isSignedIn, error, userData } = useAuth();
+  const { loaded } = useAuth();
 
   return (
     <div className="App">
-      <header>
-        <h1>Taskkeeper</h1>
-      </header>
+      <Header />
 
-      {loaded ? (
-        <>
-          {error ? (
-            <p>{error}</p>
-          ) : isSignedIn ? (
-            <div>
-              <p>
-                What up {userData.name} with email {userData.email}
-              </p>{' '}
-              <button
-                onClick={() => {
-                  post('addClient', { secret: userData.secret })
-                    .then(data => {
-                      console.log(data);
-                    })
-                    .catch(console.error);
-                }}>
-                test
-              </button>
-            </div>
-          ) : (
-            <Login />
-          )}
-        </>
-      ) : (
-        <p>Loading...</p>
-      )}
+      {loaded ? <AppLoaded /> : <p>Loading...</p>}
     </div>
   );
 };

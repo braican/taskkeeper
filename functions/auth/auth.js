@@ -1,7 +1,6 @@
 // Docs on event and context https://www.netlify.com/docs/functions/#the-handler-method
 const { OAuth2Client } = require('google-auth-library');
 const faunadb = require('faunadb');
-const { Logout } = require('faunadb');
 const faunaClient = new faunadb.Client({ secret: process.env.FAUNA_SERVER_KEY });
 const q = faunadb.query;
 
@@ -73,13 +72,9 @@ const getFaunaUser = async data => {
   const user = await fetchUser(data.uid);
 
   if (user) {
-    /* eslint-disable-next-line */
-    console.log('User found!\n');
     return user;
   }
 
-  /* eslint-disable-next-line */
-  console.log('Adding user...!\n');
   return await addUser(data);
 };
 
