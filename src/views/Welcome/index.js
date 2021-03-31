@@ -1,9 +1,9 @@
 import React from 'react';
 import LoginButton from '../../components/LoginButton';
 
-import styles from './Anonymous.module.scss';
+import styles from './Welcome.module.scss';
 
-const Anonymous = () => (
+const Welcome = () => (
   <div className={styles.screen}>
     <main className={styles.main}>
       <h1 className={styles.title}>Taskkeeper</h1>
@@ -21,4 +21,4 @@ const Anonymous = () => (
   </div>
 );
 
-export default Anonymous;
+export default Welcome;

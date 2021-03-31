@@ -1,36 +1,53 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
-import AuthenticatedView from './views/Authenticated';
-import AnonymousView from './views/Anonymous';
+import Header from './components/Header';
+import Dashboard from './views/Dashboard';
+import Welcome from './views/Welcome';
 import { useAuth } from './contexts/auth';
 
 import './styles/app.scss';
 
-const AppLoaded = () => {
-  const { isSignedIn, error } = useAuth();
+const AuthRoutes = () => (
+  <div>
+    <Header />
+    <main>
+      <Switch>
+        <Route path="/dashboard" render={() => <Dashboard />} />
+        <Route path="/*" render={() => <Redirect to="/dashboard" />} />
+      </Switch>
+    </main>
+  </div>
+);
 
-  if (error) {
-    return <p>{error}</p>;
-  }
-
-  if (isSignedIn) {
-    return <AuthenticatedView />;
-  }
-
-  return (
-    <Switch>
-      <Route path="/" exact render={() => <AnonymousView />} />
-      <Route path="/*" render={() => <Redirect to="/" />} />
-    </Switch>
-  );
-};
+const AnonRoutes = () => (
+  <Switch>
+    <Route path="/" exact render={() => <Welcome />} />
+    <Route path="/*" render={() => <Redirect to="/" />} />
+  </Switch>
+);
 
 const App = () => {
-  const { loaded } = useAuth();
+  const { loaded, isSignedIn, error } = useAuth();
+
+  if (!loaded) {
+    return (
+      <div>
+        <p>Loading...</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div>
+        <p>{error}</p>
+      </div>
+    );
+  }
 
   return (
     <div className="App">
-      <Router>{loaded ? <AppLoaded /> : <p>Loading...</p>}</Router>
+      <Router>{isSignedIn ? <AuthRoutes /> : <AnonRoutes />}</Router>
     </div>
   );
 };
