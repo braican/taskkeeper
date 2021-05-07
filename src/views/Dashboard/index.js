@@ -1,9 +1,14 @@
 import React from 'react';
-import ClientList from '../../components/ClientList';
+import ClientList from 'components/elements/ClientList';
+import AddClient from 'components/elements/AddClient';
 
 const Dashboard = () => (
   <div>
-    <ClientList />
+    <section className="section">
+      <h2>Client list</h2>
+      <AddClient />
+      <ClientList />
+    </section>
   </div>
 );
 

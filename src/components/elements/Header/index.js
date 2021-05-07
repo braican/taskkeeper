@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import Button from '../Button';
-import { useAuth } from '../../hooks';
+import Button from 'components/ui/Button';
+import { useAuth } from 'hooks';
 import styles from './Header.module.scss';
 
 const Header = () => {
@@ -45,7 +45,7 @@ const Header = () => {
         <p>
           {timeGreeting()} {userData.firstName}!
         </p>
-        <Button onClick={signOut} text="Log out" />
+        <Button onClick={signOut}>Log out</Button>
       </aside>
     </>
   );

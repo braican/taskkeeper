@@ -1,5 +1,5 @@
 import React from 'react';
-import LoginButton from '../../components/LoginButton';
+import LoginButton from 'components/elements/LoginButton';
 
 import styles from './Welcome.module.scss';
 

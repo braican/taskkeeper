@@ -3,14 +3,14 @@ import PropTypes from 'prop-types';
 
 import styles from './Button.module.scss';
 
-const Button = ({ text, className = '', onClick = () => {} }) => (
+const Button = ({ children, className = '', onClick = () => {} }) => (
   <button className={`${styles.button} ${className}`} onClick={onClick}>
-    {text}
+    {children}
   </button>
 );
 
 Button.propTypes = {
-  text: PropTypes.string.isRequired,
+  children: PropTypes.node,
   className: PropTypes.string,
   onClick: PropTypes.func,
 };

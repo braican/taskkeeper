@@ -1,8 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
-import Header from './components/Header';
-import Dashboard from './views/Dashboard';
-import Welcome from './views/Welcome';
+import Header from 'components/elements/Header';
+import Dashboard from 'views/Dashboard';
+import Welcome from 'views/Welcome';
 import { useAuth } from './hooks';
 
 import './styles/app.scss';
