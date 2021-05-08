@@ -1,20 +1,23 @@
 @import '../../../styles/mixins/_index';
 @import '../../../styles/vars/_index';
 
-$avatar-size: 56px;
-
 .header {
-  @include block();
-  position: relative;
+  @include block;
+  @include rounded-section;
+  background-color: $c-orange;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: $avatar-size;
   display: flex;
-  z-index: 3;
+  flex-direction: column;
 }
 
 .avatar {
   border-radius: 50%;
   overflow: hidden;
-  width: $avatar-size;
-  height: $avatar-size;
+  width: 100%;
 
   img {
     width: 100%;
@@ -22,44 +25,8 @@ $avatar-size: 56px;
   }
 }
 
-.menuButton {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 44px;
-  margin-left: 1rem;
-  color: $c-gray-c;
-  font-size: 2rem;
-  line-height: 1;
-
-  &:focus {
-    outline: none;
-  }
-
-  span {
-    display: block;
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background-color: $c-gray-c;
-    margin: 0 2px;
-  }
-}
-
-.utilMenu {
-  @include transition();
-  @include block();
-  position: fixed;
-  color: $c-white;
-  top: 0;
-  bottom: 0;
-  left: -60vw;
-  width: 60vw;
-  background-color: $c-gray-3;
-  z-index: 2;
-  padding-top: calc(#{$avatar-size} + 2rem);
-}
-
-.utilMenuOpen {
-  transform: translateX(100%);
+.signOut {
+  margin-top: $spacing;
+  padding: $spacing;
+  margin-top: auto;
 }

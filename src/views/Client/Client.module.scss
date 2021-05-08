@@ -1,0 +1,18 @@
+@import '../../styles/mixins/_index';
+@import '../../styles/vars/_index';
+
+.dash {
+  display: flex;
+  min-height: 100vh;
+}
+
+.tasks {
+  @include rounded-section;
+  background-color: rgba($c-gray-3, 0.02);
+  padding: 4rem 4rem 4rem calc(4rem + #{$avatar-size});
+  align-self: stretch;
+}
+
+.overview {
+  padding: 4rem;
+}

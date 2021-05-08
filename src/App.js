@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
+import SvgSprite from 'components/ui/SvgSprite';
 import Header from 'components/elements/Header';
 import Dashboard from 'views/Dashboard';
 import Welcome from 'views/Welcome';
@@ -11,6 +12,7 @@ import './styles/app.scss';
 
 const AuthRoutes = () => (
   <ClientProvider>
+    <SvgSprite />
     <Header />
     <main>
       <Switch>

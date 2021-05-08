@@ -1,0 +1,3 @@
+@mixin rounded-section {
+  border-radius: 0 0 #{$avatar-size / 2} 0;
+}
