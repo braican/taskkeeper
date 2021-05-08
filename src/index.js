@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from 'App';
+import App from './App';
 import reportWebVitals from 'reportWebVitals';
-import { AuthProvider } from 'providers';
+import { AuthProvider } from './providers';
 
 ReactDOM.render(
   <React.StrictMode>

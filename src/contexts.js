@@ -26,3 +26,8 @@ export const AuthContext = createContext({
   isSignedIn: false,
   userData: null,
 });
+
+/**
+ * @returns array
+ */
+export const ClientContext = createContext([]);

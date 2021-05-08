@@ -1,53 +1,68 @@
 import React, { useEffect, useState } from 'react';
-import { useAuth } from 'hooks';
-import { post, cancellablePromise } from 'util/index';
+import { useAuth, useClients } from 'hooks';
+import { post } from 'util/index';
 import Button from 'components/ui/Button';
+import FormInput from 'components/ui/FormInput';
 
 import styles from './AddClient.module.scss';
 
 const ClientList = () => {
   const [formActive, setFormActive] = useState(false);
   const [name, setName] = useState('');
-  const [id, setId] = useState('');
+  const [key, setKey] = useState('');
   const [rate, setRate] = useState('');
   const [address, setAddress] = useState('');
   const { userData } = useAuth();
+  const { clients, setClients } = useClients();
 
-  const addClient = async () => {
-    try {
-      console.log(name, id, rate, address);
-      // return await post('getClients', { secret: userData.secret });
-    } catch (e) {
-      console.error(e);
-    }
+  const addClient = () => {
+    post('addClient', {
+      secret: userData.secret,
+      client: { name, key, rate, address },
+    })
+      .then(({ client }) => {
+        const newClients = [...clients, client];
+        setClients(newClients);
+        setFormActive(false);
+      })
+      .catch(console.error);
   };
 
   if (formActive) {
     return (
       <form onSubmit={event => event.preventDefault()}>
-        <input
-          type="text"
+        <FormInput
+          label="Client"
           name="client_name"
           placeholder="Client"
           onChange={event => setName(event.target.value)}
         />
-        <input
-          type="text"
-          name="client_id"
-          placeholder="ID (like TST)"
-          onChange={event => setId(event.target.value)}
+
+        <FormInput
+          label="Client Key"
+          name="client_key"
+          placeholder="Key (like TST)"
+          onChange={event => setKey(event.target.value)}
         />
-        <input
-          type="text"
+        <FormInput
+          label="Rate"
+          type="number"
           name="client_rate"
           placeholder="Rate"
           onChange={event => setRate(event.target.value)}
         />
-        <textarea name="client_address" onChange={event => setAddress(event.target.value)} />
+
+        <FormInput
+          type="textarea"
+          name="client_address"
+          onChange={event => setAddress(event.target.value)}
+        />
 
         <div>
           <Button onClick={addClient}>Add</Button>
-          <button onClick={() => setFormActive(false)}>Cancel</button>
+          <button type="button" onClick={() => setFormActive(false)}>
+            Cancel
+          </button>
         </div>
       </form>
     );

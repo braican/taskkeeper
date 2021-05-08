@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { useAuth } from 'hooks';
+import React, { useEffect } from 'react';
+import { useAuth, useClients } from 'hooks';
 import { post, cancellablePromise } from 'util/index';
 
 import styles from './ClientList.module.scss';
 
 const ClientList = () => {
-  const [clients, setClients] = useState([]);
   const { userData } = useAuth();
+  const { clients, setClients } = useClients();
 
   const fetchClients = async () => {
     try {
@@ -17,13 +17,13 @@ const ClientList = () => {
   };
 
   useEffect(() => {
-    // const cancelFetch = cancellablePromise(function* () {
-    //   const { clients } = yield fetchClients();
-    //   setClients(clients);
-    // });
-    // return () => {
-    //   cancelFetch();
-    // };
+    const cancelFetch = cancellablePromise(function* () {
+      const { clients } = yield fetchClients();
+      setClients(clients);
+    });
+    return () => {
+      cancelFetch();
+    };
   }, []);
 
   return (
