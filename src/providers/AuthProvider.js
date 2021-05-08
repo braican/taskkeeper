@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useGoogleLogin, useGoogleLogout } from 'react-google-login';
-import { AuthContext } from 'contexts';
+import { AuthContext } from 'hooks';
 import { post } from 'util/index';
 
 const AuthProvider = ({ children }) => {

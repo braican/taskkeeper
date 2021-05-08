@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import styles from './FormInput.module.scss';
+// import styles from './FormInput.module.scss';
 
 const FormInput = ({ label = '', type = 'text', name = '', placeholder = '', onChange = null }) => {
   const getInputType = () => {

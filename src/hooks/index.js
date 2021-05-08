@@ -1,2 +1,2 @@
-export { default as useAuth } from './useAuth';
-export { default as useClients } from './useClients';
+export { default as useAuth, AuthContext } from './useAuth';
+export { default as useClients, ClientContext } from './useClients';

@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useAuth, useClients } from 'hooks';
 import { post } from 'util/index';
 import Button from 'components/ui/Button';
 import FormInput from 'components/ui/FormInput';
 
-import styles from './AddClient.module.scss';
+// import styles from './AddClient.module.scss';
 
 const ClientList = () => {
   const [formActive, setFormActive] = useState(false);
@@ -13,16 +13,15 @@ const ClientList = () => {
   const [rate, setRate] = useState('');
   const [address, setAddress] = useState('');
   const { userData } = useAuth();
-  const { clients, setClients } = useClients();
+  const { addClient } = useClients();
 
-  const addClient = () => {
+  const addClientToDb = () => {
     post('addClient', {
       secret: userData.secret,
       client: { name, key, rate, address },
     })
       .then(({ client }) => {
-        const newClients = [...clients, client];
-        setClients(newClients);
+        addClient(client);
         setFormActive(false);
       })
       .catch(console.error);
@@ -59,7 +58,7 @@ const ClientList = () => {
         />
 
         <div>
-          <Button onClick={addClient}>Add</Button>
+          <Button onClick={addClientToDb}>Add</Button>
           <button type="button" onClick={() => setFormActive(false)}>
             Cancel
           </button>

@@ -1,36 +1,19 @@
-import React, { useEffect } from 'react';
-import { useAuth, useClients } from 'hooks';
-import { post, cancellablePromise } from 'util/index';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { useClients } from 'hooks';
 
-import styles from './ClientList.module.scss';
+// import styles from './ClientList.module.scss';
 
 const ClientList = () => {
-  const { userData } = useAuth();
-  const { clients, setClients } = useClients();
-
-  const fetchClients = async () => {
-    try {
-      return await post('getClients', { secret: userData.secret });
-    } catch (e) {
-      console.error(e);
-    }
-  };
-
-  useEffect(() => {
-    const cancelFetch = cancellablePromise(function* () {
-      const { clients } = yield fetchClients();
-      setClients(clients);
-    });
-    return () => {
-      cancelFetch();
-    };
-  }, []);
+  const { clients } = useClients();
 
   return (
     <div>
       <ul>
-        {clients.map(client => (
-          <li key={client.id}>{client.name}</li>
+        {Object.keys(clients).map(clientId => (
+          <li key={clientId}>
+            <Link to={`client/${clientId}`}>{clients[clientId].name}</Link>
+          </li>
         ))}
       </ul>
     </div>

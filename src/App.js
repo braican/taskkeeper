@@ -3,20 +3,23 @@ import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-d
 import Header from 'components/elements/Header';
 import Dashboard from 'views/Dashboard';
 import Welcome from 'views/Welcome';
+import Client from 'views/Client';
 import { useAuth } from './hooks';
+import { ClientProvider } from './providers';
 
 import './styles/app.scss';
 
 const AuthRoutes = () => (
-  <div>
+  <ClientProvider>
     <Header />
     <main>
       <Switch>
         <Route path="/dashboard" render={() => <Dashboard />} />
+        <Route path="/client/:id" render={() => <Client />} />
         <Route path="/*" render={() => <Redirect to="/dashboard" />} />
       </Switch>
     </main>
-  </div>
+  </ClientProvider>
 );
 
 const AnonRoutes = () => (
