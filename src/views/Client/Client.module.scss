@@ -7,9 +7,7 @@
 }
 
 .tasks {
-  @include rounded-section;
   background-color: rgba($c-gray-3, 0.02);
-  padding: 4rem 4rem 4rem calc(4rem + #{$avatar-size});
   align-self: stretch;
 }
 

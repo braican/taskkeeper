@@ -1,0 +1,18 @@
+@import '../../../styles/vars/_index';
+@import '../../../styles/mixins/_index';
+
+.section {
+  position: relative;
+  padding-left: calc(#{$fs-xxl} + 1rem);
+}
+
+.headline {
+  font-size: $fs-xxl;
+  line-height: 1;
+  position: absolute;
+  transform-origin: 0 0;
+  transform: rotate(-90deg) translate(-100%, -100%);
+  padding-bottom: 0.5em;
+  font-weight: $fw-bold;
+  color: rgba($c-gray-3, 0.1);
+}

@@ -1,10 +1,18 @@
 // Font family
 // -----------
 
-$ff-base: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+$ff-base: 'Assistant', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 
 // Weight
 // -----------
 
 $fw-regular: 400;
 $fw-bold: 700;
+
+// Size
+// -----------
+
+$fs-sm: 0.75rem;
+$fs-lg: 1.2rem;
+$fs-xl: 1.6rem;
+$fs-xxl: 2.4rem;

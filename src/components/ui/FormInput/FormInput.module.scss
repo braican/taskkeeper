@@ -1,0 +1,26 @@
+@import '../../../styles/vars/_index';
+
+.formEl {
+  margin-bottom: $spacing;
+}
+
+.label {
+  font-size: $fs-sm;
+  margin-bottom: 0.5em;
+  display: block;
+}
+
+.input {
+  flex: 1;
+
+  input,
+  textarea {
+    color: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    font-family: inherit;
+    width: 100%;
+    padding: 0.5em;
+    border: 0;
+  }
+}

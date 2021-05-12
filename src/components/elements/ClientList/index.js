@@ -8,12 +8,13 @@ const ClientList = () => {
   const { clients } = useClients();
 
   return (
-    <div>
+    <div className={styles.clientlist}>
       <ul>
         {Object.keys(clients).map(clientId => (
           <li key={clientId} className={styles.clientItem}>
             <Link to={`client/${clientId}`} className={styles.client}>
-              {clients[clientId].name}
+              <span className={styles.rate}>${clients[clientId].rate}</span>
+              <span className={styles.clientName}>{clients[clientId].name}</span>
             </Link>
           </li>
         ))}

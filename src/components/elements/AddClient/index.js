@@ -3,8 +3,9 @@ import { useAuth, useClients } from 'hooks';
 import { post } from 'util/index';
 import Button from 'components/ui/Button';
 import FormInput from 'components/ui/FormInput';
+import Icon from 'components/ui/Icon';
 
-// import styles from './AddClient.module.scss';
+import styles from './AddClient.module.scss';
 
 const ClientList = () => {
   const [formActive, setFormActive] = useState(false);
@@ -29,7 +30,7 @@ const ClientList = () => {
 
   if (formActive) {
     return (
-      <form onSubmit={event => event.preventDefault()}>
+      <form onSubmit={event => event.preventDefault()} className={styles.form}>
         <FormInput
           label="Client"
           name="client_name"
@@ -52,12 +53,13 @@ const ClientList = () => {
         />
 
         <FormInput
+          label="Address"
           type="textarea"
           name="client_address"
           onChange={event => setAddress(event.target.value)}
         />
 
-        <div>
+        <div className={styles.actions}>
           <Button onClick={addClientToDb}>Add</Button>
           <button type="button" onClick={() => setFormActive(false)}>
             Cancel
@@ -67,7 +69,12 @@ const ClientList = () => {
     );
   }
 
-  return <Button onClick={() => setFormActive(true)}>Add a new client</Button>;
+  return (
+    <button onClick={() => setFormActive(true)} className={styles.addNew}>
+      <Icon viewBox="0 0 24 28" icon="plus-square" />
+      <span>Add new</span>
+    </button>
+  );
 };
 
 export default ClientList;

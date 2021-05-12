@@ -2,6 +2,9 @@ import React from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useClients } from 'hooks';
 
+import SplitLayout from 'components/layouts/SplitLayout';
+import Section from 'components/elements/Section';
+
 import styles from './Client.module.scss';
 
 const Client = () => {
@@ -9,13 +12,20 @@ const Client = () => {
   const { client } = useClients(id);
 
   return (
-    <div className={styles.dash}>
-      <section className={styles.tasks}>
+    <SplitLayout>
+      <div className={styles.tasks}>
         <Link to="/dashboard">&larr; Dashboard</Link>
-
         <h2>{client.name}</h2>
-      </section>
-    </div>
+
+        <Section headline="Tasks">
+          <p>Tasks here</p>
+        </Section>
+      </div>
+
+      <div>
+        <h2>No invoices</h2>
+      </div>
+    </SplitLayout>
   );
 };
 

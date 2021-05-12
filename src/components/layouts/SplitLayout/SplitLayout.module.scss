@@ -1,0 +1,20 @@
+@import '../../../styles/mixins/_index';
+@import '../../../styles/vars/_index';
+
+.split {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+
+  > div:first-child {
+    background-color: rgba($c-gray-3, 0.04);
+    padding: 1rem;
+    align-self: stretch;
+    flex: 1;
+  }
+
+  > div:nth-child(2) {
+    padding: 1rem;
+    order: -1;
+  }
+}

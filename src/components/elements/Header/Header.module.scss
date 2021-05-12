@@ -2,22 +2,28 @@
 @import '../../../styles/vars/_index';
 
 .header {
-  @include block;
-  @include rounded-section;
-  background-color: $c-orange;
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  width: $avatar-size;
   display: flex;
   flex-direction: column;
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 1rem;
+  align-items: center;
+
+  @include large-screens {
+    position: fixed;
+  }
+}
+
+.headerWithUtil {
+  background-color: $c-orange;
 }
 
 .avatar {
   border-radius: 50%;
   overflow: hidden;
-  width: 100%;
+  width: $avatar-size;
+  height: $avatar-size;
 
   img {
     width: 100%;
@@ -26,7 +32,5 @@
 }
 
 .signOut {
-  margin-top: $spacing;
-  padding: $spacing;
-  margin-top: auto;
+  margin-top: $spacing * 2;
 }

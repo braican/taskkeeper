@@ -1,14 +1,13 @@
-.label:not(:focus):not(:active) {
-  clip: rect(0 0 0 0);
-  clip-path: inset(50%);
-  height: 1px;
-  overflow: hidden;
-  position: absolute;
-  white-space: nowrap;
-  width: 1px;
+@import '../../../styles/mixins/_index';
+
+.label {
+  @include uppercase;
+  font-size: 10px;
+  display: block;
+  margin-top: 0.5em;
 }
 
 .svg {
   fill: currentColor;
-  width: 100%;
+  width: 22px;
 }

@@ -1,6 +1,9 @@
 @import '../../../styles/vars/_index';
+@import '../../../styles/mixins/_index';
 
 .button {
-  padding: 1rem;
-  background-color: $c-gray-c;
+  @include uppercase;
+  padding: 0.75em 1.2em;
+  font-weight: $fw-bold;
+  background-color: $c-orange;
 }

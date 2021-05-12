@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-// import styles from './FormInput.module.scss';
+import styles from './FormInput.module.scss';
 
 const FormInput = ({ label = '', type = 'text', name = '', placeholder = '', onChange = null }) => {
   const getInputType = () => {
@@ -12,10 +12,9 @@ const FormInput = ({ label = '', type = 'text', name = '', placeholder = '', onC
     return <input type={type} name={name} placeholder={placeholder} onChange={onChange} />;
   };
   return (
-    <div>
-      <span>{label}</span>
-
-      {getInputType()}
+    <div className={styles.formEl}>
+      <span className={styles.label}>{label}</span>
+      <div className={styles.input}>{getInputType()}</div>
     </div>
   );
 };

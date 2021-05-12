@@ -3,12 +3,19 @@ import PropTypes from 'prop-types';
 
 import styles from './Icon.module.scss';
 
+/**
+ * @param {string} label
+ * @param {string} viewBox
+ * @param {string} icon
+ *
+ * @return jsx
+ */
 const Icon = ({ label = '', viewBox = '', icon }) => (
   <>
-    {label && <span className={styles.label}>{label}</span>}
     <svg className={styles.svg} viewBox={viewBox}>
       <use xlinkHref={`#icon-${icon}`}></use>
     </svg>
+    {label && <span className={styles.label}>{label}</span>}
   </>
 );
 

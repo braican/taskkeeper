@@ -1,0 +1,32 @@
+@import '../../../styles/vars/_index';
+@import '../../../styles/mixins/_index';
+
+.addNew {
+  @include uppercase();
+  align-items: center;
+  color: $c-gray-3;
+  text-align: center;
+  font-weight: $fw-bold;
+  display: flex;
+  font-size: $fs-sm;
+
+  > span {
+    margin-left: $spacing / 2;
+  }
+
+  svg {
+    color: $c-green;
+  }
+}
+
+.form {
+  border-radius: $border-radius;
+  padding: $spacing;
+  background-color: rgba($c-orange, 0.15);
+}
+
+.actions {
+  button + button {
+    margin-left: $spacing;
+  }
+}
