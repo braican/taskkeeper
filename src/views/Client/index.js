@@ -4,6 +4,7 @@ import { useClients } from 'hooks';
 
 import SplitLayout from 'components/layouts/SplitLayout';
 import Section from 'components/elements/Section';
+import AddTask from 'components/elements/AddTask';
 
 import styles from './Client.module.scss';
 
@@ -11,11 +12,23 @@ const Client = () => {
   const { id } = useParams();
   const { client } = useClients(id);
 
+  if (!client) {
+    return <p>Loading...</p>;
+  }
+
   return (
     <SplitLayout>
       <div className={styles.tasks}>
-        <Link to="/dashboard">&larr; Dashboard</Link>
-        <h2>{client.name}</h2>
+        <header className={styles.header}>
+          <Link to="/dashboard" className={styles.backToDash}>
+            &larr; Dashboard
+          </Link>
+          <h2 className={styles.name}>{client.name}</h2>
+        </header>
+
+        <div className={styles.addTask}>
+          <AddTask />
+        </div>
 
         <Section headline="Tasks">
           <p>Tasks here</p>

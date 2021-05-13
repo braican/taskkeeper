@@ -1,0 +1,16 @@
+@import '../../../styles/abstracts';
+
+.addNew {
+  margin-left: auto;
+}
+
+.toggleRow {
+  display: flex;
+  align-items: center;
+}
+
+.unit {
+  margin-bottom: 0;
+  margin-left: $spacing * 2;
+  flex: 1;
+}

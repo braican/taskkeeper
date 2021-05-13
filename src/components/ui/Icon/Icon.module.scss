@@ -1,8 +1,7 @@
-@import '../../../styles/mixins/_index';
+@import '../../../styles/abstracts';
 
 .label {
-  @include uppercase;
-  font-size: 10px;
+  @include uppercase(10px);
   display: block;
   margin-top: 0.5em;
 }

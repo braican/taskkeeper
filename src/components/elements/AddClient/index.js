@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useAuth, useClients } from 'hooks';
 import { post } from 'util/index';
-import Button from 'components/ui/Button';
+import FormModal from 'components/elements/FormModal';
+
 import FormInput from 'components/ui/FormInput';
 import Icon from 'components/ui/Icon';
 
@@ -17,6 +18,10 @@ const ClientList = () => {
   const { addClient } = useClients();
 
   const addClientToDb = () => {
+    if (!name) {
+      return;
+    }
+
     post('addClient', {
       secret: userData.secret,
       client: { name, key, rate, address },
@@ -30,25 +35,29 @@ const ClientList = () => {
 
   if (formActive) {
     return (
-      <form onSubmit={event => event.preventDefault()} className={styles.form}>
+      <FormModal
+        onSubmit={addClientToDb}
+        onCancel={() => setFormActive(false)}
+        headline="Add new client">
         <FormInput
           label="Client"
           name="client_name"
-          placeholder="Client"
+          value={name}
+          required
           onChange={event => setName(event.target.value)}
         />
 
         <FormInput
           label="Client Key"
           name="client_key"
-          placeholder="Key (like TST)"
+          value={key}
           onChange={event => setKey(event.target.value)}
         />
         <FormInput
           label="Rate"
           type="number"
           name="client_rate"
-          placeholder="Rate"
+          value={rate}
           onChange={event => setRate(event.target.value)}
         />
 
@@ -56,23 +65,17 @@ const ClientList = () => {
           label="Address"
           type="textarea"
           name="client_address"
+          value={address}
           onChange={event => setAddress(event.target.value)}
         />
-
-        <div className={styles.actions}>
-          <Button onClick={addClientToDb}>Add</Button>
-          <button type="button" onClick={() => setFormActive(false)}>
-            Cancel
-          </button>
-        </div>
-      </form>
+      </FormModal>
     );
   }
 
   return (
     <button onClick={() => setFormActive(true)} className={styles.addNew}>
       <Icon viewBox="0 0 24 28" icon="plus-square" />
-      <span>Add new</span>
+      <span>Add client</span>
     </button>
   );
 };

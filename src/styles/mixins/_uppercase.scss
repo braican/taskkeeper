@@ -1,5 +1,7 @@
-@mixin uppercase() {
+@mixin uppercase($font-size: $fs-sm) {
   text-transform: uppercase;
   letter-spacing: 0.08em;
   line-height: 1;
+  font-weight: $fw-bold;
+  font-size: $font-size;
 }

@@ -1,9 +1,29 @@
-@import '../../../styles/vars/_index';
-@import '../../../styles/mixins/_index';
+@import '../../../styles/abstracts';
 
 .button {
-  @include uppercase;
+  @include transition;
+  @include uppercase();
   padding: 0.75em 1.2em;
-  font-weight: $fw-bold;
   background-color: $c-orange;
+  display: flex;
+  align-items: center;
+  border-radius: $border-radius / 2;
+
+  &:hover {
+    background-color: $c-orange-hover;
+  }
+
+  svg + span,
+  span + svg,
+  span + span {
+    margin-left: $spacing / 2;
+  }
+}
+.buttonGreen {
+  background-color: $c-green;
+  color: $c-white;
+
+  &:hover {
+    background-color: $c-green-hover;
+  }
 }

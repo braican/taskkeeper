@@ -6,15 +6,23 @@
   flex-direction: column;
   min-height: 100vh;
 
+  @include large-screens {
+    flex-direction: row-reverse;
+  }
+
   > div:first-child {
     background-color: rgba($c-gray-3, 0.04);
-    padding: 1rem;
+    padding: 2rem;
     align-self: stretch;
     flex: 1;
   }
 
   > div:nth-child(2) {
-    padding: 1rem;
+    padding: 2rem;
     order: -1;
+
+    @include large-screens {
+      width: 50%;
+    }
   }
 }

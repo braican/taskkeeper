@@ -24,7 +24,7 @@ const Dashboard = () => {
     }
 
     if (hours < 17) {
-      return `Have a good evening ${userData.firstName}.`;
+      return `Enjoy that late afternoon sun ${userData.firstName}. Or rain, if it's raining.`;
     }
 
     return `Hey ${userData.firstName}, don't work too late tonight.`;
@@ -37,8 +37,9 @@ const Dashboard = () => {
           <p className={styles.greeting}>{timeGreeting()}</p>
         </header>
 
+        <AddClient />
+
         <Section headline="Clients">
-          <AddClient />
           <ClientList />
         </Section>
       </div>

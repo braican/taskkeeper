@@ -1,14 +1,12 @@
-@import '../../../styles/vars/_index';
-@import '../../../styles/mixins/_index';
+@import '../../../styles/abstracts';
 
 .addNew {
+  @include transition();
   @include uppercase();
-  align-items: center;
-  color: $c-gray-3;
-  text-align: center;
-  font-weight: $fw-bold;
   display: flex;
-  font-size: $fs-sm;
+  align-items: center;
+  margin-left: auto;
+  color: $c-gray-6;
 
   > span {
     margin-left: $spacing / 2;
@@ -17,16 +15,9 @@
   svg {
     color: $c-green;
   }
-}
 
-.form {
-  border-radius: $border-radius;
-  padding: $spacing;
-  background-color: rgba($c-orange, 0.15);
-}
-
-.actions {
-  button + button {
-    margin-left: $spacing;
+  &:hover {
+    color: $c-gray-3;
+    transform: translateY(-1px);
   }
 }

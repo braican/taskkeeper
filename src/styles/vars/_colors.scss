@@ -2,7 +2,12 @@ $c-white: #fff;
 $c-gray-f8: #f8f8f8;
 $c-gray-e: #eee;
 $c-gray-c: #ccc;
+$c-gray-9: #999;
+$c-gray-6: #666;
 $c-gray-3: #333;
 
 $c-orange: #ffcc93;
+$c-orange-hover: darken(#ffcc93, 8%);
+
 $c-green: #0ebb2c;
+$c-green-hover: darken($c-green, 8%);

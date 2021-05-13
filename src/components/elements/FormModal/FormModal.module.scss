@@ -1,0 +1,25 @@
+@import '../../../styles/abstracts';
+
+.headline {
+  font-size: $fs-lg;
+  font-weight: $fw-bold;
+  margin-bottom: $spacing;
+  color: $c-gray-6;
+}
+
+.form {
+  border-radius: $border-radius;
+  padding: $spacing;
+  background-color: rgba($c-white, 0.5);
+  box-shadow: 0 0 14px rgba($c-gray-3, 0.1);
+  margin-bottom: $spacing * 2;
+}
+
+.actions {
+  display: flex;
+  margin-top: $spacing * 2;
+
+  button + button {
+    margin-left: $spacing;
+  }
+}

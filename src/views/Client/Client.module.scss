@@ -1,16 +1,20 @@
-@import '../../styles/mixins/_index';
-@import '../../styles/vars/_index';
+@import '../../styles/abstracts';
 
-.dash {
-  display: flex;
-  min-height: 100vh;
+.header {
+  margin-bottom: $spacing * 3;
 }
 
-.tasks {
-  background-color: rgba($c-gray-3, 0.02);
-  align-self: stretch;
+.addTask {
+  margin-bottom: $spacing * 2;
 }
 
-.overview {
-  padding: 4rem;
+.backToDash {
+  @include uppercase();
+  color: inherit;
+  text-decoration: none;
+}
+
+.name {
+  font-weight: $fw-bold;
+  font-size: $fs-xxl;
 }
