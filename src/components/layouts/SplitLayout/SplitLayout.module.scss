@@ -11,7 +11,7 @@
   }
 
   > div:first-child {
-    background-color: rgba($c-gray-3, 0.04);
+    background-color: $c-gray-transparent;
     padding: 1rem;
     align-self: stretch;
     flex: 1;

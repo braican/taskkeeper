@@ -6,16 +6,16 @@
   }
 }
 
+.task {
+  padding: $spacing;
+}
+
 .taskData {
   display: block;
   position: relative;
   padding-right: 4rem;
   width: 100%;
   text-align: left;
-
-  > span {
-    display: block;
-  }
 
   @include large-task-container() {
     display: flex;
@@ -25,18 +25,53 @@
 
 .description {
   margin-bottom: $spacing;
+
   @include large-task-container() {
     flex: 1;
     margin-bottom: 0;
   }
 }
 
-.hours,
-.price {
+.description,
+.hours {
+  padding: 4px;
+  border: 1px solid transparent;
+  position: relative;
+  left: -5px;
+
+  .hoursWrap:hover &:not(:focus),
+  &:hover {
+    border-color: $c-gray-e;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: $c-orange;
+  }
+}
+
+.hoursWrap {
+  display: flex;
+  align-self: flex-start;
+  align-items: baseline;
+
+  input {
+    margin-left: 0.5rem;
+    width: 2.6rem;
+    font-family: inherit;
+    font-weight: inherit;
+    font-style: inherit;
+    font-size: inherit;
+  }
+
   @include large-task-container() {
     flex: 0 0 4rem;
     margin-left: $spacing;
   }
+}
+
+.hoursLabel {
+  font-size: $fs-sm;
 }
 
 .price {
@@ -45,9 +80,11 @@
   top: 0;
   right: 0;
   font-weight: $fw-bold;
+  padding-top: 5px;
 
   @include large-task-container() {
     position: static;
+    flex: 0 0 3.2rem;
   }
 }
 
@@ -56,10 +93,27 @@
 
 .utility {
   display: flex;
-  margin-top: $spacing;
   justify-content: flex-end;
+  margin-top: $spacing;
+  opacity: 0.2;
 
-  button {
-    margin-left: $spacing;
+  .task:hover & {
+    opacity: 1;
   }
+
+  > button {
+    padding: 0.25rem;
+
+    &:hover {
+      background-color: $c-gray-transparent;
+    }
+
+    + button {
+      margin-left: $spacing;
+    }
+  }
+}
+
+.trash svg {
+  width: 18px;
 }

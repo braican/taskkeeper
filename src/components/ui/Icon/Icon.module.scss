@@ -1,9 +1,19 @@
 @import '../../../styles/abstracts';
 
+.inline {
+  display: flex;
+  align-items: center;
+}
+
 .label {
   @include uppercase(10px);
   display: block;
   margin-top: 0.5em;
+
+  .inline & {
+    margin-top: 0;
+    margin-left: 0.25rem;
+  }
 }
 
 .svg {
