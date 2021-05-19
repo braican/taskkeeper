@@ -1,16 +1,16 @@
 import React from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useClients } from 'hooks';
 
 import SplitLayout from 'components/layouts/SplitLayout';
 import Section from 'components/elements/Section';
 import AddTask from 'components/elements/AddTask';
+import TaskList from 'components/elements/TaskList';
 
 import styles from './Client.module.scss';
 
 const Client = () => {
-  const { id } = useParams();
-  const { client } = useClients(id);
+  const { client } = useClients();
 
   if (!client) {
     return <p>Loading...</p>;
@@ -31,7 +31,7 @@ const Client = () => {
         </div>
 
         <Section headline="Tasks">
-          <p>Tasks here</p>
+          <TaskList />
         </Section>
       </div>
 

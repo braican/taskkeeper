@@ -9,22 +9,6 @@
   margin-top: $spacing;
 }
 
-.client {
-  @include transition(all);
-  display: block;
-  padding: $spacing;
-  border-radius: $border-radius;
-  border: 1px solid $c-gray-e;
-  color: inherit;
-  text-decoration: none;
-  background-color: $c-white;
-
-  &:hover {
-    transform: translateY(-1px);
-    box-shadow: 1px 1px 6px rgba($c-gray-e, 0.75);
-  }
-}
-
 .rate {
   display: block;
   margin-bottom: 0.5em;

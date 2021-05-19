@@ -12,17 +12,22 @@
 
   > div:first-child {
     background-color: rgba($c-gray-3, 0.04);
-    padding: 2rem;
+    padding: 1rem;
     align-self: stretch;
     flex: 1;
+
+    @include large-screens {
+      padding: 2rem;
+    }
   }
 
   > div:nth-child(2) {
-    padding: 2rem;
+    padding: 1rem;
     order: -1;
 
     @include large-screens {
-      width: 50%;
+      width: 40%;
+      padding: 2rem;
     }
   }
 }

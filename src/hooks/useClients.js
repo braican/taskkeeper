@@ -1,4 +1,5 @@
 import { createContext, useContext } from 'react';
+import { useParams } from 'react-router-dom';
 
 /**
  * @returns array
@@ -14,9 +15,10 @@ export const ClientContext = createContext({
   addClient: () => {},
 });
 
-const useClients = (id = null) => {
+const useClients = () => {
+  const { clientId } = useParams();
   const clientData = useContext(ClientContext);
-  const client = id ? clientData.clients[id] : null;
+  const client = clientId ? clientData.clients[clientId] : null;
 
   return { ...clientData, client };
 };

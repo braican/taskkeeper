@@ -1,0 +1,14 @@
+@import '../../../styles/abstracts';
+
+.tasklist {
+  background-color: $c-white;
+  border-radius: $border-radius;
+  padding: 0 $spacing;
+}
+
+.task {
+  padding: $spacing 0;
+}
+.task + .task {
+  border-top: 1px solid rgba($c-gray-3, 0.1);
+}

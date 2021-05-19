@@ -26,7 +26,7 @@ type Task {
   uid: User!
   client: Client
   project: Project
-  title: String!
+  description: String!
   hours: Float
   price: Float
   status: String
@@ -46,4 +46,5 @@ type Invoice {
 
 type Query {
   users_by_uid(uid: String!): [User!]
+  clients_by_uid(uid: User!): [Client!]
 }

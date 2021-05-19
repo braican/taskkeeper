@@ -1,6 +1,7 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { useClients } from 'hooks';
+
+import Placard from 'components/ui/Placard';
 
 import styles from './ClientList.module.scss';
 
@@ -12,10 +13,10 @@ const ClientList = () => {
       <ul>
         {Object.keys(clients).map(clientId => (
           <li key={clientId} className={styles.clientItem}>
-            <Link to={`client/${clientId}`} className={styles.client}>
+            <Placard to={`client/${clientId}`}>
               <span className={styles.rate}>${clients[clientId].rate}</span>
               <span className={styles.clientName}>{clients[clientId].name}</span>
-            </Link>
+            </Placard>
           </li>
         ))}
       </ul>

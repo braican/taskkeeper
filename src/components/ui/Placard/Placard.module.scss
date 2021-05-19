@@ -1,0 +1,19 @@
+@import '../../../styles/abstracts';
+
+.placard {
+  display: block;
+  padding: $spacing;
+  border-radius: $border-radius;
+  border: 1px solid $c-gray-e;
+  color: inherit;
+  text-decoration: none;
+  background-color: $c-white;
+}
+
+a.placard {
+  @include transition(all);
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 0 10px rgba($c-gray-3, 0.1);
+  }
+}

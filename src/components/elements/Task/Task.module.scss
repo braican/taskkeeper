@@ -1,0 +1,65 @@
+@import '../../../styles/abstracts';
+
+@mixin large-task-container {
+  @media (min-width: 1000px), (min-width: 520px) and (max-width: $bp-large) {
+    @content;
+  }
+}
+
+.taskData {
+  display: block;
+  position: relative;
+  padding-right: 4rem;
+  width: 100%;
+  text-align: left;
+
+  > span {
+    display: block;
+  }
+
+  @include large-task-container() {
+    display: flex;
+    padding-right: 0;
+  }
+}
+
+.description {
+  margin-bottom: $spacing;
+  @include large-task-container() {
+    flex: 1;
+    margin-bottom: 0;
+  }
+}
+
+.hours,
+.price {
+  @include large-task-container() {
+    flex: 0 0 4rem;
+    margin-left: $spacing;
+  }
+}
+
+.price {
+  text-align: right;
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-weight: $fw-bold;
+
+  @include large-task-container() {
+    position: static;
+  }
+}
+
+// Utility
+// -----------
+
+.utility {
+  display: flex;
+  margin-top: $spacing;
+  justify-content: flex-end;
+
+  button {
+    margin-left: $spacing;
+  }
+}

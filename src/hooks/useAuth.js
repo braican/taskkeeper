@@ -22,6 +22,9 @@ export const AuthContext = createContext({
   /** @var boolean */
   isSignedIn: false,
 
+  /** @var function */
+  post: () => {},
+
   /**
    * @var object
    * @property {string} uid

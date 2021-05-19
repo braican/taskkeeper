@@ -1,10 +1,14 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { post } from 'util/index';
+import { useClients, useTasks, useAuth } from 'hooks';
 
 import FormModal from 'components/elements/FormModal';
 import Button from 'components/ui/Button';
 import Icon from 'components/ui/Icon';
 import FormInput from 'components/ui/FormInput';
 import Toggle from 'components/ui/Toggle';
+
+import { TASK_STATUS } from 'constants.js';
 
 import styles from './AddTask.module.scss';
 
@@ -13,13 +17,34 @@ const AddTask = () => {
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState(0);
   const [hours, setHours] = useState(0);
-
   const [isFixedPrice, setIsFixedPrice] = useState(false);
+
+  const { userData } = useAuth();
+  const { client } = useClients();
+  const { addTask } = useTasks();
 
   const formEl = useRef();
 
   const addTaskToDb = () => {
-    // console.log('test');
+    if (!description) {
+      return;
+    }
+
+    post('addTask', {
+      secret: userData.secret,
+      task: {
+        description,
+        status: TASK_STATUS.estimated,
+        hours: isFixedPrice ? null : hours,
+        price: isFixedPrice ? price : null,
+        client: client.id,
+      },
+    })
+      .then(({ task }) => {
+        addTask(task);
+        setFormActive(false);
+      })
+      .catch(console.error);
   };
 
   useEffect(() => {
@@ -33,6 +58,7 @@ const AddTask = () => {
       <FormModal headline="Add task" onSubmit={addTaskToDb} onCancel={() => setFormActive(false)}>
         <FormInput
           label="Description"
+          required
           type="textarea"
           onChange={event => setDescription(event.target.value)}
           value={description}

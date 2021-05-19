@@ -55,6 +55,23 @@ const AuthProvider = ({ children }) => {
     onLogoutSuccess: handleLogoutSuccess,
   });
 
+  /**
+   * Helper to send authorized requests with the secret.
+   *
+   * @param {string} route Endpoint to hit.
+   * @param {object} data Dat to send with the request.
+   *
+   * @returns object|booleana
+   */
+  const authorizedPost = async (route, data = {}) => {
+    if (!userData?.secret) {
+      console.error(`Can't connect to the database.`);
+      return false;
+    }
+
+    return await post(route, { ...data, secret: userData.secret });
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -65,6 +82,7 @@ const AuthProvider = ({ children }) => {
         error,
         isSignedIn: userData ? true : false,
         userData,
+        post: authorizedPost,
       }}>
       {children}
     </AuthContext.Provider>
