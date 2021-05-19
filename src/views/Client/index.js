@@ -7,6 +7,8 @@ import Section from 'components/elements/Section';
 import AddTask from 'components/elements/AddTask';
 import TaskList from 'components/elements/TaskList';
 
+import { TASK_STATUS } from 'constants.js';
+
 import styles from './Client.module.scss';
 
 const Client = () => {
@@ -31,7 +33,9 @@ const Client = () => {
         </div>
 
         <Section headline="Tasks">
-          <TaskList />
+          <TaskList headline="Estimated" type={TASK_STATUS.estimated} />
+          <TaskList headline="To do" type={TASK_STATUS.todo} />
+          <TaskList headline="Completed" type={TASK_STATUS.completed} />
         </Section>
       </div>
 

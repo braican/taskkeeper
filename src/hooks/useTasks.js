@@ -9,11 +9,13 @@ export const TaskContext = createContext({
   clientTasks: [],
 });
 
-const useTasks = () => {
+const useTasks = (status = null) => {
   const tasksData = useContext(TaskContext);
   const { client } = useClients();
   const clientTasks = tasksData.tasks.filter(t => t.client === client.id);
-  return { ...tasksData, clientTasks };
+  const tasksByStatus = status ? clientTasks.filter(t => t.status === status) : [];
+
+  return { ...tasksData, clientTasks, tasksByStatus };
 };
 
 export default useTasks;

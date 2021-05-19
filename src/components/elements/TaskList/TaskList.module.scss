@@ -1,5 +1,15 @@
 @import '../../../styles/abstracts';
 
+.taskWrap {
+  margin-bottom: $spacing * 2;
+}
+
+.headline {
+  font-weight: $fw-bold;
+  margin-bottom: $spacing / 2;
+  font-size: $fs-lg;
+}
+
 .tasklist {
   background-color: $c-white;
   border-radius: $border-radius;

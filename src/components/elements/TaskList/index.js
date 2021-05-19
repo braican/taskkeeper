@@ -1,21 +1,37 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { useTasks } from 'hooks';
 import Task from 'components/elements/Task';
 
+import { TASK_STATUS } from 'constants.js';
+
 import styles from './TaskList.module.scss';
 
-const TaskList = () => {
-  const { clientTasks } = useTasks();
+const TaskList = ({ type, headline = '' }) => {
+  const { tasksByStatus } = useTasks(type);
+
+  if (tasksByStatus.length < 1) {
+    return null;
+  }
 
   return (
-    <ul className={styles.tasklist}>
-      {clientTasks.map(task => (
-        <li className={styles.task} key={task.id}>
-          <Task task={task} />
-        </li>
-      ))}
-    </ul>
+    <div className={styles.taskWrap}>
+      {headline && <h3 className={styles.headline}>{headline}</h3>}
+      <ul className={styles.tasklist}>
+        {tasksByStatus.map(task => (
+          <li className={styles.task} key={task.id}>
+            <Task task={task} />
+          </li>
+        ))}
+      </ul>
+    </div>
   );
+};
+
+TaskList.propTypes = {
+  type: PropTypes.oneOf([TASK_STATUS.estimated, TASK_STATUS.todo, TASK_STATUS.completed])
+    .isRequired,
+  headline: PropTypes.string,
 };
 
 export default TaskList;
