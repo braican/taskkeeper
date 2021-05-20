@@ -93,9 +93,17 @@
 
 .utility {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   margin-top: $spacing;
+}
+
+.message {
+  font-size: $fs-sm;
+}
+
+.utilityButtons {
   opacity: 0.2;
+  margin-left: auto;
 
   .task:hover & {
     opacity: 1;

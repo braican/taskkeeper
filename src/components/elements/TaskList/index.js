@@ -7,8 +7,10 @@ import { TASK_STATUS } from 'constants.js';
 
 import styles from './TaskList.module.scss';
 
-const TaskList = ({ type, headline = '' }) => {
-  const { tasksByStatus } = useTasks(type);
+const TaskList = ({ status, headline = '' }) => {
+  const { clientTasks } = useTasks();
+
+  const tasksByStatus = clientTasks.filter(t => t.status === status);
 
   if (tasksByStatus.length < 1) {
     return null;
@@ -29,7 +31,7 @@ const TaskList = ({ type, headline = '' }) => {
 };
 
 TaskList.propTypes = {
-  type: PropTypes.oneOf([TASK_STATUS.estimated, TASK_STATUS.todo, TASK_STATUS.completed])
+  status: PropTypes.oneOf([TASK_STATUS.estimated, TASK_STATUS.todo, TASK_STATUS.completed])
     .isRequired,
   headline: PropTypes.string,
 };

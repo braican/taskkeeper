@@ -27,7 +27,19 @@ const TaskProvider = ({ children }) => {
     setTasks(newTasks);
   };
 
-  return <TaskContext.Provider value={{ tasks, addTask }}>{children}</TaskContext.Provider>;
+  /**
+   * @param {object} newTask Task data.
+   *
+   * @return
+   */
+  const updateTask = newTask => {
+    const newTasks = [...tasks].map(task => (task.id === newTask.id ? newTask : task));
+    setTasks(newTasks);
+  };
+
+  return (
+    <TaskContext.Provider value={{ tasks, addTask, updateTask }}>{children}</TaskContext.Provider>
+  );
 };
 
 TaskProvider.propTypes = {

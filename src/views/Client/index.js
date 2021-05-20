@@ -33,9 +33,9 @@ const Client = () => {
         </div>
 
         <Section headline="Tasks">
-          <TaskList headline="Estimated" type={TASK_STATUS.estimated} />
-          <TaskList headline="To do" type={TASK_STATUS.todo} />
-          <TaskList headline="Completed" type={TASK_STATUS.completed} />
+          <TaskList headline="Estimated" status={TASK_STATUS.estimated} />
+          <TaskList headline="To do" status={TASK_STATUS.todo} />
+          <TaskList headline="Completed" status={TASK_STATUS.completed} />
         </Section>
       </div>
 

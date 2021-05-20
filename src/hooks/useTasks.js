@@ -7,15 +7,17 @@ export const TaskContext = createContext({
 
   /** @var array */
   clientTasks: [],
+
+  /** @var function */
+  updateTask: () => {},
 });
 
-const useTasks = (status = null) => {
+const useTasks = () => {
   const tasksData = useContext(TaskContext);
   const { client } = useClients();
   const clientTasks = tasksData.tasks.filter(t => t.client === client.id);
-  const tasksByStatus = status ? clientTasks.filter(t => t.status === status) : [];
 
-  return { ...tasksData, clientTasks, tasksByStatus };
+  return { ...tasksData, clientTasks };
 };
 
 export default useTasks;
