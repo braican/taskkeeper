@@ -33,9 +33,8 @@ const Actions = ({ task, message }) => {
       return;
     }
 
-    return post('updateTask', { id: task.id, status: newStatus }).then(({ task }) =>
-      updateTask(task),
-    );
+    updateTask({ ...task, status: newStatus });
+    return post('updateTask', { id: task.id, status: newStatus });
   };
 
   const retreatTask = () => {
@@ -51,9 +50,8 @@ const Actions = ({ task, message }) => {
       return;
     }
 
-    return post('updateTask', { id: task.id, status: newStatus }).then(({ task }) =>
-      updateTask(task),
-    );
+    updateTask({ ...task, status: newStatus });
+    return post('updateTask', { id: task.id, status: newStatus });
   };
 
   return (
