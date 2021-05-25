@@ -7,7 +7,8 @@
 }
 
 .task {
-  padding: $spacing;
+  position: relative;
+  border-bottom: 1px solid rgba($c-gray-3, 0.1);
 }
 
 .taskData {
@@ -16,15 +17,25 @@
   padding-right: 4rem;
   width: 100%;
   text-align: left;
+  background-color: $c-white;
+  padding: $spacing ($spacing * 4) $spacing $spacing;
+  min-height: 132px;
+  position: relative;
+  z-index: 2;
 
   @include large-task-container() {
     display: flex;
-    padding-right: 0;
+    padding: $spacing;
+    min-height: 0;
+
+    .task:hover & {
+      background-color: $c-gray-fa;
+    }
   }
 }
 
 .description {
-  margin-bottom: $spacing;
+  margin-bottom: $spacing / 2;
 
   @include large-task-container() {
     flex: 1;
@@ -38,6 +49,7 @@
   border: 1px solid transparent;
   position: relative;
   left: -5px;
+  background-color: $c-white;
 
   .hoursWrap:hover &:not(:focus),
   &:hover {
@@ -77,8 +89,8 @@
 .price {
   text-align: right;
   position: absolute;
-  top: 0;
-  right: 0;
+  top: $spacing;
+  right: $spacing;
   font-weight: $fw-bold;
   padding-top: 5px;
 
@@ -88,37 +100,100 @@
   }
 }
 
+.mobileExpand {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  right: $spacing;
+  bottom: $spacing;
+  width: 44px;
+  height: 44px;
+  background-color: $c-gray-e;
+  border-radius: $border-radius;
+
+  @include large-task-container() {
+    display: none;
+  }
+}
+
+.mobileExpandExpanded {
+  transform: rotate(180deg);
+}
+
 // Utility
 // -----------
 
 .utility {
+  display: none;
+  overflow: hidden;
+
+  @include large-task-container() {
+    @include transition();
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: $c-orange;
+    transform: translateX(0);
+
+    .task:hover & {
+      transform: translateX(100%);
+    }
+  }
+}
+
+.utilityForceClose {
+  transform: translateX(0) !important;
+}
+
+.utilityOpen {
   display: flex;
-  justify-content: space-between;
-  margin-top: $spacing;
+  justify-content: flex-end;
+  padding-bottom: $spacing / 4;
+}
+
+.messageFlag {
+  @include transition();
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background-color: $c-gray-3;
+  transform: translateX(0);
+}
+
+.messageFlagOpen {
+  transform: translateX(100%);
+}
+.messageFlagGreen {
+  background-color: $c-green;
 }
 
 .message {
   font-size: $fs-sm;
+  color: $c-white;
+  padding: $spacing;
 }
 
-.utilityButtons {
-  opacity: 0.2;
-  margin-left: auto;
+.trash,
+.move {
+  padding: 0.25rem 1rem;
+  text-align: center;
 
-  .task:hover & {
-    opacity: 1;
+  @include large-task-container() {
+    flex: 1;
+    width: 100%;
   }
 
-  > button {
-    padding: 0.25rem;
-
-    &:hover {
-      background-color: $c-gray-transparent;
-    }
-
-    + button {
-      margin-left: $spacing;
-    }
+  &:hover {
+    background-color: $c-orange-hover;
   }
 }
 

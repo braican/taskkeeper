@@ -14,6 +14,6 @@ a.placard {
   @include transition(all);
   &:hover {
     transform: translateY(-1px);
-    box-shadow: 0 0 10px rgba($c-gray-3, 0.1);
+    box-shadow: 2px 2px 4px rgba($c-gray-3, 0.05);
   }
 }

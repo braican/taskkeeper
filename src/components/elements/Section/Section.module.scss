@@ -3,11 +3,12 @@
 
 .section {
   position: relative;
-  padding-left: calc(#{$fs-xxl} + 1rem);
+  padding-left: $fs-xl;
 }
 
 .headline {
-  font-size: $fs-xxl;
+  @include uppercase;
+  font-size: $fs-xl;
   line-height: 1;
   position: absolute;
   transform-origin: 0 0;

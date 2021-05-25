@@ -8,9 +8,9 @@ import { TASK_STATUS } from 'constants.js';
 import styles from './TaskList.module.scss';
 
 const TaskList = ({ status, headline = '' }) => {
-  const { clientTasks } = useTasks();
+  const { tasks } = useTasks();
 
-  const tasksByStatus = clientTasks.filter(t => t.status === status);
+  const tasksByStatus = tasks.filter(t => t.status === status && t.client === '298340127177966089');
 
   if (tasksByStatus.length < 1) {
     return null;

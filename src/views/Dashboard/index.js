@@ -4,6 +4,7 @@ import AddClient from 'components/elements/AddClient';
 import { useAuth } from 'hooks';
 
 import SplitLayout from 'components/layouts/SplitLayout';
+import Block from 'components/ui/Block';
 import Section from 'components/elements/Section';
 
 import styles from './Dashboard.module.scss';
@@ -33,19 +34,25 @@ const Dashboard = () => {
   return (
     <SplitLayout>
       <div>
-        <header className={styles.header}>
-          <p className={styles.greeting}>{timeGreeting()}</p>
-        </header>
+        <Block>
+          <header className={styles.header}>
+            <p className={styles.greeting}>{timeGreeting()}</p>
+          </header>
+        </Block>
 
-        <AddClient />
+        <Block>
+          <AddClient />
 
-        <Section headline="Clients">
-          <ClientList />
-        </Section>
+          <Section headline="Clients">
+            <ClientList />
+          </Section>
+        </Block>
       </div>
 
       <div>
-        <h2>Overview</h2>
+        <Block>
+          <h2>Overview</h2>
+        </Block>
       </div>
     </SplitLayout>
   );

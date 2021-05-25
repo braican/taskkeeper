@@ -1,7 +1,15 @@
 @import '../../styles/abstracts';
 
 .header {
-  margin-bottom: $spacing * 3;
+  padding: $spacing;
+  margin-right: $spacing + ($avatar-size / 2);
+  background-color: $c-orange;
+  border-radius: 0 0 $border-radius 0;
+
+  @include large-screens {
+    padding: $spacing * 2;
+    margin-right: $spacing * 2;
+  }
 }
 
 .addTask {

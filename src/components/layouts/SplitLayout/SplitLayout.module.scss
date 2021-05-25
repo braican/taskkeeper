@@ -11,23 +11,21 @@
   }
 
   > div:first-child {
-    background-color: $c-gray-transparent;
-    padding: 1rem;
     align-self: stretch;
     flex: 1;
-
-    @include large-screens {
-      padding: 2rem;
-    }
   }
 
   > div:nth-child(2) {
-    padding: 1rem;
     order: -1;
 
     @include large-screens {
-      width: 40%;
-      padding: 2rem;
+      width: 50%;
     }
+  }
+}
+
+.split--uneven > div:nth-child(2) {
+  @include large-screens {
+    width: 40%;
   }
 }

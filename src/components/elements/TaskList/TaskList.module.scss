@@ -1,7 +1,8 @@
 @import '../../../styles/abstracts';
 
 .taskWrap {
-  margin-bottom: $spacing * 2;
+  min-height: 11rem;
+  padding-bottom: $spacing * 2;
 }
 
 .headline {
@@ -12,9 +13,7 @@
 
 .tasklist {
   background-color: $c-white;
-  border-radius: $border-radius;
-}
-
-.task + .task {
   border-top: 1px solid rgba($c-gray-3, 0.1);
+  border-left: 1px solid rgba($c-gray-3, 0.1);
+  border-right: 1px solid rgba($c-gray-3, 0.1);
 }
