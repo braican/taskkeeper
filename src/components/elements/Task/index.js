@@ -5,26 +5,31 @@ import classnames from 'classnames';
 import { useClients, useAuth, useTasks } from 'hooks';
 
 import Icon from 'components/ui/Icon';
+import Button from 'components/ui/Button';
 
 import styles from './Task.module.scss';
 
 const Task = ({ task }) => {
   const { post } = useAuth();
-  const { updateTask } = useTasks();
+  const { updateTask, deleteTask } = useTasks();
   const { client } = useClients();
 
   const description = useRef(task.description);
   const hours = useRef(task.hours);
   const hoursInput = useRef();
 
-  const [utilityOpen, setUtilityOpen] = useState(false);
   const [message, setMessage] = useState('');
-
   const [price, setPrice] = useState(task.hours * client.rate);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const handleFocus = () => setMessage('Editing...');
 
-  const writeToFauna = data =>
+  const remove = () => {
+    deleteTask(task.id);
+    post('deleteTask', { id: task.id });
+  };
+
+  const update = data =>
     post('updateTask', { id: task.id, ...data })
       .then(({ task }) => updateTask(task))
       .then(() => {
@@ -43,7 +48,7 @@ const Task = ({ task }) => {
     description.current = newDescription;
 
     setMessage('Saving...');
-    writeToFauna({ description: newDescription });
+    update({ description: newDescription });
   };
 
   const handleHoursBlur = event => {
@@ -58,50 +63,66 @@ const Task = ({ task }) => {
 
     hours.current = newHours;
     setMessage('Saving...');
-    writeToFauna({ hours: newHours });
+    update({ hours: newHours });
   };
 
   return (
     <div className={styles.task}>
-      <div className={styles.taskData}>
-        <ContentEditable
-          html={description.current}
-          className={styles.description}
-          tagName="p"
-          onFocus={handleFocus}
-          onBlur={handleDescriptionBlur}
-        />
+      <ContentEditable
+        html={description.current}
+        className={styles.description}
+        tagName="p"
+        onFocus={handleFocus}
+        onBlur={handleDescriptionBlur}
+      />
 
-        {task.price === undefined && (
-          <span className={styles.hoursWrap}>
-            <button
-              className={styles.hoursLabel}
-              type="button"
-              onClick={() => hoursInput?.current?.focus()}>
-              hours:
-            </button>
-            <input
-              type="number"
-              defaultValue={hours.current}
-              ref={hoursInput}
-              onFocus={handleFocus}
-              onBlur={handleHoursBlur}
-              className={styles.hours}
-            />
-          </span>
-        )}
+      {task.price === undefined && (
+        <div className={styles.hoursWrap}>
+          <button
+            className={styles.hoursLabel}
+            type="button"
+            onClick={() => hoursInput?.current?.focus()}>
+            hours:
+          </button>
+          <input
+            type="number"
+            defaultValue={hours.current}
+            ref={hoursInput}
+            onFocus={handleFocus}
+            onBlur={handleHoursBlur}
+            className={styles.hours}
+          />
+        </div>
+      )}
 
-        <span className={styles.price}>${task.price === undefined ? price : ''}</span>
+      <div className={styles.price}>${task.price === undefined ? price : ''}</div>
 
+      <div className={styles.actions}>
+        <button type="button" className={styles.move} title="Add Todo">
+          <Icon viewBox="0 0 20 20" icon="checkmark" />
+        </button>
         <button
           type="button"
-          className={classnames(styles.mobileExpand, utilityOpen && styles.mobileExpandExpanded)}
-          onClick={() => setUtilityOpen(!utilityOpen)}>
-          <Icon viewBox="0 0 20 20" icon="cheveron-down" inline />
+          className={styles.trash}
+          title="Delete"
+          onClick={() => setShowDeleteModal(true)}>
+          <Icon viewBox="0 0 20 20" icon="trash" />
         </button>
       </div>
 
-      <div
+      {showDeleteModal && (
+        <div className={styles.deleteModal}>
+          <p>Are you sure?</p>
+          <Button type="button" style="warning" onClick={remove}>
+            Yes
+          </Button>
+          <button type="button" onClick={() => setShowDeleteModal(false)}>
+            Cancel
+          </button>
+        </div>
+      )}
+
+      {/* <div
         className={classnames(styles.utility, {
           [styles.utilityOpen]: utilityOpen,
           [styles.utilityForceClose]: message,
@@ -109,9 +130,7 @@ const Task = ({ task }) => {
         <button type="button" className={styles.trash}>
           <Icon label="Delete" viewBox="0 0 20 20" icon="trash" inline />
         </button>
-        <button type="button" className={styles.move}>
-          <Icon label="Todo" viewBox="0 0 20 20" icon="cheveron-down" inline />
-        </button>
+
       </div>
 
       <div
@@ -120,7 +139,7 @@ const Task = ({ task }) => {
           [styles.messageFlagGreen]: message === 'Saved',
         })}>
         <p className={styles.message}>{message}</p>
-      </div>
+      </div> */}
     </div>
   );
 };

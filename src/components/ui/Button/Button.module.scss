@@ -20,11 +20,21 @@
     margin-left: $spacing / 2;
   }
 }
-.buttonGreen {
+
+.style--green {
   background-color: $c-green;
   color: $c-white;
 
   &:hover {
     background-color: $c-green-hover;
+  }
+}
+
+.style--warning {
+  background-color: rgba(darken($c-red, 12%), 0.5);
+  color: $c-white;
+
+  &:hover {
+    background-color: darken($c-red, 10%);
   }
 }

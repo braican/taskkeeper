@@ -28,9 +28,11 @@ const TaskProvider = ({ children }) => {
   };
 
   /**
+   * Update a task in state.
+   *
    * @param {object} newTask Task data.
    *
-   * @return
+   * @return void
    */
   const updateTask = newTask => {
     const newTasks = [...tasks].map(task => (task.id === newTask.id ? newTask : task));
@@ -38,8 +40,27 @@ const TaskProvider = ({ children }) => {
     setTasks(newTasks);
   };
 
+  /**
+   * Delete a task in state.
+   *
+   * @param {string} id Task ID.
+   *
+   * @return void
+   */
+  const deleteTask = id => {
+    const taskIndex = tasks.findIndex(task => task.id === id);
+
+    if (taskIndex > -1) {
+      const newTasks = [...tasks];
+      newTasks.splice(taskIndex, 1);
+      setTasks(newTasks);
+    }
+  };
+
   return (
-    <TaskContext.Provider value={{ tasks, addTask, updateTask }}>{children}</TaskContext.Provider>
+    <TaskContext.Provider value={{ tasks, addTask, updateTask, deleteTask }}>
+      {children}
+    </TaskContext.Provider>
   );
 };
 

@@ -6,7 +6,7 @@ import styles from './Button.module.scss';
 
 const Button = ({ children, style = '', className = '', type = 'button', onClick = () => {} }) => (
   <button
-    className={classnames(styles.button, className, style === 'green' && styles.buttonGreen)}
+    className={classnames(styles.button, className, style && styles[`style--${style}`])}
     onClick={onClick}
     type={type}>
     {children}
@@ -15,7 +15,7 @@ const Button = ({ children, style = '', className = '', type = 'button', onClick
 
 Button.propTypes = {
   children: PropTypes.node,
-  style: PropTypes.string,
+  style: PropTypes.oneOf(['', 'green', 'warning']),
   className: PropTypes.string,
   type: PropTypes.string,
   onClick: PropTypes.func,

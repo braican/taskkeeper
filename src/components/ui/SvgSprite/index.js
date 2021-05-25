@@ -24,6 +24,11 @@ const SvgSprite = () => (
     <symbol id="icon-trash">
       <path d="M6 2l2-2h4l2 2h4v2h-16v-2h4zM3 6h14l-1 14h-12l-1-14zM8 8v10h1v-10h-1zM11 8v10h1v-10h-1z"></path>
     </symbol>
+
+    {/* viewBox="0 0 20 20" */}
+    <symbol id="icon-checkmark">
+      <path d="M0 11l2-2 5 5 11-11 2 2-13 13z"></path>
+    </symbol>
   </svg>
 );
 
