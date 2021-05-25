@@ -1,7 +1,6 @@
 import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import ContentEditable from 'react-contenteditable';
-import classnames from 'classnames';
 import { useClients, useAuth, useTasks } from 'hooks';
 
 import Icon from 'components/ui/Icon';
@@ -16,10 +15,11 @@ const Task = ({ task }) => {
 
   const description = useRef(task.description);
   const hours = useRef(task.hours);
+  const fixedPrice = useRef(task.price);
   const hoursInput = useRef();
 
   const [message, setMessage] = useState('');
-  const [price, setPrice] = useState(task.hours * client.rate);
+  const [price, setPrice] = useState(task.price || task.hours * client.rate);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const handleFocus = () => setMessage('Editing...');
@@ -29,13 +29,16 @@ const Task = ({ task }) => {
     post('deleteTask', { id: task.id });
   };
 
-  const update = data =>
-    post('updateTask', { id: task.id, ...data })
+  const update = data => {
+    setMessage('Saving...');
+
+    return post('updateTask', { id: task.id, ...data })
       .then(({ task }) => updateTask(task))
       .then(() => {
         setMessage('Saved');
         setTimeout(() => setMessage(''), 1400);
       });
+  };
 
   const handleDescriptionBlur = event => {
     const newDescription = event.target.innerHTML;
@@ -46,8 +49,6 @@ const Task = ({ task }) => {
     }
 
     description.current = newDescription;
-
-    setMessage('Saving...');
     update({ description: newDescription });
   };
 
@@ -59,11 +60,23 @@ const Task = ({ task }) => {
       return;
     }
 
-    setPrice(newHours * client.rate);
-
     hours.current = newHours;
-    setMessage('Saving...');
+
+    setPrice(newHours * client.rate);
     update({ hours: newHours });
+  };
+
+  const handlePriceBlur = event => {
+    const newFixedPrice = event.target.value;
+
+    if (newFixedPrice === fixedPrice.current) {
+      setMessage('');
+      return;
+    }
+
+    fixedPrice.current = newFixedPrice;
+    setPrice(newFixedPrice);
+    update({ price: newFixedPrice });
   };
 
   return (
@@ -95,19 +108,41 @@ const Task = ({ task }) => {
         </div>
       )}
 
-      <div className={styles.price}>${task.price === undefined ? price : ''}</div>
+      {task.price === undefined ? (
+        <div className={styles.price}>${price}</div>
+      ) : (
+        <div className={styles.priceWrap}>
+          <span type="button" className={styles.priceDisplay}>
+            ${price}
+          </span>
+
+          <input
+            type="number"
+            defaultValue={fixedPrice.current}
+            onFocus={handleFocus}
+            onBlur={handlePriceBlur}
+            className={styles.priceInput}
+          />
+        </div>
+      )}
 
       <div className={styles.actions}>
-        <button type="button" className={styles.move} title="Add Todo">
-          <Icon viewBox="0 0 20 20" icon="checkmark" />
-        </button>
-        <button
-          type="button"
-          className={styles.trash}
-          title="Delete"
-          onClick={() => setShowDeleteModal(true)}>
-          <Icon viewBox="0 0 20 20" icon="trash" />
-        </button>
+        {message ? (
+          <p className={styles.message}>{message}</p>
+        ) : (
+          <>
+            <button type="button" className={styles.move} title="Add Todo">
+              <Icon viewBox="0 0 20 20" icon="checkmark" />
+            </button>
+            <button
+              type="button"
+              className={styles.trash}
+              title="Delete"
+              onClick={() => setShowDeleteModal(true)}>
+              <Icon viewBox="0 0 20 20" icon="trash" />
+            </button>
+          </>
+        )}
       </div>
 
       {showDeleteModal && (
@@ -121,25 +156,6 @@ const Task = ({ task }) => {
           </button>
         </div>
       )}
-
-      {/* <div
-        className={classnames(styles.utility, {
-          [styles.utilityOpen]: utilityOpen,
-          [styles.utilityForceClose]: message,
-        })}>
-        <button type="button" className={styles.trash}>
-          <Icon label="Delete" viewBox="0 0 20 20" icon="trash" inline />
-        </button>
-
-      </div>
-
-      <div
-        className={classnames(styles.messageFlag, {
-          [styles.messageFlagOpen]: message,
-          [styles.messageFlagGreen]: message === 'Saved',
-        })}>
-        <p className={styles.message}>{message}</p>
-      </div> */}
     </div>
   );
 };

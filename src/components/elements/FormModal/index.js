@@ -11,7 +11,7 @@ const FormModal = ({ children, headline = '', onSubmit = null, onCancel = null }
 
   useEffect(() => {
     if (formEl.current) {
-      formEl.current.querySelector('input')?.focus();
+      formEl.current.querySelector('textarea, input')?.focus();
     }
   }, []);
 

@@ -15,12 +15,20 @@
   padding: $spacing / 2 $spacing * 4 $spacing / 2 $spacing;
   position: relative;
 
+  &:focus-within,
   &:hover {
     background-color: $c-gray-fa;
   }
 
   @include large-task-container() {
     padding-right: $spacing / 2;
+  }
+
+  input {
+    font-family: inherit;
+    font-weight: inherit;
+    font-style: inherit;
+    font-size: inherit;
   }
 }
 
@@ -29,20 +37,23 @@
 .description {
   margin-bottom: $spacing / 2;
   width: 100%;
+  margin-top: $spacing / 2;
 
   @include large-task-container() {
     flex: 1;
-    margin-bottom: 0;
   }
 }
 
 .description,
-.hours {
+.hours,
+.priceInput {
   padding: 4px;
   border: 1px solid transparent;
   position: relative;
   left: -5px;
   background-color: $c-white;
+  margin-left: 0.5rem;
+  width: 2.6rem;
 
   &:hover {
     border-color: $c-gray-e;
@@ -59,15 +70,6 @@
   align-items: baseline;
   flex: 1;
 
-  input {
-    margin-left: 0.5rem;
-    width: 2.6rem;
-    font-family: inherit;
-    font-weight: inherit;
-    font-style: inherit;
-    font-size: inherit;
-  }
-
   @include large-task-container() {
     flex: 0 0 4rem;
     margin-left: $spacing;
@@ -78,10 +80,54 @@
   font-size: $fs-sm;
 }
 
-.price {
+.price,
+.priceDisplay {
   text-align: right;
   font-weight: $fw-bold;
   margin-left: $spacing;
+}
+
+.priceWrap {
+  position: relative;
+  width: 5rem;
+  text-align: right;
+}
+
+.priceDisplay {
+  padding: 4px;
+  border: 1px solid transparent;
+  position: relative;
+  left: 5px;
+  background-color: $c-white;
+  cursor: text;
+
+  .priceWrap:hover & {
+    border-color: $c-gray-e;
+  }
+}
+
+.priceInput {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  width: 100%;
+  text-align: right;
+  opacity: 0;
+
+  &:focus {
+    opacity: 1;
+  }
+}
+
+.priceInput::-webkit-outer-spin-button,
+.priceInput::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+.priceInput[type='number'] {
+  -moz-appearance: textfield;
 }
 
 // Actions
@@ -94,10 +140,11 @@
   bottom: $spacing / 2;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
 
   @include large-task-container() {
-    flex: 0;
+    flex: 0 0 88px;
+    width: 88px;
     position: static;
     margin-left: $spacing;
     flex-direction: row;
@@ -110,8 +157,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 44px;
-  height: 44px;
+  width: 42px;
+  height: 42px;
   border-radius: $border-radius;
   &:hover {
     background-color: $c-gray-e;
@@ -152,4 +199,8 @@
     color: $c-white;
     margin-left: $spacing / 2;
   }
+}
+
+.message {
+  font-size: $fs-sm;
 }

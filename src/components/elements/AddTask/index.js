@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState } from 'react';
 import { post } from 'util/index';
 import { useClients, useTasks, useAuth } from 'hooks';
 
@@ -23,8 +23,6 @@ const AddTask = () => {
   const { client } = useClients();
   const { addTask } = useTasks();
 
-  const formEl = useRef();
-
   const addTaskToDb = () => {
     if (!description) {
       return;
@@ -46,12 +44,6 @@ const AddTask = () => {
       })
       .catch(console.error);
   };
-
-  useEffect(() => {
-    if (formActive && formEl.current) {
-      formEl.current.querySelector('input')?.focus();
-    }
-  }, [formActive]);
 
   if (formActive) {
     return (
