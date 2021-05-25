@@ -6,7 +6,7 @@ const getTasks = async secret => {
     const faunaClient = new faunadb.Client({ secret });
     const result = await faunaClient.query(
       q.Map(
-        q.Paginate(q.Match(q.Index('tasks_by_uid'), [q.CurrentIdentity(), 'estimated'])),
+        q.Paginate(q.Match(q.Index('tasks_by_uid'), [q.CurrentIdentity()])),
         q.Lambda('x', q.Get(q.Var('x'))),
       ),
     );

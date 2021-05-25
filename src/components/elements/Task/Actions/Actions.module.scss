@@ -1,0 +1,65 @@
+@import '../../../../styles/abstracts';
+
+.actions {
+  display: flex;
+  align-items: center;
+  margin-top: $spacing / 3;
+}
+
+.message {
+  font-size: $fs-sm;
+  flex: 1;
+}
+
+.advance,
+.retreat,
+.trash {
+  @include transition();
+  padding: 6px;
+  border-radius: $border-radius;
+  height: 1.6rem;
+  margin-left: $spacing / 2;
+
+  svg {
+    max-height: 16px;
+  }
+
+  &:hover {
+    background-color: $c-gray-e;
+  }
+}
+
+.advance {
+  color: $c-green;
+}
+
+.retreat {
+  color: $c-gray-6;
+}
+
+.trash {
+  color: $c-red;
+
+  svg {
+    height: 14px;
+  }
+}
+
+.deleteModal {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  background-color: $c-red;
+  bottom: $spacing / 2;
+  right: $spacing / 2;
+  border-radius: $border-radius;
+  box-shadow: 1px 1px 6px rgba($c-gray-3, 0.4);
+  padding: $spacing / 2;
+  font-size: $fs-sm;
+  color: $c-white;
+
+  > button {
+    color: $c-white;
+    margin-left: $spacing / 2;
+  }
+}

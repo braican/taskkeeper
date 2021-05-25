@@ -4,7 +4,6 @@
 .split {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
 
   @include large-screens {
     flex-direction: row-reverse;

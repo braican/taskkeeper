@@ -7,21 +7,14 @@
 }
 
 .task {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
   border-bottom: 1px solid rgba($c-gray-3, 0.1);
   background-color: $c-white;
-  padding: $spacing / 2 $spacing * 4 $spacing / 2 $spacing;
+  padding: $spacing / 2 $spacing;
   position: relative;
 
   &:focus-within,
   &:hover {
     background-color: $c-gray-fa;
-  }
-
-  @include large-task-container() {
-    padding-right: $spacing / 2;
   }
 
   input {
@@ -32,15 +25,21 @@
   }
 }
 
+.taskWrap {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
 // Inputs
 
 .description {
   margin-bottom: $spacing / 2;
   width: 100%;
-  margin-top: $spacing / 2;
 
   @include large-task-container() {
     flex: 1;
+    margin-bottom: 0;
   }
 }
 
@@ -52,8 +51,6 @@
   position: relative;
   left: -5px;
   background-color: $c-white;
-  margin-left: 0.5rem;
-  width: 2.6rem;
 
   &:hover {
     border-color: $c-gray-e;
@@ -63,6 +60,12 @@
     outline: none;
     border-color: $c-orange;
   }
+}
+
+.hours,
+.priceInput {
+  margin-left: 0.5rem;
+  width: 2.6rem;
 }
 
 .hoursWrap {
@@ -128,79 +131,4 @@
 /* Firefox */
 .priceInput[type='number'] {
   -moz-appearance: textfield;
-}
-
-// Actions
-// -----------
-
-.actions {
-  position: absolute;
-  right: $spacing / 2;
-  top: $spacing / 2;
-  bottom: $spacing / 2;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-
-  @include large-task-container() {
-    flex: 0 0 88px;
-    width: 88px;
-    position: static;
-    margin-left: $spacing;
-    flex-direction: row;
-  }
-}
-
-.move,
-.trash {
-  @include transition();
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 42px;
-  height: 42px;
-  border-radius: $border-radius;
-  &:hover {
-    background-color: $c-gray-e;
-  }
-}
-
-.move {
-  color: $c-green;
-}
-
-.trash {
-  color: $c-red;
-  margin-top: $spacing / 2;
-
-  svg {
-    width: 16px;
-  }
-
-  @include large-task-container() {
-    margin-top: 0;
-  }
-}
-
-.deleteModal {
-  display: flex;
-  align-items: center;
-  position: absolute;
-  background-color: $c-red;
-  bottom: $spacing / 2;
-  right: $spacing / 2;
-  border-radius: $border-radius;
-  box-shadow: 1px 1px 6px rgba($c-gray-3, 0.4);
-  padding: $spacing / 2;
-  font-size: $fs-sm;
-  color: $c-white;
-
-  > button {
-    color: $c-white;
-    margin-left: $spacing / 2;
-  }
-}
-
-.message {
-  font-size: $fs-sm;
 }

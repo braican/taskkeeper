@@ -3,14 +3,13 @@ import PropTypes from 'prop-types';
 import ContentEditable from 'react-contenteditable';
 import { useClients, useAuth, useTasks } from 'hooks';
 
-import Icon from 'components/ui/Icon';
-import Button from 'components/ui/Button';
+import Actions from 'components/elements/Task/Actions';
 
 import styles from './Task.module.scss';
 
 const Task = ({ task }) => {
   const { post } = useAuth();
-  const { updateTask, deleteTask } = useTasks();
+  const { updateTask } = useTasks();
   const { client } = useClients();
 
   const description = useRef(task.description);
@@ -20,14 +19,8 @@ const Task = ({ task }) => {
 
   const [message, setMessage] = useState('');
   const [price, setPrice] = useState(task.price || task.hours * client.rate);
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const handleFocus = () => setMessage('Editing...');
-
-  const remove = () => {
-    deleteTask(task.id);
-    post('deleteTask', { id: task.id });
-  };
 
   const update = data => {
     setMessage('Saving...');
@@ -81,81 +74,54 @@ const Task = ({ task }) => {
 
   return (
     <div className={styles.task}>
-      <ContentEditable
-        html={description.current}
-        className={styles.description}
-        tagName="p"
-        onFocus={handleFocus}
-        onBlur={handleDescriptionBlur}
-      />
+      <div className={styles.taskWrap}>
+        <ContentEditable
+          html={description.current}
+          className={styles.description}
+          tagName="p"
+          onFocus={handleFocus}
+          onBlur={handleDescriptionBlur}
+        />
 
-      {task.price === undefined && (
-        <div className={styles.hoursWrap}>
-          <button
-            className={styles.hoursLabel}
-            type="button"
-            onClick={() => hoursInput?.current?.focus()}>
-            hours:
-          </button>
-          <input
-            type="number"
-            defaultValue={hours.current}
-            ref={hoursInput}
-            onFocus={handleFocus}
-            onBlur={handleHoursBlur}
-            className={styles.hours}
-          />
-        </div>
-      )}
-
-      {task.price === undefined ? (
-        <div className={styles.price}>${price}</div>
-      ) : (
-        <div className={styles.priceWrap}>
-          <span type="button" className={styles.priceDisplay}>
-            ${price}
-          </span>
-
-          <input
-            type="number"
-            defaultValue={fixedPrice.current}
-            onFocus={handleFocus}
-            onBlur={handlePriceBlur}
-            className={styles.priceInput}
-          />
-        </div>
-      )}
-
-      <div className={styles.actions}>
-        {message ? (
-          <p className={styles.message}>{message}</p>
-        ) : (
-          <>
-            <button type="button" className={styles.move} title="Add Todo">
-              <Icon viewBox="0 0 20 20" icon="checkmark" />
-            </button>
+        {task.price === undefined && (
+          <div className={styles.hoursWrap}>
             <button
+              className={styles.hoursLabel}
               type="button"
-              className={styles.trash}
-              title="Delete"
-              onClick={() => setShowDeleteModal(true)}>
-              <Icon viewBox="0 0 20 20" icon="trash" />
+              onClick={() => hoursInput?.current?.focus()}>
+              hours:
             </button>
-          </>
+            <input
+              type="number"
+              defaultValue={hours.current}
+              ref={hoursInput}
+              onFocus={handleFocus}
+              onBlur={handleHoursBlur}
+              className={styles.hours}
+            />
+          </div>
+        )}
+
+        {task.price === undefined ? (
+          <div className={styles.price}>${price}</div>
+        ) : (
+          <div className={styles.priceWrap}>
+            <span type="button" className={styles.priceDisplay}>
+              ${price}
+            </span>
+
+            <input
+              type="number"
+              defaultValue={fixedPrice.current}
+              onFocus={handleFocus}
+              onBlur={handlePriceBlur}
+              className={styles.priceInput}
+            />
+          </div>
         )}
       </div>
 
-      {showDeleteModal && (
-        <div className={styles.deleteModal}>
-          <p>Are you sure?</p>
-          <Button type="button" style="warning" onClick={remove}>
-            Yes
-          </Button>
-          <button type="button" onClick={() => setShowDeleteModal(false)}>
-            Cancel
-          </button>
-        </div>
-      )}
+      <Actions task={task} message={message} />
     </div>
   );
 };

@@ -34,11 +34,8 @@ const Client = () => {
               <AddTask />
             </div>
 
-            <Section headline="Estimated">
-              <TaskList status={TASK_STATUS.estimated} />
-            </Section>
-
-            <Section headline="To do">
+            <Section headline="Tasks">
+              <TaskList headline="Estimated" status={TASK_STATUS.estimated} />
               <TaskList headline="To do" status={TASK_STATUS.todo} />
               <TaskList headline="Completed" status={TASK_STATUS.completed} />
             </Section>

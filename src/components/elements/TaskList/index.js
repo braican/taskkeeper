@@ -8,12 +8,11 @@ import { TASK_STATUS } from 'constants.js';
 import styles from './TaskList.module.scss';
 
 const TaskList = ({ status, headline = '' }) => {
-  const { tasks } = useTasks();
-
-  const tasksByStatus = tasks.filter(t => t.status === status && t.client === '298340127177966089');
+  const { clientTasks } = useTasks();
+  const tasksByStatus = clientTasks.filter(t => t.status === status);
 
   if (tasksByStatus.length < 1) {
-    return null;
+    return <div className={styles.taskWrap}>No {headline.toLowerCase()} tasks</div>;
   }
 
   return (
