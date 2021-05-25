@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import ContentEditable from 'react-contenteditable';
+import ContentEditable from 'components/wrappers/WrappedContentEditable';
 import { useClients, useAuth, useTasks } from 'hooks';
 
 import Actions from 'components/elements/Task/Actions';

@@ -20,6 +20,11 @@ const Actions = ({ task, message }) => {
     post('deleteTask', { id: task.id });
   };
 
+  const update = status => {
+    updateTask({ ...task, status });
+    return post('updateTask', { id: task.id, status });
+  };
+
   const advanceTask = () => {
     let newStatus = null;
 
@@ -33,8 +38,7 @@ const Actions = ({ task, message }) => {
       return;
     }
 
-    updateTask({ ...task, status: newStatus });
-    return post('updateTask', { id: task.id, status: newStatus });
+    update(newStatus);
   };
 
   const retreatTask = () => {
@@ -50,8 +54,7 @@ const Actions = ({ task, message }) => {
       return;
     }
 
-    updateTask({ ...task, status: newStatus });
-    return post('updateTask', { id: task.id, status: newStatus });
+    update(newStatus);
   };
 
   return (

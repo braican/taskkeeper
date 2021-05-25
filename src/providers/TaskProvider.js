@@ -36,7 +36,6 @@ const TaskProvider = ({ children }) => {
    */
   const updateTask = newTask => {
     const newTasks = [...tasks].map(task => (task.id === newTask.id ? newTask : task));
-
     setTasks(newTasks);
   };
 
