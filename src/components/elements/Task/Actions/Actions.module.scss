@@ -3,7 +3,9 @@
 .actions {
   display: flex;
   align-items: center;
-  margin-top: $spacing / 3;
+  justify-content: flex-end;
+  min-height: 40px;
+  text-align: right;
 }
 
 .message {
@@ -16,9 +18,12 @@
 .trash {
   @include transition();
   padding: 6px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border-radius: $border-radius;
-  height: 1.6rem;
-  margin-left: $spacing / 2;
 
   svg {
     max-height: 16px;
@@ -52,7 +57,7 @@
   background-color: $c-red;
   bottom: $spacing / 2;
   right: $spacing / 2;
-  border-radius: $border-radius;
+  border-radius: $border-radius / 2;
   box-shadow: 1px 1px 6px rgba($c-gray-3, 0.4);
   padding: $spacing / 2;
   font-size: $fs-sm;

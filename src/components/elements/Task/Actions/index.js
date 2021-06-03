@@ -57,41 +57,45 @@ const Actions = ({ task, message }) => {
     update(newStatus);
   };
 
+  if (message) {
+    return (
+      <div className={styles.actions}>
+        <p className={styles.message}>{message}</p>
+      </div>
+    );
+  }
+
   return (
     <div className={styles.actions}>
-      <p className={styles.message}>{message}</p>
-
       <button
         type="button"
         className={styles.trash}
         title="Delete"
         onClick={() => setShowDeleteModal(true)}>
-        <Icon viewBox="0 0 20 20" icon="trash" label="Delete" inline />
+        <Icon viewBox="0 0 20 20" icon="trash" />
       </button>
 
       {task.status === TASK_STATUS.estimated && (
         <button type="button" className={styles.advance} title="Todo" onClick={advanceTask}>
-          <Icon viewBox="0 0 20 20" icon="cheveron-down" label="Todo" inline />
+          <Icon viewBox="0 0 20 20" icon="cheveron-right" />
         </button>
       )}
 
       {task.status === TASK_STATUS.todo && (
         <>
-          <button type="button" className={styles.advance} title="Done" onClick={advanceTask}>
-            <Icon viewBox="0 0 20 20" icon="checkmark" label="Done" inline />
-          </button>
           <button type="button" className={styles.retreat} title="Back" onClick={retreatTask}>
-            <Icon viewBox="0 0 20 20" icon="cheveron-up" label="Back" inline />
+            <Icon viewBox="0 0 20 20" icon="cheveron-left" />
+          </button>
+          <button type="button" className={styles.advance} title="Done" onClick={advanceTask}>
+            <Icon viewBox="0 0 20 20" icon="checkmark" />
           </button>
         </>
       )}
 
       {task.status === TASK_STATUS.completed && (
-        <>
-          <button type="button" className={styles.retreat} title="Todo" onClick={retreatTask}>
-            <Icon viewBox="0 0 20 20" icon="cheveron-up" label="Todo" inline />
-          </button>
-        </>
+        <button type="button" className={styles.retreat} title="Todo" onClick={retreatTask}>
+          <Icon viewBox="0 0 20 20" icon="cheveron-left" />
+        </button>
       )}
 
       {showDeleteModal && (

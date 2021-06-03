@@ -1,11 +1,5 @@
 @import '../../../styles/abstracts';
 
-@mixin large-task-container {
-  @media (min-width: 1000px), (min-width: 580px) and (max-width: $bp-large) {
-    @content;
-  }
-}
-
 .task {
   border-bottom: 1px solid rgba($c-gray-3, 0.1);
   background-color: $c-white;
@@ -25,31 +19,29 @@
   }
 }
 
-.taskWrap {
+.row1 {
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
+  align-items: flex-start;
+}
+
+.row2 {
+  display: flex;
+  align-items: flex-start;
+  margin-top: $spacing;
+}
+
+.description,
+.actionsWrap {
+  flex: 1;
 }
 
 // Inputs
-
-.description {
-  margin-bottom: $spacing / 2;
-  width: 100%;
-
-  @include large-task-container() {
-    flex: 1;
-    margin-bottom: 0;
-  }
-}
 
 .description,
 .hours,
 .priceInput {
   padding: 4px;
   border: 1px solid transparent;
-  position: relative;
-  left: -5px;
   background-color: $c-white;
 
   &:hover {
@@ -62,45 +54,22 @@
   }
 }
 
-.hours,
-.priceInput {
-  margin-left: 0.5rem;
-  width: 2.6rem;
-}
-
-.hoursWrap {
-  display: flex;
-  align-items: baseline;
-  flex: 1;
-
-  @include large-task-container() {
-    flex: 0 0 4rem;
-    margin-left: $spacing;
-  }
-}
-
-.hoursLabel {
-  font-size: $fs-sm;
-}
-
-.price,
-.priceDisplay {
-  text-align: right;
-  font-weight: $fw-bold;
-  margin-left: $spacing;
+.description {
+  position: relative;
+  left: -5px;
+  margin-right: $spacing / 2;
 }
 
 .priceWrap {
   position: relative;
-  width: 5rem;
-  text-align: right;
 }
-
-.priceDisplay {
+.price {
+  text-align: right;
+  font-weight: $fw-bold;
   padding: 4px;
   border: 1px solid transparent;
-  position: relative;
-  left: 5px;
+}
+.priceEditable {
   background-color: $c-white;
   cursor: text;
 
@@ -111,8 +80,8 @@
 
 .priceInput {
   position: absolute;
-  top: -4px;
-  right: -4px;
+  top: 0;
+  right: 0;
   width: 100%;
   text-align: right;
   opacity: 0;
@@ -131,4 +100,17 @@
 /* Firefox */
 .priceInput[type='number'] {
   -moz-appearance: textfield;
+}
+
+.hoursWrap {
+  display: flex;
+  align-items: baseline;
+  margin-right: $spacing;
+}
+
+.hoursLabel {
+  font-size: $fs-sm;
+}
+.hours {
+  max-width: 3rem;
 }

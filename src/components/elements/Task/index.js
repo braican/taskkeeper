@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
+import classnames from 'classnames';
 import ContentEditable from 'components/wrappers/WrappedContentEditable';
 import { useClients, useAuth, useTasks } from 'hooks';
 
@@ -74,7 +75,7 @@ const Task = ({ task }) => {
 
   return (
     <div className={styles.task}>
-      <div className={styles.taskWrap}>
+      <div className={styles.row1}>
         <ContentEditable
           html={description.current}
           className={styles.description}
@@ -83,6 +84,25 @@ const Task = ({ task }) => {
           onBlur={handleDescriptionBlur}
         />
 
+        <div className={styles.priceWrap}>
+          <div
+            className={classnames(styles.price, task.price !== undefined && styles.priceEditable)}>
+            ${price}
+          </div>
+
+          {task.price !== undefined && (
+            <input
+              type="number"
+              defaultValue={fixedPrice.current}
+              onFocus={handleFocus}
+              onBlur={handlePriceBlur}
+              className={styles.priceInput}
+            />
+          )}
+        </div>
+      </div>
+
+      <div className={styles.row2}>
         {task.price === undefined && (
           <div className={styles.hoursWrap}>
             <button
@@ -102,26 +122,10 @@ const Task = ({ task }) => {
           </div>
         )}
 
-        {task.price === undefined ? (
-          <div className={styles.price}>${price}</div>
-        ) : (
-          <div className={styles.priceWrap}>
-            <span type="button" className={styles.priceDisplay}>
-              ${price}
-            </span>
-
-            <input
-              type="number"
-              defaultValue={fixedPrice.current}
-              onFocus={handleFocus}
-              onBlur={handlePriceBlur}
-              className={styles.priceInput}
-            />
-          </div>
-        )}
+        <div className={styles.actionsWrap}>
+          <Actions task={task} message={message} />
+        </div>
       </div>
-
-      <Actions task={task} message={message} />
     </div>
   );
 };

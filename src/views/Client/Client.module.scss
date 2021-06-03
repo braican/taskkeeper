@@ -12,10 +12,6 @@
   }
 }
 
-.addTask {
-  margin-bottom: $spacing * 2;
-}
-
 .backToDash {
   @include uppercase();
   color: inherit;
@@ -25,4 +21,18 @@
 .name {
   font-weight: $fw-bold;
   font-size: $fs-xxl;
+}
+
+.board {
+  @include large-screens {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+.column {
+  min-height: 12rem;
+  @include large-screens {
+    flex: 0 0 31%;
+    width: 31%;
+  }
 }

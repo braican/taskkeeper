@@ -12,7 +12,9 @@
   padding: $spacing;
   background-color: rgba($c-white, 0.5);
   box-shadow: 0 0 14px rgba($c-gray-3, 0.1);
-  margin-bottom: $spacing * 2;
+  margin-bottom: $spacing;
+  width: 100%;
+  max-width: 660px;
 }
 
 .actions {

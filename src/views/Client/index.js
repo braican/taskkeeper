@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useClients } from 'hooks';
 
-import SplitLayout from 'components/layouts/SplitLayout';
 import Block from 'components/ui/Block';
 import Section from 'components/elements/Section';
 import AddTask from 'components/elements/AddTask';
@@ -27,27 +26,37 @@ const Client = () => {
         </Link>
         <h2 className={styles.name}>{client.name}</h2>
       </header>
-      <SplitLayout split="uneven">
-        <div className={styles.tasks}>
-          <Block>
-            <div className={styles.addTask}>
-              <AddTask />
+
+      <div className={styles.tasks}>
+        <Block>
+          <AddTask />
+        </Block>
+        <Block>
+          <div className={styles.board}>
+            <div className={styles.column}>
+              <Section headline="Estimated">
+                <TaskList status={TASK_STATUS.estimated} />
+              </Section>
             </div>
+            <div className={styles.column}>
+              <Section headline="To do">
+                <TaskList status={TASK_STATUS.todo} />
+              </Section>
+            </div>
+            <div className={styles.column}>
+              <Section headline="Completed">
+                <TaskList status={TASK_STATUS.completed} />
+              </Section>
+            </div>
+          </div>
+        </Block>
+      </div>
 
-            <Section headline="Tasks">
-              <TaskList headline="Estimated" status={TASK_STATUS.estimated} />
-              <TaskList headline="To do" status={TASK_STATUS.todo} />
-              <TaskList headline="Completed" status={TASK_STATUS.completed} />
-            </Section>
-          </Block>
-        </div>
-
-        <div>
-          <Block>
-            <h2>No invoices</h2>
-          </Block>
-        </div>
-      </SplitLayout>
+      <div>
+        <Block>
+          <h2>No invoices</h2>
+        </Block>
+      </div>
     </>
   );
 };

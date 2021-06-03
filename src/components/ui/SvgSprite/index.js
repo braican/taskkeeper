@@ -21,6 +21,16 @@ const SvgSprite = () => (
     </symbol>
 
     {/* viewBox="0 0 20 20" */}
+    <symbol id="icon-cheveron-left">
+      <path d="M7.050 9.293l-0.707 0.707 5.657 5.657 1.414-1.414-4.242-4.243 4.242-4.243-1.414-1.414z"></path>
+    </symbol>
+
+    {/* viewBox="0 0 20 20" */}
+    <symbol id="icon-cheveron-right">
+      <path d="M12.95 10.707l0.707-0.707-5.657-5.657-1.414 1.414 4.242 4.243-4.242 4.243 1.414 1.414 4.95-4.95z"></path>
+    </symbol>
+
+    {/* viewBox="0 0 20 20" */}
     <symbol id="icon-edit-pencil">
       <path d="M12.3 3.7l4 4-12.3 12.3h-4v-4l12.3-12.3zM13.7 2.3l2.3-2.3 4 4-2.3 2.3-4-4z"></path>
     </symbol>
