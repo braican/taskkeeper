@@ -37,7 +37,9 @@ const Dashboard = () => {
           <p className={styles.greeting}>{timeGreeting()}</p>
         </Block>
         <Block>
-          <AddClient />
+          <div className={styles.addClient}>
+            <AddClient />
+          </div>
           <Section headline="Clients">
             <ClientList />
           </Section>

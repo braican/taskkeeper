@@ -4,9 +4,8 @@ import { post } from 'util/index';
 import FormModal from 'components/elements/FormModal';
 
 import FormInput from 'components/ui/FormInput';
+import Button from 'components/ui/Button';
 import Icon from 'components/ui/Icon';
-
-import styles from './AddClient.module.scss';
 
 const AddClient = () => {
   const [formActive, setFormActive] = useState(false);
@@ -73,10 +72,10 @@ const AddClient = () => {
   }
 
   return (
-    <button onClick={() => setFormActive(true)} className={styles.addNew}>
+    <Button onClick={() => setFormActive(true)} style="transparent">
       <Icon icon="plus-square" />
       <span>Add client</span>
-    </button>
+    </Button>
   );
 };
 

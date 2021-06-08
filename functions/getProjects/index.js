@@ -1,27 +1,25 @@
 const faunadb = require('faunadb');
 const q = faunadb.query;
 
-const getTasks = async secret => {
+const getProjects = async secret => {
   try {
     const faunaClient = new faunadb.Client({ secret });
     const result = await faunaClient.query(
       q.Map(
-        q.Paginate(q.Match(q.Index('tasks_by_uid'), [q.CurrentIdentity()])),
+        q.Paginate(q.Match(q.Index('projects_by_uid'), [q.CurrentIdentity()])),
         q.Lambda('x', q.Get(q.Var('x'))),
       ),
     );
 
-    return result.data.map(({ ref, data: { description, hours, price, status, client } }) => ({
-      description,
-      hours,
-      price,
+    return result.data.map(({ ref, data: { name, status, client } }) => ({
+      name,
       status,
       client: client.id,
       id: ref.id,
     }));
   } catch (error) {
     if (error.requestResult.statusCode === 404) {
-      console.error('No clients found.');
+      console.error('No projects found.');
     } else {
       console.error(error);
     }
@@ -35,7 +33,7 @@ const handler = async ({ body }) => {
     const data = JSON.parse(body);
     const { secret } = data;
 
-    const tasks = await getTasks(secret);
+    const tasks = await getProjects(secret);
 
     return {
       statusCode: 200,

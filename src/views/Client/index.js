@@ -11,6 +11,7 @@ import AddTask from 'components/elements/AddTask';
 import AddProject from 'components/elements/AddProject';
 import TaskList from 'components/elements/TaskList';
 import ProjectList from 'components/elements/ProjectList';
+import InvoiceList from 'components/elements/InvoiceList';
 
 import { TASK_STATUS } from 'constants.js';
 
@@ -60,14 +61,13 @@ const Client = () => {
 
         <aside className={styles.aside}>
           <Block>
-            <Section headline="Projects" minHeight="10rem">
+            <Section headline="Projects" minHeight="10rem" headerOffset="24px">
               <AddProject />
-
               <ProjectList />
             </Section>
 
-            <Section headline="Past Invoices">
-              <h2>No invoices</h2>
+            <Section headline="Past Invoices" className={styles.invoiceSection}>
+              <InvoiceList />
             </Section>
           </Block>
         </aside>

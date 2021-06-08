@@ -3,6 +3,7 @@
 .projectForm {
   width: 100%;
   max-width: 660px;
+  margin-bottom: $spacing;
 }
 
 .formInputs {
@@ -12,4 +13,12 @@
 .projectKey {
   width: 4rem;
   margin-left: $spacing / 2;
+}
+
+.actions {
+  display: flex;
+
+  button + button {
+    margin-left: $spacing;
+  }
 }

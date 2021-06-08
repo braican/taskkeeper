@@ -37,3 +37,24 @@
     background-color: darken($c-red, 10%);
   }
 }
+
+.style--black {
+  background-color: rgba($c-white, 0.1);
+  color: $c-white;
+
+  &:hover {
+    background-color: rgba($c-white, 0.2);
+  }
+}
+
+.style--transparent {
+  color: $c-gray-6;
+  background-color: transparent;
+  padding: 0;
+
+  &:hover {
+    color: $c-gray-3;
+    transform: translateY(-1px);
+    background-color: transparent;
+  }
+}

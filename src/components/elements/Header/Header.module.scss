@@ -65,13 +65,3 @@
 .userMeta {
   margin-bottom: $spacing;
 }
-
-.signOut {
-  padding: 0.4em 0.8em;
-  color: $c-white;
-  background-color: rgba($c-white, 0.1);
-
-  &:hover {
-    background-color: rgba($c-white, 0.2);
-  }
-}

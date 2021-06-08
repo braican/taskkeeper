@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useAuth } from 'hooks';
+import Button from 'components/ui/Button';
+
 import styles from './Header.module.scss';
 
 const Header = () => {
@@ -22,9 +24,9 @@ const Header = () => {
             </p>
             <p>{userData.email}</p>
           </div>
-          <button onClick={signOut} className={styles.signOut}>
+          <Button onClick={signOut} style="black">
             Logout
-          </button>
+          </Button>
         </div>
       )}
     </header>

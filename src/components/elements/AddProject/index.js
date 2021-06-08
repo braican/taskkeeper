@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import FormInput from 'components/ui/FormInput';
 
+import Button from 'components/ui/Button';
+import SecondaryButton from 'components/ui/SecondaryButton';
+import Icon from 'components/ui/Icon';
+
 import styles from './AddProject.module.scss';
 
 const AddProject = () => {
@@ -15,7 +19,12 @@ const AddProject = () => {
 
   return (
     <div>
-      {!formActive && <button onClick={() => setFormActive(true)}>Add Project</button>}
+      {!formActive && (
+        <Button onClick={() => setFormActive(true)} style="transparent">
+          <Icon icon="plus-square" />
+          <span>Add project</span>
+        </Button>
+      )}
 
       {formActive && (
         <form onSubmit={handleSubmit} className={styles.projectForm}>
@@ -35,8 +44,10 @@ const AddProject = () => {
               onChange={event => setName(event.target.value)}
             />
           </div>
-          <button onClick={handleSave}>Save</button>
-          <button onClick={() => setFormActive(false)}>Cancel</button>
+          <div className={styles.actions}>
+            <Button onClick={handleSave}>Save</Button>
+            <SecondaryButton onClick={() => setFormActive(false)}>Cancel</SecondaryButton>
+          </div>
         </form>
       )}
     </div>

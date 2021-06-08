@@ -15,7 +15,7 @@ const Button = ({ children, style = '', className = '', type = 'button', onClick
 
 Button.propTypes = {
   children: PropTypes.node,
-  style: PropTypes.oneOf(['', 'green', 'warning']),
+  style: PropTypes.oneOf(['', 'green', 'warning', 'black', 'transparent']),
   className: PropTypes.string,
   type: PropTypes.string,
   onClick: PropTypes.func,
