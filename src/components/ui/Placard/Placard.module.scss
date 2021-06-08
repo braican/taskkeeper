@@ -2,9 +2,7 @@
 
 .placard {
   display: block;
-  padding: $spacing;
-  border-radius: $border-radius;
-  border: 1px solid $c-gray-e;
+  padding: $spacing * 2;
   color: inherit;
   text-decoration: none;
   background-color: $c-white;
@@ -12,8 +10,10 @@
 
 a.placard {
   @include transition(all);
+  border-top: 2px solid rgba($c-blue, 0.4);
   &:hover {
     transform: translateY(-1px);
-    box-shadow: 2px 2px 4px rgba($c-gray-3, 0.05);
+    box-shadow: 0 2px 18px rgba($c-blue, 0.15);
+    border-top-color: rgba($c-blue, 0.6);
   }
 }

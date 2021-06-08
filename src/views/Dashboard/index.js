@@ -3,7 +3,6 @@ import ClientList from 'components/elements/ClientList';
 import AddClient from 'components/elements/AddClient';
 import { useAuth } from 'hooks';
 
-import SplitLayout from 'components/layouts/SplitLayout';
 import Block from 'components/ui/Block';
 import Section from 'components/elements/Section';
 
@@ -28,33 +27,29 @@ const Dashboard = () => {
       return `Enjoy that late afternoon sun ${userData.firstName}. Or rain, if it's raining.`;
     }
 
-    return `Hey ${userData.firstName}, don't work too late tonight.`;
+    return `Evening ${userData.firstName}.`;
   };
 
   return (
-    <SplitLayout>
-      <div>
+    <div className={styles.dash}>
+      <main className={styles.main}>
         <Block>
-          <header className={styles.header}>
-            <p className={styles.greeting}>{timeGreeting()}</p>
-          </header>
+          <p className={styles.greeting}>{timeGreeting()}</p>
         </Block>
-
         <Block>
           <AddClient />
-
           <Section headline="Clients">
             <ClientList />
           </Section>
         </Block>
-      </div>
+      </main>
 
-      <div>
+      <aside className={styles.overview}>
         <Block>
           <h2>Overview</h2>
         </Block>
-      </div>
-    </SplitLayout>
+      </aside>
+    </div>
   );
 };
 

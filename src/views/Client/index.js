@@ -1,11 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useInView } from 'react-intersection-observer';
+import classnames from 'classnames';
+
 import { useClients } from 'hooks';
 
 import Block from 'components/ui/Block';
 import Section from 'components/elements/Section';
 import AddTask from 'components/elements/AddTask';
+import AddProject from 'components/elements/AddProject';
 import TaskList from 'components/elements/TaskList';
+import ProjectList from 'components/elements/ProjectList';
 
 import { TASK_STATUS } from 'constants.js';
 
@@ -13,13 +18,16 @@ import styles from './Client.module.scss';
 
 const Client = () => {
   const { client } = useClients();
+  const { ref, inView, entry } = useInView({
+    threshold: 0,
+  });
 
   if (!client) {
     return <p>Loading...</p>;
   }
 
   return (
-    <>
+    <div className={styles.clientWrap}>
       <header className={styles.header}>
         <Link to="/dashboard" className={styles.backToDash}>
           &larr; Dashboard
@@ -27,37 +35,44 @@ const Client = () => {
         <h2 className={styles.name}>{client.name}</h2>
       </header>
 
-      <div className={styles.tasks}>
-        <Block>
-          <AddTask />
-        </Block>
-        <Block>
-          <div className={styles.board}>
-            <div className={styles.column}>
-              <Section headline="Estimated">
-                <TaskList status={TASK_STATUS.estimated} />
-              </Section>
-            </div>
-            <div className={styles.column}>
-              <Section headline="To do">
-                <TaskList status={TASK_STATUS.todo} />
-              </Section>
-            </div>
-            <div className={styles.column}>
-              <Section headline="Completed">
-                <TaskList status={TASK_STATUS.completed} />
-              </Section>
-            </div>
-          </div>
-        </Block>
-      </div>
+      <header
+        className={classnames(styles.fixedHeader, entry && !inView && styles.fixedHeaderShow)}>
+        <Link to="/dashboard" className={styles.backToDash}>
+          &larr; Dash
+        </Link>
+        <h2 className={styles.fixedName}>{client.name}</h2>
+      </header>
 
-      <div>
-        <Block>
-          <h2>No invoices</h2>
-        </Block>
-      </div>
-    </>
+      <section className={styles.main}>
+        <main className={styles.tasks}>
+          <Block>
+            <div className={styles.addTask} ref={ref}>
+              <AddTask />
+            </div>
+
+            <Section headline="Tasks" headerOffset="2.1rem">
+              <TaskList headline="Estimated" status={TASK_STATUS.estimated} />
+              <TaskList headline="To do" status={TASK_STATUS.todo} />
+              <TaskList headline="Completed" status={TASK_STATUS.completed} />
+            </Section>
+          </Block>
+        </main>
+
+        <aside className={styles.aside}>
+          <Block>
+            <Section headline="Projects" minHeight="10rem">
+              <AddProject />
+
+              <ProjectList />
+            </Section>
+
+            <Section headline="Past Invoices">
+              <h2>No invoices</h2>
+            </Section>
+          </Block>
+        </aside>
+      </section>
+    </div>
   );
 };
 

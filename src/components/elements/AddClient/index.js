@@ -8,7 +8,7 @@ import Icon from 'components/ui/Icon';
 
 import styles from './AddClient.module.scss';
 
-const ClientList = () => {
+const AddClient = () => {
   const [formActive, setFormActive] = useState(false);
   const [name, setName] = useState('');
   const [key, setKey] = useState('');
@@ -74,10 +74,10 @@ const ClientList = () => {
 
   return (
     <button onClick={() => setFormActive(true)} className={styles.addNew}>
-      <Icon viewBox="0 0 24 28" icon="plus-square" />
+      <Icon icon="plus-square" />
       <span>Add client</span>
     </button>
   );
 };
 
-export default ClientList;
+export default AddClient;

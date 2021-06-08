@@ -15,13 +15,11 @@ const AuthRoutes = () => (
     <TaskProvider>
       <SvgSprite />
       <Header />
-      <main>
-        <Switch>
-          <Route path="/dashboard" render={() => <Dashboard />} />
-          <Route path="/client/:clientId" render={() => <Client />} />
-          <Route path="/*" render={() => <Redirect to="/dashboard" />} />
-        </Switch>
-      </main>
+      <Switch>
+        <Route path="/dashboard" render={() => <Dashboard />} />
+        <Route path="/client/:clientId" render={() => <Client />} />
+        <Route path="/*" render={() => <Redirect to="/dashboard" />} />
+      </Switch>
     </TaskProvider>
   </ClientProvider>
 );

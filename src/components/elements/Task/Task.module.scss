@@ -1,14 +1,16 @@
 @import '../../../styles/abstracts';
 
 .task {
-  border-bottom: 1px solid rgba($c-gray-3, 0.1);
+  @include transition(border-top-color);
   background-color: $c-white;
-  padding: $spacing / 2 $spacing;
+  padding: $spacing;
   position: relative;
+  margin-top: $spacing / 2;
+  border-top: 2px solid rgba($c-gray-c, 0.5);
 
   &:focus-within,
   &:hover {
-    background-color: $c-gray-fa;
+    border-top-color: rgba($c-blue, 0.6);
   }
 
   input {
@@ -27,7 +29,7 @@
 .row2 {
   display: flex;
   align-items: flex-start;
-  margin-top: $spacing;
+  margin-top: $spacing / 2;
 }
 
 .description,
@@ -39,24 +41,32 @@
 
 .description,
 .hours,
-.priceInput {
-  padding: 4px;
-  border: 1px solid transparent;
+.priceInput,
+.priceEditable {
+  @include transition(border-color);
+  padding: 6px;
+  border: 1px dashed transparent;
   background-color: $c-white;
 
-  &:hover {
+  .task:hover &:not(:focus) {
     border-color: $c-gray-e;
+  }
+
+  .task:hover &:hover:not(:focus),
+  .task:hover .priceWrap:hover &:not(:focus) {
+    border-color: $c-gray-c;
   }
 
   &:focus {
     outline: none;
+    border-style: solid;
     border-color: $c-orange;
   }
 }
 
 .description {
   position: relative;
-  left: -5px;
+  left: -7px;
   margin-right: $spacing / 2;
 }
 
@@ -66,16 +76,8 @@
 .price {
   text-align: right;
   font-weight: $fw-bold;
-  padding: 4px;
-  border: 1px solid transparent;
-}
-.priceEditable {
-  background-color: $c-white;
-  cursor: text;
-
-  .priceWrap:hover & {
-    border-color: $c-gray-e;
-  }
+  padding: 6px;
+  line-height: 1.3;
 }
 
 .priceInput {
@@ -110,6 +112,7 @@
 
 .hoursLabel {
   font-size: $fs-sm;
+  margin-right: 4px;
 }
 .hours {
   max-width: 3rem;

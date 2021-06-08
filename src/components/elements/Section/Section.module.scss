@@ -7,13 +7,14 @@
 }
 
 .headline {
-  @include uppercase;
-  font-size: $fs-xl;
+  @include uppercase();
+  font-size: 1rem;
   line-height: 1;
   position: absolute;
+  top: 0;
+  left: 1rem;
   transform-origin: 0 0;
   transform: rotate(-90deg) translate(-100%, -100%);
-  padding-bottom: 0.5em;
   font-weight: $fw-bold;
-  color: rgba($c-gray-3, 0.1);
+  color: $c-blue;
 }

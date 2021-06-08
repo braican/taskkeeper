@@ -12,10 +12,6 @@
     margin-left: $spacing / 2;
   }
 
-  svg {
-    color: $c-green;
-  }
-
   &:hover {
     color: $c-gray-3;
     transform: translateY(-1px);

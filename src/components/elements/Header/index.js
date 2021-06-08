@@ -1,23 +1,31 @@
 import React, { useState } from 'react';
-import classnames from 'classnames';
-import Icon from 'components/ui/Icon';
 import { useAuth } from 'hooks';
 import styles from './Header.module.scss';
 
 const Header = () => {
   const { userData, signOut } = useAuth();
-  const [showUtil, setShowUtil] = useState(false);
+  const [showUtility, setShowUtility] = useState(false);
 
   return (
-    <header className={classnames(styles.header, showUtil && styles.headerWithUtil)}>
-      <button className={styles.avatar} onClick={() => setShowUtil(!showUtil)}>
+    <header className={styles.header}>
+      <button className={styles.avatar} onClick={() => setShowUtility(!showUtility)}>
         <img src={userData.picture} alt={`Avatar for user ${userData.name}`} />
       </button>
 
-      {showUtil && (
-        <button onClick={signOut} className={styles.signOut}>
-          <Icon label="Log out" icon="logout" viewBox="0 0 24 24" />
-        </button>
+      <h3 className={styles.appname}>Taskkeeper</h3>
+
+      {showUtility && (
+        <div className={styles.utility}>
+          <div className={styles.userMeta}>
+            <p>
+              <strong>{userData.name}</strong>
+            </p>
+            <p>{userData.email}</p>
+          </div>
+          <button onClick={signOut} className={styles.signOut}>
+            Logout
+          </button>
+        </div>
       )}
     </header>
   );

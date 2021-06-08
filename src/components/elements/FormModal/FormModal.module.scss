@@ -8,13 +8,11 @@
 }
 
 .form {
-  border-radius: $border-radius;
   padding: $spacing;
-  background-color: rgba($c-white, 0.5);
-  box-shadow: 0 0 14px rgba($c-gray-3, 0.1);
-  margin-bottom: $spacing;
+  background-color: $c-white;
+  box-shadow: 0 0 14px rgba($c-blue, 0.2);
+  margin-bottom: $spacing * 4;
   width: 100%;
-  max-width: 660px;
 }
 
 .actions {

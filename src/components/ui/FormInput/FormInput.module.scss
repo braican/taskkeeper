@@ -14,6 +14,7 @@
   transform: translateY(1.25em);
   color: $c-gray-9;
   line-height: 1;
+  pointer-events: none;
 
   .formElFocused & {
     font-size: 0.6rem;
@@ -34,7 +35,6 @@
     padding: 1.5em 0.5em 0.5em 0.5em;
     background-color: $c-white;
     border: 1px solid $c-gray-e;
-    border-radius: $border-radius / 2;
     resize: none;
 
     &:focus {

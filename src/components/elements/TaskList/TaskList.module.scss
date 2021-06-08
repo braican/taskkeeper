@@ -5,14 +5,13 @@
 }
 
 .headline {
+  @include uppercase;
   font-weight: $fw-bold;
-  margin-bottom: $spacing / 2;
-  font-size: $fs-lg;
+  font-size: $fs-xl;
+  color: rgba($c-gray-3, 0.6);
+  text-align: right;
 }
 
 .tasklist {
-  background-color: $c-white;
-  border-top: 1px solid rgba($c-gray-3, 0.1);
-  border-left: 1px solid rgba($c-gray-3, 0.1);
-  border-right: 1px solid rgba($c-gray-3, 0.1);
+  max-width: 800px;
 }

@@ -11,7 +11,7 @@ import styles from './Icon.module.scss';
  *
  * @return jsx
  */
-const Icon = ({ label = '', viewBox = '', icon, inline = false }) => (
+const Icon = ({ label = '', viewBox = '0 0 20 20', icon, inline = false }) => (
   <div className={inline ? styles.inline : ''}>
     <svg className={styles.svg} viewBox={viewBox}>
       <use xlinkHref={`#icon-${icon}`}></use>

@@ -1,3 +1,5 @@
-.section {
-  @include block;
+.App {
+  @include large-screens {
+    padding-left: calc(#{$avatar-size} + #{$spacing * 2});
+  }
 }

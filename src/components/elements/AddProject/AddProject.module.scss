@@ -1,0 +1,15 @@
+@import '../../../styles/abstracts';
+
+.projectForm {
+  width: 100%;
+  max-width: 660px;
+}
+
+.formInputs {
+  margin-bottom: $spacing / 2;
+}
+
+.projectKey {
+  width: 4rem;
+  margin-left: $spacing / 2;
+}

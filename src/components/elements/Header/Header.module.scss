@@ -4,19 +4,21 @@
 .header {
   display: flex;
   flex-direction: column;
-  position: absolute;
+  position: fixed;
+  justify-content: space-between;
   top: 0;
   right: 0;
   padding: 1rem;
   align-items: center;
+  width: calc(#{$avatar-size} + #{$spacing * 2});
+  z-index: 3;
 
   @include large-screens {
-    position: fixed;
+    background-color: $c-blue;
+    bottom: 0;
+    left: 0;
+    right: auto;
   }
-}
-
-.headerWithUtil {
-  background-color: $c-orange;
 }
 
 .avatar {
@@ -31,6 +33,45 @@
   }
 }
 
+.appname {
+  display: none;
+  color: $c-white;
+  font-weight: $fw-bold;
+  font-size: $fs-lg;
+  transform: translate(0, -200%) rotate(-90deg);
+
+  @include large-screens {
+    display: block;
+  }
+}
+
+// Utility
+// -----------
+
+.utility {
+  position: fixed;
+  top: $spacing;
+  right: calc(#{$avatar-size} + #{$spacing * 2});
+  background-color: $c-gray-3;
+  padding: $spacing;
+  color: $c-white;
+
+  @include large-screens {
+    left: calc(#{$avatar-size} + #{$spacing * 3});
+    right: auto;
+  }
+}
+
+.userMeta {
+  margin-bottom: $spacing;
+}
+
 .signOut {
-  margin-top: $spacing * 2;
+  padding: 0.4em 0.8em;
+  color: $c-white;
+  background-color: rgba($c-white, 0.1);
+
+  &:hover {
+    background-color: rgba($c-white, 0.2);
+  }
 }
