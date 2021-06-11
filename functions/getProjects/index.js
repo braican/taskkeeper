@@ -11,9 +11,10 @@ const getProjects = async secret => {
       ),
     );
 
-    return result.data.map(({ ref, data: { name, status, client } }) => ({
+    return result.data.map(({ ref, data: { name, color, status, client } }) => ({
       name,
       status,
+      color,
       client: client.id,
       id: ref.id,
     }));
@@ -33,11 +34,11 @@ const handler = async ({ body }) => {
     const data = JSON.parse(body);
     const { secret } = data;
 
-    const tasks = await getProjects(secret);
+    const projects = await getProjects(secret);
 
     return {
       statusCode: 200,
-      body: JSON.stringify({ tasks }),
+      body: JSON.stringify({ projects }),
     };
   } catch (error) {
     return { statusCode: 500, body: error.toString() };

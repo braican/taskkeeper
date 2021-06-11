@@ -61,7 +61,7 @@ const Client = () => {
 
         <aside className={styles.aside}>
           <Block>
-            <Section headline="Projects" minHeight="10rem" headerOffset="24px">
+            <Section headline="Projects" minHeight="10rem" headerOffset="calc(24px + 1rem)">
               <AddProject />
               <ProjectList />
             </Section>

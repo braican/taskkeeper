@@ -6,11 +6,13 @@ import styles from './FormInput.module.scss';
 
 const FormInput = ({
   value = '',
+  defaultValue = '',
   label = '',
   type = 'text',
   name = '',
   placeholder = '',
   onChange = null,
+  onBlur = null,
   required = false,
   className = '',
 }) => {
@@ -25,6 +27,17 @@ const FormInput = ({
     onFocus: () => setFocused(true),
     onBlur: () => setFocused(value !== ''),
   };
+
+  if (type === 'color') {
+    return (
+      <input
+        className={styles.colorpicker}
+        type="color"
+        defaultValue={defaultValue}
+        onBlur={onBlur}
+      />
+    );
+  }
 
   const getInputType = () => {
     if (type === 'textarea') {
@@ -44,11 +57,13 @@ const FormInput = ({
 
 FormInput.propTypes = {
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  defaultValue: PropTypes.string,
   label: PropTypes.string,
   type: PropTypes.string,
   name: PropTypes.string,
   placeholder: PropTypes.string,
   onChange: PropTypes.func,
+  onBlur: PropTypes.func,
   required: PropTypes.bool,
   className: PropTypes.string,
 };

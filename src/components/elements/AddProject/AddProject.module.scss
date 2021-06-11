@@ -1,5 +1,9 @@
 @import '../../../styles/abstracts';
 
+.addProject {
+  margin-bottom: $spacing;
+}
+
 .projectForm {
   width: 100%;
   max-width: 660px;
@@ -10,9 +14,15 @@
   margin-bottom: $spacing / 2;
 }
 
-.projectKey {
-  width: 4rem;
-  margin-left: $spacing / 2;
+.colorpickerWrap {
+  display: flex;
+  align-items: center;
+}
+.colorpickerLabel {
+  @include uppercase;
+  color: $c-gray-9;
+  font-style: $fs-sm;
+  margin-right: $spacing;
 }
 
 .actions {

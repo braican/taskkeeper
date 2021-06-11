@@ -8,9 +8,9 @@
   justify-content: space-between;
   top: 0;
   right: 0;
-  padding: 1rem;
+  padding: $spacing / 2;
   align-items: center;
-  width: calc(#{$avatar-size} + #{$spacing * 2});
+  width: calc(#{$avatar-size} + #{$spacing});
   z-index: 3;
 
   @include large-screens {

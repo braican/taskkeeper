@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { post } from 'util/index';
 import { useClients, useTasks, useAuth } from 'hooks';
 
 import FormModal from 'components/elements/FormModal';
@@ -19,7 +18,7 @@ const AddTask = () => {
   const [hours, setHours] = useState(0);
   const [isFixedPrice, setIsFixedPrice] = useState(false);
 
-  const { userData } = useAuth();
+  const { post } = useAuth();
   const { client } = useClients();
   const { addTask } = useTasks();
 
@@ -29,7 +28,6 @@ const AddTask = () => {
     }
 
     post('addTask', {
-      secret: userData.secret,
       task: {
         description,
         status: TASK_STATUS.estimated,

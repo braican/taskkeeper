@@ -1,12 +1,14 @@
 import React from 'react';
 import { useProjects } from 'hooks';
+import ActiveProject from './ActiveProject';
+
+import { PROJECT_STATUS } from 'constants.js';
 
 import styles from './ProjectList.module.scss';
 
 const ProjectList = () => {
   const { clientProjects } = useProjects();
 
-  // eslint-disable-next-line
   if (clientProjects.length < 1) {
     return (
       <div className={styles.projectWrap}>
@@ -18,11 +20,13 @@ const ProjectList = () => {
   return (
     <div className={styles.projectWrap}>
       <ul className={styles.projectList}>
-        {clientProjects.map(project => (
-          <li key={project.id} className={styles.project}>
-            {project.name}
-          </li>
-        ))}
+        {clientProjects
+          .filter(({ status }) => status === PROJECT_STATUS.active)
+          .map(project => (
+            <li key={project.id} className={styles.project}>
+              <ActiveProject color={project.color} name={project.name} />
+            </li>
+          ))}
       </ul>
     </div>
   );

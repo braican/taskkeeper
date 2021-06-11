@@ -4,3 +4,8 @@ export const TASK_STATUS = {
   completed: 'completed',
   archived: 'archived',
 };
+
+export const PROJECT_STATUS = {
+  active: 'active',
+  archived: 'archived',
+};

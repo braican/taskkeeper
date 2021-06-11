@@ -6,7 +6,7 @@
   padding: $spacing;
   position: relative;
   margin-top: $spacing / 2;
-  border-top: 2px solid rgba($c-gray-c, 0.5);
+  @include top-rule;
 
   &:focus-within,
   &:hover {

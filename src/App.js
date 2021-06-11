@@ -6,20 +6,22 @@ import Dashboard from 'views/Dashboard';
 import Welcome from 'views/Welcome';
 import Client from 'views/Client';
 import { useAuth } from './hooks';
-import { ClientProvider, TaskProvider } from './providers';
+import { ClientProvider, TaskProvider, ProjectProvider } from './providers';
 
 import './styles/app.scss';
 
 const AuthRoutes = () => (
   <ClientProvider>
     <TaskProvider>
-      <SvgSprite />
-      <Header />
-      <Switch>
-        <Route path="/dashboard" render={() => <Dashboard />} />
-        <Route path="/client/:clientId" render={() => <Client />} />
-        <Route path="/*" render={() => <Redirect to="/dashboard" />} />
-      </Switch>
+      <ProjectProvider>
+        <SvgSprite />
+        <Header />
+        <Switch>
+          <Route path="/dashboard" render={() => <Dashboard />} />
+          <Route path="/client/:clientId" render={() => <Client />} />
+          <Route path="/*" render={() => <Redirect to="/dashboard" />} />
+        </Switch>
+      </ProjectProvider>
     </TaskProvider>
   </ClientProvider>
 );

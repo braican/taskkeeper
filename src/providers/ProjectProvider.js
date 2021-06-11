@@ -11,8 +11,8 @@ const ProjectProvider = ({ children }) => {
   useEffect(() => {
     if (!fetched) {
       const cancelFetch = cancellablePromise(function* () {
-        const { tasks } = yield post('getProjects');
-        setProjects(tasks);
+        const { projects } = yield post('getProjects');
+        setProjects(projects);
         setFetched(true);
       }, 'projectFetch');
 
