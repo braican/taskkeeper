@@ -111,6 +111,7 @@
 }
 
 .hoursLabel {
+  @include uppercase;
   font-size: $fs-sm;
   margin-right: 4px;
 }

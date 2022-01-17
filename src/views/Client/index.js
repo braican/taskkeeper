@@ -3,14 +3,12 @@ import { Link } from 'react-router-dom';
 import { useInView } from 'react-intersection-observer';
 import classnames from 'classnames';
 
-import { useClients } from 'hooks';
+import { useClients, useTasks } from 'hooks';
 
 import Block from 'components/ui/Block';
 import Section from 'components/elements/Section';
 import AddTask from 'components/elements/AddTask';
-import AddProject from 'components/elements/AddProject';
 import TaskList from 'components/elements/TaskList';
-import ProjectList from 'components/elements/ProjectList';
 import InvoiceList from 'components/elements/InvoiceList';
 
 import { TASK_STATUS } from 'constants.js';
@@ -19,6 +17,7 @@ import styles from './Client.module.scss';
 
 const Client = () => {
   const { client } = useClients();
+  const { clientTasks } = useTasks();
   const { ref, inView, entry } = useInView({
     threshold: 0,
   });
@@ -51,21 +50,20 @@ const Client = () => {
               <AddTask />
             </div>
 
-            <Section headline="Tasks" headerOffset="2.1rem">
-              <TaskList headline="Estimated" status={TASK_STATUS.estimated} />
-              <TaskList headline="To do" status={TASK_STATUS.todo} />
-              <TaskList headline="Completed" status={TASK_STATUS.completed} />
-            </Section>
+            {clientTasks.length === 0 ? (
+              <p>Nothing going on here.</p>
+            ) : (
+              <>
+                <TaskList headline="Estimated" status={TASK_STATUS.estimated} />
+                <TaskList headline="To do" status={TASK_STATUS.todo} />
+                <TaskList headline="Completed" status={TASK_STATUS.completed} />
+              </>
+            )}
           </Block>
         </main>
 
         <aside className={styles.aside}>
           <Block>
-            <Section headline="Projects" minHeight="10rem" headerOffset="calc(24px + 1rem)">
-              <AddProject />
-              <ProjectList />
-            </Section>
-
             <Section headline="Past Invoices" className={styles.invoiceSection}>
               <InvoiceList />
             </Section>

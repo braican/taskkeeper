@@ -12,7 +12,7 @@ const TaskList = ({ status, headline = '' }) => {
   const tasksByStatus = clientTasks.filter(t => t.status === status);
 
   if (tasksByStatus.length < 1) {
-    return <div className={styles.taskWrap}>No {headline.toLowerCase()} tasks</div>;
+    return null;
   }
 
   return (

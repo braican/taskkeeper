@@ -15,7 +15,7 @@ export const TaskContext = createContext({
 const useTasks = () => {
   const tasksData = useContext(TaskContext);
   const { client } = useClients();
-  const clientTasks = tasksData.tasks.filter(t => t.client === client.id);
+  const clientTasks = client ? tasksData.tasks.filter(t => t.client === client.id) : [];
 
   return { ...tasksData, clientTasks };
 };

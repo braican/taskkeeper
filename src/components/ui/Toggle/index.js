@@ -13,8 +13,10 @@ const Toggle = ({ off, on, onChange }) => {
         type="button"
         className={classnames(styles.label, !checked && styles.labelActive)}
         onClick={() => {
-          setChecked(false);
-          onChange();
+          if (checked === true) {
+            setChecked(false);
+            onChange();
+          }
         }}>
         {off}
       </button>
@@ -34,8 +36,10 @@ const Toggle = ({ off, on, onChange }) => {
         type="button"
         className={classnames(styles.label, checked && styles.labelActive)}
         onClick={() => {
-          setChecked(true);
-          onChange();
+          if (checked !== true) {
+            setChecked(true);
+            onChange();
+          }
         }}>
         {on}
       </button>

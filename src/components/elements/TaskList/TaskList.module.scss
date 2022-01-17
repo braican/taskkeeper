@@ -5,9 +5,7 @@
 }
 
 .headline {
-  @include uppercase;
   font-weight: $fw-bold;
-  font-size: $fs-xl;
+  font-size: $fs-lg;
   color: rgba($c-gray-3, 0.6);
-  text-align: right;
 }
