@@ -3,14 +3,19 @@
 .button {
   @include transition;
   @include uppercase();
-  padding: 0.75em 1.2em;
-  background-color: $c-orange;
+  padding: 1.2em 1.4em;
+  background-color: $c-blue;
   display: flex;
   align-items: center;
   border-radius: $border-radius;
+  color: $c-white;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  min-width: 76px;
+  justify-content: center;
+  text-align: center;
 
   &:hover {
-    background-color: $c-orange-hover;
+    background-color: $c-blue-hover;
   }
 
   div + span,
@@ -52,10 +57,15 @@
   color: $c-gray-6;
   background-color: transparent;
   padding: 0;
+  box-shadow: none;
 
   &:hover {
     color: $c-gray-3;
     transform: translateY(-1px);
     background-color: transparent;
   }
+}
+
+.style--fullwidth {
+  width: 100%;
 }
