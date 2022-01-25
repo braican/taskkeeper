@@ -15,6 +15,7 @@
 
 .advance,
 .retreat,
+.done,
 .trash {
   @include transition();
   padding: 6px;
@@ -24,7 +25,8 @@
   align-items: center;
   justify-content: center;
   background-color: $c-light-blue;
-  margin-left: 4px;
+  margin-left: 6px;
+  border-radius: $border-radius;
 
   svg {
     max-height: 20px;
@@ -35,16 +37,17 @@
   }
 }
 
-.advance {
+.advance,
+.done {
   color: $c-green;
-
-  svg {
-    height: 16px;
-  }
 }
 
 .retreat {
   color: $c-gray-6;
+}
+
+.done svg {
+  height: 16px;
 }
 
 .trash {
@@ -57,18 +60,27 @@
 
 .deleteModal {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   align-items: center;
   position: absolute;
   background-color: $c-red;
   bottom: $spacing / 2;
   right: $spacing / 2;
+  top: $spacing / 2;
+  left: $spacing / 2;
   box-shadow: 1px 1px 6px rgba($c-gray-3, 0.4);
   padding: $spacing / 2;
-  font-size: $fs-sm;
   color: $c-white;
+  text-align: center;
+  font-size: 0.8rem;
+
+  > p {
+    width: 100%;
+  }
 
   > button {
     color: $c-white;
-    margin-left: $spacing / 2;
+    margin: $spacing / 2;
   }
 }

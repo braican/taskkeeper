@@ -1,4 +1,6 @@
 .App {
+  border-top: 4px solid $c-blue;
+
   @include large-screens {
     padding-left: calc(#{$avatar-size} + #{$spacing});
   }

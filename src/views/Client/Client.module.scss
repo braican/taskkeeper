@@ -10,7 +10,6 @@
 // -----------
 
 .header {
-  border-top: 4px solid $c-blue;
   padding: $spacing * 2 calc(#{$spacing * 2} + #{$avatar-size}) $spacing $spacing;
 
   @include large-screens {
@@ -30,7 +29,6 @@
   background-color: $c-white;
   z-index: 2;
   width: 100%;
-  height: calc(#{$spacing * 2} + #{$avatar-size});
 
   &.fixedHeaderShow {
     transform: translateY(0);
@@ -72,7 +70,7 @@
 }
 
 .tasks {
-  background-color: $c-light-blue;
+  background-color: $c-light-bg;
   flex: 2;
 }
 

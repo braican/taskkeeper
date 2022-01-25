@@ -86,7 +86,7 @@ const Actions = ({ task, message }) => {
           <button type="button" className={styles.retreat} title="Back" onClick={retreatTask}>
             <Icon viewBox="0 0 20 20" icon="cheveron-left" />
           </button>
-          <button type="button" className={styles.advance} title="Done" onClick={advanceTask}>
+          <button type="button" className={styles.done} title="Done" onClick={advanceTask}>
             <Icon viewBox="0 0 20 20" icon="checkmark" />
           </button>
         </>
@@ -100,7 +100,7 @@ const Actions = ({ task, message }) => {
 
       {showDeleteModal && (
         <div className={styles.deleteModal}>
-          <p>Are you sure?</p>
+          <p>Are you sure you want to delete this task?</p>
           <Button type="button" style="warning" onClick={removeTask}>
             Yes
           </Button>

@@ -26,6 +26,10 @@ const Client = () => {
     return <p>Loading...</p>;
   }
 
+  const estimatedTasks = clientTasks.filter(t => t.status === TASK_STATUS.estimated);
+  const todoTasks = clientTasks.filter(t => t.status === TASK_STATUS.todo);
+  const completedTasks = clientTasks.filter(t => t.status === TASK_STATUS.completed);
+
   return (
     <div className={styles.clientWrap}>
       <header className={styles.header}>
@@ -54,9 +58,21 @@ const Client = () => {
               <p>Nothing going on here.</p>
             ) : (
               <>
-                <TaskList headline="Estimated" status={TASK_STATUS.estimated} />
-                <TaskList headline="To do" status={TASK_STATUS.todo} />
-                <TaskList headline="Completed" status={TASK_STATUS.completed} />
+                {estimatedTasks.length > 0 && (
+                  <Section headline="Estimated">
+                    <TaskList tasks={estimatedTasks} />
+                  </Section>
+                )}
+                {todoTasks.length > 0 && (
+                  <Section headline="To do">
+                    <TaskList tasks={todoTasks} />
+                  </Section>
+                )}
+                {completedTasks.length > 0 && (
+                  <Section headline="Completed">
+                    <TaskList tasks={completedTasks} />
+                  </Section>
+                )}
               </>
             )}
           </Block>
