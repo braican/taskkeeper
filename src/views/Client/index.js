@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useInView } from 'react-intersection-observer';
 import classnames from 'classnames';
 
-import { useClients, useTasks } from 'hooks';
+import { useClients, useTasks, useInvoices } from 'hooks';
 import { NewInvoiceProvider } from 'providers';
 
 import Block from 'components/ui/Block';
@@ -20,9 +20,12 @@ import styles from './Client.module.scss';
 const Client = () => {
   const { client } = useClients();
   const { clientTasks } = useTasks();
+  const { clientInvoices } = useInvoices();
   const { ref, inView, entry } = useInView({
     threshold: 0,
   });
+
+  console.log(clientInvoices);
 
   if (!client) {
     return <p>Loading...</p>;
@@ -60,7 +63,7 @@ const Client = () => {
               {clientTasks.length === 0 ? (
                 <p>Nothing going on here.</p>
               ) : (
-                <>
+                <div className={styles.taskGroups}>
                   {estimatedTasks.length > 0 && (
                     <Section headline="Estimated">
                       <TaskList tasks={estimatedTasks} />
@@ -76,7 +79,7 @@ const Client = () => {
                       <TaskList tasks={completedTasks} selectable />
                     </Section>
                   )}
-                </>
+                </div>
               )}
 
               {completedTasks.length > 0 && (
@@ -88,13 +91,13 @@ const Client = () => {
           </NewInvoiceProvider>
         </main>
 
-        <aside className={styles.aside}>
+        {/* <aside className={styles.aside}>
           <Block>
             <Section headline="Past Invoices" className={styles.invoiceSection}>
               <InvoiceList />
             </Section>
           </Block>
-        </aside>
+        </aside> */}
       </section>
     </div>
   );

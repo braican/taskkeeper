@@ -90,6 +90,7 @@ const Task = ({ task, selectable = false }) => {
           tagName="p"
           onFocus={handleFocus}
           onBlur={handleDescriptionBlur}
+          disabled={isSelected}
         />
 
         <div className={styles.priceWrap}>
@@ -105,6 +106,7 @@ const Task = ({ task, selectable = false }) => {
               onFocus={handleFocus}
               onBlur={handlePriceBlur}
               className={styles.priceInput}
+              disabled={isSelected}
             />
           )}
         </div>
@@ -126,6 +128,7 @@ const Task = ({ task, selectable = false }) => {
               onFocus={handleFocus}
               onBlur={handleHoursBlur}
               className={styles.hours}
+              disabled={isSelected}
             />
           </div>
         )}

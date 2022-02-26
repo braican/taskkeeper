@@ -40,3 +40,9 @@
     @content;
   }
 }
+
+@mixin small-screens() {
+  @include mq($bp-large, max) {
+    @content;
+  }
+}

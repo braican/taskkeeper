@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { useNewInvoice, useAuth, useClients } from 'hooks';
+import { useNewInvoice, useAuth, useClients, useTasks } from 'hooks';
 
 import Button from 'components/ui/Button';
 import FormModal from 'components/elements/FormModal';
@@ -13,13 +13,9 @@ import { INVOICE_STATUS } from 'constants.js';
 const CreateInvoice = () => {
   const today = toDateInputValue();
   const net30 = toDateInputValue(addDays(30, new Date(today)));
-  const {
-    isInvoicing,
-    setIsInvoicing,
-    removeAllTasks,
-    invoiceTotal,
-    invoicedTasks,
-  } = useNewInvoice();
+  const { isInvoicing, setIsInvoicing, removeAllTasks, invoiceTotal, invoicedTasks } =
+    useNewInvoice();
+
   const [description, setDescription] = useState('');
   const [invoiceId, setInvoiceId] = useState('');
   const [issueDate, setIssueDate] = useState(today);
