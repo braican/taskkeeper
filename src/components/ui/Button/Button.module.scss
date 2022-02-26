@@ -22,7 +22,7 @@
   svg + span,
   span + svg,
   span + span {
-    margin-left: $spacing / 2;
+    margin-left: $spacing * 0.5;
   }
 }
 
