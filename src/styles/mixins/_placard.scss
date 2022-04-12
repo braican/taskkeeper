@@ -1,4 +1,10 @@
 @mixin placard {
+  display: block;
   box-shadow: $box-shadow;
   border-radius: $border-radius;
+  background-color: $c-white;
+  padding: $spacing-lg;
+  color: inherit;
+  text-decoration: none;
+  border: 1px solid rgba(0,0,0,.05);
 }

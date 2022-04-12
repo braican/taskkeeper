@@ -1,7 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useInView } from 'react-intersection-observer';
-import classnames from 'classnames';
 
 import { useClients, useTasks, useInvoices } from 'hooks';
 import { NewInvoiceProvider } from 'providers';
@@ -21,9 +19,6 @@ const Client = () => {
   const { client } = useClients();
   const { clientTasks } = useTasks();
   const { clientInvoices } = useInvoices();
-  const { ref, inView, entry } = useInView({
-    threshold: 0,
-  });
 
   console.log(clientInvoices);
 
@@ -44,60 +39,46 @@ const Client = () => {
         <h2 className={styles.name}>{client.name}</h2>
       </header>
 
-      <header
-        className={classnames(styles.fixedHeader, entry && !inView && styles.fixedHeaderShow)}>
-        <Link to="/dashboard" className={styles.backToDash}>
-          &larr; Dash
-        </Link>
-        <h2 className={styles.fixedName}>{client.name}</h2>
-      </header>
-
-      <section className={styles.main}>
+      <section className={styles.layout}>
         <main className={styles.tasks}>
           <NewInvoiceProvider>
             <Block>
-              <div className={styles.addTask} ref={ref}>
-                <AddTask />
-              </div>
-
-              {clientTasks.length === 0 ? (
-                <p>Nothing going on here.</p>
-              ) : (
-                <div className={styles.taskGroups}>
-                  {estimatedTasks.length > 0 && (
-                    <Section headline="Estimated">
-                      <TaskList tasks={estimatedTasks} />
-                    </Section>
-                  )}
-                  {todoTasks.length > 0 && (
-                    <Section headline="To do">
-                      <TaskList tasks={todoTasks} />
-                    </Section>
-                  )}
-                  {completedTasks.length > 0 && (
-                    <Section headline="Completed">
-                      <TaskList tasks={completedTasks} selectable />
-                    </Section>
-                  )}
+              <Section headline="Tasks">
+                <div className={styles.addTask}>
+                  <AddTask />
                 </div>
-              )}
 
-              {completedTasks.length > 0 && (
-                <div className={styles.createInvoice}>
-                  <CreateInvoice />
-                </div>
-              )}
+                {clientTasks.length === 0 ? (
+                  <p>Nothing going on here.</p>
+                ) : (
+                  <div className={styles.taskGroups}>
+                    {estimatedTasks.length > 0 && (
+                      <TaskList headline="Estimated" tasks={estimatedTasks} />
+                    )}
+                    {todoTasks.length > 0 && <TaskList headline="To do" tasks={todoTasks} />}
+                    {completedTasks.length > 0 && (
+                      <TaskList headline="Completed" tasks={completedTasks} selectable />
+                    )}
+                  </div>
+                )}
+
+                {completedTasks.length > 0 && (
+                  <div className={styles.createInvoice}>
+                    <CreateInvoice />
+                  </div>
+                )}
+              </Section>
             </Block>
           </NewInvoiceProvider>
         </main>
 
-        {/* <aside className={styles.aside}>
+        <aside className={styles.aside}>
           <Block>
             <Section headline="Past Invoices" className={styles.invoiceSection}>
               <InvoiceList />
             </Section>
           </Block>
-        </aside> */}
+        </aside>
       </section>
     </div>
   );

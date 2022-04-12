@@ -3,8 +3,8 @@
 
 .dash {
   display: flex;
+  flex: 1;
   flex-direction: column;
-  min-height: 100vh;
 
   @include large-screens {
     flex-direction: row-reverse;
@@ -14,7 +14,6 @@
 .main {
   align-self: stretch;
   flex: 1;
-  background-color: $c-light-bg;
 }
 
 .overview {
@@ -26,9 +25,5 @@
 }
 
 .greeting {
-  font-size: $fs-lg;
-}
-
-.addClient {
-  margin-bottom: $spacing * 2;
+  font-size: $fs-xxl;
 }

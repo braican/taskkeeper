@@ -4,8 +4,9 @@ import Task from 'components/elements/Task';
 
 import styles from './TaskList.module.scss';
 
-const TaskList = ({ tasks, selectable = false }) => (
+const TaskList = ({ tasks, headline = '', selectable = false }) => (
   <div className={styles.taskWrap}>
+    {headline && <h3 className={styles.headline}>{headline}</h3>}
     <ul className={styles.tasklist}>
       {tasks.map(task => (
         <li className={styles.task} key={task.id}>
@@ -18,6 +19,7 @@ const TaskList = ({ tasks, selectable = false }) => (
 
 TaskList.propTypes = {
   tasks: PropTypes.array,
+  headline: PropTypes.string,
   selectable: PropTypes.bool,
 };
 

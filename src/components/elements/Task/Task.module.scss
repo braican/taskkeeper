@@ -2,23 +2,17 @@
 
 .task {
   @include transition(border-top-color);
-  @include top-rule;
   @include placard;
   background-color: $c-white;
   padding: $spacing;
   position: relative;
   margin-top: $spacing;
   overflow: hidden;
-  max-width: 520px;
-
-  @include large-screens {
-    margin-bottom: $spacing;
-    margin-top: 0;
-  }
+  border-top: 2px solid transparent;
 
   &:focus-within,
   &:hover {
-    border-top-color: rgba($c-blue, 0.6);
+    border-top-color: $c-blue;
   }
 
   &:after {
@@ -38,7 +32,6 @@
     font-family: inherit;
     font-weight: inherit;
     font-style: inherit;
-    font-size: inherit;
   }
 }
 
@@ -83,14 +76,25 @@
 
 // Inputs
 
+$input-font-size: 1.1rem;
+
+.description,
+.hours,
+.price,
+.priceInput,
+.priceEditable {
+  padding: 8px;
+  line-height: 1.5;
+  font-size: $input-font-size;
+  background-color: $c-white;
+}
+
 .description,
 .hours,
 .priceInput,
 .priceEditable {
   @include transition(border-color);
-  padding: 6px;
   border: 1px dashed transparent;
-  background-color: $c-white;
 
   .task:hover &:not(:focus) {
     border-color: $c-gray-e;
@@ -111,18 +115,20 @@
 .description {
   position: relative;
   left: -7px;
-  margin-right: $spacing * 0.5;
-  line-height: 1.5;
+  margin-right: $spacing;
 }
 
 .priceWrap {
   position: relative;
 }
-.price {
+
+.price,
+.priceInput {
   text-align: right;
+}
+
+.price {
   font-weight: $fw-bold;
-  padding: 6px;
-  line-height: 1.5;
 }
 
 .priceInput {
@@ -130,9 +136,7 @@
   top: 0;
   right: 0;
   width: 100%;
-  text-align: right;
   opacity: 0;
-  line-height: 1.5;
 
   &:focus {
     opacity: 1;
@@ -160,7 +164,7 @@
   @include uppercase;
   font-size: $fs-sm;
   margin-right: 4px;
-  color: $c-gray-3;
+  color: $c-gray-6;
 }
 .hours {
   max-width: 3rem;

@@ -6,16 +6,18 @@ $c-gray-c: #ccc;
 $c-gray-9: #999;
 $c-gray-6: #666666;
 $c-gray-3: #333;
+$c-black: #080F0F;
 
-$c-light-blue: #f3f6fc;
-$c-blue: rgb(90, 130, 241);
+$c-blue: #3677dd;
+$c-blue-background: rgba($c-blue, 0.3);
 $c-blue-hover: darken($c-blue, 8%);
 
 $c-gray-transparent: rgba($c-gray-3, 0.04);
 
-$c-orange: #ffcc93;
+$c-orange: #F5B700;
+$c-orange-hover: darken($c-orange, 8%);
 
-$c-green: #0ebb2c;
+$c-green: #55917F;
 $c-green-hover: darken($c-green, 8%);
 
 $c-red: #c00;

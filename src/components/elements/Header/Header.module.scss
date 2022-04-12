@@ -1,23 +1,19 @@
 @import '../../../styles/mixins/_index';
 @import '../../../styles/vars/_index';
 
+$avatar-size: 56px;
+
 .header {
   display: flex;
-  flex-direction: column;
-  position: fixed;
+  flex: 0 0 auto;
   justify-content: space-between;
-  top: 0;
-  right: 0;
-  padding: $spacing * 0.5;
+  padding: $spacing;
   align-items: center;
-  width: calc(#{$avatar-size} + #{$spacing});
-  z-index: 3;
+  position: relative;
 
   @include large-screens {
     background-color: $c-blue;
-    bottom: 0;
-    left: 0;
-    right: auto;
+    flex-direction: column;
   }
 }
 
@@ -26,6 +22,9 @@
   overflow: hidden;
   width: $avatar-size;
   height: $avatar-size;
+  border: 1px solid $c-white;
+  position: relative;
+  z-index: 11;
 
   img {
     width: 100%;
@@ -34,14 +33,13 @@
 }
 
 .appname {
-  display: none;
-  color: $c-white;
   font-weight: $fw-bold;
   font-size: $fs-lg;
-  transform: translate(0, -200%) rotate(-90deg);
 
   @include large-screens {
-    display: block;
+    transform: rotate(-90deg);
+    width: 0;
+    color: $c-white;
   }
 }
 
@@ -50,16 +48,14 @@
 
 .utility {
   position: fixed;
-  top: $spacing;
-  right: calc(#{$avatar-size} + #{$spacing * 2});
+  top: 0;
+  left: 0;
+  bottom: 0;
   background-color: $c-gray-3;
   padding: $spacing;
   color: $c-white;
-
-  @include large-screens {
-    left: calc(#{$avatar-size} + #{$spacing * 3});
-    right: auto;
-  }
+  z-index: 10;
+  padding-top: calc(#{$avatar-size} + #{$spacing-lg});
 }
 
 .userMeta {

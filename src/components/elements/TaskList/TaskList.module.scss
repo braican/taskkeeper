@@ -1,7 +1,10 @@
 @import '../../../styles/abstracts';
 
+.taskWrap {
+  margin-top: $spacing-xl;
+  max-width: 560px;
+}
+
 .headline {
-  font-weight: $fw-bold;
-  font-size: $fs-lg;
-  color: rgba($c-gray-3, 0.6);
+  @include headline;
 }

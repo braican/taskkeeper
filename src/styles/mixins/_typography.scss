@@ -1,0 +1,16 @@
+@mixin uppercase($font-size: $fs-sm) {
+  text-transform: uppercase;
+  line-height: 1;
+  font-weight: $fw-bold;
+  font-size: $font-size;
+  letter-spacing: 0.04em;
+}
+
+@mixin headline {
+  @include uppercase($ff-base);
+  color: rgba($c-blue, .5);
+  margin-top: $spacing;
+  margin-bottom: $spacing-lg;
+  padding-bottom: $spacing-sm;
+  border-bottom: 2px solid currentColor;
+}

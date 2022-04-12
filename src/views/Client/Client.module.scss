@@ -1,44 +1,19 @@
 @import '../../styles/abstracts';
 
 .clientWrap {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+  flex: 1;
 }
 
 // headers
 // -----------
 
 .header {
-  padding: $spacing * 2 calc(#{$spacing * 2} + #{$avatar-size}) $spacing $spacing;
+  padding: $spacing;
+  padding-bottom: $spacing-lg;
 
   @include large-screens {
-    border-top: 0;
-    padding: $spacing * 2;
+    padding: $spacing-lg;
   }
-}
-
-.fixedHeader {
-  @include transition(transform);
-  display: flex;
-  align-items: center;
-  padding: $spacing;
-  position: fixed;
-  top: 0;
-  transform: translateY(-100%);
-  background-color: $c-white;
-  z-index: 2;
-  width: 100%;
-
-  &.fixedHeaderShow {
-    transform: translateY(0);
-    box-shadow: 0 1px 8px rgba($c-gray-3, 0.1);
-  }
-}
-
-.fixedName {
-  font-weight: $fw-bold;
-  margin-left: $spacing;
 }
 
 .backToDash {
@@ -51,33 +26,39 @@
   font-weight: $fw-bold;
   font-size: $fs-xxl;
   line-height: 1;
-  margin-top: 0.5em;
+  margin-top: $spacing-sm;
 }
 
 // Layout
 // -----------
 
-.aside {
+.layout {
+  @include large-screens {
+    display: flex;
+  }
+}
+.tasks {
   flex: 1;
 }
 
-.tasks {
-  background-color: $c-light-bg;
-  flex: 2;
+.aside {
+  margin-top: $spacing-lg;
+  border-top: 2px solid $c-gray-f8;
+  padding-top: $spacing-lg;
+
+  @include large-screens {
+    min-width: 320px;
+    border-top: 0;
+    margin-top: 0;
+    padding-top: 0;
+    border-left: 2px solid $c-gray-f8;
+  }
 }
 
-.addTask {
-  margin-bottom: $spacing * 2;
+.createInvoice {
+  margin-top: $spacing-xl;
 }
 
 .invoiceSection {
-  margin-top: $spacing * 2;
-}
-
-.taskGroups {
-  @include large-screens {
-    display: grid;
-    grid-gap: $spacing;
-    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
-  }
+  min-height: 220px;
 }

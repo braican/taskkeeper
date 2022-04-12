@@ -52,7 +52,7 @@ const CreateInvoice = () => {
 
   if (isInvoicing === false) {
     return (
-      <Button style="fullwidth" onClick={() => setIsInvoicing(true)}>
+      <Button style={['fullwidth', 'green']} onClick={() => setIsInvoicing(true)}>
         Create an Invoice
       </Button>
     );
