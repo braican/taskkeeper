@@ -1,19 +1,29 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
+import { useAuth, useInvoices } from 'hooks';
 
 import Button from '../../ui/Button';
 import Icon from '../../ui/Icon';
 
+import { INVOICE_STATUS } from 'constants.js';
+
 import styles from './ActiveInvoice.module.scss';
 
 const ActiveInvoice = ({ invoice }) => {
+  const { post } = useAuth();
+  const { updateInvoice } = useInvoices();
   const [showTasks, setShowTasks] = useState(false);
 
   const hours = invoice.tasks.reduce(
     (total, { hours }) => (hours ? parseFloat(hours) + total : total),
     0,
   );
+
+  const markAsPaid = () =>
+    post('updateInvoice', { ...invoice, status: INVOICE_STATUS.paid }).then(({ invoice }) =>
+      updateInvoice(invoice),
+    );
 
   return (
     <article className={styles.invoice}>
@@ -66,7 +76,9 @@ const ActiveInvoice = ({ invoice }) => {
       )}
 
       <div className={styles.action}>
-        <Button style={['fullwidth', 'orange']}>Paid</Button>
+        <Button style={['fullwidth', 'orange']} onClick={markAsPaid}>
+          Paid
+        </Button>
       </div>
     </article>
   );

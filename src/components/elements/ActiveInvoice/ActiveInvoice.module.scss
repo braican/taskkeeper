@@ -74,7 +74,7 @@
 
 .task {
   display: grid;
-  grid-template-columns: 1fr 60px 72px;
+  grid-template-columns: 1fr 58px 58px;
   gap: $spacing;
 
   + .task {

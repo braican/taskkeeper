@@ -12,8 +12,9 @@ $avatar-size: 56px;
   position: relative;
 
   @include large-screens {
+    box-sizing: content-box;
     background-color: $c-blue;
-    flex-direction: column;
+    width: $avatar-size;
   }
 }
 
@@ -26,6 +27,12 @@ $avatar-size: 56px;
   position: relative;
   z-index: 11;
 
+  @include large-screens {
+    position: fixed;
+    top: $spacing;
+    left: $spacing;
+  }
+
   img {
     width: 100%;
     display: block;
@@ -37,9 +44,12 @@ $avatar-size: 56px;
   font-size: $fs-lg;
 
   @include large-screens {
-    transform: rotate(-90deg);
-    width: 0;
+    transform: rotate(-90deg) translate(0, 100%);
+    transform-origin: left;
     color: $c-white;
+    position: fixed;
+    bottom: $spacing;
+    left: $spacing;
   }
 }
 

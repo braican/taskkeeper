@@ -1,6 +1,10 @@
 @import '../../styles/mixins/_index';
 @import '../../styles/vars/_index';
 
+.dashboard {
+  width: 100%;
+}
+
 .dash {
   display: flex;
   flex: 1;

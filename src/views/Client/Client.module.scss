@@ -41,6 +41,13 @@
   flex: 1;
 }
 
+.addTask {
+  margin-bottom: $spacing-xl;
+}
+.noTasks {
+  font-size: $fs-lg;
+}
+
 .aside {
   margin-top: $spacing-lg;
   border-top: 2px solid $c-gray-f8;

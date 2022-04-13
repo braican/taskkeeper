@@ -39,10 +39,12 @@ const Client = () => {
       </header>
 
       {clientInvoices.length > 0 && (
-        <Block className={styles.activeInvoices}>
-          {clientInvoices.map(invoice => (
-            <ActiveInvoice key={invoice.id} invoice={invoice} />
-          ))}
+        <Block>
+          <Section headline="Active Invoices" className={styles.activeInvoices}>
+            {clientInvoices.map(invoice => (
+              <ActiveInvoice key={invoice.id} invoice={invoice} />
+            ))}
+          </Section>
         </Block>
       )}
 
@@ -56,7 +58,7 @@ const Client = () => {
                 </div>
 
                 {clientTasks.length === 0 ? (
-                  <p>Nothing going on here.</p>
+                  <p className={styles.noTasks}>Nothing going on here.</p>
                 ) : (
                   <div className={styles.taskGroups}>
                     {estimatedTasks.length > 0 && (
