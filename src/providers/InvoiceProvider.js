@@ -14,13 +14,25 @@ const InvoiceProvider = ({ children }) => {
         const { invoices } = yield post('getInvoices');
         setInvoices(invoices);
         setFetched(true);
-      }, 'taskFetch');
+      }, 'invoiceFetch');
 
       return () => {
         cancelFetch();
       };
     }
   }, []);
+
+  /**
+   * Add a new invoice to state.
+   *
+   * @param {object} newInvoice The new invoice.
+   *
+   * @return void
+   */
+  const addInvoice = newInvoice => {
+    const newInvoices = [...invoices, newInvoice];
+    setInvoices(newInvoices);
+  };
 
   /**
    * Update an invoice in state.
@@ -37,7 +49,7 @@ const InvoiceProvider = ({ children }) => {
   };
 
   return (
-    <InvoiceContext.Provider value={{ invoices, updateInvoice }}>
+    <InvoiceContext.Provider value={{ invoices, updateInvoice, addInvoice }}>
       {children}
     </InvoiceContext.Provider>
   );

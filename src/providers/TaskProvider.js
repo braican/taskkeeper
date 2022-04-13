@@ -22,6 +22,13 @@ const TaskProvider = ({ children }) => {
     }
   }, []);
 
+  /**
+   * Add a new task.
+   *
+   * @param {object} newTask The task to add.
+   *
+   * @return void
+   */
   const addTask = newTask => {
     const newTasks = [...tasks, newTask];
     setTasks(newTasks);
@@ -56,8 +63,20 @@ const TaskProvider = ({ children }) => {
     }
   };
 
+  /**
+   * Removes a list of tasks.
+   *
+   * @param {array} taskIds List of task IDs.
+   *
+   * @return void
+   */
+  const removeTasks = taskIds => {
+    const newTasks = [...tasks].filter(({ id }) => taskIds.indexOf(id) === -1);
+    setTasks(newTasks);
+  };
+
   return (
-    <TaskContext.Provider value={{ tasks, addTask, updateTask, deleteTask }}>
+    <TaskContext.Provider value={{ tasks, addTask, updateTask, deleteTask, removeTasks }}>
       {children}
     </TaskContext.Provider>
   );

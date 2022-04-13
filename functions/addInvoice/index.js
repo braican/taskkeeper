@@ -4,6 +4,13 @@ const q = faunadb.query;
 const addInvoice = async ({ secret, invoice }) => {
   const faunaClient = new faunadb.Client({ secret });
 
+  await faunaClient.query(
+    q.Map(
+      invoice.tasks.map(({ id }) => id),
+      q.Lambda('id', q.Delete(q.Ref(q.Collection('Task'), q.Var('id')))),
+    ),
+  );
+
   const newInvoice = await faunaClient.query(
     q.Create(q.Collection('Invoice'), {
       data: {

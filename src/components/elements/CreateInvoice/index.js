@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-
-import { useNewInvoice, useAuth, useClients, useTasks } from 'hooks';
+import { useNewInvoice, useInvoices, useAuth, useClients, useTasks } from 'hooks';
 
 import Button from 'components/ui/Button';
 import FormModal from 'components/elements/FormModal';
@@ -10,11 +9,15 @@ import { toDateInputValue, addDays } from 'util/index';
 
 import { INVOICE_STATUS } from 'constants.js';
 
+import styles from './CreateInvoice.module.scss';
+
 const CreateInvoice = () => {
   const today = toDateInputValue();
   const net30 = toDateInputValue(addDays(30, new Date(today)));
   const { isInvoicing, setIsInvoicing, removeAllTasks, invoiceTotal, invoicedTasks } =
     useNewInvoice();
+  const { removeTasks } = useTasks();
+  const { addInvoice } = useInvoices();
 
   const [description, setDescription] = useState('');
   const [invoiceId, setInvoiceId] = useState('');
@@ -31,20 +34,22 @@ const CreateInvoice = () => {
       return;
     }
 
-    post('addInvoice', {
-      invoice: {
-        description,
-        total: invoiceTotal,
-        status: INVOICE_STATUS.active,
-        issued: issueDate,
-        due: dueDate,
-        client: client.id,
-        rate: client.rate,
-        tasks: invoicedTasks,
-      },
-    })
+    const invoice = {
+      description,
+      invoiceId,
+      total: invoiceTotal,
+      status: INVOICE_STATUS.active,
+      issued: issueDate,
+      due: dueDate,
+      client: client.id,
+      rate: client.rate,
+      tasks: invoicedTasks,
+    };
+
+    post('addInvoice', { invoice })
       .then(({ invoice }) => {
-        console.log(invoice);
+        removeTasks(invoicedTasks.map(({ id }) => id));
+        addInvoice(invoice);
         setIsInvoicing(false);
       })
       .catch(console.error);
@@ -68,7 +73,7 @@ const CreateInvoice = () => {
         setDueDate(net30);
         removeAllTasks();
       }}>
-      <span>${invoiceTotal}</span>
+      <span className={styles.total}>${invoiceTotal}</span>
 
       <FormInput
         label="Invoice ID"

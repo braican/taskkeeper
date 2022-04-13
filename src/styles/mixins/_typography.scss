@@ -7,7 +7,7 @@
 }
 
 @mixin headline {
-  @include uppercase($ff-base);
+  @include uppercase($fs-base);
   color: rgba($c-blue, .5);
   margin-top: $spacing;
   margin-bottom: $spacing-lg;

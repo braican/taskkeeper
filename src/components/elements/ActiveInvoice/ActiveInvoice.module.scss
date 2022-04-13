@@ -1,0 +1,90 @@
+@import '../../../styles/abstracts';
+
+.invoice {
+  background-color: lighten($c-orange, 38%);
+  padding: $spacing;
+  border-radius: $border-radius-full;
+  display: grid;
+  gap: $spacing;
+  grid-template-columns: 1fr 1fr;
+  font-size: 1.1rem;
+  margin-bottom: $spacing-lg;
+
+  @include large-screens {
+    padding: $spacing-lg;
+  }
+}
+
+.label {
+  @include uppercase(.8rem);
+  margin-top: $spacing;
+}
+
+.meta {
+  grid-row: 1 / span 2;
+}
+
+.total {
+  font-size: 2rem;
+  font-weight: $fw-bold;
+  display: block;
+}
+
+.description {
+  align-self: end;
+}
+
+.descriptionText {
+  margin-bottom: $spacing;
+}
+
+.action {
+  padding-top: $spacing-sm;
+  grid-column: 1 / span 2;
+  align-self: end;
+}
+
+// Tasks
+// -----------
+
+.taskToggle svg {
+  @include transition(transform);
+
+}
+.taskToggleFlipped svg{
+  transform: scale(-1);
+}
+
+.tasks {
+  padding: $spacing;
+  grid-column: 1 / span 2;
+  margin-left: -$spacing;
+  margin-right: -$spacing;
+  background-color: lighten($c-orange, 48%);
+  font-size: $fs-sm;
+  border-left: 1px solid rgba($c-gray-3, .1);
+  border-right: 1px solid rgba($c-gray-3, .1);
+
+  @include large-screens {
+    padding: $spacing $spacing-lg;
+    margin-left: -$spacing-lg;
+    margin-right: -$spacing-lg;
+  }
+}
+
+.task {
+  display: grid;
+  grid-template-columns: 1fr 60px 72px;
+  gap: $spacing;
+
+  + .task {
+    padding-top: $spacing-sm;
+    margin-top: $spacing-sm;
+    border-top: 1px solid rgba($c-gray-3, .1);
+  }
+}
+
+.taskTotal {
+  text-align: right;
+}
+

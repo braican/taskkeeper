@@ -12,20 +12,7 @@
 
   &:focus-within,
   &:hover {
-    border-top-color: $c-blue;
-  }
-
-  &:after {
-    @include transition();
-    content: '';
-    display: block;
-    height: 2px;
-    top: 0;
-    left: 0;
-    right: 0;
-    background-color: $c-green;
-    position: absolute;
-    transform: translateY(-2px);
+    border-top-color: $c-orange;
   }
 
   input {

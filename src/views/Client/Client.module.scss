@@ -62,3 +62,16 @@
 .invoiceSection {
   min-height: 220px;
 }
+
+// Invoices
+// -----------
+
+.activeInvoices {
+  gap: $spacing;
+
+  @include mq(700px) {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+    align-items: start;
+  }
+}

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classnames from 'classnames';
 
 import styles from './Icon.module.scss';
 
@@ -11,20 +12,20 @@ import styles from './Icon.module.scss';
  *
  * @return jsx
  */
-const Icon = ({ label = '', viewBox = '0 0 20 20', icon, inline = false }) => (
-  <div className={inline ? styles.inline : ''}>
+const Icon = ({ label = '', viewBox = '0 0 20 20', icon, inline = false, className = '' }) => (
+  <span className={classnames(inline ? styles.inline : '', className)}>
     <svg className={styles.svg} viewBox={viewBox}>
       <use xlinkHref={`#icon-${icon}`}></use>
     </svg>
     {label && <span className={styles.label}>{label}</span>}
-  </div>
+  </span>
 );
-
 Icon.propTypes = {
   label: PropTypes.string,
   viewBox: PropTypes.string,
   icon: PropTypes.string.isRequired,
   inline: PropTypes.bool,
+  className: PropTypes.string,
 };
 
 export default Icon;

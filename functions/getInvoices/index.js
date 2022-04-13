@@ -12,7 +12,10 @@ const getInvoices = async secret => {
     );
 
     return result.data.map(
-      ({ ref, data: { description, total, status, issued, due, rate, tasks, client } }) => ({
+      ({
+        ref,
+        data: { description, total, status, issued, due, rate, tasks, client, invoiceId },
+      }) => ({
         description,
         total,
         status,
@@ -20,6 +23,7 @@ const getInvoices = async secret => {
         due,
         rate,
         tasks,
+        invoiceId,
         client: client.id,
         id: ref.id,
       }),
@@ -40,11 +44,11 @@ const handler = async ({ body }) => {
     const data = JSON.parse(body);
     const { secret } = data;
 
-    const tasks = await getInvoices(secret);
+    const invoices = await getInvoices(secret);
 
     return {
       statusCode: 200,
-      body: JSON.stringify({ tasks }),
+      body: JSON.stringify({ invoices }),
     };
   } catch (error) {
     return { statusCode: 500, body: error.toString() };

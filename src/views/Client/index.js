@@ -10,6 +10,7 @@ import AddTask from 'components/elements/AddTask';
 import CreateInvoice from 'components/elements/CreateInvoice';
 import TaskList from 'components/elements/TaskList';
 import InvoiceList from 'components/elements/InvoiceList';
+import ActiveInvoice from 'components/elements/ActiveInvoice';
 
 import { TASK_STATUS } from 'constants.js';
 
@@ -19,8 +20,6 @@ const Client = () => {
   const { client } = useClients();
   const { clientTasks } = useTasks();
   const { clientInvoices } = useInvoices();
-
-  console.log(clientInvoices);
 
   if (!client) {
     return <p>Loading...</p>;
@@ -38,6 +37,14 @@ const Client = () => {
         </Link>
         <h2 className={styles.name}>{client.name}</h2>
       </header>
+
+      {clientInvoices.length > 0 && (
+        <Block className={styles.activeInvoices}>
+          {clientInvoices.map(invoice => (
+            <ActiveInvoice key={invoice.id} invoice={invoice} />
+          ))}
+        </Block>
+      )}
 
       <section className={styles.layout}>
         <main className={styles.tasks}>
