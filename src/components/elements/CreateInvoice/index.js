@@ -5,7 +5,7 @@ import Button from 'components/ui/Button';
 import FormModal from 'components/elements/FormModal';
 import FormInput from 'components/ui/FormInput';
 
-import { toDateInputValue, addDays } from 'util/index';
+import { toDateInputValue, addDays, currencyFormatter } from 'util/index';
 
 import { INVOICE_STATUS } from 'constants.js';
 
@@ -30,7 +30,7 @@ const CreateInvoice = () => {
   const addInvoiceToDb = () => {
     if (invoicedTasks.length === 0) {
       // eslint-disable-next-line
-      console.warning('No tasks selected!');
+      console.warn('No tasks selected!');
       return;
     }
 
@@ -74,7 +74,7 @@ const CreateInvoice = () => {
         removeAllTasks();
       }}>
       <div className={styles.formGrid}>
-        <span className={styles.total}>${invoiceTotal}</span>
+        <span className={styles.total}>{currencyFormatter.format(invoiceTotal)}</span>
 
         <FormInput
           label="Invoice ID"

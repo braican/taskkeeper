@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { useAuth, useInvoices } from 'hooks';
+import { currencyFormatter } from 'util/index';
 
 import Button from '../../ui/Button';
 import Icon from '../../ui/Icon';
@@ -39,7 +40,7 @@ const ActiveInvoice = ({ invoice }) => {
         </dl>
       </div>
       <div>
-        <span className={styles.total}>${invoice.total}</span>
+        <span className={styles.total}>{currencyFormatter.format(invoice.total)}</span>
         <span className={styles.hours}>{hours} hours</span>
       </div>
       <div className={styles.description}>
