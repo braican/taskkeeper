@@ -1,0 +1,28 @@
+@import '../../../styles/abstracts';
+
+.headline {
+  @include headline;
+}
+
+.form {
+  padding: $spacing;
+  box-shadow: $box-shadow;
+  margin-bottom: $spacing * 4;
+  width: 100%;
+  border-radius: $border-radius-full;
+  background-color: $c-gray-transparent;
+  border: 1px solid rgba(0,0,0,.05);
+
+  @include large-screens {
+    padding: $spacing-lg;
+  }
+}
+
+.actions {
+  display: flex;
+  margin-top: $spacing * 2;
+
+  button + button {
+    margin-left: $spacing;
+  }
+}

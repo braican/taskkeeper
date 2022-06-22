@@ -1,0 +1,26 @@
+$c-white: #fff;
+$c-gray-fa: #fafafa;
+$c-gray-f8: #f8f8f8;
+$c-gray-e: #eee;
+$c-gray-c: #ccc;
+$c-gray-9: #999;
+$c-gray-6: #666666;
+$c-gray-3: #333;
+$c-black: #080F0F;
+
+$c-blue: #3677dd;
+$c-blue-background: rgba($c-blue, 0.3);
+$c-blue-hover: darken($c-blue, 8%);
+
+$c-gray-transparent: rgba($c-gray-3, 0.04);
+
+$c-orange: #F5B700;
+$c-orange-hover: darken($c-orange, 8%);
+
+$c-green: #55917F;
+$c-green-hover: darken($c-green, 8%);
+
+$c-red: #c00;
+
+// Spot.
+$c-light-bg: $c-gray-f8;

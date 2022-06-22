@@ -1,0 +1,56 @@
+@import '../../../styles/abstracts';
+
+.toggle {
+  display: flex;
+  align-items: center;
+}
+
+.input {
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  opacity: 0;
+  position: absolute;
+  visibility: hidden;
+}
+
+$toggle-size: 0.6rem;
+
+.track {
+  cursor: pointer;
+  box-sizing: content-box;
+  position: relative;
+  display: block;
+  width: $toggle-size * 2;
+  height: $toggle-size;
+  border-radius: $toggle-size * 2;
+  background-color: $c-gray-3;
+  border: 4px solid $c-gray-3;
+  margin: 0 $spacing * 0.5;
+
+  &:before {
+    @include transition();
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    width: $toggle-size;
+    height: $toggle-size;
+    background-color: $c-orange;
+    border-radius: 50%;
+
+    .input:checked + & {
+      transform: translateX($toggle-size);
+    }
+  }
+}
+
+.label {
+  @include transition();
+  @include uppercase();
+  opacity: 0.3;
+}
+.labelActive {
+  opacity: 1;
+}
