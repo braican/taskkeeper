@@ -4,30 +4,68 @@ const q = faunadb.query;
 const addInvoice = async ({ secret, invoice }) => {
   const faunaClient = new faunadb.Client({ secret });
 
-  await faunaClient.query(
-    q.Map(
-      invoice.tasks.map(({ id }) => id),
-      q.Lambda('id', q.Delete(q.Ref(q.Collection('Task'), q.Var('id')))),
-    ),
-  );
+  const modTasks = [...invoice.tasks].map(t => {
+    const newT = { ...t };
+    delete newT.uid;
+    delete newT.client;
+    return newT;
+  });
 
-  const newInvoice = await faunaClient.query(
-    q.Create(q.Collection('Invoice'), {
-      data: {
-        ...invoice,
-        client: q.Ref(q.Collection('Client'), invoice.client),
-        uid: q.CurrentIdentity(),
-      },
-    }),
-  );
+  const modInvoice = { ...invoice, tasks: modTasks };
 
-  return { ...newInvoice.data, id: newInvoice.ref.id, client: newInvoice.data.client.id };
+  try {
+    const newInvoice = await faunaClient.query(
+      q.Create(q.Collection('Invoice'), {
+        data: {
+          ...modInvoice,
+          client: q.Ref(q.Collection('Client'), invoice.client),
+          uid: q.CurrentIdentity(),
+        },
+      }),
+    );
+
+    return { ...newInvoice.data, id: newInvoice.ref.id, client: newInvoice.data.client.id };
+  } catch (error) {
+    return null;
+  }
+};
+
+const deleteTasks = async ({ secret, invoice }) => {
+  const faunaClient = new faunadb.Client({ secret });
+
+  try {
+    await faunaClient.query(
+      q.Map(
+        invoice.tasks.map(({ id }) => id),
+        q.Lambda('id', q.Delete(q.Ref(q.Collection('Task'), q.Var('id')))),
+      ),
+    );
+    return true;
+  } catch (error) {
+    return false;
+  }
 };
 
 const handler = async ({ body }) => {
   try {
     const data = JSON.parse(body);
     const newInvoice = await addInvoice(data);
+
+    if (newInvoice === null) {
+      return {
+        statusCode: 500,
+        body: 'NEW INVOICE IS NULL',
+      };
+    }
+
+    const deleteSuccess = await deleteTasks(data);
+
+    if (!deleteSuccess) {
+      return {
+        statusCode: 500,
+        body: 'DELETE SUCCESS FAILED',
+      };
+    }
 
     return {
       statusCode: 200,
