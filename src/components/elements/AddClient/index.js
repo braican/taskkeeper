@@ -28,6 +28,10 @@ const AddClient = () => {
       .then(({ client }) => {
         addClient(client);
         setFormActive(false);
+        setName('');
+        setKey('');
+        setRate('');
+        setAddress('');
       })
       .catch(console.error);
   };

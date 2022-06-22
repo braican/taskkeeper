@@ -39,6 +39,10 @@ const AddTask = () => {
       .then(({ task }) => {
         addTask(task);
         setFormActive(false);
+        setDescription('');
+        setPrice(0);
+        setHours(0);
+        setIsFixedPrice(false);
       })
       .catch(console.error);
   };

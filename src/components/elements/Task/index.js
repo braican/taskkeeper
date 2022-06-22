@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import ContentEditable from 'components/wrappers/WrappedContentEditable';
 import { useClients, useAuth, useTasks, useNewInvoice } from 'hooks';
+import { currencyFormatter } from 'util/index';
 
 import Actions from 'components/elements/Task/Actions';
 
@@ -96,7 +97,7 @@ const Task = ({ task, selectable = false }) => {
         <div className={styles.priceWrap}>
           <div
             className={classnames(styles.price, task.price !== undefined && styles.priceEditable)}>
-            ${price}
+            {currencyFormatter.format(price)}
           </div>
 
           {task.price !== undefined && (
@@ -153,7 +154,7 @@ const Task = ({ task, selectable = false }) => {
                 }
               }}
             />
-            <span>{isSelected ? 'Added!' : 'Add to invoice'}</span>
+            <span>{isSelected ? 'Added' : 'Add to invoice'}</span>
           </label>
         )}
       </div>

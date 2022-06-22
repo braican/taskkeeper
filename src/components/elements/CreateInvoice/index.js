@@ -73,38 +73,42 @@ const CreateInvoice = () => {
         setDueDate(net30);
         removeAllTasks();
       }}>
-      <span className={styles.total}>${invoiceTotal}</span>
+      <div className={styles.formGrid}>
+        <span className={styles.total}>${invoiceTotal}</span>
 
-      <FormInput
-        label="Invoice ID"
-        type="text"
-        value={invoiceId}
-        onChange={event => setInvoiceId(event.target.value)}
-      />
+        <FormInput
+          label="Invoice ID"
+          type="text"
+          value={invoiceId}
+          className={styles.id}
+          onChange={event => setInvoiceId(event.target.value)}
+        />
 
-      <FormInput
-        label="Issue Date"
-        type="date"
-        value={issueDate}
-        onChange={event => {
-          setIssueDate(event.target.value);
-          setDueDate(toDateInputValue(addDays(30, new Date(event.target.value))));
-        }}
-      />
+        <FormInput
+          label="Issue Date"
+          type="date"
+          value={issueDate}
+          onChange={event => {
+            setIssueDate(event.target.value);
+            setDueDate(toDateInputValue(addDays(30, new Date(event.target.value))));
+          }}
+        />
 
-      <FormInput
-        label="Due Date"
-        type="date"
-        value={dueDate}
-        onChange={event => setDueDate(event.target.value)}
-      />
+        <FormInput
+          label="Due Date"
+          type="date"
+          value={dueDate}
+          onChange={event => setDueDate(event.target.value)}
+        />
 
-      <FormInput
-        label="Description"
-        type="textarea"
-        value={description}
-        onChange={event => setDescription(event.target.value)}
-      />
+        <FormInput
+          label="Description"
+          type="textarea"
+          value={description}
+          className={styles.description}
+          onChange={event => setDescription(event.target.value)}
+        />
+      </div>
     </FormModal>
   );
 };

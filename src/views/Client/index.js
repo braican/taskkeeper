@@ -40,7 +40,7 @@ const Client = () => {
 
       {clientInvoices.length > 0 && (
         <Block>
-          <Section headline="Active Invoices" className={styles.activeInvoices}>
+          <Section headline="Invoices" className={styles.activeInvoices}>
             {clientInvoices.map(invoice => (
               <ActiveInvoice key={invoice.id} invoice={invoice} />
             ))}
@@ -61,13 +61,9 @@ const Client = () => {
                   <p className={styles.noTasks}>Nothing going on here.</p>
                 ) : (
                   <div className={styles.taskGroups}>
-                    {estimatedTasks.length > 0 && (
-                      <TaskList headline="Estimated" tasks={estimatedTasks} />
-                    )}
-                    {todoTasks.length > 0 && <TaskList headline="To do" tasks={todoTasks} />}
-                    {completedTasks.length > 0 && (
-                      <TaskList headline="Completed" tasks={completedTasks} selectable />
-                    )}
+                    <TaskList headline="Estimated" tasks={estimatedTasks} />
+                    <TaskList headline="To do" tasks={todoTasks} />
+                    <TaskList headline="Completed" tasks={completedTasks} selectable />
                   </div>
                 )}
 

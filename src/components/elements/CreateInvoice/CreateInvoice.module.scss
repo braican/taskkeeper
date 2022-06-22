@@ -1,8 +1,25 @@
 @import '../../../styles/abstracts';
 
+.formGrid {
+  @include mq(460px) {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+
+    > * {
+      margin: 0;
+    }
+  }
+}
+
 .total {
   font-size: $fs-xxl;
   font-weight: $fw-bold;
   display: block;
-  margin-bottom: $spacing;
+}
+
+.total,
+.description,
+.id {
+  grid-column-end: span 2;
 }

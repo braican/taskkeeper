@@ -10,3 +10,17 @@
     border-top-color: $c-blue;
   }
 }
+
+.listItem {
+  @include transition(all);
+  display: block;
+  color: inherit;
+  text-decoration: none;
+  border-top: 2px solid rgba($c-gray-c, .25);
+  padding: 1rem 0;
+
+  &:hover {
+    transform: translateY(-1px);
+  }
+}
+

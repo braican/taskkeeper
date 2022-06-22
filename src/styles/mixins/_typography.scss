@@ -6,11 +6,14 @@
   letter-spacing: 0.04em;
 }
 
-@mixin headline {
+@mixin headline($bottom-rule: true) {
   @include uppercase($fs-base);
   color: rgba($c-blue, .5);
   margin-top: $spacing;
   margin-bottom: $spacing-lg;
   padding-bottom: $spacing-sm;
-  border-bottom: 2px solid currentColor;
+
+  @if $bottom-rule {
+    border-bottom: 2px solid currentColor;
+  }
 }

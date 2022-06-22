@@ -3,22 +3,26 @@
 
 .section {
   position: relative;
-  padding-left: 3rem;
+  padding-left: 2.8rem;
   padding-bottom: $spacing-lg;
 }
 
 .headline {
   @include uppercase($fs-xl);
   line-height: 1;
-  position: absolute;
-  top: 0;
-  left: 1rem;
+  position: sticky;
+  top: 20px;
+  display: inline-block;
   transform-origin: 0 0;
-  transform: rotate(-90deg) translate(-100%, -80%);
+  writing-mode: vertical-lr;
+  transform: scale(-1) translate(100%, -100%);
+  // transform: rotate(-90deg) translate(-100%, calc(-100% - 1.4rem));
   font-weight: $fw-bold;
   color: $c-gray-9;
+  height: 210px;
+  text-align: right;
 
-  @include large-screens {
-    transform: rotate(-90deg) translate(-100%, -100%);
+  + * {
+    margin-top: -210px;
   }
 }
