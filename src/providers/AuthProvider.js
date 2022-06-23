@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { useGoogleLogin, useGoogleLogout } from 'react-google-login';
+import { useGoogleLogin } from '@react-oauth/google';
 import { AuthContext } from 'hooks';
 import { post } from 'util/index';
 
@@ -10,50 +10,39 @@ const AuthProvider = ({ children }) => {
   const [authLoading, setAuthLoading] = useState(false);
   const [error, setError] = useState(false);
 
-  const handleLoginSuccess = googleData => {
-    setAuthLoading(true);
-    post('auth', { token: googleData.tokenId })
-      .then(userData => {
-        setUserData(userData);
-        setLoaded(true);
-        setAuthLoading(false);
-      })
-      .catch(console.error);
+  const handleValidUser = userData => {
+    setUserData(userData);
+    setLoaded(true);
+    setAuthLoading(false);
+
+    localStorage.setItem('_tktoken', userData.token);
   };
 
-  const handleLogoutSuccess = () => {
+  const handleError = error => {
+    console.error(error);
+    setError(error);
+  };
+
+  const handleNewLogin = code => {
+    if (!code) {
+      return;
+    }
+
+    setAuthLoading(true);
+
+    post('auth', { code }).then(handleValidUser).catch(handleError);
+  };
+
+  const signIn = useGoogleLogin({
+    onSuccess: ({ code }) => handleNewLogin(code),
+    flow: 'auth-code',
+  });
+
+  const signOut = () => {
     setUserData(null);
     post('logout', { secret: userData.secret });
+    localStorage.removeItem('_tktoken');
   };
-
-  const onFailure = error => {
-    if (error.error === 'idpiframe_initialization_failed') {
-      setError(
-        'Unable to authenticate in browsers that have third-party cookies disabled, like a private browser.',
-      );
-      console.warn('[UNABLE TO AUTHENTICATE IN A PRIVATE BROWSER]');
-    } else {
-      console.warn('[LOGIN FAILURE]', error);
-    }
-  };
-
-  const { signIn } = useGoogleLogin({
-    clientId: process.env.REACT_APP_GOOGLE_OAUTH_CLIENT_ID,
-    onSuccess: handleLoginSuccess,
-    onFailure,
-    onAutoLoadFinished: autoLoaded => {
-      if (!autoLoaded) {
-        setLoaded(true);
-      }
-    },
-    isSignedIn: true,
-    cookiePolicy: 'single_host_origin',
-  });
-
-  const { signOut } = useGoogleLogout({
-    clientId: process.env.REACT_APP_GOOGLE_OAUTH_CLIENT_ID,
-    onLogoutSuccess: handleLogoutSuccess,
-  });
 
   /**
    * Helper to send authorized requests with the secret.
@@ -71,6 +60,16 @@ const AuthProvider = ({ children }) => {
 
     return await post(route, { ...data, secret: userData.secret });
   };
+
+  useEffect(() => {
+    const token = localStorage.getItem('_tktoken');
+
+    if (!token) {
+      setLoaded(true);
+    } else {
+      post('auth', { token }).then(handleValidUser).catch(handleError);
+    }
+  }, []);
 
   return (
     <AuthContext.Provider

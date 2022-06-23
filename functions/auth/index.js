@@ -4,6 +4,21 @@ const faunadb = require('faunadb');
 const faunaClient = new faunadb.Client({ secret: process.env.FAUNA_SERVER_KEY });
 const q = faunadb.query;
 
+const client = new OAuth2Client(
+  process.env.REACT_APP_GOOGLE_OAUTH_CLIENT_ID,
+  process.env.GOOGLE_OAUTH_CLIENT_SECRET,
+  'postmessage',
+);
+
+const getGoogleIdToken = async code => {
+  try {
+    const { tokens } = await client.getToken(code);
+    return tokens.id_token;
+  } catch (error) {
+    throw new Error(error);
+  }
+};
+
 /**
  * Authenticate with Google.
  * @param {string} token Google client-side token.
@@ -11,8 +26,6 @@ const q = faunadb.query;
  */
 const authenticateWithGoogle = async token => {
   try {
-    const client = new OAuth2Client(process.env.REACT_APP_GOOGLE_OAUTH_CLIENT_ID);
-
     const ticket = await client.verifyIdToken({
       idToken: token,
       audience: process.env.REACT_APP_GOOGLE_OAUTH_CLIENT_ID,
@@ -20,7 +33,7 @@ const authenticateWithGoogle = async token => {
 
     const { sub: uid, name, picture, email, given_name: firstName } = ticket.getPayload();
 
-    return { uid, name, picture, email, firstName };
+    return { uid, name, picture, email, firstName, token };
   } catch (error) {
     throw new Error(error);
   }
@@ -95,7 +108,8 @@ const loginToFauna = async ref => {
 const handler = async ({ body }) => {
   try {
     const data = JSON.parse(body);
-    const { token } = data;
+    const { code } = data;
+    const token = data.token || (await getGoogleIdToken(code));
 
     const googleData = await authenticateWithGoogle(token);
     const { data: userData, ref } = await getFaunaUser(googleData);
@@ -103,7 +117,7 @@ const handler = async ({ body }) => {
 
     return {
       statusCode: 200,
-      body: JSON.stringify({ ...userData, secret }),
+      body: JSON.stringify({ ...userData, secret, token: googleData.token }),
     };
   } catch (error) {
     return { statusCode: 500, body: error.toString() };
