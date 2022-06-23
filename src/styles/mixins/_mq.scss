@@ -1,21 +1,30 @@
 // Write less verbose media queries.
-// @param {Number(px)} $bp-1 - breakpoint value, min-width if declaring range
-// @param {Number(px)} $bp-2 [null] - [Optional] breakpoint value, max-width if declaring range
-// @link http://codepen.io/upstatement/pen/vORJPZ See it on Codepen
+// $bp-1 - breakpoint value, min-width if declaring range
+// $bp-2 [null] - [Optional] breakpoint value, max-width if declaring range
+//
+// @example scss - SCSS
+// .item-1 {
+//    @include mq(600px, 768px) {
+//     display: block;
+//   }
+// }
+//
+// .item-2 {
+//   @include mq(768px) {
+//     display: block;
+//   }
+// }
 
-/* stylelint-disable scss/at-rule-no-unknown */
 @mixin mq($bp-1, $bp-2: null) {
   @if $bp-1 == 'max' {
     @media (max-width: $bp-2 - 1) {
       @content;
     }
-  }
-  @elseif $bp-2 == 'max' {
+  } @else if $bp-2 == 'max' {
     @media (max-width: $bp-1 - 1) {
       @content;
     }
-  }
-  @elseif $bp-2 == null {
+  } @else if $bp-2 == null {
     @media (min-width: $bp-1) {
       @content;
     }
@@ -25,4 +34,15 @@
     }
   }
 }
-/* stylelint-enable */
+
+@mixin large-screens() {
+  @include mq($bp-large) {
+    @content;
+  }
+}
+
+@mixin small-screens() {
+  @include mq($bp-large, max) {
+    @content;
+  }
+}

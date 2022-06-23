@@ -1,0 +1,33 @@
+@import '../../styles/mixins/_index';
+@import '../../styles/vars/_index';
+
+.dashboard {
+  width: 100%;
+}
+
+.dash {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+
+  @include large-screens {
+    flex-direction: row-reverse;
+  }
+}
+
+.main {
+  align-self: stretch;
+  flex: 1;
+}
+
+.overview {
+  order: -1;
+
+  @include large-screens {
+    width: 50%;
+  }
+}
+
+.greeting {
+  font-size: $fs-xxl;
+}

@@ -1,0 +1,10 @@
+@import '../../../styles/abstracts';
+
+.taskWrap {
+  margin-top: $spacing-xl;
+  max-width: 560px;
+}
+
+.headline {
+  @include headline;
+}

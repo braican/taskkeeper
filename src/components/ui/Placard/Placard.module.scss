@@ -1,0 +1,26 @@
+@import '../../../styles/abstracts';
+
+.placard {
+  @include placard;
+  @include transition(all);
+  border-top: 4px solid rgba($c-blue, .5);
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 18px rgba($c-blue, 0.15);
+    border-top-color: $c-blue;
+  }
+}
+
+.listItem {
+  @include transition(all);
+  display: block;
+  color: inherit;
+  text-decoration: none;
+  border-top: 2px solid rgba($c-gray-c, .25);
+  padding: 1rem 0;
+
+  &:hover {
+    transform: translateY(-1px);
+  }
+}
+

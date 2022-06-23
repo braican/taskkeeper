@@ -1,8 +1,0 @@
-@mixin box-shadow(
-  $h-offset: 0,
-  $v-offset: 2px,
-  $blur: 4px,
-  $color: rgba(darken($c--blue-dark, 20%), 0.4)
-) {
-  box-shadow: $h-offset $v-offset $blur $color;
-}
