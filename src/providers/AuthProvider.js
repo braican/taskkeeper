@@ -15,7 +15,7 @@ const AuthProvider = ({ children }) => {
     setLoaded(true);
     setAuthLoading(false);
 
-    localStorage.setItem('_tktoken', userData.token);
+    localStorage.setItem('_tktoken', userData.refreshToken);
   };
 
   const handleError = error => {
@@ -62,12 +62,12 @@ const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    const token = localStorage.getItem('_tktoken');
+    const refreshToken = localStorage.getItem('_tktoken');
 
-    if (!token) {
+    if (!refreshToken) {
       setLoaded(true);
     } else {
-      post('auth', { token }).then(handleValidUser).catch(handleError);
+      post('auth', { refreshToken }).then(handleValidUser).catch(handleError);
     }
   }, []);
 

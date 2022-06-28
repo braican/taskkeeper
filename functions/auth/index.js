@@ -10,30 +10,26 @@ const client = new OAuth2Client(
   'postmessage',
 );
 
-const getGoogleIdToken = async code => {
+const authorizeGoogleClient = async code => {
   try {
     const { tokens } = await client.getToken(code);
-    return tokens.id_token;
+    return tokens.refresh_token;
   } catch (error) {
     throw new Error(error);
   }
 };
 
 /**
- * Authenticate with Google.
- * @param {string} token Google client-side token.
- * @returns object
+ * Get user data.
+ *
  */
-const authenticateWithGoogle = async token => {
+const getGoogleUser = async () => {
   try {
-    const ticket = await client.verifyIdToken({
-      idToken: token,
-      audience: process.env.REACT_APP_GOOGLE_OAUTH_CLIENT_ID,
-    });
-
-    const { sub: uid, name, picture, email, given_name: firstName } = ticket.getPayload();
-
-    return { uid, name, picture, email, firstName, token };
+    const url = 'https://www.googleapis.com/oauth2/v1/userinfo';
+    const {
+      data: { id: uid, name, picture, email, given_name: firstName },
+    } = await client.request({ url });
+    return { uid, name, picture, email, firstName };
   } catch (error) {
     throw new Error(error);
   }
@@ -108,16 +104,22 @@ const loginToFauna = async ref => {
 const handler = async ({ body }) => {
   try {
     const data = JSON.parse(body);
-    const { code } = data;
-    const token = data.token || (await getGoogleIdToken(code));
+    const refreshToken = data.code ? await authorizeGoogleClient(data.code) : data.refreshToken;
 
-    const googleData = await authenticateWithGoogle(token);
+    if (!refreshToken) {
+      throw new Error('No refresh token provided.');
+    }
+
+    client.setCredentials({ refresh_token: refreshToken });
+
+    const googleData = await getGoogleUser();
+
     const { data: userData, ref } = await getFaunaUser(googleData);
     const { secret } = await loginToFauna(ref);
 
     return {
       statusCode: 200,
-      body: JSON.stringify({ ...userData, secret, token: googleData.token }),
+      body: JSON.stringify({ ...userData, secret, refreshToken }),
     };
   } catch (error) {
     return { statusCode: 500, body: error.toString() };
