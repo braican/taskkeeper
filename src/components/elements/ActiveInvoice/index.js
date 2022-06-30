@@ -4,7 +4,7 @@ import classnames from 'classnames';
 import { useAuth, useInvoices } from 'hooks';
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import InvoicePdf from '../../../views/InvoicePdf';
-import { currencyFormatter } from 'util/index';
+import { currencyFormatter, currencyFormatterFull, formatDate } from 'util/index';
 
 import Button from '../../ui/Button';
 import Icon from '../../ui/Icon';
@@ -18,6 +18,10 @@ const ActiveInvoice = ({ invoice }) => {
   const { updateInvoice } = useInvoices();
   const [showTasks, setShowTasks] = useState(false);
 
+  if (!invoice) {
+    return null;
+  }
+
   const hours = invoice.tasks.reduce(
     (total, { hours }) => (hours ? parseFloat(hours) + total : total),
     0,
@@ -28,6 +32,8 @@ const ActiveInvoice = ({ invoice }) => {
       updateInvoice(invoice),
     );
 
+  const filename = `invoice-${invoice.invoiceId.replace('-', '_').toLowerCase()}.pdf`;
+
   return (
     <article className={styles.invoice}>
       <div className={styles.meta}>
@@ -35,22 +41,18 @@ const ActiveInvoice = ({ invoice }) => {
 
         <dl>
           <dt className={styles.label}>Issued</dt>
-          <dd className={styles.value}>{invoice.issued}</dd>
+          <dd className={styles.value}>{formatDate(invoice.issued)}</dd>
 
           <dt className={styles.label}>Due</dt>
-          <dd className={styles.value}>{invoice.due}</dd>
+          <dd className={styles.value}>{formatDate(invoice.due)}</dd>
         </dl>
       </div>
       <div>
         <span className={styles.total}>{currencyFormatter.format(invoice.total)}</span>
-        <span className={styles.hours}>{hours} hours</span>
+        <span className={styles.hours}>{hours ? `${hours} hours` : ''}</span>
       </div>
       <div className={styles.description}>
         {invoice.description && <p className={styles.descriptionText}>{invoice.description}</p>}
-
-        <PDFDownloadLink document={<InvoicePdf />} filename="somthing.pdf">
-          {({ loading }) => (loading ? 'Loading document...' : 'Download now!')}
-        </PDFDownloadLink>
 
         <button
           className={classnames(styles.taskToggle, showTasks ? styles.taskToggleFlipped : '')}
@@ -75,15 +77,36 @@ const ActiveInvoice = ({ invoice }) => {
               <li key={task.id} className={styles.task}>
                 <span>{task.description}</span>
                 <span>{hours > 0 ? `${hours} hrs` : ''}</span>
-                <span className={styles.taskTotal}>${total}</span>
+                <span className={styles.taskTotal}>
+                  {parseFloat(total) < 0
+                    ? `(${currencyFormatterFull.format(Math.abs(total))})`
+                    : currencyFormatterFull.format(total)}
+                </span>
               </li>
             );
           })}
         </ul>
       )}
 
+      <div className={styles.download}>
+        <PDFDownloadLink
+          document={<InvoicePdf invoice={invoice} />}
+          fileName={filename}
+          className={styles.downloadButton}>
+          {({ loading }) => (
+            <Icon
+              viewBox="0 0 24 24"
+              icon="download"
+              label="Download"
+              inline
+              className={loading ? styles.downloadButtonLoading : ''}
+            />
+          )}
+        </PDFDownloadLink>
+      </div>
+
       <div className={styles.action}>
-        <Button style={['fullwidth', 'orange']} onClick={markAsPaid}>
+        <Button style={['fullwidth', 'green']} onClick={markAsPaid}>
           Paid
         </Button>
       </div>
