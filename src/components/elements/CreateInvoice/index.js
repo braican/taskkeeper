@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNewInvoice, useInvoices, useAuth, useClients, useTasks } from 'hooks';
 
 import Button from 'components/ui/Button';
@@ -17,7 +17,7 @@ const CreateInvoice = () => {
   const { isInvoicing, setIsInvoicing, removeAllTasks, invoiceTotal, invoicedTasks } =
     useNewInvoice();
   const { removeTasks } = useTasks();
-  const { addInvoice } = useInvoices();
+  const { addInvoice, clientInvoices } = useInvoices();
 
   const [description, setDescription] = useState('');
   const [invoiceId, setInvoiceId] = useState('');
@@ -26,6 +26,22 @@ const CreateInvoice = () => {
 
   const { post } = useAuth();
   const { client } = useClients();
+
+  useEffect(() => {
+    const ids = clientInvoices
+      .map(i => {
+        const match = i.invoiceId.match(/-(\d+)$/);
+        return match ? parseInt(match[1]) : null;
+      })
+      .filter(i => i)
+      .sort((a, b) => (a < b ? 1 : -1));
+
+    if (ids.length > 0) {
+      setInvoiceId(`${client.key}-${ids[0].toString().padStart(4, '0')}`);
+    } else {
+      setInvoiceId(`${client.key}-0001`);
+    }
+  }, [clientInvoices]);
 
   const addInvoiceToDb = () => {
     if (invoicedTasks.length === 0) {
