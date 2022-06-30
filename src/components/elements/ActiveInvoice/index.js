@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import { useAuth, useInvoices } from 'hooks';
+import { useAuth, useInvoices, useClients } from 'hooks';
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import InvoicePdf from '../../../views/InvoicePdf';
 import { currencyFormatter, currencyFormatterFull, formatDate } from 'util/index';
@@ -17,10 +17,13 @@ const ActiveInvoice = ({ invoice }) => {
   const { post } = useAuth();
   const { updateInvoice } = useInvoices();
   const [showTasks, setShowTasks] = useState(false);
+  const { clients } = useClients();
 
   if (!invoice) {
     return null;
   }
+
+  const client = clients[invoice.client];
 
   const hours = invoice.tasks.reduce(
     (total, { hours }) => (hours ? parseFloat(hours) + total : total),
@@ -90,7 +93,7 @@ const ActiveInvoice = ({ invoice }) => {
 
       <div className={styles.download}>
         <PDFDownloadLink
-          document={<InvoicePdf invoice={invoice} />}
+          document={<InvoicePdf invoice={invoice} client={client.name} />}
           fileName={filename}
           className={styles.downloadButton}>
           {({ loading }) => (
@@ -123,6 +126,7 @@ ActiveInvoice.propTypes = {
     due: PropTypes.string,
     description: PropTypes.string,
     tasks: PropTypes.array,
+    client: PropTypes.string,
   }),
 };
 
