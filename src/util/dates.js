@@ -7,3 +7,11 @@ export const addDays = (days, date = new Date()) => {
   date.setDate(date.getDate() + days);
   return date;
 };
+
+export const formatDate = date =>
+  new Date(date).toLocaleDateString('en-US', {
+    timeZone: 'UTC',
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric',
+  });

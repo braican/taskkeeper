@@ -3,6 +3,9 @@ command = "yarn build"
 functions = "functions/"
 publish = "build"
 
+[dev]
+command = "yarn react-start"
+
 [[redirects]]
   from = "/api/*"
   to = "/.netlify/functions/:splat"
