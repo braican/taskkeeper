@@ -76,7 +76,7 @@ const AddTask = () => {
   }
 
   return (
-    <Button onClick={() => setFormActive(true)} style={['green']}>
+    <Button onClick={() => setFormActive(true)} style={['orange']}>
       <Icon icon="plus-square" />
       <span>Add task</span>
     </Button>

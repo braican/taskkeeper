@@ -38,6 +38,8 @@
 // -----------
 
 .layout {
+  margin-bottom: 20vw;
+
   @include large-screens {
     display: flex;
   }
