@@ -5,6 +5,8 @@ import Header from 'components/elements/Header';
 import Dashboard from 'views/Dashboard';
 import Welcome from 'views/Welcome';
 import Client from 'views/Client';
+import { PDFViewer } from '@react-pdf/renderer';
+import InvoicePdf from 'views/InvoicePdf';
 import { useAuth } from './hooks';
 import { ClientProvider, TaskProvider, InvoiceProvider, ProjectProvider } from './providers';
 
@@ -20,6 +22,16 @@ const AuthRoutes = () => (
           <Switch>
             <Route path="/dashboard" render={() => <Dashboard />} />
             <Route path="/client/:clientId" render={() => <Client />} />
+            <Route
+              path="/invoice"
+              render={() => (
+                <div style={{ flex: 1 }}>
+                  <PDFViewer style={{ width: '100%', height: '100%' }}>
+                    <InvoicePdf />
+                  </PDFViewer>
+                </div>
+              )}
+            />
             <Route path="/*" render={() => <Redirect to="/dashboard" />} />
           </Switch>
         </ProjectProvider>

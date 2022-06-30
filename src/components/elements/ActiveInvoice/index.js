@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { useAuth, useInvoices } from 'hooks';
+import { PDFDownloadLink } from '@react-pdf/renderer';
+import InvoicePdf from '../../../views/InvoicePdf';
 import { currencyFormatter } from 'util/index';
 
 import Button from '../../ui/Button';
@@ -45,6 +47,10 @@ const ActiveInvoice = ({ invoice }) => {
       </div>
       <div className={styles.description}>
         {invoice.description && <p className={styles.descriptionText}>{invoice.description}</p>}
+
+        <PDFDownloadLink document={<InvoicePdf />} filename="somthing.pdf">
+          {({ loading }) => (loading ? 'Loading document...' : 'Download now!')}
+        </PDFDownloadLink>
 
         <button
           className={classnames(styles.taskToggle, showTasks ? styles.taskToggleFlipped : '')}
