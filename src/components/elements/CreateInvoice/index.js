@@ -41,7 +41,7 @@ const CreateInvoice = () => {
     } else {
       setInvoiceId(`${client.key}-0001`);
     }
-  }, [clientInvoices]);
+  }, []);
 
   const addInvoiceToDb = () => {
     if (invoicedTasks.length === 0) {

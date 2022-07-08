@@ -93,7 +93,7 @@ const ActiveInvoice = ({ invoice }) => {
 
       <div className={styles.download}>
         <PDFDownloadLink
-          document={<InvoicePdf invoice={invoice} client={client.name} />}
+          document={<InvoicePdf invoice={invoice} client={client?.name} />}
           fileName={filename}
           className={styles.downloadButton}>
           {({ loading }) => (

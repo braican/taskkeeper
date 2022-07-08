@@ -4,10 +4,12 @@ const q = faunadb.query;
 const updateInvoice = async ({ secret, id, ...data }) => {
   const faunaClient = new faunadb.Client({ secret });
   const updatedInvoice = await faunaClient.query(
-    q.Update(q.Ref(q.Collection('Invoice'), id), { data }),
+    q.Update(q.Ref(q.Collection('Invoice'), id), {
+      ...data,
+      client: q.Ref(q.Collection('Client'), data.client),
+      uid: q.CurrentIdentity(),
+    }),
   );
-
-  console.log(updatedInvoice);
 
   return {
     ...updatedInvoice.data,
