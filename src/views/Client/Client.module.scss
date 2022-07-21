@@ -26,8 +26,8 @@
 }
 
 .headerRows {
-  display: flex;
-  flex-wrap: wrap;
+  // display: flex;
+  // flex-wrap: wrap;
   margin-top: $spacing;
 }
 
@@ -46,6 +46,20 @@
   font-size: $fs-xxxl;
   font-size: clamp($fs-xxxl, 7vw, 80px);
   line-height: 1;
+}
+
+.meta {
+  display: flex;
+  gap: $spacing;
+}
+
+.address {
+  white-space: pre-line;
+}
+
+.rate > span {
+  display: block;
+  font-weight: $fw-bold;
 }
 
 // Layout

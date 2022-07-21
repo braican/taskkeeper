@@ -31,8 +31,6 @@ const Client = () => {
   const todoTasks = clientTasks.filter(t => t.status === TASK_STATUS.todo);
   const completedTasks = clientTasks.filter(t => t.status === TASK_STATUS.completed);
 
-  console.log(client);
-
   return (
     <div className={styles.clientWrap}>
       <header className={styles.header}>
@@ -49,7 +47,12 @@ const Client = () => {
         <div className={styles.headerRows}>
           <h1 className={styles.name}>{client.name}</h1>
 
-          <div className={styles.meta}>{client.address}</div>
+          <div className={styles.meta}>
+            <p className={styles.address}>{client.address}</p>
+            <p className={styles.rate}>
+              <span>Rate</span>${client.rate}
+            </p>
+          </div>
         </div>
       </header>
 
