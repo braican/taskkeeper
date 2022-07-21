@@ -11,6 +11,8 @@ import CreateInvoice from 'components/elements/CreateInvoice';
 import TaskList from 'components/elements/TaskList';
 import InvoiceList from 'components/elements/InvoiceList';
 import ActiveInvoice from 'components/elements/ActiveInvoice';
+import Button from 'components/ui/Button';
+import Icon from 'components/ui/Icon';
 
 import { TASK_STATUS } from 'constants.js';
 
@@ -29,13 +31,26 @@ const Client = () => {
   const todoTasks = clientTasks.filter(t => t.status === TASK_STATUS.todo);
   const completedTasks = clientTasks.filter(t => t.status === TASK_STATUS.completed);
 
+  console.log(client);
+
   return (
     <div className={styles.clientWrap}>
       <header className={styles.header}>
-        <Link to="/dashboard" className={styles.backToDash}>
-          &larr; Dashboard
-        </Link>
-        <h2 className={styles.name}>{client.name}</h2>
+        <div className={styles.utility}>
+          <Link to="/dashboard" className={styles.backToDash}>
+            &larr; Dashboard
+          </Link>
+
+          <Button style="translucent">
+            <Icon icon="cog" inline label="Client" />
+          </Button>
+        </div>
+
+        <div className={styles.headerRows}>
+          <h1 className={styles.name}>{client.name}</h1>
+
+          <div className={styles.meta}>{client.address}</div>
+        </div>
       </header>
 
       {clientInvoices.length > 0 && (

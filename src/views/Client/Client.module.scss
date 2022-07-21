@@ -16,6 +16,21 @@
   }
 }
 
+.utility {
+  display: flex;
+  align-items: center;
+
+  > *:not(:first-child) {
+    margin-left: $spacing-lg;
+  }
+}
+
+.headerRows {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: $spacing;
+}
+
 .backToDash {
   @include uppercase();
   color: inherit;
@@ -31,7 +46,6 @@
   font-size: $fs-xxxl;
   font-size: clamp($fs-xxxl, 7vw, 80px);
   line-height: 1;
-  margin-top: $spacing-sm;
 }
 
 // Layout
