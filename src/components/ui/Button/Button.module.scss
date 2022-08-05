@@ -62,6 +62,16 @@
   }
 }
 
+.style--translucent {
+  background-color: rgba($c-black, 0.05);
+  color: $c-black;
+  box-shadow: none;
+
+  &:hover {
+    background-color: rgba($c-black, 0.1);
+  }
+}
+
 .style--transparent {
   color: $c-gray-6;
   background-color: transparent;
@@ -78,3 +88,4 @@
 .style--fullwidth {
   width: 100%;
 }
+

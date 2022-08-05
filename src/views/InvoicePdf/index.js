@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
 // Create Document Component
 const InvoicePdf = ({ invoice, client }) => (
   <Document>
-    <Page size="A4" style={styles.page}>
+    <Page size="LETTER" style={styles.page}>
       <View>
         <Image style={{ width: 22 }} src="/static/img/logo.png" />
       </View>
@@ -113,10 +113,15 @@ const InvoicePdf = ({ invoice, client }) => (
           <Text style={styles.paragraph}>Portland, Oregon 97215</Text>
         </View>
         <View style={[styles.col, { paddingRight: 10 }]}>
-          <Text style={styles.smallheader}>Invoice for</Text>
-          <Text style={styles.paragraph}>{client}</Text>
+          {client && (
+            <>
+              <Text style={styles.smallheader}>Invoice for</Text>
+              <Text style={styles.paragraph}>{client.name}</Text>
+              <Text style={styles.paragraph}>{client.address}</Text>
+            </>
+          )}
 
-          <Text style={[styles.smallheader, { marginTop: 20 }]}>Description</Text>
+          <Text style={[styles.smallheader, { marginTop: client ? 20 : 0 }]}>Description</Text>
           <Text style={styles.paragraph}>{invoice.description}</Text>
         </View>
         <View style={[styles.col]}>
@@ -212,7 +217,10 @@ InvoicePdf.propTypes = {
     description: PropTypes.string,
     tasks: PropTypes.array,
   }),
-  client: PropTypes.string,
+  client: PropTypes.shape({
+    name: PropTypes.string,
+    address: PropTypes.string,
+  }),
 };
 
 export default InvoicePdf;

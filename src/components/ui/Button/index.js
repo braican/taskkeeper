@@ -23,7 +23,16 @@ const Button = ({ children, style = [], className = '', type = 'button', onClick
   );
 };
 
-const availableClasses = ['', 'green', 'warning', 'black', 'orange', 'transparent', 'fullwidth'];
+const availableClasses = [
+  '',
+  'green',
+  'warning',
+  'black',
+  'orange',
+  'transparent',
+  'fullwidth',
+  'translucent',
+];
 
 Button.propTypes = {
   children: PropTypes.node,
