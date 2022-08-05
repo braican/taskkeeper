@@ -50,7 +50,8 @@ const Client = () => {
           <h1 className={styles.name}>{client.name}</h1>
 
           <div className={styles.meta}>
-            <p className={styles.address}>{client.address}</p>
+            {client.address && <p className={styles.address}>{client.address}</p>}
+
             <p className={styles.rate}>
               <span>Rate</span>${client.rate}
             </p>
