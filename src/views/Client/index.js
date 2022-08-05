@@ -3,18 +3,17 @@ import { Link } from 'react-router-dom';
 
 import { useClients, useTasks, useInvoices } from 'hooks';
 import { NewInvoiceProvider } from 'providers';
+import { INVOICE_STATUS, TASK_STATUS } from 'constants.js';
 
 import Block from 'components/ui/Block';
 import Section from 'components/elements/Section';
 import AddTask from 'components/elements/AddTask';
 import CreateInvoice from 'components/elements/CreateInvoice';
 import TaskList from 'components/elements/TaskList';
-import InvoiceList from 'components/elements/InvoiceList';
 import ActiveInvoice from 'components/elements/ActiveInvoice';
+import PaidInvoice from 'components/elements/PaidInvoice';
 import Button from 'components/ui/Button';
 import Icon from 'components/ui/Icon';
-
-import { TASK_STATUS } from 'constants.js';
 
 import styles from './Client.module.scss';
 
@@ -26,6 +25,9 @@ const Client = () => {
   if (!client) {
     return <p>Loading...</p>;
   }
+
+  const activeInvoices = clientInvoices.filter(({ status }) => status === INVOICE_STATUS.active);
+  const paidInvoices = clientInvoices.filter(({ status }) => status === INVOICE_STATUS.paid);
 
   const estimatedTasks = clientTasks.filter(t => t.status === TASK_STATUS.estimated);
   const todoTasks = clientTasks.filter(t => t.status === TASK_STATUS.todo);
@@ -56,10 +58,10 @@ const Client = () => {
         </div>
       </header>
 
-      {clientInvoices.length > 0 && (
+      {activeInvoices.length > 0 && (
         <Block>
           <Section headline="Invoices" className={styles.activeInvoices}>
-            {clientInvoices.map(invoice => (
+            {activeInvoices.map(invoice => (
               <ActiveInvoice key={invoice.id} invoice={invoice} />
             ))}
           </Section>
@@ -98,7 +100,15 @@ const Client = () => {
         <aside className={styles.aside}>
           <Block>
             <Section headline="Past Invoices" className={styles.invoiceSection}>
-              <InvoiceList />
+              {paidInvoices.length > 0 ? (
+                <div>
+                  {paidInvoices.map(invoice => (
+                    <PaidInvoice invoice={invoice} key={invoice.id} />
+                  ))}
+                </div>
+              ) : (
+                <p>No past invoices.</p>
+              )}
             </Section>
           </Block>
         </aside>
