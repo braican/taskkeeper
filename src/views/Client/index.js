@@ -3,16 +3,17 @@ import { Link } from 'react-router-dom';
 
 import { useClients, useTasks, useInvoices } from 'hooks';
 import { NewInvoiceProvider } from 'providers';
+import { INVOICE_STATUS, TASK_STATUS } from 'constants.js';
 
 import Block from 'components/ui/Block';
 import Section from 'components/elements/Section';
 import AddTask from 'components/elements/AddTask';
 import CreateInvoice from 'components/elements/CreateInvoice';
 import TaskList from 'components/elements/TaskList';
-import InvoiceList from 'components/elements/InvoiceList';
 import ActiveInvoice from 'components/elements/ActiveInvoice';
-
-import { TASK_STATUS } from 'constants.js';
+import PaidInvoice from 'components/elements/PaidInvoice';
+import Button from 'components/ui/Button';
+import Icon from 'components/ui/Icon';
 
 import styles from './Client.module.scss';
 
@@ -25,6 +26,9 @@ const Client = () => {
     return <p>Loading...</p>;
   }
 
+  const activeInvoices = clientInvoices.filter(({ status }) => status === INVOICE_STATUS.active);
+  const paidInvoices = clientInvoices.filter(({ status }) => status === INVOICE_STATUS.paid);
+
   const estimatedTasks = clientTasks.filter(t => t.status === TASK_STATUS.estimated);
   const todoTasks = clientTasks.filter(t => t.status === TASK_STATUS.todo);
   const completedTasks = clientTasks.filter(t => t.status === TASK_STATUS.completed);
@@ -32,16 +36,33 @@ const Client = () => {
   return (
     <div className={styles.clientWrap}>
       <header className={styles.header}>
-        <Link to="/dashboard" className={styles.backToDash}>
-          &larr; Dashboard
-        </Link>
-        <h2 className={styles.name}>{client.name}</h2>
+        <div className={styles.utility}>
+          <Link to="/dashboard" className={styles.backToDash}>
+            &larr; Dashboard
+          </Link>
+
+          <Button style="translucent">
+            <Icon icon="cog" inline label="Client" />
+          </Button>
+        </div>
+
+        <div className={styles.headerRows}>
+          <h1 className={styles.name}>{client.name}</h1>
+
+          <div className={styles.meta}>
+            {client.address && <p className={styles.address}>{client.address}</p>}
+
+            <p className={styles.rate}>
+              <span>Rate</span>${client.rate}
+            </p>
+          </div>
+        </div>
       </header>
 
-      {clientInvoices.length > 0 && (
+      {activeInvoices.length > 0 && (
         <Block>
           <Section headline="Invoices" className={styles.activeInvoices}>
-            {clientInvoices.map(invoice => (
+            {activeInvoices.map(invoice => (
               <ActiveInvoice key={invoice.id} invoice={invoice} />
             ))}
           </Section>
@@ -80,7 +101,15 @@ const Client = () => {
         <aside className={styles.aside}>
           <Block>
             <Section headline="Past Invoices" className={styles.invoiceSection}>
-              <InvoiceList />
+              {paidInvoices.length > 0 ? (
+                <div>
+                  {paidInvoices.map(invoice => (
+                    <PaidInvoice invoice={invoice} key={invoice.id} />
+                  ))}
+                </div>
+              ) : (
+                <p>No past invoices.</p>
+              )}
             </Section>
           </Block>
         </aside>

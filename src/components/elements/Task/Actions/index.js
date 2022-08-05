@@ -77,14 +77,14 @@ const Actions = ({ task, message }) => {
 
       {task.status === TASK_STATUS.estimated && (
         <button type="button" className={styles.advance} title="Todo" onClick={advanceTask}>
-          <Icon viewBox="0 0 20 20" icon="cheveron-right" />
+          <Icon viewBox="0 0 20 20" icon="cheveron-down" />
         </button>
       )}
 
       {task.status === TASK_STATUS.todo && (
         <>
           <button type="button" className={styles.retreat} title="Back" onClick={retreatTask}>
-            <Icon viewBox="0 0 20 20" icon="cheveron-left" />
+            <Icon viewBox="0 0 20 20" icon="cheveron-up" />
           </button>
           <button type="button" className={styles.done} title="Done" onClick={advanceTask}>
             <Icon viewBox="0 0 20 20" icon="checkmark" />
@@ -94,7 +94,7 @@ const Actions = ({ task, message }) => {
 
       {task.status === TASK_STATUS.completed && (
         <button type="button" className={styles.retreat} title="Todo" onClick={retreatTask}>
-          <Icon viewBox="0 0 20 20" icon="cheveron-left" />
+          <Icon viewBox="0 0 20 20" icon="cheveron-up" />
         </button>
       )}
 
