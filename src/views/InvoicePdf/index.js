@@ -109,8 +109,8 @@ const InvoicePdf = ({ invoice, client }) => (
           <Text>nick.braica@gmail.com</Text>
           <Text style={styles.paragraph}>860.849.0791</Text>
 
-          <Text style={{ marginTop: 20 }}>2316 SE 52nd Avenue</Text>
-          <Text style={styles.paragraph}>Portland, Oregon 97215</Text>
+          <Text style={{ marginTop: 20 }}>4 Moloney Street</Text>
+          <Text style={styles.paragraph}>West Roxbury, Massachusetts 02132</Text>
         </View>
         <View style={[styles.col, { paddingRight: 10 }]}>
           {client && (
