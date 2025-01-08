@@ -1,1 +1,14 @@
 .DS_Store
+
+# Dependencies
+/node_modules
+
+# Testing
+/coverage
+
+# next.js
+/.next/
+/out/
+/build
+
+next-env.d.ts
