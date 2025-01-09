@@ -1,0 +1,15 @@
+.sidebar {
+  background-color: var(--bg-accent);
+  height: 100%;
+  border-radius: var(--border-radius);
+  padding: var(--space-m);
+}
+
+.logo {
+  width: 24px;
+  display: block;
+}
+.logo svg {
+  display: block;
+  width: 100%;
+}

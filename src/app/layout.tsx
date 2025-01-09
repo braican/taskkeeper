@@ -1,7 +1,19 @@
 import type { Metadata } from 'next';
 import { AuthProvider } from '@/contexts/AuthContext';
+import { Funnel_Sans, Funnel_Display } from 'next/font/google';
 import Sidebar from '@/components/sidebar';
+import styles from './layout.module.css';
 import './globals.css';
+
+const funnelSans = Funnel_Sans({
+  variable: '--font-primary',
+  subsets: ['latin'],
+});
+
+const funnelDisplay = Funnel_Display({
+  variable: '--font-display',
+  subsets: ['latin'],
+});
 
 export const metadata: Metadata = {
   title: 'Taskkeeper',
@@ -14,11 +26,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html
+      lang="en"
+      className={`${funnelSans.variable} ${funnelDisplay.variable}`}
+    >
       <body>
         <AuthProvider>
-          <Sidebar />
-          <main>{children}</main>
+          <div className={styles.mainLayout}>
+            <aside className={styles.aside}>
+              <Sidebar />
+            </aside>
+            <main className={styles.main}>{children}</main>
+          </div>
         </AuthProvider>
       </body>
     </html>
