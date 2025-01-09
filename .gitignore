@@ -1,4 +1,5 @@
 .DS_Store
+.env
 
 # Dependencies
 /node_modules
@@ -10,5 +11,4 @@
 /.next/
 /out/
 /build
-
 next-env.d.ts
