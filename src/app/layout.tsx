@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
-import { AuthProvider } from '@/contexts/AuthContext';
 import { Funnel_Sans, Funnel_Display } from 'next/font/google';
+import { AuthProvider } from '@/contexts/AuthContext';
 import Sidebar from '@/components/sidebar';
 import styles from './layout.module.css';
 import './globals.css';

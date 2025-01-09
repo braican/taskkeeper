@@ -1,9 +1,16 @@
 :root {
   --bg: #f7f6f7;
   --bg-accent: #e8e8e8;
+  --bg-accent-border: #ccc;
   --text-color: #222;
 
+  --c-gray: #666;
+
   --border-radius: 1rem;
+
+  --weight-normal: 400;
+  --weight-bold: 700;
+  --weight-extrabold: 800;
 
   /* @link https://utopia.fyi/type/calculator?c=340,16,1.2,1280,18,1.333,3,1,&s=0.75|0.5|0.25,1.5|2|3|4|6,s-l&g=s,l,xl,12 */
 
