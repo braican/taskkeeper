@@ -29,26 +29,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     const checkAuth = async () => {
-      try {
-        // Handle routing based on auth state
-        if (pb.authStore.isValid) {
-          setIsAuthenticated(true);
-          setUser(pb.authStore.record);
-          if (pathname === '/') {
-            router.replace('/dashboard');
-          }
-        } else {
-          setIsAuthenticated(false);
-          setUser(null);
-          if (pathname !== '/') {
-            router.replace('/');
-          }
-        }
-      } catch (error) {
-        console.error('Auth check failed:', error);
-        setIsAuthenticated(false);
-        setUser(null);
-      }
+      setIsAuthenticated(pb.authStore.isValid);
+      setUser(pb.authStore.isValid ? pb.authStore.record : null);
     };
 
     checkAuth();
@@ -56,16 +38,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   // While checking auth status, show loading state
   if (isAuthenticated === null) {
-    return <div>Loading...</div>;
+    return;
   }
 
   const login = async () => {
     try {
-      const authData = await pb
-        .collection('users')
-        .authWithOAuth2({ provider: 'google' }); // Use your OAuth provider (e.g., Google, GitHub)
-      setIsAuthenticated(true);
-      setUser(authData.record);
+      await pb.collection('users').authWithOAuth2({ provider: 'google' });
+      router.push('/dashboard');
     } catch (err) {
       console.error('OAuth2 login failed', err);
     }
@@ -73,8 +52,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const logout = () => {
     pb.authStore.clear();
-    setIsAuthenticated(false);
-    setUser(null);
+    router.push('/');
   };
 
   return (
