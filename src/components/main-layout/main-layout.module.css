@@ -8,11 +8,16 @@
 
 .main {
   flex: 1;
-  padding: calc(var(--space-m) * 2 + 48px) var(--space-m);
+  padding: 0 var(--space-m) calc(var(--space-m) * 2 + 48px) var(--space-m);
 }
 
 @media screen and (min-width: 862px) {
   .mainLayout {
     display: flex;
+  }
+
+  .main {
+    flex: 1;
+    padding-top: calc(var(--space-m) * 2 + 48px);
   }
 }
