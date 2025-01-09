@@ -1,0 +1,9 @@
+.button {
+  border-radius: var(--border-radius-small);
+  background-color: var(--bg-accent);
+  padding: var(--space-s) var(--space-m);
+}
+
+.button:hover {
+  background-color: var(--c-gray-mid);
+}

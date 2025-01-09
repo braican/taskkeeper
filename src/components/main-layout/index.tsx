@@ -2,9 +2,9 @@
 
 import { useAuth } from '@/contexts/AuthContext';
 import Sidebar from '@/components/sidebar';
-import styles from './app.module.css';
+import styles from './main-layout.module.css';
 
-export default function App({
+export default function MainLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;

@@ -1,5 +1,4 @@
 .mainLayout {
-  display: flex;
   min-height: 100svh;
 }
 
@@ -10,4 +9,10 @@
 .main {
   flex: 1;
   padding: calc(var(--space-m) * 2 + 48px) var(--space-m);
+}
+
+@media screen and (min-width: 862px) {
+  .mainLayout {
+    display: flex;
+  }
 }

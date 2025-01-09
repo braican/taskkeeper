@@ -2,6 +2,7 @@
 'use client';
 
 import { useAuth } from '@/contexts/AuthContext';
+import Button from '@/components/button';
 
 export default function Home() {
   const { login } = useAuth();
@@ -13,7 +14,7 @@ export default function Home() {
   return (
     <div>
       <h1>Taskkeeper</h1>
-      <button onClick={handleLogin}>Log In with Google</button>
+      <Button onClick={handleLogin}>Log in with Google</Button>
     </div>
   );
 }
