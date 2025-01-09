@@ -1,0 +1,13 @@
+.mainLayout {
+  display: flex;
+  min-height: 100svh;
+}
+
+.aside {
+  flex: 0 0 calc(280px + 2vw);
+}
+
+.main {
+  flex: 1;
+  padding: calc(var(--space-m) * 2 + 48px) var(--space-m);
+}

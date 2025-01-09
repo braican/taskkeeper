@@ -1,9 +1,10 @@
 import type { Metadata } from 'next';
 import { Funnel_Sans, Funnel_Display } from 'next/font/google';
 import { AuthProvider } from '@/contexts/AuthContext';
-import Sidebar from '@/components/sidebar';
+import IconLogo from '@/icons/logo';
 import styles from './layout.module.css';
 import './globals.css';
+import App from '@/components/app';
 
 const funnelSans = Funnel_Sans({
   variable: '--font-primary',
@@ -32,13 +33,12 @@ export default function RootLayout({
     >
       <body>
         <AuthProvider>
-          <div className={styles.mainLayout}>
-            <aside className={styles.aside}>
-              <Sidebar />
-            </aside>
-            <main className={styles.main}>{children}</main>
-          </div>
+          <App>{children}</App>
         </AuthProvider>
+
+        <span className={styles.logo}>
+          <IconLogo />
+        </span>
       </body>
     </html>
   );

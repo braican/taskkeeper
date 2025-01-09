@@ -1,14 +1,9 @@
-.mainLayout {
-  display: flex;
-  min-height: 100svh;
-}
-
-.aside {
-  flex: 0 0 280px;
-  padding: var(--space-s);
-}
-
-.main {
-  flex: 1;
-  padding: calc(var(--space-m) + var(--space-s)) var(--space-m);
+.logo {
+  position: fixed;
+  top: 0;
+  right: 0;
+  padding: var(--space-m);
+  width: 20px;
+  box-sizing: content-box;
+  opacity: 0.1;
 }

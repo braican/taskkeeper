@@ -1,11 +1,17 @@
 :root {
-  --bg: #f7f6f7;
-  --bg-accent: #e8e8e8;
-  --bg-accent-border: #ccc;
-  --text-color: #222;
+  --c-white: #fff;
+  --c-off-white: #f7f6f7;
+  --c-gray-light: #e8e8e8;
+  --c-gray-mid: #ccc;
+  --c-gray-dark: #666;
+  --c-black: #222;
 
-  --c-gray: #666;
+  --bg: var(--c-off-white);
+  --bg-accent: var(--c-gray-light);
+  --bg-accent-border: var(--c-gray-mid);
+  --text-color: var(--c-black);
 
+  --border-radius-small: 0.5rem;
   --border-radius: 1rem;
 
   --weight-normal: 400;
@@ -49,9 +55,24 @@ body {
   margin: 0;
 }
 
+button {
+  border: 0;
+  padding: 0;
+  box-shadow: none;
+  cursor: pointer;
+  background-color: transparent;
+  font-size: inherit;
+  color: inherit;
+}
+
 a {
   color: inherit;
   text-decoration: none;
+}
+
+.ul-reset {
+  list-style: none;
+  padding: 0;
 }
 
 .sr-only {
