@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Funnel_Sans, Funnel_Display } from 'next/font/google';
 import { AuthProvider } from '@/contexts/AuthContext';
+import { GlobalProvider } from '@/contexts/GlobalContext';
 import IconLogo from '@/icons/logo';
 import MainLayout from '@/components/main-layout';
 
@@ -33,9 +34,11 @@ export default function RootLayout({
       className={`${funnelSans.variable} ${funnelDisplay.variable}`}
     >
       <body>
-        <AuthProvider>
-          <MainLayout>{children}</MainLayout>
-        </AuthProvider>
+        <GlobalProvider>
+          <AuthProvider>
+            <MainLayout>{children}</MainLayout>
+          </AuthProvider>
+        </GlobalProvider>
 
         <span className={styles.logo}>
           <IconLogo />

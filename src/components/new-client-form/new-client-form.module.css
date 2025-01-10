@@ -1,0 +1,8 @@
+.form {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: var(--space-m);
+  background-color: var(--c-white);
+}
