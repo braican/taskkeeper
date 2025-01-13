@@ -4,6 +4,7 @@
 import Button from '@/components/button';
 import { useAuth } from '@/contexts/AuthContext';
 import { useGlobals } from '@/contexts/GlobalContext';
+import ClientList from '@/components/client-list';
 import IconPlus from '@/icons/plus';
 
 import styles from './dashboard.module.css';
@@ -23,6 +24,8 @@ export default function Dashboard() {
       <Button onClick={toggleNewClientFormVisible} icon={IconPlus}>
         Add new client
       </Button>
+
+      <ClientList />
     </div>
   );
 }

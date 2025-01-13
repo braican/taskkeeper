@@ -34,11 +34,11 @@ export default function RootLayout({
       className={`${funnelSans.variable} ${funnelDisplay.variable}`}
     >
       <body>
-        <GlobalProvider>
-          <AuthProvider>
+        <AuthProvider>
+          <GlobalProvider>
             <MainLayout>{children}</MainLayout>
-          </AuthProvider>
-        </GlobalProvider>
+          </GlobalProvider>
+        </AuthProvider>
 
         <span className={styles.logo}>
           <IconLogo />

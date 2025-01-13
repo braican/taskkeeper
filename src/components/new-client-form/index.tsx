@@ -11,19 +11,38 @@ export default function NewClientForm({
   className?: string;
   ref?: RefObject<null> | null;
 }) {
-  const { toggleNewClientFormVisible } = useGlobals();
+  const { toggleNewClientFormVisible, addClient } = useGlobals();
   const [name, setName] = useState('');
   const [key, setKey] = useState('');
   const [rate, setRate] = useState('');
   const [address, setAddress] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState('');
 
-  const saveClient = () => {
-    console.log('save iot');
-    console.log(name, key, rate, address);
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError('');
+    setIsSubmitting(true);
+
+    try {
+      await addClient({ name, key, rate: Number(rate), address });
+    } catch (err) {
+      console.error(err);
+      setError('Failed to save client. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+      toggleNewClientFormVisible();
+    }
   };
 
   return (
-    <form className={`${styles.form} ${className}`} ref={ref}>
+    <form
+      className={`${styles.form} ${className}`}
+      ref={ref}
+      onSubmit={handleSubmit}
+    >
+      {error && <div className="error-message">{error}</div>}
+
       <div className="form-item">
         <label className="form-label" htmlFor="client_name">
           Client
@@ -81,8 +100,8 @@ export default function NewClientForm({
         >
           Cancel
         </Button>
-        <Button type="button" onClick={saveClient}>
-          Save
+        <Button type="submit" disabled={isSubmitting}>
+          {isSubmitting ? 'Saving...' : 'Save'}
         </Button>
       </div>
     </form>
