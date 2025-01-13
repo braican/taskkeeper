@@ -122,6 +122,19 @@ a {
 
 /** Type **/
 
+.page-title {
+  font-size: var(--step-3);
+  font-weight: var(--weight-extrabold);
+  font-family: var(--font-display);
+}
+
+.uppercase-header {
+  font-size: var(--step--1);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: var(--weight-extrabold);
+}
+
 /** Layout **/
 
 /** Forms **/

@@ -18,14 +18,16 @@ export default function Dashboard() {
   }
 
   return (
-    <div>
-      <h1 className={styles.headline}>Hey, {user.name}</h1>
+    <div className={styles.dashboard}>
+      <h1 className={`${styles.headline} page-title`}>Hey, {user.name}</h1>
 
       <Button onClick={toggleNewClientFormVisible} icon={IconPlus}>
         Add new client
       </Button>
 
-      <ClientList />
+      <div className={styles.clientList}>
+        <ClientList />
+      </div>
     </div>
   );
 }

@@ -11,19 +11,13 @@ import {
   useState,
 } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
-
-interface Client {
-  id?: string;
-  name: string;
-  key: string;
-  rate: number;
-  address?: string;
-}
+import { Client } from '@/types';
 
 interface GlobalContextType {
   areClientsLoaded: boolean;
   clients: Client[];
   addClient: (client: Omit<Client, 'id'>) => Promise<void>;
+  getClientById: (id: string) => Client | undefined | null;
   isNewClientFormVisible: boolean;
   toggleNewClientFormVisible: () => void;
 }
@@ -43,6 +37,8 @@ export const GlobalProvider = ({ children }: { children: ReactNode }) => {
     hasFetchedRef.current = true;
 
     async function fetchClients() {
+      console.log('!! Fetch clients');
+
       try {
         const records = await pb.collection('clients').getFullList();
 
@@ -85,6 +81,14 @@ export const GlobalProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  const getClientById = (id: string) => {
+    if (clients.length < 1) {
+      return null;
+    }
+
+    return clients.find((client) => client.id === id);
+  };
+
   const toggleNewClientFormVisible = () => {
     setIsNewClientFormVisible(!isNewClientFormVisible);
   };
@@ -95,6 +99,7 @@ export const GlobalProvider = ({ children }: { children: ReactNode }) => {
         areClientsLoaded,
         clients,
         addClient,
+        getClientById,
         isNewClientFormVisible,
         toggleNewClientFormVisible,
       }}

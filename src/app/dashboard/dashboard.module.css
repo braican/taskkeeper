@@ -1,3 +1,13 @@
 .headline {
   margin-bottom: var(--space-l);
 }
+
+.clientList {
+  margin-top: var(--space-xl);
+}
+
+@media screen and (min-width: 862px) {
+  .dashboard {
+    padding-top: calc(48px + var(--space-m));
+  }
+}

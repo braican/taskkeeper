@@ -13,7 +13,7 @@ export default function Home() {
 
   return (
     <div>
-      <h1>Taskkeeper</h1>
+      <h1 className="page-title">Taskkeeper</h1>
       <Button onClick={handleLogin}>Log in with Google</Button>
     </div>
   );

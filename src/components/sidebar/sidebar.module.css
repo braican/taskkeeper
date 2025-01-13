@@ -59,6 +59,14 @@
   flex: 1;
   background-color: var(--bg-accent);
   border-radius: var(--border-radius);
+  padding: var(--space-m);
+}
+.clientList {
+  margin-top: var(--space-s);
+}
+.clientItem {
+  padding: 1em 0;
+  border-top: 1px solid var(--c-beige);
 }
 
 @media screen and (max-width: 861px) {

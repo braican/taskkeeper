@@ -1,0 +1,23 @@
+.dashboardLink {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dashboardIcon {
+  width: 14px;
+}
+
+.dashboardIcon svg {
+  display: block;
+  width: 100%;
+}
+
+@media screen and (min-width: 862px) {
+  .breadcrumbs {
+    height: 48px;
+    display: flex;
+    align-items: center;
+    margin-bottom: var(--space-m);
+  }
+}

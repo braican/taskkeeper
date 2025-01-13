@@ -2,18 +2,28 @@
 
 import { useRef, useEffect, useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 import UserNav from '@/components/user-nav';
 import pb from '@/lib/pocketbase';
-import styles from './sidebar.module.css';
+import { useGlobals } from '@/contexts/GlobalContext';
 import IconMenu from '@/icons/menu';
+import styles from './sidebar.module.css';
 
 export default function Sidebar() {
+  const pathname = usePathname();
+  const { clients, areClientsLoaded } = useGlobals();
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [sideMenuOpen, setSideMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const { user } = useAuth();
   const avatar = user ? pb.files.getURL(user, user.avatar) : null;
+
+  // Close the side menu whenever the route changes.
+  useEffect(() => {
+    setSideMenuOpen(false);
+  }, [pathname]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -77,7 +87,19 @@ export default function Sidebar() {
       </header>
 
       <div className={styles.sidebarNav}>
-        <h3>Current clients</h3>
+        {areClientsLoaded && clients && (
+          <>
+            <h3 className="uppercase-header">clients</h3>
+
+            <ul className={`ul-reset ${styles.clientList}`}>
+              {clients.map((client) => (
+                <li key={client.id} className={styles.clientItem}>
+                  <Link href={`/client/${client.id}`}>{client.name}</Link>
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
       </div>
     </aside>
   );

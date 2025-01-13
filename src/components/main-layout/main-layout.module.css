@@ -34,8 +34,7 @@
 
 .main {
   flex: 1;
-  padding: calc(var(--space-m) * 2 + 48px) var(--space-m)
-    calc(var(--space-m) * 2 + 48px) var(--space-m);
+  padding: calc(var(--space-m) * 2 + 48px) var(--space-m);
 }
 
 @media screen and (min-width: 862px) {
@@ -46,5 +45,6 @@
 
   .main {
     margin-left: calc(280px + 2vw);
+    padding-top: var(--space-m);
   }
 }
