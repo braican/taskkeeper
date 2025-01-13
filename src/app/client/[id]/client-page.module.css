@@ -1,9 +1,3 @@
-.dashboardLink {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
 .dashboardIcon {
   width: 14px;
 }
@@ -13,11 +7,17 @@
   width: 100%;
 }
 
+.breadcrumbs {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-m);
+}
+
 @media screen and (min-width: 862px) {
   .breadcrumbs {
     height: 48px;
-    display: flex;
-    align-items: center;
+    justify-content: flex-start;
     margin-bottom: var(--space-m);
   }
 }

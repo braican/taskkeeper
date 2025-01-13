@@ -41,6 +41,8 @@ export default function NewClientForm({
       ref={ref}
       onSubmit={handleSubmit}
     >
+      <h2 className={`${styles.formTitle} secondary-header`}>Add client</h2>
+
       {error && <div className="error-message">{error}</div>}
 
       <div className="form-item">
@@ -96,7 +98,7 @@ export default function NewClientForm({
         <Button
           type="button"
           onClick={toggleNewClientFormVisible}
-          style="secondary"
+          style="inline"
         >
           Cancel
         </Button>

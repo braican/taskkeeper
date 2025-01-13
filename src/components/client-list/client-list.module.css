@@ -23,12 +23,6 @@
   transform: translate3d(6px, 0, 0);
 }
 
-.header {
-  display: flex;
-  align-items: center;
-  gap: var(--space-xs);
-}
-
 .name {
   font-size: var(--step-2);
 }

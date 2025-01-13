@@ -12,13 +12,13 @@ export default function Button({
   onClick?: () => void;
   type?: 'button' | 'submit' | 'reset';
   icon?: React.ElementType | null;
-  style?: 'primary' | 'secondary';
+  style?: 'primary' | 'secondary' | 'inline';
   disabled?: boolean;
 }) {
   return (
     <button
       type={type}
-      className={`${styles.button} ${Icon ? styles.hasIcon : ''} ${styles[`button${style}`]}`}
+      className={`${styles.button} ${Icon ? `${styles.hasIcon} with-icon` : ''} ${styles[`button${style}`]}`}
       onClick={onClick}
       disabled={disabled}
     >

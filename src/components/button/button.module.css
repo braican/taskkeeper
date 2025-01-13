@@ -1,29 +1,41 @@
-.buttonprimary {
+.buttonprimary,
+.buttonsecondary {
+  transition: background-color 0.2s;
+  border-radius: var(--border-radius-small);
   font-weight: var(--weight-semibold);
+}
+
+.buttonprimary {
   background-color: var(--c-midnight-green);
   padding: var(--space-s) var(--space-m);
   color: var(--c-white);
-  border-radius: var(--border-radius-small);
-  transition: background-color 0.2s;
 }
 .buttonprimary:hover {
   background-color: var(--c-gunmetal);
 }
+.buttonprimary.hasIcon {
+  padding-left: var(--space-s);
+}
 
 .buttonsecondary {
+  background-color: var(--c-gray-light);
+  padding: 0.6em 1em;
+}
+.buttonsecondary:hover {
+  background-color: var(--c-beige);
+}
+.buttonsecondary.hasIcon {
+  padding-left: 0.6em;
+}
+
+.buttoninline {
   transition: color 0.2s;
   color: var(--c-gray-dark);
 }
-.buttonsecondary:hover {
+.buttoninline:hover {
   color: var(--c-midnight-green);
 }
 
-.hasIcon {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding-left: var(--space-s);
-}
 .icon {
   width: 24px;
 }

@@ -19,7 +19,7 @@ export default function ClientList() {
         <li key={client.id} className={styles.item}>
           <Link href={`/client/${client.id}`} className={styles.link}>
             <div className={styles.inner}>
-              <div className={styles.header}>
+              <div className="client-superscript">
                 <h3 className={styles.name}>{client.name}</h3>
                 <p>{client.key}</p>
               </div>
