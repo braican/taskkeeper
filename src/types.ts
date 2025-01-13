@@ -3,7 +3,7 @@ export interface Client {
   name: string;
   key: string;
   rate: number;
-  address?: string;
+  address: string;
 }
 
 export interface Task {

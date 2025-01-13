@@ -21,7 +21,7 @@ export default function Dashboard() {
     <div className={styles.dashboard}>
       <h1 className={`${styles.headline} page-title`}>Hey, {user.name}</h1>
 
-      <Button onClick={toggleClientFormVisible} icon={IconPlus}>
+      <Button onClick={() => toggleClientFormVisible()} icon={IconPlus}>
         Add new client
       </Button>
 

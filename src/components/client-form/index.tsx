@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useGlobals } from '@/contexts/GlobalContext';
 import SlideUpModalForm from '@/components/slide-up-modal-form';
 import { useClients } from '@/contexts/ClientContext';
@@ -7,14 +7,25 @@ export default function ClientForm() {
   const { isClientFormVisible, toggleClientFormVisible, clientToEdit } =
     useGlobals();
   const { addClient, updateClient } = useClients();
-  const [name, setName] = useState(clientToEdit ? clientToEdit.name : '');
-  const [key, setKey] = useState(clientToEdit ? clientToEdit.key : '');
-  const [rate, setRate] = useState(clientToEdit ? clientToEdit.rate : '');
-  const [address, setAddress] = useState(
-    clientToEdit ? clientToEdit.address : '',
-  );
-
+  const [name, setName] = useState('');
+  const [key, setKey] = useState('');
+  const [rate, setRate] = useState('');
+  const [address, setAddress] = useState('');
   const [error, setError] = useState('');
+
+  useEffect(() => {
+    if (clientToEdit) {
+      setName(clientToEdit.name);
+      setKey(clientToEdit.key);
+      setRate(clientToEdit.rate.toString());
+      setAddress(clientToEdit.address);
+    } else {
+      setName('');
+      setKey('');
+      setRate('');
+      setAddress('');
+    }
+  }, [clientToEdit]);
 
   const handleSubmit = async () => {
     setError('');

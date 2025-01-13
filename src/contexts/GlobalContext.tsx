@@ -29,6 +29,7 @@ export const GlobalProvider = ({ children }: { children: ReactNode }) => {
         setClientToEdit(client);
       }
     }
+
     setIsClientFormVisible(!isClientFormVisible);
   };
 
