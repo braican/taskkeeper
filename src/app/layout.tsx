@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Funnel_Sans, Funnel_Display } from 'next/font/google';
 import { AuthProvider } from '@/contexts/AuthContext';
 import { GlobalProvider } from '@/contexts/GlobalContext';
+import { ClientProvider } from '@/contexts/ClientContext';
 import IconLogo from '@/icons/logo';
 import MainLayout from '@/components/main-layout';
 
@@ -35,9 +36,11 @@ export default function RootLayout({
     >
       <body>
         <AuthProvider>
-          <GlobalProvider>
-            <MainLayout>{children}</MainLayout>
-          </GlobalProvider>
+          <ClientProvider>
+            <GlobalProvider>
+              <MainLayout>{children}</MainLayout>
+            </GlobalProvider>
+          </ClientProvider>
         </AuthProvider>
 
         <span className={styles.logo}>

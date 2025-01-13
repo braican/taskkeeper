@@ -1,9 +1,9 @@
-import { useGlobals } from '@/contexts/GlobalContext';
+import { useClients } from '@/contexts/ClientContext';
 import Link from 'next/link';
 import styles from './client-list.module.css';
 
 export default function ClientList() {
-  const { clients, areClientsLoaded } = useGlobals();
+  const { clients, areClientsLoaded } = useClients();
 
   if (!areClientsLoaded) {
     return <p>Loading clients...</p>;

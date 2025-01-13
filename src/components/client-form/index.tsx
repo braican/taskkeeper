@@ -1,15 +1,12 @@
 import { useState } from 'react';
 import { useGlobals } from '@/contexts/GlobalContext';
 import SlideUpModalForm from '@/components/slide-up-modal-form';
+import { useClients } from '@/contexts/ClientContext';
 
 export default function ClientForm() {
-  const {
-    isClientFormVisible,
-    toggleClientFormVisible,
-    addClient,
-    updateClient,
-    clientToEdit,
-  } = useGlobals();
+  const { isClientFormVisible, toggleClientFormVisible, clientToEdit } =
+    useGlobals();
+  const { addClient, updateClient } = useClients();
   const [name, setName] = useState(clientToEdit ? clientToEdit.name : '');
   const [key, setKey] = useState(clientToEdit ? clientToEdit.key : '');
   const [rate, setRate] = useState(clientToEdit ? clientToEdit.rate : '');

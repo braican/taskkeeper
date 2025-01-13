@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { useGlobals } from '@/contexts/GlobalContext';
+import { useClients } from '@/contexts/ClientContext';
 import Button from '@/components/button';
 import IconArrowLeft from '@/icons/arrow-back';
 import IconSettings from '@/icons/settings';
@@ -15,7 +16,7 @@ import TaskForm from '@/components/task-form';
 function ClientPageMain() {
   const [isTaskFormVisible, setIsTaskFormVisible] = useState(false);
   const { id }: { id: string } = useParams();
-  const { getClientById, areClientsLoaded } = useGlobals();
+  const { getClientById, areClientsLoaded } = useClients();
   const client = getClientById(id);
 
   if (!areClientsLoaded) {
@@ -56,7 +57,8 @@ function ClientPageMain() {
 
 export default function ClientPage() {
   const { id }: { id: string } = useParams();
-  const { getClientById, toggleClientFormVisible } = useGlobals();
+  const { toggleClientFormVisible } = useGlobals();
+  const { getClientById } = useClients();
   const client = getClientById(id);
 
   return (

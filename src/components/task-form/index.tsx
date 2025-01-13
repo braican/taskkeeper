@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import SlideUpModalForm from '@/components/slide-up-modal-form';
+import { Task } from '@/types';
 import styles from './task-form.module.css';
 
 export default function TaskForm({
@@ -18,7 +19,17 @@ export default function TaskForm({
     setError('');
 
     try {
-      // await addTask({description});
+      const task: Task = { description };
+
+      if (unit === 'hourly') {
+        task.hours = Number(value);
+      } else {
+        task.price = Number(value);
+      }
+
+      console.log(task);
+
+      // await addTask(task);
     } catch (err) {
       console.error(err);
       setError('Failed to save task.');

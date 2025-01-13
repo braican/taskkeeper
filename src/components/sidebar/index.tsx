@@ -6,14 +6,14 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 import UserNav from '@/components/user-nav';
+import { useClients } from '@/contexts/ClientContext';
 import pb from '@/lib/pocketbase';
-import { useGlobals } from '@/contexts/GlobalContext';
 import IconMenu from '@/icons/menu';
 import styles from './sidebar.module.css';
 
 export default function Sidebar() {
   const pathname = usePathname();
-  const { clients, areClientsLoaded } = useGlobals();
+  const { clients, areClientsLoaded } = useClients();
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [sideMenuOpen, setSideMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);

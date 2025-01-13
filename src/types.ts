@@ -5,3 +5,12 @@ export interface Client {
   rate: number;
   address?: string;
 }
+
+export interface Task {
+  id?: string;
+  client: string;
+  description: string;
+  status?: string;
+  hours?: number;
+  price?: number;
+}
