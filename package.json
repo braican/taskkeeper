@@ -22,13 +22,15 @@
     "next": "15.1.4",
     "pocketbase": "^0.25.0",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "react-transition-group": "^4.4.5"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@types/react-transition-group": "^4.4.12",
     "eslint": "^9",
     "eslint-config-next": "15.1.4",
     "prettier": "3.4.2",

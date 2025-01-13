@@ -2,16 +2,19 @@ import Button from '@/components/button';
 import { useGlobals } from '@/contexts/GlobalContext';
 
 import styles from './new-client-form.module.css';
+import { RefObject } from 'react';
 
 export default function NewClientForm({
   className = '',
+  ref = null,
 }: {
   className?: string;
+  ref?: RefObject<null> | null;
 }) {
   const { toggleNewClientFormVisible } = useGlobals();
 
   return (
-    <form className={`${styles.form} ${className}`}>
+    <form className={`${styles.form} ${className}`} ref={ref}>
       <div>
         <label htmlFor="client_name">Client</label>
         <input type="text" id="client_name" />

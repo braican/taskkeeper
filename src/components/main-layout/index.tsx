@@ -1,5 +1,7 @@
 'use client';
 
+import { useRef } from 'react';
+import { CSSTransition } from 'react-transition-group';
 import { useAuth } from '@/contexts/AuthContext';
 import { useGlobals } from '@/contexts/GlobalContext';
 import Sidebar from '@/components/sidebar';
@@ -13,10 +15,13 @@ export default function MainLayout({
 }) {
   const { isAuthenticated } = useAuth();
   const { isNewClientFormVisible } = useGlobals();
+  const newClientFormRef = useRef(null);
 
   return (
     <>
-      <div className={styles.mainLayout}>
+      <div
+        className={`${styles.mainLayout} ${isNewClientFormVisible ? styles.modalOverlay : ''}`}
+      >
         {isAuthenticated && (
           <aside className={styles.aside}>
             <Sidebar />
@@ -24,8 +29,17 @@ export default function MainLayout({
         )}
 
         <main className={styles.main}>{children}</main>
-        {isNewClientFormVisible && <NewClientForm />}
       </div>
+
+      <CSSTransition
+        nodeRef={newClientFormRef}
+        in={isNewClientFormVisible}
+        timeout={300}
+        classNames="slideup"
+        unmountOnExit
+      >
+        <NewClientForm ref={newClientFormRef} />
+      </CSSTransition>
     </>
   );
 }

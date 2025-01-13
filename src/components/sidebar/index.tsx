@@ -62,8 +62,6 @@ export default function Sidebar() {
                 )}
               </figure>
             </button>
-
-            <span className={styles.userName}>{user.name}</span>
           </>
         )}
 

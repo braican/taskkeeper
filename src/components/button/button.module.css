@@ -1,9 +1,26 @@
 .button {
+  transition: background-color 0.2s;
   border-radius: var(--border-radius-small);
-  background-color: var(--bg-accent);
+  background-color: var(--c-midnight-green);
   padding: var(--space-s) var(--space-m);
+  color: var(--c-white);
+  font-weight: var(--weight-semibold);
 }
 
 .button:hover {
-  background-color: var(--c-gray-mid);
+  background-color: var(--c-gunmetal);
+}
+
+.hasIcon {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-left: var(--space-s);
+}
+.icon {
+  width: 24px;
+}
+.icon svg {
+  width: 100%;
+  display: block;
 }

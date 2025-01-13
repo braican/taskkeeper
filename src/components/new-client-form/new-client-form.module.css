@@ -1,8 +1,10 @@
 .form {
   position: fixed;
-  left: 0;
-  right: 0;
+  left: var(--space-s);
+  right: var(--space-s);
   bottom: 0;
   padding: var(--space-m);
   background-color: var(--c-white);
+  border-radius: var(--border-radius) var(--border-radius) 0 0;
+  z-index: 10;
 }
