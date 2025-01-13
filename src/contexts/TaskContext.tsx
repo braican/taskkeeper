@@ -18,6 +18,9 @@ interface TaskContextType {
   areTasksLoaded: boolean;
   tasks: Task[];
   addTask: (taskData: Omit<Task, 'id'>) => Promise<void>;
+  updateTask: (taskData: Task) => Promise<void>;
+  deleteTask: (taskId: string) => Promise<void>;
+  getClientTasks: (clientId: string) => Task[];
 }
 
 const TaskContext = createContext<TaskContextType | undefined>(undefined);
@@ -71,8 +74,52 @@ export const TaskProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  const updateTask = async (taskData: Task) => {
+    if (!taskData.id) {
+      return;
+    }
+
+    try {
+      await pb.collection('tasks').update(taskData.id, taskData);
+      setTasks((oldTasks) =>
+        oldTasks.map((task) => {
+          if (task.id !== taskData.id) {
+            return task;
+          }
+          return { ...task, ...taskData };
+        }),
+      );
+    } catch (error) {
+      console.error('Error updating task:', error);
+      throw error;
+    }
+  };
+
+  const deleteTask = async (taskId: string) => {
+    try {
+      await pb.collection('tasks').delete(taskId);
+      setTasks((oldTasks) => oldTasks.filter((task) => task.id !== taskId));
+    } catch (error) {
+      console.error('Error deleting task:', error);
+      throw error;
+    }
+  };
+
+  const getClientTasks = (clientId: string): Task[] => {
+    return tasks.filter((task) => task.client === clientId);
+  };
+
   return (
-    <TaskContext.Provider value={{ areTasksLoaded, tasks, addTask }}>
+    <TaskContext.Provider
+      value={{
+        areTasksLoaded,
+        tasks,
+        addTask,
+        updateTask,
+        deleteTask,
+        getClientTasks,
+      }}
+    >
       {children}
     </TaskContext.Provider>
   );

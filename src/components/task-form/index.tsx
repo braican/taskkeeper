@@ -1,15 +1,19 @@
 import { useState } from 'react';
+import { useTasks } from '@/contexts/TaskContext';
 import SlideUpModalForm from '@/components/slide-up-modal-form';
-import { Task } from '@/types';
+import { Client, Task } from '@/types';
 import styles from './task-form.module.css';
 
 export default function TaskForm({
   visible = false,
   setVisibility,
+  client,
 }: {
   visible: boolean;
   setVisibility: (setVisibility: boolean) => void;
+  client: Client;
 }) {
+  const { addTask } = useTasks();
   const [description, setDescription] = useState('');
   const [value, setValue] = useState('');
   const [unit, setUnit] = useState<'hourly' | 'fixed'>('hourly');
@@ -19,7 +23,11 @@ export default function TaskForm({
     setError('');
 
     try {
-      const task: Task = { description };
+      const task: Omit<Task, 'id'> = {
+        description,
+        client: client.id,
+        status: 'estimated',
+      };
 
       if (unit === 'hourly') {
         task.hours = Number(value);
@@ -27,9 +35,7 @@ export default function TaskForm({
         task.price = Number(value);
       }
 
-      console.log(task);
-
-      // await addTask(task);
+      await addTask(task);
     } catch (err) {
       console.error(err);
       setError('Failed to save task.');

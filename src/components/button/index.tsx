@@ -7,6 +7,7 @@ export default function Button({
   icon: Icon = null,
   style = 'primary',
   disabled = false,
+  iconOnly = false,
 }: {
   children: React.ReactNode;
   onClick?: () => void;
@@ -14,11 +15,12 @@ export default function Button({
   icon?: React.ElementType | null;
   style?: 'primary' | 'secondary' | 'inline';
   disabled?: boolean;
+  iconOnly?: boolean;
 }) {
   return (
     <button
       type={type}
-      className={`${styles.button} ${Icon ? `${styles.hasIcon} with-icon` : ''} ${styles[`button${style}`]}`}
+      className={`${styles.button} ${iconOnly ? styles.iconOnly : ''} ${Icon ? `${styles.hasIcon} with-icon` : ''} ${styles[`button${style}`]}`}
       onClick={onClick}
       disabled={disabled}
     >
@@ -27,7 +29,7 @@ export default function Button({
           <Icon />
         </span>
       )}
-      <span>{children}</span>
+      <span className={iconOnly ? 'sr-only' : ''}>{children}</span>
     </button>
   );
 }

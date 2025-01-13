@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useGlobals } from '@/contexts/GlobalContext';
 import SlideUpModalForm from '@/components/slide-up-modal-form';
 import { useClients } from '@/contexts/ClientContext';
+import { Client } from '@/types';
 
 export default function ClientForm() {
   const { isClientFormVisible, toggleClientFormVisible, clientToEdit } =
@@ -31,7 +32,12 @@ export default function ClientForm() {
     setError('');
 
     try {
-      const newData = { name, key, rate: Number(rate), address };
+      const newData: Omit<Client, 'id'> = {
+        name,
+        key,
+        rate: Number(rate),
+        address,
+      };
       if (clientToEdit) {
         await updateClient({ ...newData, id: clientToEdit.id });
       } else {

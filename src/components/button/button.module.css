@@ -28,6 +28,12 @@
   padding-left: 0.6em;
 }
 
+.buttonprimary.iconOnly,
+.buttonsecondary.iconOnly {
+  padding-left: var(--space-xs);
+  padding-right: var(--space-xs);
+}
+
 .buttoninline {
   transition: color 0.2s;
   color: var(--c-gray-dark);

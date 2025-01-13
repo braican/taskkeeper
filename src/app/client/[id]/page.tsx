@@ -12,6 +12,7 @@ import IconPlus from '@/icons/plus';
 
 import styles from './client-page.module.css';
 import TaskForm from '@/components/task-form';
+import TaskList from '@/components/task-list';
 
 function ClientPageMain() {
   const [isTaskFormVisible, setIsTaskFormVisible] = useState(false);
@@ -43,10 +44,15 @@ function ClientPageMain() {
         <Button onClick={() => setIsTaskFormVisible(true)} icon={IconPlus}>
           Add task
         </Button>
+
+        <div className={styles.taskList}>
+          <TaskList client={client} />
+        </div>
       </div>
 
       {client && (
         <TaskForm
+          client={client}
           visible={isTaskFormVisible}
           setVisibility={setIsTaskFormVisible}
         />

@@ -89,7 +89,7 @@ export const ClientProvider = ({ children }: { children: ReactNode }) => {
         }),
       );
     } catch (error) {
-      console.error('Error adding client:', error);
+      console.error('Error updating client:', error);
       throw error;
     }
   };

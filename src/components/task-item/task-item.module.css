@@ -1,0 +1,110 @@
+.task {
+  background-color: var(--c-white);
+  border-radius: var(--border-radius);
+  padding: var(--space-s);
+  display: grid;
+  grid-template-columns: fit-content(45%) 1fr fit-content(45%);
+  align-items: center;
+  gap: var(--space-xs) var(--space-m);
+  position: relative;
+  overflow: hidden;
+}
+
+.descriptionCell {
+  grid-column: 1 / span 2;
+}
+
+.taskCost {
+  font-weight: var(--weight-extrabold);
+  min-width: 6ch;
+}
+
+.hoursLabel {
+  display: inline-block;
+  font-weight: var(--weight-semibold);
+  padding: var(--space-xs);
+}
+
+.costInput,
+.description,
+.costDisplay,
+.hours {
+  transition: border-color 0.2s;
+  padding: var(--space-xs);
+  border: 1px dashed transparent;
+  border-radius: var(--border-radius-small);
+}
+
+.task:hover .description,
+.task:hover .costDisplay,
+.task:hover .hours,
+.task:hover .costInput {
+  border-color: var(--c-beige);
+}
+
+.task .description:focus,
+.task .hours:focus,
+.task .costInput:focus,
+.task .costInput:focus {
+  border-color: var(--c-midnight-green);
+  border-style: solid;
+  outline: none;
+}
+
+.taskCost {
+  position: relative;
+}
+.costDisplay {
+  display: block;
+  text-align: right;
+}
+.costInput {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  appearance: none;
+  opacity: 0;
+  text-align: right;
+  -moz-appearance: textfield;
+}
+.costInput:focus {
+  opacity: 1;
+}
+.costInput::-webkit-outer-spin-button,
+.costInput::-webkit-inner-spin-button {
+  appearance: none;
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.alertCenter {
+  grid-column: 2 / span 2;
+  text-align: right;
+  padding: var(--space-xs);
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.deleteModal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--c-white);
+  padding: var(--space-m);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.deleteOptions {
+  display: flex;
+  gap: var(--space-m);
+  margin-top: var(--space-s);
+}

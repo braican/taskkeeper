@@ -1,5 +1,5 @@
 export interface Client {
-  id?: string;
+  id: string;
   name: string;
   key: string;
   rate: number;
@@ -7,10 +7,10 @@ export interface Client {
 }
 
 export interface Task {
-  id?: string;
+  id: string;
   client: string;
   description: string;
-  status?: string;
+  status: 'estimated' | 'approved' | 'done';
   hours?: number;
   price?: number;
 }

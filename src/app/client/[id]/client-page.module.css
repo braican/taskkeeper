@@ -19,6 +19,11 @@
   margin-top: var(--space-l);
 }
 
+.taskList {
+  margin-top: var(--space-l);
+  max-width: 600px;
+}
+
 @media screen and (min-width: 862px) {
   .breadcrumbs {
     height: 48px;
