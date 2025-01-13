@@ -1,5 +1,4 @@
 import { useState } from 'react';
-
 import { useGlobals } from '@/contexts/GlobalContext';
 import SlideUpModalForm from '@/components/slide-up-modal-form';
 
@@ -17,13 +16,11 @@ export default function ClientForm() {
   const [address, setAddress] = useState(
     clientToEdit ? clientToEdit.address : '',
   );
-  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const [error, setError] = useState('');
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
     setError('');
-    setIsSubmitting(true);
 
     try {
       const newData = { name, key, rate: Number(rate), address };
@@ -36,7 +33,6 @@ export default function ClientForm() {
       console.error(err);
       setError('Failed to save client.');
     } finally {
-      setIsSubmitting(false);
       toggleClientFormVisible();
     }
   };
@@ -47,7 +43,6 @@ export default function ClientForm() {
       title={clientToEdit ? `Editing ${clientToEdit.name}` : 'Add client'}
       onSubmit={handleSubmit}
       onCancel={toggleClientFormVisible}
-      isSubmitting={isSubmitting}
     >
       <>
         {error && <div className="error-message">{error}</div>}

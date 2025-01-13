@@ -13,6 +13,7 @@ import styles from './client-page.module.css';
 import TaskForm from '@/components/task-form';
 
 function ClientPageMain() {
+  const [isTaskFormVisible, setIsTaskFormVisible] = useState(false);
   const { id }: { id: string } = useParams();
   const { getClientById, areClientsLoaded } = useGlobals();
   const client = getClientById(id);
@@ -38,16 +39,22 @@ function ClientPageMain() {
       </header>
 
       <div className={styles.main}>
-        <Button onClick={() => {}} icon={IconPlus}>
+        <Button onClick={() => setIsTaskFormVisible(true)} icon={IconPlus}>
           Add task
         </Button>
       </div>
+
+      {client && (
+        <TaskForm
+          visible={isTaskFormVisible}
+          setVisibility={setIsTaskFormVisible}
+        />
+      )}
     </>
   );
 }
 
 export default function ClientPage() {
-  const [isTaskFormVisible, setIsTaskFormVisible] = useState(false);
   const { id }: { id: string } = useParams();
   const { getClientById, toggleClientFormVisible } = useGlobals();
   const client = getClientById(id);
@@ -74,13 +81,6 @@ export default function ClientPage() {
       </nav>
 
       <ClientPageMain />
-
-      {/* {client && (
-        <TaskForm
-          toggleVisibility={setIsTaskFormVisible}
-          visible={isTaskFormVisible}
-        />
-      )} */}
     </div>
   );
 }

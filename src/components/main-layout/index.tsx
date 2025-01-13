@@ -12,12 +12,12 @@ export default function MainLayout({
   children: React.ReactNode;
 }) {
   const { isAuthenticated } = useAuth();
-  const { isClientFormVisible } = useGlobals();
+  const { bodyScrollIsLocked } = useGlobals();
 
   return (
     <>
       <div
-        className={`${styles.mainLayout} ${isClientFormVisible ? styles.modalOverlay : ''}`}
+        className={`${styles.mainLayout} ${bodyScrollIsLocked ? styles.modalOverlay : ''}`}
       >
         {isAuthenticated && (
           <aside className={styles.aside}>

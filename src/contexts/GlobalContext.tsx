@@ -22,6 +22,8 @@ interface GlobalContextType {
   isClientFormVisible: boolean;
   toggleClientFormVisible: (clientId?: string) => void;
   clientToEdit: Client | null;
+  bodyScrollIsLocked: boolean;
+  setBodyScrollIsLocked: (shouldLock: boolean) => void;
 }
 
 const GlobalContext = createContext<GlobalContextType | undefined>(undefined);
@@ -31,6 +33,7 @@ export const GlobalProvider = ({ children }: { children: ReactNode }) => {
   const [areClientsLoaded, setClientsLoaded] = useState(false);
   const [clients, setClients] = useState<Client[]>([]);
   const [clientToEdit, setClientToEdit] = useState<Client | null>(null);
+  const [bodyScrollIsLocked, setBodyScrollIsLocked] = useState(false);
   const { user } = useAuth();
   const hasFetchedRef = useRef(false); // Add this line
 
@@ -135,6 +138,8 @@ export const GlobalProvider = ({ children }: { children: ReactNode }) => {
         isClientFormVisible,
         toggleClientFormVisible,
         clientToEdit,
+        setBodyScrollIsLocked,
+        bodyScrollIsLocked,
       }}
     >
       {children}
