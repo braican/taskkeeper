@@ -1,0 +1,24 @@
+.modal {
+  position: fixed;
+  left: var(--space-s);
+  right: var(--space-s);
+  bottom: 0;
+  max-width: 640px;
+  padding: var(--space-m) var(--space-m) var(--space-l) var(--space-m);
+  background-color: var(--c-white);
+  border-radius: var(--border-radius) var(--border-radius) 0 0;
+  z-index: 10;
+  max-height: calc(100svh - var(--space-m));
+  overflow: auto;
+}
+
+.formTitle {
+  margin-bottom: var(--space-m);
+}
+
+.formActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-m);
+  margin-top: var(--space-m);
+}

@@ -1,13 +1,16 @@
 'use client';
 
+import { useState } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { useGlobals } from '@/contexts/GlobalContext';
+import Button from '@/components/button';
+import IconArrowLeft from '@/icons/arrow-back';
+import IconSettings from '@/icons/settings';
+import IconPlus from '@/icons/plus';
 
 import styles from './client-page.module.css';
-import IconArrowLeft from '@/icons/arrow-back';
-import Button from '@/components/button';
-import IconSettings from '@/icons/settings';
+import TaskForm from '@/components/task-form';
 
 function ClientPageMain() {
   const { id }: { id: string } = useParams();
@@ -23,19 +26,28 @@ function ClientPageMain() {
   }
 
   return (
-    <header>
-      <div className="client-superscript">
-        <h1 className="page-title">{client.name}</h1>
-        <span>{client.key}</span>
-      </div>
-      <p>${client.rate}/hour</p>
+    <>
+      <header>
+        <div className="client-superscript">
+          <h1 className="page-title">{client.name}</h1>
+          <span>{client.key}</span>
+        </div>
+        <p>${client.rate}/hour</p>
 
-      {client.address && <p>{client.address}</p>}
-    </header>
+        {client.address && <p>{client.address}</p>}
+      </header>
+
+      <div className={styles.main}>
+        <Button onClick={() => {}} icon={IconPlus}>
+          Add task
+        </Button>
+      </div>
+    </>
   );
 }
 
 export default function ClientPage() {
+  const [isTaskFormVisible, setIsTaskFormVisible] = useState(false);
   const { id }: { id: string } = useParams();
   const { getClientById, toggleClientFormVisible } = useGlobals();
   const client = getClientById(id);
@@ -62,6 +74,13 @@ export default function ClientPage() {
       </nav>
 
       <ClientPageMain />
+
+      {/* {client && (
+        <TaskForm
+          toggleVisibility={setIsTaskFormVisible}
+          visible={isTaskFormVisible}
+        />
+      )} */}
     </div>
   );
 }

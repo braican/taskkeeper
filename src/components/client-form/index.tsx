@@ -1,18 +1,16 @@
-import { useState, RefObject } from 'react';
-import Button from '@/components/button';
+import { useState } from 'react';
+
 import { useGlobals } from '@/contexts/GlobalContext';
+import SlideUpModalForm from '@/components/slide-up-modal-form';
 
-import styles from './client-form.module.css';
-
-export default function ClientForm({
-  className = '',
-  ref = null,
-}: {
-  className?: string;
-  ref?: RefObject<null> | null;
-}) {
-  const { toggleClientFormVisible, addClient, updateClient, clientToEdit } =
-    useGlobals();
+export default function ClientForm() {
+  const {
+    isClientFormVisible,
+    toggleClientFormVisible,
+    addClient,
+    updateClient,
+    clientToEdit,
+  } = useGlobals();
   const [name, setName] = useState(clientToEdit ? clientToEdit.name : '');
   const [key, setKey] = useState(clientToEdit ? clientToEdit.key : '');
   const [rate, setRate] = useState(clientToEdit ? clientToEdit.rate : '');
@@ -44,74 +42,65 @@ export default function ClientForm({
   };
 
   return (
-    <form
-      className={`${styles.form} ${className}`}
-      ref={ref}
+    <SlideUpModalForm
+      visible={isClientFormVisible}
+      title={clientToEdit ? `Editing ${clientToEdit.name}` : 'Add client'}
       onSubmit={handleSubmit}
+      onCancel={toggleClientFormVisible}
+      isSubmitting={isSubmitting}
     >
-      <h2 className={`${styles.formTitle} secondary-header`}>
-        {clientToEdit ? `Editing ${clientToEdit.name}` : 'Add client'}
-      </h2>
+      <>
+        {error && <div className="error-message">{error}</div>}
 
-      {error && <div className="error-message">{error}</div>}
-
-      <div className="form-item">
-        <label className="form-label" htmlFor="client_name">
-          Client
-        </label>
-        <input
-          className="form-input"
-          type="text"
-          id="client_name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-      </div>
-      <div className="form-item">
-        <label className="form-label" htmlFor="client_key">
-          Client key
-        </label>
-        <input
-          className="form-input"
-          type="text"
-          id="client_key"
-          value={key}
-          onChange={(e) => setKey(e.target.value)}
-        />
-      </div>
-      <div className="form-item">
-        <label className="form-label" htmlFor="client_rate">
-          Rate
-        </label>
-        <input
-          className="form-input"
-          type="number"
-          id="client_rate"
-          value={rate}
-          onChange={(e) => setRate(e.target.value)}
-        />
-      </div>
-      <div className="form-item">
-        <label className="form-label" htmlFor="client_address">
-          Address
-        </label>
-        <textarea
-          className="form-input"
-          id="client_address"
-          rows={2}
-          value={address}
-          onChange={(e) => setAddress(e.target.value)}
-        ></textarea>
-      </div>
-
-      <div className={`${styles.formActions} form-item`}>
-        <Button type="button" onClick={toggleClientFormVisible} style="inline">
-          Cancel
-        </Button>
-        <Button type="submit" disabled={isSubmitting}>
-          {isSubmitting ? 'Saving...' : 'Save'}
-        </Button>
-      </div>
-    </form>
+        <div className="form-item">
+          <label className="form-label" htmlFor="client_name">
+            Client
+          </label>
+          <input
+            className="form-input"
+            type="text"
+            id="client_name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+        </div>
+        <div className="form-item">
+          <label className="form-label" htmlFor="client_key">
+            Client key
+          </label>
+          <input
+            className="form-input"
+            type="text"
+            id="client_key"
+            value={key}
+            onChange={(e) => setKey(e.target.value)}
+          />
+        </div>
+        <div className="form-item">
+          <label className="form-label" htmlFor="client_rate">
+            Rate
+          </label>
+          <input
+            className="form-input"
+            type="number"
+            id="client_rate"
+            value={rate}
+            onChange={(e) => setRate(e.target.value)}
+          />
+        </div>
+        <div className="form-item">
+          <label className="form-label" htmlFor="client_address">
+            Address
+          </label>
+          <textarea
+            className="form-input"
+            id="client_address"
+            rows={2}
+            value={address}
+            onChange={(e) => setAddress(e.target.value)}
+          ></textarea>
+        </div>
+      </>
+    </SlideUpModalForm>
   );
 }
