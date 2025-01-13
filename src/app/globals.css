@@ -131,8 +131,13 @@ input,
 textarea {
   font: inherit;
 }
-.form-item + .form-item {
+.form-row + .form-row {
   margin-top: var(--space-s);
+}
+
+.form-row.flex-fields {
+  display: flex;
+  gap: var(--space-m);
 }
 
 .form-label {

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import SlideUpModalForm from '@/components/slide-up-modal-form';
+import styles from './task-form.module.css';
 
 export default function TaskForm({
   visible = false,
@@ -10,6 +11,7 @@ export default function TaskForm({
 }) {
   const [description, setDescription] = useState('');
   const [value, setValue] = useState('');
+  const [unit, setUnit] = useState<'hourly' | 'fixed'>('hourly');
   const [error, setError] = useState('');
 
   const handleSubmit = async () => {
@@ -35,9 +37,9 @@ export default function TaskForm({
       <>
         {error && <div className="error-message">{error}</div>}
 
-        <div className="form-item">
+        <div className="form-row">
           <label className="form-label" htmlFor="task_description">
-            Address
+            Description
           </label>
           <textarea
             className="form-input"
@@ -48,17 +50,48 @@ export default function TaskForm({
           ></textarea>
         </div>
 
-        <div className="form-item">
-          <label className="form-label" htmlFor="task_value">
-            Rate
-          </label>
-          <input
-            className="form-input"
-            type="number"
-            id="task_value"
-            value={value}
-            onChange={(e) => setValue(e.target.value)}
-          />
+        <div className={`form-row flex-fields ${styles.rateRow}`}>
+          <div className={styles.rateToggle}>
+            <input
+              className={`${styles.rateCheckbox} sr-only`}
+              type="checkbox"
+              id="rate_toggle_indicator"
+              checked={unit === 'fixed'}
+              onChange={() => setUnit(unit === 'hourly' ? 'fixed' : 'hourly')}
+            />
+            <button
+              type="button"
+              onClick={() => setUnit('hourly')}
+              className={styles.hourlyLabel}
+            >
+              Hourly
+            </button>
+            <label
+              htmlFor="rate_toggle_indicator"
+              className={styles.toggleIndicator}
+            ></label>
+            <button
+              type="button"
+              onClick={() => setUnit('fixed')}
+              className={styles.fixedLabel}
+            >
+              Fixed
+            </button>
+          </div>
+          <div className={styles.valueField}>
+            <label className="form-label" htmlFor="task_value">
+              {unit === 'fixed' ? 'Price' : 'Hours'}
+            </label>
+            <div className={unit === 'fixed' ? styles.fixedValueInput : ''}>
+              <input
+                className="form-input"
+                type="number"
+                id="task_value"
+                value={value}
+                onChange={(e) => setValue(e.target.value)}
+              />
+            </div>
+          </div>
         </div>
       </>
     </SlideUpModalForm>

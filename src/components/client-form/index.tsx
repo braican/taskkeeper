@@ -47,7 +47,7 @@ export default function ClientForm() {
       <>
         {error && <div className="error-message">{error}</div>}
 
-        <div className="form-item">
+        <div className="form-row">
           <label className="form-label" htmlFor="client_name">
             Client
           </label>
@@ -59,7 +59,7 @@ export default function ClientForm() {
             onChange={(e) => setName(e.target.value)}
           />
         </div>
-        <div className="form-item">
+        <div className="form-row">
           <label className="form-label" htmlFor="client_key">
             Client key
           </label>
@@ -71,7 +71,7 @@ export default function ClientForm() {
             onChange={(e) => setKey(e.target.value)}
           />
         </div>
-        <div className="form-item">
+        <div className="form-row">
           <label className="form-label" htmlFor="client_rate">
             Rate
           </label>
@@ -83,7 +83,7 @@ export default function ClientForm() {
             onChange={(e) => setRate(e.target.value)}
           />
         </div>
-        <div className="form-item">
+        <div className="form-row">
           <label className="form-label" htmlFor="client_address">
             Address
           </label>
