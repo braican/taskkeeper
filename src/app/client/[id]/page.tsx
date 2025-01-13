@@ -37,7 +37,7 @@ function ClientPageMain() {
 
 export default function ClientPage() {
   const { id }: { id: string } = useParams();
-  const { getClientById } = useGlobals();
+  const { getClientById, toggleClientFormVisible } = useGlobals();
   const client = getClientById(id);
 
   return (
@@ -51,7 +51,11 @@ export default function ClientPage() {
         </Link>
 
         {client && (
-          <Button icon={IconSettings} style="secondary">
+          <Button
+            icon={IconSettings}
+            style="secondary"
+            onClick={() => toggleClientFormVisible(client.id)}
+          >
             Edit client
           </Button>
         )}

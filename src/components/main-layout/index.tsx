@@ -5,7 +5,7 @@ import { CSSTransition } from 'react-transition-group';
 import { useAuth } from '@/contexts/AuthContext';
 import { useGlobals } from '@/contexts/GlobalContext';
 import Sidebar from '@/components/sidebar';
-import NewClientForm from '@/components/new-client-form';
+import ClientForm from '@/components/client-form';
 import styles from './main-layout.module.css';
 
 export default function MainLayout({
@@ -14,13 +14,13 @@ export default function MainLayout({
   children: React.ReactNode;
 }) {
   const { isAuthenticated } = useAuth();
-  const { isNewClientFormVisible } = useGlobals();
-  const newClientFormRef = useRef(null);
+  const { isClientFormVisible } = useGlobals();
+  const clientFormRef = useRef(null);
 
   return (
     <>
       <div
-        className={`${styles.mainLayout} ${isNewClientFormVisible ? styles.modalOverlay : ''}`}
+        className={`${styles.mainLayout} ${isClientFormVisible ? styles.modalOverlay : ''}`}
       >
         {isAuthenticated && (
           <aside className={styles.aside}>
@@ -32,13 +32,13 @@ export default function MainLayout({
       </div>
 
       <CSSTransition
-        nodeRef={newClientFormRef}
-        in={isNewClientFormVisible}
+        nodeRef={clientFormRef}
+        in={isClientFormVisible}
         timeout={300}
         classNames="slideup"
         unmountOnExit
       >
-        <NewClientForm ref={newClientFormRef} />
+        <ClientForm ref={clientFormRef} />
       </CSSTransition>
     </>
   );

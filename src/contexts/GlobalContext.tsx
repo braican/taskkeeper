@@ -17,17 +17,20 @@ interface GlobalContextType {
   areClientsLoaded: boolean;
   clients: Client[];
   addClient: (client: Omit<Client, 'id'>) => Promise<void>;
+  updateClient: (client: Client) => Promise<void>;
   getClientById: (id: string) => Client | undefined | null;
-  isNewClientFormVisible: boolean;
-  toggleNewClientFormVisible: () => void;
+  isClientFormVisible: boolean;
+  toggleClientFormVisible: (clientId?: string) => void;
+  clientToEdit: Client | null;
 }
 
 const GlobalContext = createContext<GlobalContextType | undefined>(undefined);
 
 export const GlobalProvider = ({ children }: { children: ReactNode }) => {
-  const [isNewClientFormVisible, setIsNewClientFormVisible] = useState(false);
+  const [isClientFormVisible, setIsClientFormVisible] = useState(false);
   const [areClientsLoaded, setClientsLoaded] = useState(false);
   const [clients, setClients] = useState<Client[]>([]);
+  const [clientToEdit, setClientToEdit] = useState<Client | null>(null);
   const { user } = useAuth();
   const hasFetchedRef = useRef(false); // Add this line
 
@@ -41,8 +44,6 @@ export const GlobalProvider = ({ children }: { children: ReactNode }) => {
 
       try {
         const records = await pb.collection('clients').getFullList();
-
-        // Only update state if component is still mounted
         const clients = records.map((record) => ({
           id: record.id,
           name: record.name,
@@ -81,6 +82,29 @@ export const GlobalProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  const updateClient = async (clientData: Client) => {
+    if (!clientData.id) {
+      return;
+    }
+
+    try {
+      await pb.collection('clients').update(clientData.id, clientData);
+
+      setClients((oldClients) =>
+        oldClients.map((client) => {
+          if (client.id !== clientData.id) {
+            return client;
+          }
+
+          return { ...client, ...clientData };
+        }),
+      );
+    } catch (error) {
+      console.error('Error adding client:', error);
+      throw error;
+    }
+  };
+
   const getClientById = (id: string) => {
     if (clients.length < 1) {
       return null;
@@ -89,8 +113,15 @@ export const GlobalProvider = ({ children }: { children: ReactNode }) => {
     return clients.find((client) => client.id === id);
   };
 
-  const toggleNewClientFormVisible = () => {
-    setIsNewClientFormVisible(!isNewClientFormVisible);
+  const toggleClientFormVisible = (clientId?: string) => {
+    if (clientId) {
+      const client = getClientById(clientId);
+
+      if (client) {
+        setClientToEdit(client);
+      }
+    }
+    setIsClientFormVisible(!isClientFormVisible);
   };
 
   return (
@@ -99,9 +130,11 @@ export const GlobalProvider = ({ children }: { children: ReactNode }) => {
         areClientsLoaded,
         clients,
         addClient,
+        updateClient,
         getClientById,
-        isNewClientFormVisible,
-        toggleNewClientFormVisible,
+        isClientFormVisible,
+        toggleClientFormVisible,
+        clientToEdit,
       }}
     >
       {children}

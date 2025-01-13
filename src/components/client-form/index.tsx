@@ -2,20 +2,23 @@ import { useState, RefObject } from 'react';
 import Button from '@/components/button';
 import { useGlobals } from '@/contexts/GlobalContext';
 
-import styles from './new-client-form.module.css';
+import styles from './client-form.module.css';
 
-export default function NewClientForm({
+export default function ClientForm({
   className = '',
   ref = null,
 }: {
   className?: string;
   ref?: RefObject<null> | null;
 }) {
-  const { toggleNewClientFormVisible, addClient } = useGlobals();
-  const [name, setName] = useState('');
-  const [key, setKey] = useState('');
-  const [rate, setRate] = useState('');
-  const [address, setAddress] = useState('');
+  const { toggleClientFormVisible, addClient, updateClient, clientToEdit } =
+    useGlobals();
+  const [name, setName] = useState(clientToEdit ? clientToEdit.name : '');
+  const [key, setKey] = useState(clientToEdit ? clientToEdit.key : '');
+  const [rate, setRate] = useState(clientToEdit ? clientToEdit.rate : '');
+  const [address, setAddress] = useState(
+    clientToEdit ? clientToEdit.address : '',
+  );
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
 
@@ -25,13 +28,18 @@ export default function NewClientForm({
     setIsSubmitting(true);
 
     try {
-      await addClient({ name, key, rate: Number(rate), address });
+      const newData = { name, key, rate: Number(rate), address };
+      if (clientToEdit) {
+        await updateClient({ ...newData, id: clientToEdit.id });
+      } else {
+        await addClient(newData);
+      }
     } catch (err) {
       console.error(err);
-      setError('Failed to save client. Please try again.');
+      setError('Failed to save client.');
     } finally {
       setIsSubmitting(false);
-      toggleNewClientFormVisible();
+      toggleClientFormVisible();
     }
   };
 
@@ -41,7 +49,9 @@ export default function NewClientForm({
       ref={ref}
       onSubmit={handleSubmit}
     >
-      <h2 className={`${styles.formTitle} secondary-header`}>Add client</h2>
+      <h2 className={`${styles.formTitle} secondary-header`}>
+        {clientToEdit ? `Editing ${clientToEdit.name}` : 'Add client'}
+      </h2>
 
       {error && <div className="error-message">{error}</div>}
 
@@ -95,11 +105,7 @@ export default function NewClientForm({
       </div>
 
       <div className={`${styles.formActions} form-item`}>
-        <Button
-          type="button"
-          onClick={toggleNewClientFormVisible}
-          style="inline"
-        >
+        <Button type="button" onClick={toggleClientFormVisible} style="inline">
           Cancel
         </Button>
         <Button type="submit" disabled={isSubmitting}>
