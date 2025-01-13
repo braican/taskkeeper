@@ -5,7 +5,8 @@
   --c-gray-mid: #ccc;
   --c-gray-dark: #666;
   --c-black: #222;
-  --c-beige: #ded6d1;
+  --c-beige: rgb(222, 214, 209);
+  --c-beige-transparent: rgb(222, 214, 209, 0.2);
   --c-orange: #ff6663;
   --c-gunmetal: #00272b;
   --c-midnight-green: #004952;
@@ -120,3 +121,29 @@ a {
 }
 
 /** Type **/
+
+/** Layout **/
+
+/** Forms **/
+input,
+textarea {
+  font: inherit;
+}
+.form-item + .form-item {
+  margin-top: var(--space-s);
+}
+
+.form-label {
+  display: block;
+  font-weight: var(--weight-semibold);
+  font-size: var(--step--1);
+  margin-bottom: 0.5em;
+}
+
+.form-input {
+  border-radius: var(--border-radius-small);
+  border: 1px solid var(--c-gray-light);
+  background-color: var(--c-beige-transparent);
+  padding: 1em;
+  width: 100%;
+}

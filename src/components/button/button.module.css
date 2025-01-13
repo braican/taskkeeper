@@ -1,14 +1,21 @@
-.button {
-  transition: background-color 0.2s;
-  border-radius: var(--border-radius-small);
+.buttonprimary {
+  font-weight: var(--weight-semibold);
   background-color: var(--c-midnight-green);
   padding: var(--space-s) var(--space-m);
   color: var(--c-white);
-  font-weight: var(--weight-semibold);
+  border-radius: var(--border-radius-small);
+  transition: background-color 0.2s;
+}
+.buttonprimary:hover {
+  background-color: var(--c-gunmetal);
 }
 
-.button:hover {
-  background-color: var(--c-gunmetal);
+.buttonsecondary {
+  transition: color 0.2s;
+  color: var(--c-gray-dark);
+}
+.buttonsecondary:hover {
+  color: var(--c-midnight-green);
 }
 
 .hasIcon {

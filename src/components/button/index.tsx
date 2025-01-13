@@ -5,16 +5,18 @@ export default function Button({
   onClick = () => {},
   type = 'button',
   icon: Icon = null,
+  style = 'primary',
 }: {
   children: React.ReactNode;
   onClick?: () => void;
   type?: 'button' | 'submit' | 'reset';
   icon?: React.ElementType | null;
+  style?: 'primary' | 'secondary';
 }) {
   return (
     <button
       type={type}
-      className={`${styles.button} ${Icon ? styles.hasIcon : ''}`}
+      className={`${styles.button} ${Icon ? styles.hasIcon : ''} ${styles[`button${style}`]}`}
       onClick={onClick}
     >
       {Icon && (
