@@ -2,6 +2,7 @@ import styles from './button.module.css';
 
 export default function Button({
   children,
+  className,
   onClick = () => {},
   type = 'button',
   icon: Icon = null,
@@ -11,15 +12,20 @@ export default function Button({
   iconOnly = false,
 }: {
   children: React.ReactNode;
+  className?: string;
   onClick?: () => void;
   type?: 'button' | 'submit' | 'reset';
   icon?: React.ElementType | null;
-  style?: 'primary' | 'secondary' | 'inline';
+  style?: 'primary' | 'secondary' | 'inline' | 'outlined';
   size?: 'regular' | 'small';
   disabled?: boolean;
   iconOnly?: boolean;
 }) {
   const classes = [styles[`button${style}`], styles[`button_size${size}`]];
+
+  if (className) {
+    classes.push(className);
+  }
 
   if (Icon) {
     classes.push(styles.hasIcon, 'with-icon');

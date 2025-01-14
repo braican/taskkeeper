@@ -30,6 +30,7 @@
   flex-wrap: wrap;
 }
 
+.invoiceForm,
 .taskList {
   margin-top: var(--space-l);
   max-width: 600px;

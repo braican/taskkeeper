@@ -98,6 +98,10 @@
   justify-content: flex-end;
 }
 
+.invoiceButton {
+  min-height: 46px;
+}
+
 .deleteModal {
   position: absolute;
   top: 0;

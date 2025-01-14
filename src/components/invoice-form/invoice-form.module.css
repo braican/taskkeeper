@@ -1,0 +1,16 @@
+.invoiceCost {
+  font-size: var(--step-3);
+  font-weight: var(--weight-semibold);
+}
+
+.invoiceGrid {
+  display: grid;
+  gap: var(--space-s);
+}
+
+@media screen and (min-width: 580px) {
+  .invoiceGrid {
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: var(--space-m);
+  }
+}

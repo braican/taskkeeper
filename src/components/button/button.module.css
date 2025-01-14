@@ -1,6 +1,7 @@
 .buttonprimary,
-.buttonsecondary {
-  transition: background-color 0.2s;
+.buttonsecondary,
+.buttonoutlined {
+  border: 1px solid transparent;
   border-radius: var(--border-radius-small);
   font-weight: var(--weight-semibold);
   padding: var(--space-s) var(--space-m);
@@ -21,14 +22,19 @@
   background-color: var(--c-beige);
 }
 
+.buttonoutlined {
+  border: 1px solid var(--c-beige);
+  background-color: var(--c-beige-transparent);
+}
+.buttonoutlined:hover {
+  background-color: var(--c-beige);
+}
+
 .button_sizesmall {
   padding: var(--space-xs) var(--space-s);
 }
 
 .buttoninline {
-  transition:
-    color 0.2s,
-    opacity 0.2s;
   font-weight: var(--weight-bold);
   color: var(--c-midnight-green);
   opacity: 0.8;

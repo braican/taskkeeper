@@ -61,7 +61,7 @@ export default function SlideUpModalForm({
             )}
             <div>{children}</div>
 
-            <div className={`${styles.formActions} form-item`}>
+            <div className="form-row form-actions">
               <Button type="button" onClick={onCancel} style="inline">
                 Cancel
               </Button>

@@ -1,16 +1,21 @@
 import { useCallback, useEffect, useState, useRef } from 'react';
 import sanitizeHtml from 'sanitize-html';
 import { useTasks } from '@/contexts/TaskContext';
+import { useNewInvoice } from '@/contexts/NewInvoiceContext';
 import Button from '@/components/button';
 import IconTrash from '@/icons/trash';
+import IconCheckmark from '@/icons/checkmark';
 import { Task } from '@/types';
 import styles from './task-item.module.css';
+import { moneyFormatter } from '@/utils';
 
 export default function TaskItem({ task, rate }: { task: Task; rate: number }) {
+  const { isInvoicing, addTask, removeTask } = useNewInvoice();
   const { updateTask, deleteTask } = useTasks();
   const [isSaving, setIsSaving] = useState(false);
   const [isConfirmingDeletion, setConfirmDelettion] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [isSelected, setIsSelected] = useState(false);
   const [statusMessage, setStatusMessage] = useState('');
   const [description, setDescription] = useState(task.description);
   const [hours, setHours] = useState(task.hours);
@@ -19,11 +24,6 @@ export default function TaskItem({ task, rate }: { task: Task; rate: number }) {
   );
   const hoursInputRef = useRef<HTMLInputElement>(null);
   const costInputRef = useRef<HTMLInputElement>(null);
-  const currencyFormatter = new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-    trailingZeroDisplay: 'stripIfInteger',
-  });
 
   useEffect(() => {
     if (hours && hours > 0) {
@@ -130,6 +130,16 @@ export default function TaskItem({ task, rate }: { task: Task; rate: number }) {
     } catch (error) {}
   };
 
+  const handleSelectForInvoice = () => {
+    if (isSelected) {
+      removeTask(task.id);
+    } else {
+      addTask(task);
+    }
+
+    setIsSelected(!isSelected);
+  };
+
   return (
     <div className={styles.task}>
       <div className={styles.descriptionCell}>
@@ -147,7 +157,7 @@ export default function TaskItem({ task, rate }: { task: Task; rate: number }) {
         ref={costInputRef}
       >
         <span className={styles.costDisplay}>
-          {currencyFormatter.format(price || 0)}
+          {moneyFormatter.format(price || 0)}
         </span>
 
         {(task.price || 0) > 0 && (
@@ -196,14 +206,26 @@ export default function TaskItem({ task, rate }: { task: Task; rate: number }) {
         )}
 
         <div className={styles.actions}>
-          <Button
-            icon={IconTrash}
-            style="secondary"
-            iconOnly
-            onClick={() => setConfirmDelettion(true)}
-          >
-            Delete
-          </Button>
+          {isInvoicing ? (
+            <Button
+              icon={isSelected ? IconCheckmark : null}
+              onClick={handleSelectForInvoice}
+              style={isSelected ? 'primary' : 'outlined'}
+              size="small"
+              className={styles.invoiceButton}
+            >
+              {isSelected ? 'Added to invoice' : 'Add to invoice'}
+            </Button>
+          ) : (
+            <Button
+              icon={IconTrash}
+              style="secondary"
+              iconOnly
+              onClick={() => setConfirmDelettion(true)}
+            >
+              Delete
+            </Button>
+          )}
         </div>
       </div>
 

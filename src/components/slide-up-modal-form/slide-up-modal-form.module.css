@@ -15,10 +15,3 @@
 .formTitle {
   margin-bottom: var(--space-m);
 }
-
-.formActions {
-  display: flex;
-  justify-content: flex-end;
-  gap: var(--space-m);
-  margin-top: var(--space-m);
-}
