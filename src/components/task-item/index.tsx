@@ -1,4 +1,4 @@
-import { useCallback, useState, useRef } from 'react';
+import { useCallback, useEffect, useState, useRef } from 'react';
 import sanitizeHtml from 'sanitize-html';
 import { useTasks } from '@/contexts/TaskContext';
 import Button from '@/components/button';
@@ -24,6 +24,12 @@ export default function TaskItem({ task, rate }: { task: Task; rate: number }) {
     currency: 'USD',
     trailingZeroDisplay: 'stripIfInteger',
   });
+
+  useEffect(() => {
+    if (hours && hours > 0) {
+      setPrice(hours * rate);
+    }
+  }, [hours, rate]);
 
   const triggerTaskSave = useCallback(
     async (newTask: Task) => {
@@ -136,7 +142,10 @@ export default function TaskItem({ task, rate }: { task: Task; rate: number }) {
         />
       </div>
 
-      <p className={styles.taskCost} ref={costInputRef}>
+      <p
+        className={`${styles.taskCost} ${(task.price || 0) > 0 ? styles.taskCostHoverable : ''}`}
+        ref={costInputRef}
+      >
         <span className={styles.costDisplay}>
           {currencyFormatter.format(price || 0)}
         </span>
@@ -179,21 +188,23 @@ export default function TaskItem({ task, rate }: { task: Task; rate: number }) {
         )}
       </div>
 
-      <div className={styles.alertCenter}>
-        {statusMessage ? (
-          <p>{statusMessage}</p>
-        ) : (
-          <div className={styles.actions}>
-            <Button
-              icon={IconTrash}
-              style="secondary"
-              iconOnly
-              onClick={() => setConfirmDelettion(true)}
-            >
-              Delete
-            </Button>
-          </div>
+      <div
+        className={`${styles.alertCenter} ${statusMessage ? styles.hasStatusMessage : ''}`}
+      >
+        {statusMessage && (
+          <p className={styles.statusMessage}>{statusMessage}</p>
         )}
+
+        <div className={styles.actions}>
+          <Button
+            icon={IconTrash}
+            style="secondary"
+            iconOnly
+            onClick={() => setConfirmDelettion(true)}
+          >
+            Delete
+          </Button>
+        </div>
       </div>
 
       {isConfirmingDeletion && (

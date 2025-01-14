@@ -15,6 +15,7 @@
 }
 
 .taskCost {
+  position: relative;
   font-weight: var(--weight-extrabold);
   min-width: 6ch;
 }
@@ -36,7 +37,7 @@
 }
 
 .task:hover .description,
-.task:hover .costDisplay,
+.task:hover .taskCostHoverable .costDisplay,
 .task:hover .hours,
 .task:hover .costInput {
   border-color: var(--c-beige);
@@ -44,16 +45,12 @@
 
 .task .description:focus,
 .task .hours:focus,
-.task .costInput:focus,
 .task .costInput:focus {
   border-color: var(--c-midnight-green);
   border-style: solid;
   outline: none;
 }
 
-.taskCost {
-  position: relative;
-}
 .costDisplay {
   display: block;
   text-align: right;
@@ -79,9 +76,21 @@
 }
 
 .alertCenter {
+  position: relative;
   grid-column: 2 / span 2;
   text-align: right;
   padding: var(--space-xs);
+}
+.statusMessage {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+}
+.alertCenter.hasStatusMessage .actions {
+  opacity: 0;
 }
 
 .actions {
