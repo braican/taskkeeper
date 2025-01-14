@@ -9,6 +9,7 @@ import Button from '@/components/button';
 import IconArrowLeft from '@/icons/arrow-back';
 import IconSettings from '@/icons/settings';
 import IconPlus from '@/icons/plus';
+import IconAddInvoice from '@/icons/add-invoice';
 
 import styles from './client-page.module.css';
 import TaskForm from '@/components/task-form';
@@ -41,9 +42,14 @@ function ClientPageMain() {
       </header>
 
       <div className={styles.main}>
-        <Button onClick={() => setIsTaskFormVisible(true)} icon={IconPlus}>
-          Add task
-        </Button>
+        <div className={styles.actions}>
+          <Button onClick={() => setIsTaskFormVisible(true)} icon={IconPlus}>
+            Add task
+          </Button>
+          <Button onClick={() => {}} icon={IconAddInvoice} style="secondary">
+            Create invoice
+          </Button>
+        </div>
 
         <div className={styles.taskList}>
           <TaskList client={client} />
@@ -84,6 +90,7 @@ export default function ClientPage() {
           <Button
             icon={IconSettings}
             style="secondary"
+            size="small"
             onClick={() => toggleClientFormVisible(client.id)}
           >
             Edit client

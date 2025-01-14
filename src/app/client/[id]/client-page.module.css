@@ -24,6 +24,12 @@
   margin-top: var(--space-l);
 }
 
+.actions {
+  display: flex;
+  gap: var(--space-s);
+  flex-wrap: wrap;
+}
+
 .taskList {
   margin-top: var(--space-l);
   max-width: 600px;

@@ -3,43 +3,51 @@
   transition: background-color 0.2s;
   border-radius: var(--border-radius-small);
   font-weight: var(--weight-semibold);
+  padding: var(--space-s) var(--space-m);
 }
 
 .buttonprimary {
   background-color: var(--c-midnight-green);
-  padding: var(--space-s) var(--space-m);
   color: var(--c-white);
 }
 .buttonprimary:hover {
   background-color: var(--c-gunmetal);
 }
-.buttonprimary.hasIcon {
-  padding-left: var(--space-s);
-}
 
 .buttonsecondary {
   background-color: var(--c-gray-light);
-  padding: 0.6em 1em;
 }
 .buttonsecondary:hover {
   background-color: var(--c-beige);
 }
-.buttonsecondary.hasIcon {
-  padding-left: 0.6em;
-}
 
-.buttonprimary.iconOnly,
-.buttonsecondary.iconOnly {
-  padding-left: var(--space-xs);
-  padding-right: var(--space-xs);
+.button_sizesmall {
+  padding: var(--space-xs) var(--space-s);
 }
 
 .buttoninline {
-  transition: color 0.2s;
-  color: var(--c-gray-dark);
+  transition:
+    color 0.2s,
+    opacity 0.2s;
+  font-weight: var(--weight-bold);
+  color: var(--c-midnight-green);
+  opacity: 0.8;
 }
 .buttoninline:hover {
-  color: var(--c-midnight-green);
+  color: var(--c-black);
+  opacity: 1;
+}
+
+.hasIcon {
+  padding-left: var(--space-s);
+}
+
+.button_sizesmall.hasIcon {
+  padding-left: var(--space-xs);
+}
+
+.hasIcon.iconOnly {
+  padding: var(--space-xs);
 }
 
 .icon {
