@@ -70,7 +70,10 @@ export default function ClientPage() {
   return (
     <div>
       <nav className={styles.breadcrumbs}>
-        <Link href="/dashboard" className="with-icon">
+        <Link
+          href="/dashboard"
+          className={`with-icon basic-link ${styles.dashboardLink}`}
+        >
           <span className={styles.dashboardIcon}>
             <IconArrowLeft />
           </span>

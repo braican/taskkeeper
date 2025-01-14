@@ -126,6 +126,16 @@ a {
   gap: 8px;
 }
 
+.basic-link {
+  transition: color 0.2s;
+  font-weight: var(--weight-bold);
+  color: var(--c-midnight-green);
+}
+
+.basic-link:hover {
+  color: var(--c-black);
+}
+
 /** Forms **/
 input,
 textarea {
