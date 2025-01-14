@@ -19,6 +19,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "focus-trap-react": "^11.0.3",
     "next": "15.1.4",
     "pocketbase": "^0.25.0",
     "react": "^19.0.0",

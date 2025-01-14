@@ -14,6 +14,14 @@ export default function ClientForm() {
   const [address, setAddress] = useState('');
   const [error, setError] = useState('');
 
+  const clearForm = () => {
+    setName('');
+    setKey('');
+    setRate('');
+    setAddress('');
+    setError('');
+  };
+
   useEffect(() => {
     if (clientToEdit) {
       setName(clientToEdit.name);
@@ -21,12 +29,15 @@ export default function ClientForm() {
       setRate(clientToEdit.rate.toString());
       setAddress(clientToEdit.address);
     } else {
-      setName('');
-      setKey('');
-      setRate('');
-      setAddress('');
+      clearForm();
     }
   }, [clientToEdit]);
+
+  useEffect(() => {
+    if (!toggleClientFormVisible) {
+      clearForm();
+    }
+  }, [toggleClientFormVisible]);
 
   const handleSubmit = async () => {
     setError('');

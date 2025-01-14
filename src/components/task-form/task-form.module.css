@@ -7,14 +7,17 @@
 }
 .hourlyLabel,
 .fixedLabel {
-  transition: opacity 0.2s;
+  transition: color 0.2s;
   font-weight: var(--weight-semibold);
-  opacity: 0.2;
+  color: var(--c-beige);
 }
 
 .rateCheckbox:not(:checked) ~ .hourlyLabel,
 .rateCheckbox:checked ~ .fixedLabel {
-  opacity: 1;
+  color: var(--text-color);
+}
+.rateCheckbox:focus ~ .toggleIndicator {
+  outline: 1px solid blue;
 }
 
 .toggleIndicator {

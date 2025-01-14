@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useTasks } from '@/contexts/TaskContext';
 import SlideUpModalForm from '@/components/slide-up-modal-form';
 import { Client, Task } from '@/types';
@@ -18,6 +18,15 @@ export default function TaskForm({
   const [value, setValue] = useState('');
   const [unit, setUnit] = useState<'hourly' | 'fixed'>('hourly');
   const [error, setError] = useState('');
+
+  useEffect(() => {
+    if (!visible) {
+      setDescription('');
+      setValue('');
+      setUnit('hourly');
+      setError('');
+    }
+  }, [visible]);
 
   const handleSubmit = async () => {
     setError('');

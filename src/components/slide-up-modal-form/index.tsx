@@ -1,5 +1,6 @@
 import { useRef, useEffect, useState } from 'react';
 import { CSSTransition } from 'react-transition-group';
+import { FocusTrap } from 'focus-trap-react';
 import Button from '@/components/button';
 import { useGlobals } from '@/contexts/GlobalContext';
 
@@ -50,23 +51,27 @@ export default function SlideUpModalForm({
       classNames={'slideup'}
       unmountOnExit
     >
-      <div ref={elRef} className={styles.modal}>
-        <form onSubmit={handleSubmit}>
-          {title && (
-            <h2 className={`${styles.formTitle} secondary-header`}>{title}</h2>
-          )}
-          <div>{children}</div>
+      <FocusTrap>
+        <div ref={elRef} className={styles.modal}>
+          <form onSubmit={handleSubmit}>
+            {title && (
+              <h2 className={`${styles.formTitle} secondary-header`}>
+                {title}
+              </h2>
+            )}
+            <div>{children}</div>
 
-          <div className={`${styles.formActions} form-item`}>
-            <Button type="button" onClick={onCancel} style="inline">
-              Cancel
-            </Button>
-            <Button type="submit" disabled={isSubmitting}>
-              {isSubmitting ? 'Saving...' : 'Save'}
-            </Button>
-          </div>
-        </form>
-      </div>
+            <div className={`${styles.formActions} form-item`}>
+              <Button type="button" onClick={onCancel} style="inline">
+                Cancel
+              </Button>
+              <Button type="submit" disabled={isSubmitting}>
+                {isSubmitting ? 'Saving...' : 'Save'}
+              </Button>
+            </div>
+          </form>
+        </div>
+      </FocusTrap>
     </CSSTransition>
   );
 }
