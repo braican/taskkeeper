@@ -31,6 +31,11 @@ export default function TaskForm({
   const handleSubmit = async () => {
     setError('');
 
+    if (!description) {
+      setError('You must supply a task description.');
+      return;
+    }
+
     try {
       const task: Omit<Task, 'id'> = {
         description,
@@ -61,7 +66,7 @@ export default function TaskForm({
       onCancel={() => setVisibility(false)}
     >
       <>
-        {error && <div className="error-message">{error}</div>}
+        {error && <div className="form-error-message">{error}</div>}
 
         <div className="form-row">
           <label className="form-label" htmlFor="task_description">

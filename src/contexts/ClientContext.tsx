@@ -60,6 +60,10 @@ export const ClientProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   const addClient = async (clientData: Omit<Client, 'id'>) => {
+    if (!clientData.name) {
+      return;
+    }
+
     try {
       const record = await pb
         .collection('clients')

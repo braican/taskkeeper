@@ -42,6 +42,11 @@ export default function ClientForm() {
   const handleSubmit = async () => {
     setError('');
 
+    if (!name) {
+      setError('You must supply a client name.');
+      return;
+    }
+
     try {
       const newData: Omit<Client, 'id'> = {
         name,
@@ -70,7 +75,7 @@ export default function ClientForm() {
       onCancel={toggleClientFormVisible}
     >
       <>
-        {error && <div className="error-message">{error}</div>}
+        {error && <div className="form-error-message">{error}</div>}
 
         <div className="form-row">
           <label className="form-label" htmlFor="client_name">

@@ -127,13 +127,17 @@ a {
 }
 
 .basic-link {
-  transition: color 0.2s;
+  transition:
+    color 0.2s,
+    opacity 0.2s;
   font-weight: var(--weight-bold);
   color: var(--c-midnight-green);
+  opacity: 0.8;
 }
 
 .basic-link:hover {
   color: var(--c-black);
+  opacity: 1;
 }
 
 /** Forms **/
@@ -163,6 +167,11 @@ textarea {
   background-color: var(--c-beige-transparent);
   padding: 1em;
   width: 100%;
+}
+
+.form-error-message {
+  color: var(--c-orange);
+  margin-bottom: var(--space-m);
 }
 
 /** Elements **/
