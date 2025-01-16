@@ -22,6 +22,13 @@
   background-color: var(--c-beige);
 }
 
+.buttonprimary:disabled,
+.buttonsecondary:disabled {
+  background-color: var(--c-gray-light);
+  color: var(--c-white);
+  pointer-events: none;
+}
+
 .buttonoutlined {
   border: 1px solid var(--c-beige);
   background-color: var(--c-beige-transparent);

@@ -50,7 +50,10 @@ function ClientPageMain() {
       <div className={styles.main}>
         {isInvoicing ? (
           <div className={styles.invoiceForm}>
-            <InvoiceForm onCancel={() => setIsInvoicing(false)} />
+            <InvoiceForm
+              client={client}
+              onCancel={() => setIsInvoicing(false)}
+            />
           </div>
         ) : (
           <div className={styles.actions}>

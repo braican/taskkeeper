@@ -14,3 +14,21 @@ export interface Task {
   hours?: number;
   price?: number;
 }
+
+export interface InvoicedTask {
+  description: string;
+  cost: number;
+  hours?: number;
+}
+
+export interface Invoice {
+  id: string;
+  client: string;
+  number: string;
+  status: 'active' | 'paid';
+  issueDate: string;
+  dueDate: string;
+  paidDate?: string;
+  description?: string;
+  tasks: InvoicedTask[];
+}

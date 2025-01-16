@@ -31,6 +31,12 @@ export default function TaskItem({ task, rate }: { task: Task; rate: number }) {
     }
   }, [hours, rate]);
 
+  useEffect(() => {
+    if (!isInvoicing) {
+      setIsSelected(false);
+    }
+  }, [isInvoicing]);
+
   const triggerTaskSave = useCallback(
     async (newTask: Task) => {
       setStatusMessage('Saving...');

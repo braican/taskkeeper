@@ -47,7 +47,7 @@ export default function Sidebar() {
   };
 
   return (
-    <aside
+    <div
       className={`${styles.sidebar} ${sideMenuOpen ? styles.sideMenuOpen : null}`}
     >
       <header className={styles.header} ref={menuRef}>
@@ -101,6 +101,6 @@ export default function Sidebar() {
           </>
         )}
       </div>
-    </aside>
+    </div>
   );
 }

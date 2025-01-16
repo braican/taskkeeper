@@ -79,6 +79,7 @@
     background-color: var(--bg-accent);
     border-radius: var(--border-radius);
     transition: transform 0.2s;
+    box-shadow: 10px 0 16px -16px rgba(0, 0, 0, 0.2);
   }
 
   .sideMenuOpen .sidebarNav {
