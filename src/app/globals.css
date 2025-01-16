@@ -8,9 +8,10 @@
   --c-beige: rgb(222, 214, 209);
   --c-beige-transparent: rgb(222, 214, 209, 0.2);
   --c-orange: #ff6663;
-  --c-gunmetal: #00272b;
-  --c-midnight-green: #004952;
-
+  --c-gunmetal: #004952;
+  --c-midnight-green: rgb(26, 102, 111);
+  --c-midnight-green-transparent: rgb(26, 102, 111, 0.1);
+  --c-lighter-green: #e6edeb;
   --bg: var(--c-off-white);
   --bg-accent: var(--c-gray-light);
   --bg-accent-border: var(--c-gray-mid);
@@ -116,7 +117,7 @@ a {
 .uppercase-header {
   font-size: var(--step--1);
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 0.02em;
   font-weight: var(--weight-extrabold);
 }
 

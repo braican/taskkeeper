@@ -21,7 +21,11 @@ export default function Button({
   disabled?: boolean;
   iconOnly?: boolean;
 }) {
-  const classes = [styles[`button${style}`], styles[`button_size${size}`]];
+  const classes = [
+    styles.button,
+    styles[`button${style}`],
+    styles[`button_size${size}`],
+  ];
 
   if (className) {
     classes.push(className);

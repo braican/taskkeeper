@@ -1,6 +1,12 @@
+.button {
+  font-weight: var(--weight-semibold);
+}
+
 .buttonprimary,
 .buttonsecondary,
+.buttonwhite,
 .buttonoutlined {
+  transition: all 0.2s;
   border: 1px solid transparent;
   border-radius: var(--border-radius-small);
   font-weight: var(--weight-semibold);
@@ -14,10 +20,13 @@
 .buttonprimary:hover {
   background-color: var(--c-gunmetal);
 }
-
+.buttonwhite {
+  background-color: var(--c-white);
+}
 .buttonsecondary {
   background-color: var(--c-gray-light);
 }
+.buttonwhite:hover,
 .buttonsecondary:hover {
   background-color: var(--c-beige);
 }

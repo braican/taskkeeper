@@ -20,6 +20,11 @@
   margin-bottom: var(--space-m);
 }
 
+.invoiceList {
+  margin-top: var(--space-xl);
+  margin-bottom: var(--space-xl);
+}
+
 .main {
   margin-top: var(--space-l);
 }
@@ -33,12 +38,16 @@
 .invoiceForm,
 .taskList {
   margin-top: var(--space-l);
-  max-width: 600px;
 }
 
 @media screen and (min-width: 862px) {
   .breadcrumbs {
     height: 48px;
     justify-content: flex-start;
+  }
+
+  .invoiceForm,
+  .taskList {
+    max-width: 600px;
   }
 }

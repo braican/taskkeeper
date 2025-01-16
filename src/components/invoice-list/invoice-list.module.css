@@ -1,0 +1,10 @@
+.invoiceGrid {
+  display: grid;
+  gap: var(--space-m);
+}
+
+@media screen and (min-width: 400px) {
+  .invoiceGrid {
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  }
+}

@@ -9,6 +9,8 @@ import {
   NewInvoiceProvider,
   useNewInvoice,
 } from '@/contexts/NewInvoiceContext';
+import { useInvoices } from '@/contexts/InvoiceContext';
+import { useTasks } from '@/contexts/TaskContext';
 import Button from '@/components/button';
 import TaskForm from '@/components/task-form';
 import TaskList from '@/components/task-list';
@@ -19,9 +21,12 @@ import IconPlus from '@/icons/plus';
 import IconAddInvoice from '@/icons/add-invoice';
 
 import styles from './client-page.module.css';
+import InvoiceList from '@/components/invoice-list';
 
 function ClientPageMain() {
   const { setIsInvoicing, isInvoicing } = useNewInvoice();
+  const { getClientTasks } = useTasks();
+  const { getClientInvoices } = useInvoices();
   const [isTaskFormVisible, setIsTaskFormVisible] = useState(false);
   const { id }: { id: string } = useParams();
   const { getClientById, areClientsLoaded } = useClients();
@@ -35,6 +40,9 @@ function ClientPageMain() {
     return <p>404: Client not found</p>;
   }
 
+  const tasks = getClientTasks(client.id);
+  const invoices = getClientInvoices(client.id);
+
   return (
     <>
       <header>
@@ -46,6 +54,12 @@ function ClientPageMain() {
 
         {client.address && <p>{client.address}</p>}
       </header>
+
+      {invoices.length > 0 && (
+        <div className={styles.invoiceList}>
+          <InvoiceList invoices={invoices} />
+        </div>
+      )}
 
       <div className={styles.main}>
         {isInvoicing ? (
@@ -75,7 +89,7 @@ function ClientPageMain() {
         )}
 
         <div className={styles.taskList}>
-          <TaskList client={client} />
+          <TaskList client={client} tasks={tasks} />
         </div>
       </div>
 
