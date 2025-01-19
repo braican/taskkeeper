@@ -38,12 +38,15 @@
   flex: 1;
 }
 
-.tasks {
+.details {
   grid-column: 1 / span 2;
 }
 
+.description {
+  margin: 0.25em 0 var(--space-s);
+}
 .taskList {
-  margin-top: 0.5em;
+  margin-top: 0.25em;
 }
 .taskItem {
   padding-top: 0.5em;
@@ -59,4 +62,25 @@
 }
 .taskCost {
   text-align: right;
+}
+
+.paidDateInput {
+  position: relative;
+  padding-top: calc(var(--step-1));
+}
+
+.paidDateLabel {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.paidButtons {
+  flex: 1;
+  display: flex;
+  padding-top: calc(var(--step-1));
+}
+
+.cancelPaid {
+  padding-right: 0;
 }

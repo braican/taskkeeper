@@ -169,6 +169,9 @@ textarea {
   padding: 1em;
   width: 100%;
 }
+.form-input.outlined {
+  border-color: var(--c-midnight-green-transparent);
+}
 
 .form-error-message {
   color: var(--c-orange);

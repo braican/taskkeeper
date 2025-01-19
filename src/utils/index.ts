@@ -17,3 +17,5 @@ export const dateFormatterFilename = (dateString: string) => {
   const date = new Date(dateString);
   return date.toISOString().split('T')[0].replace(/-/g, '.');
 };
+
+export const todaysDate = () => new Date().toISOString().split('T')[0];

@@ -3,7 +3,7 @@ import Button from '../button';
 import styles from './invoice-form.module.css';
 import { useInvoices } from '@/contexts/InvoiceContext';
 import { useNewInvoice } from '@/contexts/NewInvoiceContext';
-import { moneyFormatter } from '@/utils';
+import { moneyFormatter, todaysDate } from '@/utils';
 import { Client, Invoice, InvoicedTask } from '@/types';
 
 export default function InvoiceForm({
@@ -18,9 +18,7 @@ export default function InvoiceForm({
   const [invoiceNumber, setInvoiceNumber] = useState(
     getNextInvoiceNumber(client),
   );
-  const [issueDate, setIssueDate] = useState(
-    new Date().toISOString().split('T')[0],
-  );
+  const [issueDate, setIssueDate] = useState(todaysDate);
   const [dueDate, setDueDate] = useState('');
   const [description, setDescription] = useState('');
   const [error, setError] = useState('');

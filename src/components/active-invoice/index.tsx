@@ -1,9 +1,15 @@
 import { useState } from 'react';
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import { Invoice } from '@/types';
-import { moneyFormatter, dateFormatter, dateFormatterFilename } from '@/utils';
+import {
+  moneyFormatter,
+  dateFormatter,
+  dateFormatterFilename,
+  todaysDate,
+} from '@/utils';
 import { useClients } from '@/contexts/ClientContext';
 import { useAuth } from '@/contexts/AuthContext';
+import { useInvoices } from '@/contexts/InvoiceContext';
 import Button from '@/components/button';
 import InvoicePdf from '@/components/invoice-pdf';
 import IconChevronDown from '@/icons/chevron-down';
@@ -12,14 +18,32 @@ import styles from './active-invoice.module.css';
 
 export default function ActiveInvoice({ invoice }: { invoice: Invoice }) {
   const { getClientById } = useClients();
+  const { setInvoicePaid } = useInvoices();
   const { user } = useAuth();
   const [isExpanded, setIsExpanded] = useState(false);
+  const [isSetPaidConfirmation, setIsPaidConfirmation] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+  const [paidDate, setPaidDate] = useState(todaysDate);
 
   const client = getClientById(invoice.client);
   const invoiceTotal = invoice.tasks.reduce(
     (total, task) => total + task.cost,
     0,
   );
+
+  const handlePaid = async () => {
+    setIsSaving(true);
+
+    try {
+      await setInvoicePaid(invoice.id, paidDate);
+    } finally {
+      setIsSaving(false);
+    }
+  };
+  const handleCancelPaid = () => {
+    setIsPaidConfirmation(false);
+    setPaidDate(todaysDate);
+  };
 
   return (
     <div className={styles.invoice}>
@@ -48,23 +72,14 @@ export default function ActiveInvoice({ invoice }: { invoice: Invoice }) {
         )}
       </div>
 
-      <p className={styles.action}>
-        <Button className={styles.payButton} size="small">
-          Mark as paid
-        </Button>
-        <Button
-          icon={IconChevronDown}
-          className={`${styles.collapser} ${isExpanded ? styles.flipCollapser : ''}`}
-          iconOnly
-          size="small"
-          onClick={() => setIsExpanded(!isExpanded)}
-        >
-          {isExpanded ? 'Collapse invoice' : 'Expand invoice'}
-        </Button>
-      </p>
-
       {isExpanded && (
-        <div className={styles.tasks}>
+        <div className={styles.details}>
+          {invoice.description && (
+            <>
+              <p className="uppercase-header">Description</p>
+              <p className={styles.description}>{invoice.description}</p>
+            </>
+          )}
           <p className="uppercase-header">Tasks</p>
           <ul className={`ul-reset ${styles.taskList}`}>
             {invoice.tasks.map((task) => (
@@ -79,6 +94,67 @@ export default function ActiveInvoice({ invoice }: { invoice: Invoice }) {
           </ul>
         </div>
       )}
+
+      <div className={styles.action}>
+        {isSetPaidConfirmation ? (
+          <>
+            <div className={styles.paidDateInput}>
+              <label
+                className={`form-label ${styles.paidDateLabel}`}
+                htmlFor="invoice_paid_date"
+              >
+                Paid Date
+              </label>
+              <input
+                className="form-input outlined"
+                type="date"
+                id="invoice_paid_date"
+                value={paidDate}
+                onChange={(e) => setPaidDate(e.target.value)}
+              />
+            </div>
+            <div className={styles.paidButtons}>
+              <Button
+                className={styles.payButton}
+                size="small"
+                onClick={handlePaid}
+                disabled={isSaving}
+              >
+                {isSaving ? 'Paying...' : 'Paid'}
+              </Button>
+              {!isSaving && (
+                <Button
+                  className={styles.cancelPaid}
+                  size="small"
+                  onClick={handleCancelPaid}
+                  style="inline"
+                >
+                  Cancel
+                </Button>
+              )}
+            </div>
+          </>
+        ) : (
+          <>
+            <Button
+              className={styles.payButton}
+              size="small"
+              onClick={() => setIsPaidConfirmation(true)}
+            >
+              Mark as paid
+            </Button>
+            <Button
+              icon={IconChevronDown}
+              className={`${styles.collapser} ${isExpanded ? styles.flipCollapser : ''}`}
+              iconOnly
+              size="small"
+              onClick={() => setIsExpanded(!isExpanded)}
+            >
+              {isExpanded ? 'Collapse invoice' : 'Expand invoice'}
+            </Button>
+          </>
+        )}
+      </div>
     </div>
   );
 }

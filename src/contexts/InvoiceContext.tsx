@@ -20,6 +20,7 @@ interface InvoiceContextType {
   addInvoice: (invoiceData: Omit<Invoice, 'id'>) => void;
   getClientInvoices: (clientId: string) => Invoice[];
   getNextInvoiceNumber: (client: Client) => string;
+  setInvoicePaid: (invoiceId: string, paidDate?: string) => void;
 }
 
 const InvoiceContext = createContext<InvoiceContextType | undefined>(undefined);
@@ -92,6 +93,29 @@ export const InvoiceProvider = ({ children }: { children: ReactNode }) => {
     return `${client.key}-${newInvoiceNumber.toString().padStart(4, '0')}`;
   };
 
+  const setInvoicePaid = async (invoiceId: string, paidDate?: string) => {
+    if (!invoiceId) {
+      return;
+    }
+
+    try {
+      await pb
+        .collection('invoices')
+        .update(invoiceId, { status: 'paid', paidDate });
+      setInvoices((oldInvoices) =>
+        oldInvoices.map((invoice) => {
+          if (invoice.id !== invoiceId) {
+            return invoice;
+          }
+          return { ...invoice, status: 'paid', paidDate };
+        }),
+      );
+    } catch (error) {
+      console.error('Error updating the invoice:', error);
+      throw error;
+    }
+  };
+
   return (
     <InvoiceContext.Provider
       value={{
@@ -100,6 +124,7 @@ export const InvoiceProvider = ({ children }: { children: ReactNode }) => {
         addInvoice,
         getClientInvoices,
         getNextInvoiceNumber,
+        setInvoicePaid,
       }}
     >
       {children}
