@@ -6,10 +6,12 @@ import {
   dateFormatter,
   dateFormatterFilename,
   todaysDate,
+  invoiceCost,
 } from '@/utils';
 import { useClients } from '@/contexts/ClientContext';
 import { useAuth } from '@/contexts/AuthContext';
 import { useInvoices } from '@/contexts/InvoiceContext';
+import { usePaidInvoices } from '@/contexts/PaidInvoiceContext';
 import Button from '@/components/button';
 import InvoicePdf from '@/components/invoice-pdf';
 import IconChevronDown from '@/icons/chevron-down';
@@ -19,27 +21,25 @@ import styles from './active-invoice.module.css';
 export default function ActiveInvoice({ invoice }: { invoice: Invoice }) {
   const { getClientById } = useClients();
   const { setInvoicePaid } = useInvoices();
+  const { addPaidInvoice } = usePaidInvoices();
   const { user } = useAuth();
   const [isExpanded, setIsExpanded] = useState(false);
   const [isSetPaidConfirmation, setIsPaidConfirmation] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [paidDate, setPaidDate] = useState(todaysDate);
-
   const client = getClientById(invoice.client);
-  const invoiceTotal = invoice.tasks.reduce(
-    (total, task) => total + task.cost,
-    0,
-  );
 
   const handlePaid = async () => {
     setIsSaving(true);
 
     try {
-      await setInvoicePaid(invoice.id, paidDate);
+      const paidInvoice = await setInvoicePaid(invoice.id, paidDate);
+      addPaidInvoice(paidInvoice);
     } finally {
       setIsSaving(false);
     }
   };
+
   const handleCancelPaid = () => {
     setIsPaidConfirmation(false);
     setPaidDate(todaysDate);
@@ -59,7 +59,7 @@ export default function ActiveInvoice({ invoice }: { invoice: Invoice }) {
         </p>
       </div>
       <div>
-        <p className={styles.total}>{moneyFormatter.format(invoiceTotal)}</p>
+        <p className={styles.total}>{invoiceCost(invoice.tasks)}</p>
         {client && user?.email === 'nick.braica@gmail.com' && (
           <Button onClick={() => {}} style="inline" icon={IconDownload}>
             <PDFDownloadLink

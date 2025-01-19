@@ -17,34 +17,38 @@ import { Client, Invoice } from '@/types';
 
 interface InvoiceContextType {
   areInvoicedLoaded: boolean;
-  invoices: Invoice[];
+  activeInvoices: Invoice[];
   addInvoice: (invoiceData: Omit<Invoice, 'id'>) => Promise<void>;
-  getClientInvoices: (clientId: string) => Invoice[];
+  getClientActiveInvoices: (clientId: string) => Invoice[];
   getNextInvoiceNumber: (client: Client) => string;
-  setInvoicePaid: (invoiceId: string, paidDate?: string) => Promise<void>;
+  setInvoicePaid: (
+    invoiceId: string,
+    paidDate?: string,
+  ) => Promise<Invoice | undefined>;
 }
 
 const InvoiceContext = createContext<InvoiceContextType | undefined>(undefined);
 
-const recordToInvoice = (record: RecordModel): Invoice => ({
+export const recordToInvoice = (record: RecordModel): Invoice => ({
   id: record.id,
   client: record.client,
   number: record.number,
+  description: record.description,
   status: record.status,
   issueDate: record.issueDate,
   dueDate: record.dueDate,
+  paidDate: record.paidDate,
   tasks: record.tasks,
-  description: record.description,
 });
 
 export const InvoiceProvider = ({ children }: { children: ReactNode }) => {
   const { user } = useAuth();
   const { setTasks } = useTasks();
   const [areInvoicedLoaded, setInvoicedLoaded] = useState(false);
-  const [invoices, setInvoices] = useState<Invoice[]>([]);
+  const [activeInvoices, setActiveInvoices] = useState<Invoice[]>([]);
   const hasFetchedRef = useRef(false);
 
-  // Fetch clients on component mount
+  // Fetch invoices on component mount
   useEffect(() => {
     if (hasFetchedRef.current || !user) return;
     hasFetchedRef.current = true;
@@ -58,7 +62,7 @@ export const InvoiceProvider = ({ children }: { children: ReactNode }) => {
         });
         const invoices = records.map(recordToInvoice);
         setInvoicedLoaded(true);
-        setInvoices(invoices);
+        setActiveInvoices(invoices);
       } catch (error) {
         console.error('Error fetching invoices:', error);
       }
@@ -80,7 +84,10 @@ export const InvoiceProvider = ({ children }: { children: ReactNode }) => {
       });
       await batch.send();
 
-      setInvoices((oldInvoices) => [...oldInvoices, recordToInvoice(record)]);
+      setActiveInvoices((oldInvoices) => [
+        ...oldInvoices,
+        recordToInvoice(record),
+      ]);
       setTasks((oldTasks) =>
         oldTasks.filter((task) => !taskIds.includes(task.id)),
       );
@@ -90,12 +97,12 @@ export const InvoiceProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  const getClientInvoices = (clientId: string): Invoice[] => {
-    return invoices.filter((invoice) => invoice.client === clientId);
+  const getClientActiveInvoices = (clientId: string): Invoice[] => {
+    return activeInvoices.filter((invoice) => invoice.client === clientId);
   };
 
   const getNextInvoiceNumber = (client: Client): string => {
-    const invoices = getClientInvoices(client.id);
+    const invoices = getClientActiveInvoices(client.id);
     const latestInvoiceNumber = invoices
       .map((invoice) => {
         const numericPart = invoice.number.split('-')[1] || '1';
@@ -117,9 +124,21 @@ export const InvoiceProvider = ({ children }: { children: ReactNode }) => {
         .collection('invoices')
         .update(invoiceId, { status: 'paid', paidDate });
 
-      setInvoices((oldInvoices) =>
+      const newlyPaidInvoice = activeInvoices.find(
+        (invoice) => invoice.id === invoiceId,
+      );
+
+      setActiveInvoices((oldInvoices) =>
         oldInvoices.filter((invoice) => invoice.id !== invoiceId),
       );
+
+      return newlyPaidInvoice
+        ? ({
+            ...newlyPaidInvoice,
+            status: 'paid',
+            paidDate,
+          } as Invoice)
+        : undefined;
     } catch (error) {
       console.error('Error updating the invoice:', error);
       throw error;
@@ -130,9 +149,9 @@ export const InvoiceProvider = ({ children }: { children: ReactNode }) => {
     <InvoiceContext.Provider
       value={{
         areInvoicedLoaded,
-        invoices,
+        activeInvoices,
         addInvoice,
-        getClientInvoices,
+        getClientActiveInvoices,
         getNextInvoiceNumber,
         setInvoicePaid,
       }}

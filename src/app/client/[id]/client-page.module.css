@@ -36,7 +36,8 @@
 }
 
 .invoiceForm,
-.taskList {
+.taskList,
+.paidInvoices {
   margin-top: var(--space-l);
 }
 

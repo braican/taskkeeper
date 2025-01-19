@@ -11,22 +11,24 @@ import {
 } from '@/contexts/NewInvoiceContext';
 import { useInvoices } from '@/contexts/InvoiceContext';
 import { useTasks } from '@/contexts/TaskContext';
+import { PaidInvoiceProvider } from '@/contexts/PaidInvoiceContext';
 import Button from '@/components/button';
 import TaskForm from '@/components/task-form';
 import TaskList from '@/components/task-list';
 import InvoiceForm from '@/components/invoice-form';
+import InvoiceList from '@/components/invoice-list';
+import PaidInvoices from '@/components/paid-invoices';
 import IconArrowLeft from '@/icons/arrow-back';
 import IconSettings from '@/icons/settings';
 import IconPlus from '@/icons/plus';
 import IconAddInvoice from '@/icons/add-invoice';
 
 import styles from './client-page.module.css';
-import InvoiceList from '@/components/invoice-list';
 
 function ClientPageMain() {
   const { setIsInvoicing, isInvoicing } = useNewInvoice();
   const { getClientTasks } = useTasks();
-  const { getClientInvoices } = useInvoices();
+  const { getClientActiveInvoices } = useInvoices();
   const [isTaskFormVisible, setIsTaskFormVisible] = useState(false);
   const { id }: { id: string } = useParams();
   const { getClientById, areClientsLoaded } = useClients();
@@ -41,10 +43,10 @@ function ClientPageMain() {
   }
 
   const tasks = getClientTasks(client.id);
-  const invoices = getClientInvoices(client.id);
+  const invoices = getClientActiveInvoices(client.id);
 
   return (
-    <>
+    <PaidInvoiceProvider client={client}>
       <header>
         <div className="client-superscript">
           <h1 className="page-title">{client.name}</h1>
@@ -93,14 +95,19 @@ function ClientPageMain() {
         </div>
       </div>
 
-      {client && (
-        <TaskForm
-          client={client}
-          visible={isTaskFormVisible}
-          setVisibility={setIsTaskFormVisible}
-        />
-      )}
-    </>
+      <div className={styles.paidInvoices}>
+        <header>
+          <h2 className="secondary-header">Paid Invoices</h2>
+        </header>
+        <PaidInvoices />
+      </div>
+
+      <TaskForm
+        client={client}
+        visible={isTaskFormVisible}
+        setVisibility={setIsTaskFormVisible}
+      />
+    </PaidInvoiceProvider>
   );
 }
 
