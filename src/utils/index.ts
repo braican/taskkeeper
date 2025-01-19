@@ -12,3 +12,8 @@ export const dateFormatter = (dateString: string) => {
     day: 'numeric',
   });
 };
+
+export const dateFormatterFilename = (dateString: string) => {
+  const date = new Date(dateString);
+  return date.toISOString().split('T')[0].replace(/-/g, '.');
+};

@@ -60,7 +60,7 @@
   opacity: 1;
 }
 
-.hasIcon {
+.hasIcon:not(.buttoninline) {
   padding-left: var(--space-s);
 }
 
