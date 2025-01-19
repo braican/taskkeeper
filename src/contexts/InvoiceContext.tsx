@@ -32,6 +32,7 @@ const recordToInvoice = (record: RecordModel): Invoice => ({
   issueDate: record.issueDate,
   dueDate: record.dueDate,
   tasks: record.tasks,
+  description: record.description,
 });
 
 export const InvoiceProvider = ({ children }: { children: ReactNode }) => {
@@ -42,7 +43,7 @@ export const InvoiceProvider = ({ children }: { children: ReactNode }) => {
 
   // Fetch clients on component mount
   useEffect(() => {
-    if (hasFetchedRef.current) return;
+    if (hasFetchedRef.current || !user) return;
     hasFetchedRef.current = true;
 
     async function fetchInvoices() {
@@ -59,7 +60,7 @@ export const InvoiceProvider = ({ children }: { children: ReactNode }) => {
     }
 
     fetchInvoices();
-  }, []);
+  }, [user]);
 
   const addInvoice = async (invoiceData: Omit<Invoice, 'id'>) => {
     try {

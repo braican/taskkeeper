@@ -42,7 +42,7 @@ export const TaskProvider = ({ children }: { children: ReactNode }) => {
 
   // Fetch clients on component mount
   useEffect(() => {
-    if (hasFetchedRef.current) return;
+    if (hasFetchedRef.current || !user) return;
     hasFetchedRef.current = true;
 
     async function fetchTasks() {
@@ -59,7 +59,7 @@ export const TaskProvider = ({ children }: { children: ReactNode }) => {
     }
 
     fetchTasks();
-  }, []);
+  }, [user]);
 
   const addTask = async (taskData: Omit<Task, 'id'>) => {
     try {

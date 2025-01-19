@@ -40,7 +40,7 @@ export const ClientProvider = ({ children }: { children: ReactNode }) => {
 
   // Fetch clients on component mount
   useEffect(() => {
-    if (hasFetchedRef.current) return;
+    if (hasFetchedRef.current || !user) return;
     hasFetchedRef.current = true;
 
     async function fetchClients() {
@@ -57,7 +57,7 @@ export const ClientProvider = ({ children }: { children: ReactNode }) => {
     }
 
     fetchClients();
-  }, []);
+  }, [user]);
 
   const addClient = async (clientData: Omit<Client, 'id'>) => {
     if (!clientData.name) {
