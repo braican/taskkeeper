@@ -4,6 +4,8 @@
 import { RecordModel } from 'pocketbase';
 import pb from '@/lib/pocketbase';
 import {
+  Dispatch,
+  SetStateAction,
   ReactNode,
   createContext,
   useContext,
@@ -17,6 +19,7 @@ import { Task } from '@/types';
 interface TaskContextType {
   areTasksLoaded: boolean;
   tasks: Task[];
+  setTasks: Dispatch<SetStateAction<Task[]>>;
   addTask: (taskData: Omit<Task, 'id'>) => Promise<void>;
   updateTask: (taskData: Task) => Promise<void>;
   deleteTask: (taskId: string) => Promise<void>;
@@ -114,6 +117,7 @@ export const TaskProvider = ({ children }: { children: ReactNode }) => {
       value={{
         areTasksLoaded,
         tasks,
+        setTasks,
         addTask,
         updateTask,
         deleteTask,

@@ -16,6 +16,7 @@ export interface Task {
 }
 
 export interface InvoicedTask {
+  id: string;
   description: string;
   cost: number;
   hours?: number;

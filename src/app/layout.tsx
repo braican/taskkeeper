@@ -39,13 +39,13 @@ export default function RootLayout({
       <body>
         <AuthProvider>
           <ClientProvider>
-            <InvoiceProvider>
-              <TaskProvider>
+            <TaskProvider>
+              <InvoiceProvider>
                 <GlobalProvider>
                   <MainLayout>{children}</MainLayout>
                 </GlobalProvider>
-              </TaskProvider>
-            </InvoiceProvider>
+              </InvoiceProvider>
+            </TaskProvider>
           </ClientProvider>
         </AuthProvider>
 

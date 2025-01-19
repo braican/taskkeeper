@@ -12,15 +12,16 @@ import {
   useState,
 } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
+import { useTasks } from '@/contexts/TaskContext';
 import { Client, Invoice } from '@/types';
 
 interface InvoiceContextType {
   areInvoicedLoaded: boolean;
   invoices: Invoice[];
-  addInvoice: (invoiceData: Omit<Invoice, 'id'>) => void;
+  addInvoice: (invoiceData: Omit<Invoice, 'id'>) => Promise<void>;
   getClientInvoices: (clientId: string) => Invoice[];
   getNextInvoiceNumber: (client: Client) => string;
-  setInvoicePaid: (invoiceId: string, paidDate?: string) => void;
+  setInvoicePaid: (invoiceId: string, paidDate?: string) => Promise<void>;
 }
 
 const InvoiceContext = createContext<InvoiceContextType | undefined>(undefined);
@@ -37,9 +38,10 @@ const recordToInvoice = (record: RecordModel): Invoice => ({
 });
 
 export const InvoiceProvider = ({ children }: { children: ReactNode }) => {
+  const { user } = useAuth();
+  const { setTasks } = useTasks();
   const [areInvoicedLoaded, setInvoicedLoaded] = useState(false);
   const [invoices, setInvoices] = useState<Invoice[]>([]);
-  const { user } = useAuth();
   const hasFetchedRef = useRef(false);
 
   // Fetch clients on component mount
@@ -48,10 +50,12 @@ export const InvoiceProvider = ({ children }: { children: ReactNode }) => {
     hasFetchedRef.current = true;
 
     async function fetchInvoices() {
-      console.log('!! Fetch invoices');
+      console.log('!! Fetch active invoices');
 
       try {
-        const records = await pb.collection('invoices').getFullList();
+        const records = await pb.collection('invoices').getFullList({
+          filter: 'status = "active"',
+        });
         const invoices = records.map(recordToInvoice);
         setInvoicedLoaded(true);
         setInvoices(invoices);
@@ -69,7 +73,17 @@ export const InvoiceProvider = ({ children }: { children: ReactNode }) => {
         .collection('invoices')
         .create({ ...invoiceData, user: user?.id });
 
+      const batch = pb.createBatch();
+      const taskIds = invoiceData.tasks.map((task) => task.id);
+      taskIds.forEach((id) => {
+        batch.collection('tasks').delete(id);
+      });
+      await batch.send();
+
       setInvoices((oldInvoices) => [...oldInvoices, recordToInvoice(record)]);
+      setTasks((oldTasks) =>
+        oldTasks.filter((task) => !taskIds.includes(task.id)),
+      );
     } catch (error) {
       console.error('Error adding invoice:', error);
       throw error;
@@ -102,13 +116,9 @@ export const InvoiceProvider = ({ children }: { children: ReactNode }) => {
       await pb
         .collection('invoices')
         .update(invoiceId, { status: 'paid', paidDate });
+
       setInvoices((oldInvoices) =>
-        oldInvoices.map((invoice) => {
-          if (invoice.id !== invoiceId) {
-            return invoice;
-          }
-          return { ...invoice, status: 'paid', paidDate };
-        }),
+        oldInvoices.filter((invoice) => invoice.id !== invoiceId),
       );
     } catch (error) {
       console.error('Error updating the invoice:', error);

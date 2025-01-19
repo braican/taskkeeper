@@ -57,6 +57,7 @@ export default function InvoiceForm({
       client: client.id,
       tasks: tasks.map((task) => {
         const taskData: InvoicedTask = {
+          id: task.id,
           description: task.description,
           cost: task.price ? task.price : (task.hours || 0) * client.rate,
         };
