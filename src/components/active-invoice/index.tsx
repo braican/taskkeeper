@@ -11,7 +11,6 @@ import {
 import { useClients } from '@/contexts/ClientContext';
 import { useAuth } from '@/contexts/AuthContext';
 import { useInvoices } from '@/contexts/InvoiceContext';
-import { usePaidInvoices } from '@/contexts/PaidInvoiceContext';
 import Button from '@/components/button';
 import InvoicePdf from '@/components/invoice-pdf';
 import IconChevronDown from '@/icons/chevron-down';
@@ -21,7 +20,6 @@ import styles from './active-invoice.module.css';
 export default function ActiveInvoice({ invoice }: { invoice: Invoice }) {
   const { getClientById } = useClients();
   const { setInvoicePaid } = useInvoices();
-  const { addPaidInvoice } = usePaidInvoices();
   const { user } = useAuth();
   const [isExpanded, setIsExpanded] = useState(false);
   const [isSetPaidConfirmation, setIsPaidConfirmation] = useState(false);
@@ -34,7 +32,6 @@ export default function ActiveInvoice({ invoice }: { invoice: Invoice }) {
 
     try {
       const paidInvoice = await setInvoicePaid(invoice.id, paidDate);
-      addPaidInvoice(paidInvoice);
     } finally {
       setIsSaving(false);
     }

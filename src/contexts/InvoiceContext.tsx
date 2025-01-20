@@ -1,7 +1,7 @@
 // contexts/TaskContext.tsx
 'use client';
 
-import { RecordModel } from 'pocketbase';
+import { ClientResponseError, RecordModel } from 'pocketbase';
 import pb from '@/lib/pocketbase';
 import {
   ReactNode,
@@ -17,9 +17,9 @@ import { Client, Invoice } from '@/types';
 
 interface InvoiceContextType {
   areInvoicedLoaded: boolean;
-  activeInvoices: Invoice[];
+  invoices: Invoice[];
   addInvoice: (invoiceData: Omit<Invoice, 'id'>) => Promise<void>;
-  getClientActiveInvoices: (clientId: string) => Invoice[];
+  getClientInvoices: (clientId: string) => Invoice[];
   getNextInvoiceNumber: (client: Client) => Promise<string>;
   setInvoicePaid: (
     invoiceId: string,
@@ -45,7 +45,7 @@ export const InvoiceProvider = ({ children }: { children: ReactNode }) => {
   const { user } = useAuth();
   const { setTasks } = useTasks();
   const [areInvoicedLoaded, setInvoicedLoaded] = useState(false);
-  const [activeInvoices, setActiveInvoices] = useState<Invoice[]>([]);
+  const [invoices, setInvoices] = useState<Invoice[]>([]);
   const hasFetchedRef = useRef(false);
 
   // Fetch invoices on component mount
@@ -54,7 +54,7 @@ export const InvoiceProvider = ({ children }: { children: ReactNode }) => {
     hasFetchedRef.current = true;
 
     async function fetchInvoices() {
-      console.log('!! Fetch active invoices');
+      console.log('!! Fetch invoices');
 
       try {
         const records = await pb.collection('invoices').getFullList({
@@ -62,7 +62,7 @@ export const InvoiceProvider = ({ children }: { children: ReactNode }) => {
         });
         const invoices = records.map(recordToInvoice);
         setInvoicedLoaded(true);
-        setActiveInvoices(invoices);
+        setInvoices(invoices);
       } catch (error) {
         console.error('Error fetching invoices:', error);
       }
@@ -84,10 +84,7 @@ export const InvoiceProvider = ({ children }: { children: ReactNode }) => {
       });
       await batch.send();
 
-      setActiveInvoices((oldInvoices) => [
-        ...oldInvoices,
-        recordToInvoice(record),
-      ]);
+      setInvoices((oldInvoices) => [...oldInvoices, recordToInvoice(record)]);
       setTasks((oldTasks) =>
         oldTasks.filter((task) => !taskIds.includes(task.id)),
       );
@@ -97,20 +94,25 @@ export const InvoiceProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  const getClientActiveInvoices = (clientId: string): Invoice[] => {
-    return activeInvoices.filter((invoice) => invoice.client === clientId);
+  const getClientInvoices = (clientId: string): Invoice[] => {
+    return invoices.filter((invoice) => invoice.client === clientId);
   };
 
   const getNextInvoiceNumber = async (client: Client): Promise<string> => {
     try {
-      const record = await pb.collection('invoices').getFirstListItem('', {
-        sort: '-number',
-      });
+      const record = await pb
+        .collection('invoices')
+        .getFirstListItem(`client="${client.id}"`, {
+          sort: '-number',
+        });
 
       const newInvoiceNumber = record?.number.split('-')[1] || '0';
       return `${client.key}-${(parseInt(newInvoiceNumber) + 1).toString().padStart(4, '0')}`;
     } catch (error) {
-      console.error('Error fetching the latest invoice:', error);
+      if (!(error instanceof ClientResponseError && error.status === 404)) {
+        console.error('Error fetching the latest invoice:', error);
+      }
+
       return `${client.key}-0001`;
     }
   };
@@ -125,11 +127,11 @@ export const InvoiceProvider = ({ children }: { children: ReactNode }) => {
         .collection('invoices')
         .update(invoiceId, { status: 'paid', paidDate });
 
-      const newlyPaidInvoice = activeInvoices.find(
+      const newlyPaidInvoice = invoices.find(
         (invoice) => invoice.id === invoiceId,
       );
 
-      setActiveInvoices((oldInvoices) =>
+      setInvoices((oldInvoices) =>
         oldInvoices.filter((invoice) => invoice.id !== invoiceId),
       );
 
@@ -150,9 +152,9 @@ export const InvoiceProvider = ({ children }: { children: ReactNode }) => {
     <InvoiceContext.Provider
       value={{
         areInvoicedLoaded,
-        activeInvoices,
+        invoices,
         addInvoice,
-        getClientActiveInvoices,
+        getClientInvoices,
         getNextInvoiceNumber,
         setInvoicePaid,
       }}
