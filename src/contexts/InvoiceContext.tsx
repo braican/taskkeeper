@@ -25,6 +25,7 @@ interface InvoiceContextType {
   };
   getNextInvoiceNumber: (client: Client) => Promise<string>;
   setInvoicePaid: (invoiceId: string, paidDate?: string) => Promise<void>;
+  fetchAllPaidClientInvoices: (clientId: string) => Promise<Invoice[]>;
 }
 
 const InvoiceContext = createContext<InvoiceContextType | undefined>(undefined);
@@ -162,6 +163,19 @@ export const InvoiceProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  const fetchAllPaidClientInvoices = async (clientId: string) => {
+    try {
+      const allPaidInvoices = await pb.collection('invoices').getFullList({
+        filter: `client="${clientId}"`,
+      });
+
+      return allPaidInvoices.map((record) => recordToInvoice(record));
+    } catch (error) {
+      console.error('Error fetching paid invoices for the client:', error);
+      return [];
+    }
+  };
+
   return (
     <InvoiceContext.Provider
       value={{
@@ -171,6 +185,7 @@ export const InvoiceProvider = ({ children }: { children: ReactNode }) => {
         getClientInvoices,
         getNextInvoiceNumber,
         setInvoicePaid,
+        fetchAllPaidClientInvoices,
       }}
     >
       {children}

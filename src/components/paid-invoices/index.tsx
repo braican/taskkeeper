@@ -1,15 +1,21 @@
 import { useEffect, useState } from 'react';
 import { dateFormatter, invoiceCost } from '@/utils';
+import { useInvoices } from '@/contexts/InvoiceContext';
 import Button from '@/components//button';
-import { Invoice } from '@/types';
+import { Client, Invoice } from '@/types';
 
 import styles from './paid-invoices.module.css';
 
 export default function PaidInvoices({
   invoices = [],
+  client,
 }: {
   invoices: Invoice[];
+  client: Client;
 }) {
+  const { fetchAllPaidClientInvoices } = useInvoices();
+  const [isFetching, setIsFetching] = useState(false);
+  const [hasFetchedAll, setHasFetchedAll] = useState(false);
   const [organizedInvoices, setOrganizedInvoices] = useState<
     { year: string; invoices: Invoice[] }[]
   >([]);
@@ -43,7 +49,17 @@ export default function PaidInvoices({
     setOrganizedInvoices(organizeInvoices(invoices));
   }, [invoices]);
 
-  const fetchMoreInvoices = () => {};
+  const fetchMoreInvoices = async () => {
+    if (!client) {
+      return;
+    }
+
+    setIsFetching(true);
+    const newInvoices = await fetchAllPaidClientInvoices(client.id);
+    setOrganizedInvoices(organizeInvoices(newInvoices));
+    setIsFetching(false);
+    setHasFetchedAll(true);
+  };
 
   return (
     <div>
@@ -80,9 +96,16 @@ export default function PaidInvoices({
         ))}
       </ul>
 
-      <Button style="outlined" size="small" onClick={fetchMoreInvoices}>
-        More paid invoices
-      </Button>
+      {!hasFetchedAll && (
+        <Button
+          style="outlined"
+          size="small"
+          onClick={fetchMoreInvoices}
+          disabled={isFetching}
+        >
+          {isFetching ? 'Fetching all invoices...' : 'More paid invoices'}
+        </Button>
+      )}
     </div>
   );
 }

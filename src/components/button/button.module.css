@@ -45,6 +45,10 @@
 .buttonoutlined:hover {
   background-color: var(--c-beige);
 }
+.buttonoutlined:disabled {
+  border-color: var(--c-beige-transparent);
+  pointer-events: none;
+}
 
 .button_sizesmall {
   padding: var(--space-xs) var(--space-s);

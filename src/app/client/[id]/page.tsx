@@ -98,7 +98,7 @@ function ClientPageMain() {
         <header className={styles.paidInvoicesHeader}>
           <h2 className="secondary-header">Paid Invoices</h2>
         </header>
-        <PaidInvoices invoices={paidInvoices} />
+        <PaidInvoices invoices={paidInvoices} client={client} />
       </div>
 
       <TaskForm
