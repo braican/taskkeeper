@@ -94,7 +94,16 @@ export default function Sidebar() {
             <ul className={`ul-reset ${styles.clientList}`}>
               {clients.map((client) => (
                 <li key={client.id} className={styles.clientItem}>
-                  <Link href={`/client/${client.id}`}>{client.name}</Link>
+                  <Link
+                    href={`/client/${client.id}`}
+                    className={
+                      pathname === `/client/${client.id}`
+                        ? styles.activeClientLink
+                        : ''
+                    }
+                  >
+                    {client.name}
+                  </Link>
                 </li>
               ))}
             </ul>

@@ -68,6 +68,20 @@
   padding: 1em 0;
   border-top: 1px solid var(--c-beige);
 }
+.activeClientLink {
+  font-weight: var(--weight-semibold);
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+.activeClientLink::before {
+  content: '';
+  display: block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--c-midnight-green);
+}
 
 @media screen and (max-width: 861px) {
   .sidebarNav {
