@@ -24,9 +24,13 @@ export default function InvoiceForm({
   const hasFetchedNextInvoiceNumber = useRef(false);
 
   useEffect(() => {
-    const newDueDate = new Date(issueDate);
-    newDueDate.setDate(newDueDate.getDate() + 30);
-    setDueDate(newDueDate.toISOString().split('T')[0]);
+    try {
+      const newDueDate = new Date(issueDate);
+      newDueDate.setDate(newDueDate.getDate() + 30);
+      setDueDate(newDueDate.toISOString().split('T')[0]);
+    } catch (e) {
+      console.warn('Invalid date input.');
+    }
   }, [issueDate]);
 
   useEffect(() => {
