@@ -19,7 +19,10 @@ interface InvoiceContextType {
   areInvoicedLoaded: boolean;
   invoices: Invoice[];
   addInvoice: (invoiceData: Omit<Invoice, 'id'>) => Promise<void>;
-  getActiveInvoices: () => Invoice[];
+  getActiveInvoices: (invoiceList?: Invoice[]) => {
+    pending: Invoice[];
+    sent: Invoice[];
+  };
   getClientInvoices: (clientId: string) => {
     activeInvoices: Invoice[];
     paidInvoices: Invoice[];
@@ -97,8 +100,30 @@ export const InvoiceProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  const getActiveInvoices = () =>
-    invoices.filter((invoice) => invoice.status === 'active');
+  const getActiveInvoices = (
+    invoiceList?: Invoice[],
+  ): {
+    pending: Invoice[];
+    sent: Invoice[];
+  } => {
+    if (typeof invoiceList === 'undefined') {
+      invoiceList = invoices.filter((invoice) => invoice.status === 'active');
+    }
+
+    return invoiceList.reduce(
+      (acc, invoice) => {
+        const issueDate = new Date(invoice.issueDate);
+        const today = new Date();
+        if (issueDate > today) {
+          acc.pending.push(invoice);
+        } else {
+          acc.sent.push(invoice);
+        }
+        return acc;
+      },
+      { pending: [] as Invoice[], sent: [] as Invoice[] },
+    );
+  };
 
   const getClientInvoices = (
     clientId: string,

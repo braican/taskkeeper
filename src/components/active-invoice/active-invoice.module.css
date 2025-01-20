@@ -5,6 +5,12 @@
   padding: var(--space-m);
   border-radius: var(--border-radius-small);
   background-color: var(--c-lighter-green);
+  border: 1px solid transparent;
+}
+
+.invoicePending {
+  border-color: var(--c-lighter-green);
+  background-color: var(--c-gray-light);
 }
 
 .number {
@@ -27,6 +33,12 @@
   gap: var(--space-xs);
   grid-column: span 2;
 }
+
+.actionToIssue {
+  align-items: center;
+  justify-content: space-between;
+}
+
 .collapser {
   transition: transform 0.2s;
 }
@@ -34,6 +46,9 @@
   transform: scale(-1);
 }
 
+.toIssueWarning {
+  font-weight: var(--weight-bold);
+}
 .payButton {
   flex: 1;
 }

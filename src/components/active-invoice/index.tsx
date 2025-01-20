@@ -27,6 +27,10 @@ export default function ActiveInvoice({ invoice }: { invoice: Invoice }) {
   const [paidDate, setPaidDate] = useState(todaysDate);
   const client = getClientById(invoice.client);
 
+  const issueDate = new Date(invoice.issueDate);
+  const today = new Date();
+  const isPending = issueDate >= today;
+
   const handlePaid = async () => {
     setIsSaving(true);
 
@@ -43,13 +47,17 @@ export default function ActiveInvoice({ invoice }: { invoice: Invoice }) {
   };
 
   return (
-    <div className={styles.invoice}>
+    <div
+      className={`${styles.invoice} ${isPending ? styles.invoicePending : ''}`}
+    >
       <div>
         <p className={styles.number}>{invoice.number}</p>
-        <p>
-          <span className="uppercase-header">Issued</span>{' '}
-          {dateFormatter(invoice.issueDate)}
-        </p>
+        {!isPending && (
+          <p>
+            <span className="uppercase-header">Issued</span>{' '}
+            {dateFormatter(invoice.issueDate)}
+          </p>
+        )}
         <p>
           <span className="uppercase-header">Due</span>{' '}
           {dateFormatter(invoice.dueDate)}
@@ -92,7 +100,9 @@ export default function ActiveInvoice({ invoice }: { invoice: Invoice }) {
         </div>
       )}
 
-      <div className={styles.action}>
+      <div
+        className={`${styles.action} ${isPending ? styles.actionToIssue : ''}`}
+      >
         {isSetPaidConfirmation ? (
           <>
             <div className={styles.paidDateInput}>
@@ -133,17 +143,24 @@ export default function ActiveInvoice({ invoice }: { invoice: Invoice }) {
           </>
         ) : (
           <>
-            <Button
-              className={styles.payButton}
-              size="small"
-              onClick={() => setIsPaidConfirmation(true)}
-            >
-              Mark as paid
-            </Button>
+            {isPending ? (
+              <p className={styles.toIssueWarning}>
+                To issue on {dateFormatter(invoice.issueDate)}
+              </p>
+            ) : (
+              <Button
+                className={styles.payButton}
+                size="small"
+                onClick={() => setIsPaidConfirmation(true)}
+              >
+                Mark as paid
+              </Button>
+            )}
             <Button
               icon={IconChevronDown}
               className={`${styles.collapser} ${isExpanded ? styles.flipCollapser : ''}`}
               iconOnly
+              style={isPending ? 'secondary' : 'primary'}
               size="small"
               onClick={() => setIsExpanded(!isExpanded)}
             >

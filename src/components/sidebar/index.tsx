@@ -22,7 +22,7 @@ export default function Sidebar() {
   const menuRef = useRef<HTMLDivElement>(null);
   const { user } = useAuth();
   const avatar = user ? pb.files.getURL(user, user.avatar) : null;
-  const activeInvoices = getActiveInvoices();
+  const { pending, sent } = getActiveInvoices();
 
   // Close the side menu whenever the route changes.
   useEffect(() => {
@@ -91,21 +91,44 @@ export default function Sidebar() {
       </header>
 
       <div className={styles.sidebarNav}>
-        {areInvoicedLoaded && activeInvoices.length > 0 && (
+        {areInvoicedLoaded && pending.length > 0 && (
           <div className={styles.navGroup}>
-            <h3 className="uppercase-header">Active Invoices</h3>
+            <h3 className="uppercase-header">Pending Invoices</h3>
             <ul className="ul-reset">
-              {activeInvoices.map((invoice) => (
-                <li key={invoice.id} className={styles.invoice}>
-                  <div>
-                    <p>{invoice.number}</p>
-                    <p>
-                      <span className="uppercase-header">Due</span>{' '}
-                      {dateFormatter(invoice.dueDate, 'numeric')}
-                    </p>
-                  </div>
+              {pending.map((invoice) => (
+                <li
+                  key={invoice.id}
+                  className={`${styles.invoice} ${styles.invoicePending}`}
+                >
+                  <p>{invoice.number}</p>
                   <p className={styles.invoiceCost}>
                     {invoiceCost(invoice.tasks)}
+                  </p>
+                  <p className={styles.invoiceDate}>
+                    <span className="uppercase-header">Send on</span>{' '}
+                    {dateFormatter(invoice.issueDate, 'numeric')}
+                  </p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+        {areInvoicedLoaded && sent.length > 0 && (
+          <div className={styles.navGroup}>
+            <h3 className="uppercase-header">Sent Invoices</h3>
+            <ul className="ul-reset">
+              {sent.map((invoice) => (
+                <li
+                  key={invoice.id}
+                  className={`${styles.invoice} ${styles.invoiceSent}`}
+                >
+                  <p>{invoice.number}</p>
+                  <p className={styles.invoiceCost}>
+                    {invoiceCost(invoice.tasks)}
+                  </p>
+                  <p className={styles.invoiceDate}>
+                    <span className="uppercase-header">Due</span>{' '}
+                    {dateFormatter(invoice.dueDate, 'numeric')}
                   </p>
                 </li>
               ))}
