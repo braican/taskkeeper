@@ -29,7 +29,7 @@ export default function InvoiceForm({
       newDueDate.setDate(newDueDate.getDate() + 30);
       setDueDate(newDueDate.toISOString().split('T')[0]);
     } catch (e) {
-      console.warn('Invalid date input.');
+      console.warn('Invalid date input.', e);
     }
   }, [issueDate]);
 
