@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Button from '../button';
 import styles from './invoice-form.module.css';
 import { useInvoices } from '@/contexts/InvoiceContext';
@@ -15,20 +15,29 @@ export default function InvoiceForm({
 }) {
   const { getNextInvoiceNumber, addInvoice } = useInvoices();
   const { getCost, clearTasks, tasks, setIsInvoicing } = useNewInvoice();
-  const [invoiceNumber, setInvoiceNumber] = useState(
-    getNextInvoiceNumber(client),
-  );
+  const [invoiceNumber, setInvoiceNumber] = useState<string | undefined>();
   const [issueDate, setIssueDate] = useState(todaysDate);
   const [dueDate, setDueDate] = useState('');
   const [description, setDescription] = useState('');
   const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const hasFetchedNextInvoiceNumber = useRef(false);
 
   useEffect(() => {
     const newDueDate = new Date(issueDate);
     newDueDate.setDate(newDueDate.getDate() + 30);
     setDueDate(newDueDate.toISOString().split('T')[0]);
   }, [issueDate]);
+
+  useEffect(() => {
+    if (hasFetchedNextInvoiceNumber.current) return;
+    hasFetchedNextInvoiceNumber.current = true;
+
+    (async () => {
+      const nextInvoiceNumber = await getNextInvoiceNumber(client);
+      setInvoiceNumber(nextInvoiceNumber);
+    })();
+  }, [getNextInvoiceNumber, client]);
 
   const handleCancel = () => {
     if (typeof onCancel === 'function') {
@@ -49,7 +58,7 @@ export default function InvoiceForm({
     setIsSubmitting(true);
 
     const newInvoice: Omit<Invoice, 'id'> = {
-      number: invoiceNumber,
+      number: invoiceNumber || `${client.key}-0001`,
       status: 'active',
       issueDate,
       dueDate,
@@ -98,7 +107,8 @@ export default function InvoiceForm({
             className="form-input"
             type="text"
             id="invoice_id"
-            value={invoiceNumber}
+            value={invoiceNumber || ''}
+            disabled={typeof invoiceNumber === 'undefined'}
             onChange={(e) => setInvoiceNumber(e.target.value)}
           />
         </div>

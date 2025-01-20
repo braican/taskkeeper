@@ -26,12 +26,12 @@ import IconAddInvoice from '@/icons/add-invoice';
 import styles from './client-page.module.css';
 
 function ClientPageMain() {
+  const { id }: { id: string } = useParams();
   const { setIsInvoicing, isInvoicing } = useNewInvoice();
   const { getClientTasks } = useTasks();
   const { getClientActiveInvoices } = useInvoices();
-  const [isTaskFormVisible, setIsTaskFormVisible] = useState(false);
-  const { id }: { id: string } = useParams();
   const { getClientById, areClientsLoaded } = useClients();
+  const [isTaskFormVisible, setIsTaskFormVisible] = useState(false);
   const client = getClientById(id);
 
   if (!areClientsLoaded) {

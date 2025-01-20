@@ -20,7 +20,7 @@ interface InvoiceContextType {
   activeInvoices: Invoice[];
   addInvoice: (invoiceData: Omit<Invoice, 'id'>) => Promise<void>;
   getClientActiveInvoices: (clientId: string) => Invoice[];
-  getNextInvoiceNumber: (client: Client) => string;
+  getNextInvoiceNumber: (client: Client) => Promise<string>;
   setInvoicePaid: (
     invoiceId: string,
     paidDate?: string,
@@ -101,17 +101,18 @@ export const InvoiceProvider = ({ children }: { children: ReactNode }) => {
     return activeInvoices.filter((invoice) => invoice.client === clientId);
   };
 
-  const getNextInvoiceNumber = (client: Client): string => {
-    const invoices = getClientActiveInvoices(client.id);
-    const latestInvoiceNumber = invoices
-      .map((invoice) => {
-        const numericPart = invoice.number.split('-')[1] || '1';
-        return parseInt(numericPart, 10);
-      })
-      .reduce((max, current) => Math.max(max, current), 0);
-    const newInvoiceNumber = latestInvoiceNumber + 1;
+  const getNextInvoiceNumber = async (client: Client): Promise<string> => {
+    try {
+      const record = await pb.collection('invoices').getFirstListItem('', {
+        sort: '-number',
+      });
 
-    return `${client.key}-${newInvoiceNumber.toString().padStart(4, '0')}`;
+      const newInvoiceNumber = record?.number.split('-')[1] || '0';
+      return `${client.key}-${(parseInt(newInvoiceNumber) + 1).toString().padStart(4, '0')}`;
+    } catch (error) {
+      console.error('Error fetching the latest invoice:', error);
+      return `${client.key}-0001`;
+    }
   };
 
   const setInvoicePaid = async (invoiceId: string, paidDate?: string) => {
