@@ -31,7 +31,7 @@ export default function ActiveInvoice({ invoice }: { invoice: Invoice }) {
     setIsSaving(true);
 
     try {
-      const paidInvoice = await setInvoicePaid(invoice.id, paidDate);
+      await setInvoicePaid(invoice.id, paidDate);
     } finally {
       setIsSaving(false);
     }

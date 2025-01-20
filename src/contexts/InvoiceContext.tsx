@@ -19,12 +19,12 @@ interface InvoiceContextType {
   areInvoicedLoaded: boolean;
   invoices: Invoice[];
   addInvoice: (invoiceData: Omit<Invoice, 'id'>) => Promise<void>;
-  getClientInvoices: (clientId: string) => Invoice[];
+  getClientInvoices: (clientId: string) => {
+    activeInvoices: Invoice[];
+    paidInvoices: Invoice[];
+  };
   getNextInvoiceNumber: (client: Client) => Promise<string>;
-  setInvoicePaid: (
-    invoiceId: string,
-    paidDate?: string,
-  ) => Promise<Invoice | undefined>;
+  setInvoicePaid: (invoiceId: string, paidDate?: string) => Promise<void>;
 }
 
 const InvoiceContext = createContext<InvoiceContextType | undefined>(undefined);
@@ -56,11 +56,16 @@ export const InvoiceProvider = ({ children }: { children: ReactNode }) => {
     async function fetchInvoices() {
       console.log('!! Fetch invoices');
 
+      const currentYear = new Date().getFullYear();
+
       try {
         const records = await pb.collection('invoices').getFullList({
-          filter: 'status = "active"',
+          filter: `(status = "active" || issueDate>"${currentYear - 2}-01-01")`,
         });
         const invoices = records.map(recordToInvoice);
+
+        console.log(invoices);
+
         setInvoicedLoaded(true);
         setInvoices(invoices);
       } catch (error) {
@@ -94,8 +99,25 @@ export const InvoiceProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  const getClientInvoices = (clientId: string): Invoice[] => {
-    return invoices.filter((invoice) => invoice.client === clientId);
+  const getClientInvoices = (
+    clientId: string,
+  ): {
+    activeInvoices: Invoice[];
+    paidInvoices: Invoice[];
+  } => {
+    return invoices
+      .filter((invoice) => invoice.client === clientId)
+      .reduce(
+        (acc, invoice) => {
+          if (invoice.status === 'active') {
+            acc.activeInvoices.push(invoice);
+          } else if (invoice.status === 'paid') {
+            acc.paidInvoices.push(invoice);
+          }
+          return acc;
+        },
+        { activeInvoices: [] as Invoice[], paidInvoices: [] as Invoice[] },
+      );
   };
 
   const getNextInvoiceNumber = async (client: Client): Promise<string> => {
@@ -123,25 +145,21 @@ export const InvoiceProvider = ({ children }: { children: ReactNode }) => {
     }
 
     try {
-      await pb
-        .collection('invoices')
-        .update(invoiceId, { status: 'paid', paidDate });
-
-      const newlyPaidInvoice = invoices.find(
-        (invoice) => invoice.id === invoiceId,
-      );
+      const newInvoiceData: Pick<Invoice, 'status' | 'paidDate'> = {
+        status: 'paid',
+        paidDate,
+      };
+      await pb.collection('invoices').update(invoiceId, newInvoiceData);
 
       setInvoices((oldInvoices) =>
-        oldInvoices.filter((invoice) => invoice.id !== invoiceId),
-      );
+        oldInvoices.map((invoice) => {
+          if (invoice.id !== invoiceId) {
+            return invoice;
+          }
 
-      return newlyPaidInvoice
-        ? ({
-            ...newlyPaidInvoice,
-            status: 'paid',
-            paidDate,
-          } as Invoice)
-        : undefined;
+          return { ...invoice, ...newInvoiceData };
+        }),
+      );
     } catch (error) {
       console.error('Error updating the invoice:', error);
       throw error;

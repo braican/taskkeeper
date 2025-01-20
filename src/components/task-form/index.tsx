@@ -119,6 +119,7 @@ export default function TaskForm({
                 type="number"
                 id="task_value"
                 value={value}
+                min="0"
                 onChange={(e) => setValue(e.target.value)}
               />
             </div>

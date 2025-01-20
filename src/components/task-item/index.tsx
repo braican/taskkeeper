@@ -189,6 +189,7 @@ export default function TaskItem({ task, rate }: { task: Task; rate: number }) {
             <input
               ref={hoursInputRef}
               type="number"
+              min="0"
               defaultValue={hours}
               className={styles.hours}
               style={{ width: `${(hours || 0)?.toString().length + 5}ch` }}

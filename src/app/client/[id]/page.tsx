@@ -42,7 +42,7 @@ function ClientPageMain() {
   }
 
   const tasks = getClientTasks(client.id);
-  const invoices = getClientInvoices(client.id);
+  const { activeInvoices, paidInvoices } = getClientInvoices(client.id);
 
   return (
     <>
@@ -56,9 +56,9 @@ function ClientPageMain() {
         {client.address && <p>{client.address}</p>}
       </header>
 
-      {invoices.length > 0 && (
+      {activeInvoices.length > 0 && (
         <div className={styles.invoiceList}>
-          <InvoiceList invoices={invoices} />
+          <InvoiceList invoices={activeInvoices} />
         </div>
       )}
 
@@ -98,7 +98,7 @@ function ClientPageMain() {
         <header>
           <h2 className="secondary-header">Paid Invoices</h2>
         </header>
-        <PaidInvoices />
+        <PaidInvoices invoices={paidInvoices} />
       </div>
 
       <TaskForm
