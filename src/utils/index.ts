@@ -6,14 +6,20 @@ export const moneyFormatter = new Intl.NumberFormat('en-US', {
   trailingZeroDisplay: 'stripIfInteger',
 });
 
-export const dateFormatter = (dateString: string) => {
+export const dateFormatter = (dateString: string, format = 'default') => {
   const date = new Date(dateString);
-  return date.toLocaleDateString('en-US', {
+  const options: Intl.DateTimeFormatOptions = {
     year: 'numeric',
     month: 'short',
     day: 'numeric',
     timeZone: 'UTC',
-  });
+  };
+
+  if (format === 'numeric') {
+    options.month = 'numeric';
+  }
+
+  return date.toLocaleDateString('en-US', options);
 };
 
 export const dateFormatterFilename = (dateString: string) => {

@@ -95,7 +95,7 @@ function ClientPageMain() {
       </div>
 
       <div className={styles.paidInvoices}>
-        <header>
+        <header className={styles.paidInvoicesHeader}>
           <h2 className="secondary-header">Paid Invoices</h2>
         </header>
         <PaidInvoices invoices={paidInvoices} />

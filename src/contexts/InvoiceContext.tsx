@@ -57,15 +57,11 @@ export const InvoiceProvider = ({ children }: { children: ReactNode }) => {
       console.log('!! Fetch invoices');
 
       const currentYear = new Date().getFullYear();
-
       try {
         const records = await pb.collection('invoices').getFullList({
           filter: `(status = "active" || issueDate>"${currentYear - 2}-01-01")`,
         });
         const invoices = records.map(recordToInvoice);
-
-        console.log(invoices);
-
         setInvoicedLoaded(true);
         setInvoices(invoices);
       } catch (error) {

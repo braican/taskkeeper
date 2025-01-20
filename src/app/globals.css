@@ -17,6 +17,8 @@
   --bg-accent-border: var(--c-gray-mid);
   --text-color: var(--c-black);
 
+  --max-component-width: 600px;
+
   --border-radius-small: 0.5rem;
   --border-radius: 1rem;
 

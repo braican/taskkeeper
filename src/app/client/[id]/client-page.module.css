@@ -36,9 +36,17 @@
 }
 
 .invoiceForm,
-.taskList,
-.paidInvoices {
+.taskList {
   margin-top: var(--space-l);
+}
+
+.paidInvoices {
+  margin-top: var(--space-xl);
+  padding-top: var(--space-m);
+  border-top: 1px solid var(--c-beige);
+}
+.paidInvoicesHeader {
+  margin-bottom: var(--space-m);
 }
 
 @media screen and (min-width: 862px) {
@@ -48,7 +56,8 @@
   }
 
   .invoiceForm,
-  .taskList {
-    max-width: 600px;
+  .taskList,
+  .paidInvoices {
+    max-width: var(--max-component-width);
   }
 }

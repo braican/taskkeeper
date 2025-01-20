@@ -1,0 +1,22 @@
+.invoiceList {
+  margin-bottom: var(--space-m);
+}
+
+.year {
+  margin-top: var(--space-s);
+}
+.yearLabel {
+  margin-bottom: var(--space-xs);
+}
+
+.invoice {
+  display: flex;
+  gap: var(--space-xs);
+  padding: var(--space-xs) 0;
+  border-top: 1px solid var(--c-gray-light);
+}
+
+.invoiceCost {
+  margin-left: auto;
+  font-weight: var(--weight-bold);
+}
