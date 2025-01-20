@@ -68,19 +68,37 @@
   padding: 1em 0;
   border-top: 1px solid var(--c-beige);
 }
-.activeClientLink {
-  font-weight: var(--weight-semibold);
-  display: flex;
-  align-items: center;
-  gap: 0.5em;
+
+.clientLink {
+  position: relative;
 }
-.activeClientLink::before {
+.clientLink span {
+  transition: all 0.2s;
+  display: block;
+}
+.clientLink:not(.activeClientLink):hover span {
+  transform: translate3d(8px, 0, 0);
+  color: var(--c-midnight-green);
+}
+.clientLink::before {
+  transition: opacity 0.2s;
   content: '';
   display: block;
   width: 8px;
   height: 8px;
   border-radius: 50%;
   background-color: var(--c-midnight-green);
+  opacity: 0;
+  position: absolute;
+  top: 50%;
+  margin-top: -4px;
+}
+.activeClientLink span {
+  font-weight: var(--weight-semibold);
+  padding-left: 12px;
+}
+.activeClientLink::before {
+  opacity: 1;
 }
 
 @media screen and (max-width: 861px) {

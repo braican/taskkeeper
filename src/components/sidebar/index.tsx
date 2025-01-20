@@ -96,13 +96,13 @@ export default function Sidebar() {
                 <li key={client.id} className={styles.clientItem}>
                   <Link
                     href={`/client/${client.id}`}
-                    className={
+                    className={`${styles.clientLink} ${
                       pathname === `/client/${client.id}`
                         ? styles.activeClientLink
                         : ''
-                    }
+                    }`}
                   >
-                    {client.name}
+                    <span>{client.name}</span>
                   </Link>
                 </li>
               ))}
