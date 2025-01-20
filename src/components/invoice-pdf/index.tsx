@@ -243,7 +243,9 @@ export default function InvoicePdf({
                 <View style={styles.tableRow} key={task.description}>
                   <Text style={styles.descriptionCol}>{task.description}</Text>
                   <Text style={styles.costCol}>
+                    {task.cost < 0 ? '(' : ''}
                     {moneyFormatter.format(task.cost)}
+                    {task.cost < 0 ? ')' : ''}
                   </Text>
                 </View>
               ))}

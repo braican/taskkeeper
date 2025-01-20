@@ -19,6 +19,7 @@ interface InvoiceContextType {
   areInvoicedLoaded: boolean;
   invoices: Invoice[];
   addInvoice: (invoiceData: Omit<Invoice, 'id'>) => Promise<void>;
+  getActiveInvoices: () => Invoice[];
   getClientInvoices: (clientId: string) => {
     activeInvoices: Invoice[];
     paidInvoices: Invoice[];
@@ -95,6 +96,9 @@ export const InvoiceProvider = ({ children }: { children: ReactNode }) => {
       throw error;
     }
   };
+
+  const getActiveInvoices = () =>
+    invoices.filter((invoice) => invoice.status === 'active');
 
   const getClientInvoices = (
     clientId: string,
@@ -182,6 +186,7 @@ export const InvoiceProvider = ({ children }: { children: ReactNode }) => {
         areInvoicedLoaded,
         invoices,
         addInvoice,
+        getActiveInvoices,
         getClientInvoices,
         getNextInvoiceNumber,
         setInvoicePaid,

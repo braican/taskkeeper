@@ -119,7 +119,7 @@ export default function TaskForm({
                 type="number"
                 id="task_value"
                 value={value}
-                min="0"
+                min={unit !== 'fixed' ? '0' : undefined}
                 onChange={(e) => setValue(e.target.value)}
               />
             </div>

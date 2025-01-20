@@ -61,6 +61,26 @@
   border-radius: var(--border-radius);
   padding: var(--space-m);
 }
+
+.navGroup + .navGroup {
+  margin-top: var(--space-l);
+}
+
+.invoice {
+  padding: var(--space-xs);
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-s);
+  background-color: var(--c-midnight-green);
+  color: var(--c-white);
+  border-radius: var(--border-radius-small);
+  margin-top: var(--space-s);
+}
+
+.invoiceCost {
+  font-weight: var(--weight-extrabold);
+}
+
 .clientList {
   margin-top: var(--space-s);
 }

@@ -10,15 +10,19 @@ import { useClients } from '@/contexts/ClientContext';
 import pb from '@/lib/pocketbase';
 import IconMenu from '@/icons/menu';
 import styles from './sidebar.module.css';
+import { useInvoices } from '@/contexts/InvoiceContext';
+import { dateFormatter, invoiceCost } from '@/utils';
 
 export default function Sidebar() {
   const pathname = usePathname();
   const { clients, areClientsLoaded } = useClients();
+  const { areInvoicedLoaded, getActiveInvoices } = useInvoices();
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [sideMenuOpen, setSideMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const { user } = useAuth();
   const avatar = user ? pb.files.getURL(user, user.avatar) : null;
+  const activeInvoices = getActiveInvoices();
 
   // Close the side menu whenever the route changes.
   useEffect(() => {
@@ -87,8 +91,29 @@ export default function Sidebar() {
       </header>
 
       <div className={styles.sidebarNav}>
+        {areInvoicedLoaded && activeInvoices.length > 0 && (
+          <div className={styles.navGroup}>
+            <h3 className="uppercase-header">Active Invoices</h3>
+            <ul className="ul-reset">
+              {activeInvoices.map((invoice) => (
+                <li key={invoice.id} className={styles.invoice}>
+                  <div>
+                    <p>{invoice.number}</p>
+                    <p>
+                      <span className="uppercase-header">Due</span>{' '}
+                      {dateFormatter(invoice.dueDate, 'numeric')}
+                    </p>
+                  </div>
+                  <p className={styles.invoiceCost}>
+                    {invoiceCost(invoice.tasks)}
+                  </p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
         {areClientsLoaded && clients && (
-          <>
+          <div className={styles.navGroup}>
             <h3 className="uppercase-header">clients</h3>
 
             <ul className={`ul-reset ${styles.clientList}`}>
@@ -107,7 +132,7 @@ export default function Sidebar() {
                 </li>
               ))}
             </ul>
-          </>
+          </div>
         )}
       </div>
     </div>
