@@ -1,9 +1,0 @@
-@import '../../../styles/abstracts';
-
-.block {
-  padding: $spacing;
-
-  @include large-screens {
-    padding: $spacing * 2;
-  }
-}

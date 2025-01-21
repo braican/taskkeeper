@@ -1,0 +1,16 @@
+.nav {
+  position: absolute;
+  border: 1px solid var(--bg-accent-border);
+  top: 52px;
+  left: 0;
+  background-color: var(--c-white);
+  border-radius: var(--border-radius-small);
+  overflow: hidden;
+}
+
+.button {
+  padding: var(--space-xs) var(--space-s);
+}
+.button:hover {
+  background-color: var(--c-off-white);
+}
