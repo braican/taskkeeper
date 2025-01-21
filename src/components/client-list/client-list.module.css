@@ -4,19 +4,32 @@
 .item {
   border-bottom: 1px solid var(--c-beige);
 }
+.name,
+.key {
+  display: inline;
+  vertical-align: top;
+}
 
 .link {
-  transition: background-color 0.2s;
+  transition: all 0.2s;
   padding: var(--space-m) 0;
   display: block;
+  padding-left: var(--space-xs);
+  padding-right: var(--space-xs);
+  border-left: 1px solid transparent;
+  border-right: 1px solid transparent;
 }
 .link:hover {
   background-color: var(--c-beige-transparent);
+  border-left-color: var(--c-beige);
+  border-right-color: var(--c-beige);
 }
 
 .inner {
   transition: transform 0.2s;
   width: calc(100% - 6px);
+  display: grid;
+  gap: var(--space-xs) var(--space-m);
 }
 
 .link:hover .inner {
@@ -25,4 +38,28 @@
 
 .name {
   font-size: var(--step-2);
+}
+
+.hasStatus .statuses {
+  position: relative;
+  padding-left: 2ch;
+}
+.hasStatus .statuses::before {
+  content: '';
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: block;
+  background-color: var(--c-midnight-green);
+  position: absolute;
+  left: 0;
+  top: calc(0.5em * 1.4 - 5px);
+}
+
+@media screen and (min-width: 1078px),
+  screen and (min-width: 560px) and (max-width: 861px) {
+  .inner {
+    grid-template-columns: auto 20ch;
+    align-items: flex-start;
+  }
 }
