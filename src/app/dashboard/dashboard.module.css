@@ -8,6 +8,10 @@
   gap: var(--space-xl);
 }
 
+.clientList {
+  max-width: 600px;
+}
+
 @media screen and (min-width: 862px) {
   .dashboard {
     padding-top: calc(48px + var(--space-m));
@@ -15,5 +19,10 @@
 
   .main {
     grid-template-columns: 1fr auto;
+    max-width: 1320px;
+  }
+
+  .stats {
+    padding-right: var(--space-l);
   }
 }

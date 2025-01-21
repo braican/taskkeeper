@@ -58,7 +58,7 @@ export default function Stats() {
           <dd>{moneyFormatter.format(estimated)}</dd>
           <dt className="uppercase-header">Pending invoice:</dt>
           <dd>{moneyFormatter.format(pending)}</dd>
-          <dt className="uppercase-header">Waiting on payment:</dt>
+          <dt className="uppercase-header">Awaiting payment:</dt>
           <dd>{moneyFormatter.format(waiting)}</dd>
           <dt className="uppercase-header">Paid:</dt>
           <dd>{moneyFormatter.format(paid)}</dd>

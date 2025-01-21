@@ -195,7 +195,7 @@ export const InvoiceProvider = ({ children }: { children: ReactNode }) => {
   const fetchAllPaidClientInvoices = async (clientId: string) => {
     try {
       const allPaidInvoices = await pb.collection('invoices').getFullList({
-        filter: `client="${clientId}"`,
+        filter: `(client="${clientId}" && status="paid")`,
       });
 
       return allPaidInvoices.map((record) => recordToInvoice(record));

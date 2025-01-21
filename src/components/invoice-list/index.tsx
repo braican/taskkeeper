@@ -15,11 +15,12 @@ export default function InvoiceList({ invoices }: { invoices: Invoice[] }) {
 
   return (
     <>
-      {pending.length > 0 && (
-        <div>
-          <h3 className="uppercase-header">Pending</h3>
+      <h2 className="secondary-header">Current Invoices</h2>
+      {sent.length > 0 && (
+        <div className={styles.invoiceGroup}>
+          <h3 className="uppercase-header">Sent</h3>
           <ul className={`ul-reset ${styles.invoiceGrid}`}>
-            {pending.map((invoice) => (
+            {sent.map((invoice) => (
               <li key={invoice.id}>
                 <ActiveInvoice invoice={invoice} />
               </li>
@@ -27,11 +28,11 @@ export default function InvoiceList({ invoices }: { invoices: Invoice[] }) {
           </ul>
         </div>
       )}
-      {sent.length > 0 && (
-        <div>
-          <h3 className="uppercase-header">Sent</h3>
+      {pending.length > 0 && (
+        <div className={styles.invoiceGroup}>
+          <h3 className="uppercase-header">Pending</h3>
           <ul className={`ul-reset ${styles.invoiceGrid}`}>
-            {sent.map((invoice) => (
+            {pending.map((invoice) => (
               <li key={invoice.id}>
                 <ActiveInvoice invoice={invoice} />
               </li>

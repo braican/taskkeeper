@@ -90,7 +90,7 @@ export default function PaidInvoices({
                 ))}
               </ul>
             ) : (
-              <p className={styles.invoice}>No invoices in {group.year}</p>
+              <p className={styles.invoice}>No paid invoices in {group.year}</p>
             )}
           </li>
         ))}
