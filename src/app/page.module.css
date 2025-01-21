@@ -5,6 +5,15 @@
   align-items: flex-start;
 }
 
+.logo {
+  width: 2ch;
+  display: inline-block;
+}
+.logo svg {
+  width: 100%;
+  display: block;
+}
+
 .description {
   font-size: var(--step-2);
   margin-bottom: var(--space-xl);

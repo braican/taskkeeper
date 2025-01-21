@@ -3,6 +3,8 @@
 
 import { useAuth } from '@/contexts/AuthContext';
 import Button from '@/components/button';
+import IconLogo from '@/icons/logo';
+
 import styles from './page.module.css';
 
 export default function Home() {
@@ -14,7 +16,12 @@ export default function Home() {
 
   return (
     <div className={styles.layout}>
-      <h1 className="page-title">Taskkeeper</h1>
+      <h1 className="page-title">
+        <span className={styles.logo}>
+          <IconLogo />
+        </span>{' '}
+        Taskkeeper
+      </h1>
       <p className={styles.description}>Know what you&apos;re owe.</p>
       <Button onClick={handleLogin}>Log in with Google</Button>
       <p className={styles.copyright}>
