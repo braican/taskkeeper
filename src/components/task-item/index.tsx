@@ -7,7 +7,7 @@ import IconTrash from '@/icons/trash';
 import IconCheckmark from '@/icons/checkmark';
 import { Task } from '@/types';
 import styles from './task-item.module.css';
-import { moneyFormatter } from '@/utils';
+import { moneyFormatter, taskCost } from '@/utils';
 
 export default function TaskItem({ task, rate }: { task: Task; rate: number }) {
   const { isInvoicing, addTask, removeTask } = useNewInvoice();
@@ -19,9 +19,7 @@ export default function TaskItem({ task, rate }: { task: Task; rate: number }) {
   const [statusMessage, setStatusMessage] = useState('');
   const [description, setDescription] = useState(task.description);
   const [hours, setHours] = useState(task.hours);
-  const [price, setPrice] = useState(
-    (task.hours || 0) > 0 ? (task.hours || 0) * rate : task.price || 0,
-  );
+  const [price, setPrice] = useState(taskCost(task, rate));
   const hoursInputRef = useRef<HTMLInputElement>(null);
   const costInputRef = useRef<HTMLInputElement>(null);
 

@@ -8,6 +8,7 @@ import ClientList from '@/components/client-list';
 import IconPlus from '@/icons/plus';
 
 import styles from './dashboard.module.css';
+import Stats from '@/components/stats';
 
 export default function Dashboard() {
   const { toggleClientFormVisible } = useGlobals();
@@ -25,8 +26,13 @@ export default function Dashboard() {
         Add new client
       </Button>
 
-      <div className={styles.clientList}>
-        <ClientList />
+      <div className={styles.main}>
+        <div>
+          <ClientList />
+        </div>
+        <div className={styles.stats}>
+          <Stats />
+        </div>
       </div>
     </div>
   );

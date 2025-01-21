@@ -2,12 +2,18 @@
   margin-bottom: var(--space-l);
 }
 
-.clientList {
+.main {
   margin-top: var(--space-xl);
+  display: grid;
+  gap: var(--space-xl);
 }
 
 @media screen and (min-width: 862px) {
   .dashboard {
     padding-top: calc(48px + var(--space-m));
+  }
+
+  .main {
+    grid-template-columns: 1fr auto;
   }
 }
