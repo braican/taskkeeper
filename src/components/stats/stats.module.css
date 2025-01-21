@@ -1,0 +1,9 @@
+.section + .section {
+  margin-top: var(--space-m);
+  padding-top: var(--space-m);
+  border-top: 1px solid var(--c-gray-light);
+}
+
+.statList dt {
+  margin-top: var(--space-xs);
+}

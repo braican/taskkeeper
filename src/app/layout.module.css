@@ -1,0 +1,9 @@
+.logo {
+  position: fixed;
+  top: 0;
+  right: 0;
+  padding: var(--space-m);
+  width: 20px;
+  box-sizing: content-box;
+  opacity: 0.1;
+}

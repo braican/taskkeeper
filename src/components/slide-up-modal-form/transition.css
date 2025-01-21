@@ -1,0 +1,18 @@
+.slideup-enter {
+  opacity: 0;
+  transform: translate3d(0, 100%, 0);
+}
+.slideup-enter-active {
+  opacity: 1;
+  transition: all 300ms;
+  transform: translate3d(0, 0, 0);
+}
+.slideup-exit {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+.slideup-exit-active {
+  opacity: 0;
+  transition: all 300ms;
+  transform: translate3d(0, 100%, 0);
+}
