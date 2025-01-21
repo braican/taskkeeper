@@ -241,7 +241,11 @@ export default function TaskItem({ task, rate }: { task: Task; rate: number }) {
             <Button onClick={() => setConfirmDelettion(false)} style="inline">
               Cancel
             </Button>
-            <Button onClick={handleDelete} style="secondary">
+            <Button
+              onClick={handleDelete}
+              style="secondary"
+              disabled={isDeleting}
+            >
               {isDeleting ? 'Deleting...' : 'Delete'}
             </Button>
           </div>
