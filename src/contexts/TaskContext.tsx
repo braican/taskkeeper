@@ -43,8 +43,14 @@ export const TaskProvider = ({ children }: { children: ReactNode }) => {
   const { user } = useAuth();
   const hasFetchedRef = useRef(false);
 
-  // Fetch clients on component mount
+  // Fetch tasks on component mount
   useEffect(() => {
+    if (!user) {
+      hasFetchedRef.current = false;
+      setTasks([]);
+      setTasksLoaded(false);
+    }
+
     if (hasFetchedRef.current || !user) return;
     hasFetchedRef.current = true;
 

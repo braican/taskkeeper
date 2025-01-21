@@ -40,6 +40,12 @@ export const ClientProvider = ({ children }: { children: ReactNode }) => {
 
   // Fetch clients on component mount
   useEffect(() => {
+    if (!user) {
+      hasFetchedRef.current = false;
+      setClients([]);
+      setClientsLoaded(false);
+    }
+
     if (hasFetchedRef.current || !user) return;
     hasFetchedRef.current = true;
 

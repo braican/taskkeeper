@@ -55,6 +55,12 @@ export const InvoiceProvider = ({ children }: { children: ReactNode }) => {
 
   // Fetch invoices on component mount
   useEffect(() => {
+    if (!user) {
+      hasFetchedRef.current = false;
+      setInvoices([]);
+      setInvoicedLoaded(false);
+    }
+
     if (hasFetchedRef.current || !user) return;
     hasFetchedRef.current = true;
 
