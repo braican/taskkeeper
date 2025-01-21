@@ -60,6 +60,7 @@
   background-color: var(--bg-accent);
   border-radius: var(--border-radius);
   padding: var(--space-m) var(--space-s);
+  overflow: auto;
 }
 
 .navGroup + .navGroup {
