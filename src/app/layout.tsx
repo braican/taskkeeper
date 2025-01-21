@@ -24,6 +24,20 @@ const funnelDisplay = Funnel_Display({
 export const metadata: Metadata = {
   title: 'Taskkeeper',
   description: "Know how much you're owed",
+  icons: {
+    icon: [
+      {
+        type: 'image/png',
+        media: '(prefers-color-scheme: light)',
+        url: '/icons/icon.png',
+      },
+      {
+        type: 'image/png',
+        media: '(prefers-color-scheme: dark)',
+        url: '/icons/icon-dark-mode.png',
+      },
+    ],
+  },
 };
 
 export default function RootLayout({

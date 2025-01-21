@@ -8,6 +8,7 @@
 .logo {
   width: 2ch;
   display: inline-block;
+  color: var(--c-midnight-green);
 }
 .logo svg {
   width: 100%;
