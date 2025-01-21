@@ -1,0 +1,25 @@
+.layout {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.description {
+  font-size: var(--step-2);
+  margin-bottom: var(--space-xl);
+}
+
+.copyright {
+  color: var(--c-gray-mid);
+  padding-top: var(--space-xl);
+  margin-top: auto;
+}
+
+.copyright a {
+  transition: color 0.2s;
+  text-decoration: underline;
+}
+.copyright a:hover {
+  color: var(--c-gray-dark);
+}

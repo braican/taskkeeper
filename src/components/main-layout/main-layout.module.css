@@ -35,6 +35,14 @@
 .main {
   flex: 1;
   padding: calc(var(--space-m) * 2 + 48px) var(--space-m);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: 100svh;
+}
+
+.anonMain {
+  padding-bottom: var(--space-m);
 }
 
 @media screen and (min-width: 862px) {
@@ -43,7 +51,7 @@
     width: calc(280px + 2vw);
   }
 
-  .main {
+  .authlayout .main {
     margin-left: calc(280px + 2vw);
     padding-top: var(--space-m);
   }

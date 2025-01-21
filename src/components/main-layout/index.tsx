@@ -17,7 +17,7 @@ export default function MainLayout({
   return (
     <>
       <div
-        className={`${styles.mainLayout} ${bodyScrollIsLocked ? styles.modalOverlay : ''}`}
+        className={`${styles.mainLayout} ${bodyScrollIsLocked ? styles.modalOverlay : ''} ${isAuthenticated ? styles.authlayout : ''}`}
       >
         {isAuthenticated && (
           <aside className={styles.aside}>
@@ -25,7 +25,11 @@ export default function MainLayout({
           </aside>
         )}
 
-        <main className={styles.main}>{children}</main>
+        <main
+          className={`${styles.main} ${isAuthenticated ? styles.authmain : styles.anonMain}`}
+        >
+          {children}
+        </main>
 
         <ClientForm />
       </div>

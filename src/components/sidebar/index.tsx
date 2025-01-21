@@ -135,26 +135,30 @@ export default function Sidebar() {
             </ul>
           </div>
         )}
-        {areClientsLoaded && clients && (
+        {areClientsLoaded && (
           <div className={styles.navGroup}>
             <h3 className="uppercase-header">clients</h3>
 
-            <ul className={`ul-reset ${styles.clientList}`}>
-              {clients.map((client) => (
-                <li key={client.id} className={styles.clientItem}>
-                  <Link
-                    href={`/client/${client.id}`}
-                    className={`${styles.clientLink} ${
-                      pathname === `/client/${client.id}`
-                        ? styles.activeClientLink
-                        : ''
-                    }`}
-                  >
-                    <span>{client.name}</span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
+            {clients.length ? (
+              <ul className={`ul-reset ${styles.clientList}`}>
+                {clients.map((client) => (
+                  <li key={client.id} className={styles.clientItem}>
+                    <Link
+                      href={`/client/${client.id}`}
+                      className={`${styles.clientLink} ${
+                        pathname === `/client/${client.id}`
+                          ? styles.activeClientLink
+                          : ''
+                      }`}
+                    >
+                      <span>{client.name}</span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p>No clients yet.</p>
+            )}
           </div>
         )}
       </div>
