@@ -52,6 +52,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const logout = () => {
     pb.authStore.clear();
+    setUser(null);
+    setIsAuthenticated(false);
     router.push('/');
   };
 

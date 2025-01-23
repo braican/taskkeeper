@@ -6,9 +6,18 @@ import Button from '@/components/button';
 import IconLogo from '@/icons/logo';
 
 import styles from './page.module.css';
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
 export default function Home() {
-  const { login } = useAuth();
+  const { login, isAuthenticated } = useAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.replace('/dashboard');
+    }
+  }, [isAuthenticated, router]);
 
   const handleLogin = async () => {
     await login();
