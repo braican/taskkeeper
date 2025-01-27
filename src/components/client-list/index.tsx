@@ -66,16 +66,19 @@ export default function ClientList() {
                     {client.activeTasks.length === 1 ? '' : 's'}
                   </p>
                 )}
+
+                {client.activeSent.length > 0 && (
+                  <p>
+                    <strong>
+                      {client.activeSent.length} active invoice
+                      {client.activeSent.length === 1 ? '' : 's'}
+                    </strong>
+                  </p>
+                )}
                 {client.activePending.length > 0 && (
                   <p>
                     {client.activePending.length} invoice
                     {client.activePending.length === 1 ? '' : 's'} pending
-                  </p>
-                )}
-                {client.activeSent.length > 0 && (
-                  <p>
-                    {client.activeSent.length} invoice
-                    {client.activeSent.length === 1 ? '' : 's'} awaiting payment
                   </p>
                 )}
               </div>

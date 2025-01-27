@@ -11,7 +11,7 @@ import pb from '@/lib/pocketbase';
 import IconMenu from '@/icons/menu';
 import styles from './sidebar.module.css';
 import { useInvoices } from '@/contexts/InvoiceContext';
-import { dateFormatter, invoiceCost } from '@/utils';
+import ActiveInvoiceList from '../active-invoice-list';
 
 export default function Sidebar() {
   const pathname = usePathname();
@@ -91,50 +91,27 @@ export default function Sidebar() {
       </header>
 
       <div className={styles.sidebarNav}>
-        {areInvoicedLoaded && pending.length > 0 && (
-          <div className={styles.navGroup}>
-            <h3 className="uppercase-header">Pending Invoices</h3>
-            <ul className="ul-reset">
-              {pending.map((invoice) => (
-                <li
-                  key={invoice.id}
-                  className={`${styles.invoice} ${styles.invoicePending}`}
-                >
-                  <p>{invoice.number}</p>
-                  <p className={styles.invoiceCost}>
-                    {invoiceCost(invoice.tasks)}
-                  </p>
-                  <p className={styles.invoiceDate}>
-                    <span className="uppercase-header">Send on</span>{' '}
-                    {dateFormatter(invoice.issueDate, 'numeric')}
-                  </p>
-                </li>
-              ))}
-            </ul>
-          </div>
+        {areInvoicedLoaded && (
+          <>
+            {sent.length > 0 && (
+              <ActiveInvoiceList
+                className={styles.navGroup}
+                invoices={sent}
+                headline="Awaiting Payment"
+                type="sent"
+              />
+            )}
+            {pending.length > 0 && (
+              <ActiveInvoiceList
+                className={styles.navGroup}
+                invoices={pending}
+                headline="Pending Invoices"
+                type="pending"
+              />
+            )}
+          </>
         )}
-        {areInvoicedLoaded && sent.length > 0 && (
-          <div className={styles.navGroup}>
-            <h3 className="uppercase-header">Sent Invoices</h3>
-            <ul className="ul-reset">
-              {sent.map((invoice) => (
-                <li
-                  key={invoice.id}
-                  className={`${styles.invoice} ${styles.invoiceSent}`}
-                >
-                  <p>{invoice.number}</p>
-                  <p className={styles.invoiceCost}>
-                    {invoiceCost(invoice.tasks)}
-                  </p>
-                  <p className={styles.invoiceDate}>
-                    <span className="uppercase-header">Due</span>{' '}
-                    {dateFormatter(invoice.dueDate, 'numeric')}
-                  </p>
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
+
         {areClientsLoaded && (
           <div className={styles.navGroup}>
             <h3 className="uppercase-header">clients</h3>
