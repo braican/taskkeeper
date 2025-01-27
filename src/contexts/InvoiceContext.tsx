@@ -116,7 +116,7 @@ export const InvoiceProvider = ({ children }: { children: ReactNode }) => {
       invoiceList = invoices.filter((invoice) => invoice.status === 'active');
     }
 
-    return invoiceList.reduce(
+    const { pending, sent } = invoiceList.reduce(
       (acc, invoice) => {
         const issueDate = new Date(invoice.issueDate);
         const today = new Date();
@@ -129,6 +129,19 @@ export const InvoiceProvider = ({ children }: { children: ReactNode }) => {
       },
       { pending: [] as Invoice[], sent: [] as Invoice[] },
     );
+
+    // Sort pending invoices by issueDate.
+    pending.sort(
+      (a, b) =>
+        new Date(a.issueDate).getTime() - new Date(b.issueDate).getTime(),
+    );
+
+    // Sort sent invoices by dueDate.
+    sent.sort(
+      (a, b) => new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime(),
+    );
+
+    return { pending, sent };
   };
 
   const getClientInvoices = (
