@@ -1,5 +1,7 @@
+import Link from 'next/link';
 import { dateFormatter, invoiceCost } from '@/utils';
 import { Invoice } from '@/types';
+
 import styles from './active-invoice-list.module.css';
 
 export default function ActiveInvoiceList({
@@ -19,21 +21,23 @@ export default function ActiveInvoiceList({
 
       <ul className="ul-reset">
         {invoices.map((invoice) => (
-          <li
-            key={invoice.id}
-            className={`${styles.invoice} ${type === 'sent' ? styles.invoiceSent : styles.invoicePending}`}
-          >
-            <p>{invoice.number}</p>
-            <p className={styles.invoiceCost}>{invoiceCost(invoice.tasks)}</p>
-            <p className={styles.invoiceDate}>
-              <span className="uppercase-header">
-                {type === 'sent' ? 'Due on' : 'Send on'}
-              </span>{' '}
-              {dateFormatter(
-                type === 'sent' ? invoice.dueDate : invoice.issueDate,
-                'numeric',
-              )}
-            </p>
+          <li key={invoice.id}>
+            <Link
+              className={`${styles.invoice} ${type === 'sent' ? styles.invoiceSent : styles.invoicePending}`}
+              href={invoice.client ? `/client/${invoice.client}` : '#'}
+            >
+              <p>{invoice.number}</p>
+              <p className={styles.invoiceCost}>{invoiceCost(invoice.tasks)}</p>
+              <p className={styles.invoiceDate}>
+                <span className="uppercase-header">
+                  {type === 'sent' ? 'Due on' : 'Send on'}
+                </span>{' '}
+                {dateFormatter(
+                  type === 'sent' ? invoice.dueDate : invoice.issueDate,
+                  'numeric',
+                )}
+              </p>
+            </Link>
           </li>
         ))}
       </ul>
