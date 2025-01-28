@@ -15,6 +15,7 @@ import Button from '@/components/button';
 import InvoicePdf from '@/components/invoice-pdf';
 import IconChevronDown from '@/icons/chevron-down';
 import IconDownload from '@/icons/download';
+import IconEdit from '@/icons/edit';
 import styles from './active-invoice.module.css';
 
 export default function ActiveInvoice({ invoice }: { invoice: Invoice }) {
@@ -167,6 +168,17 @@ export default function ActiveInvoice({ invoice }: { invoice: Invoice }) {
               onClick={() => setIsExpanded(!isExpanded)}
             >
               {isExpanded ? 'Collapse invoice' : 'Expand invoice'}
+            </Button>
+            <Button
+              icon={IconEdit}
+              iconOnly
+              style={isPending ? 'secondary' : 'primary'}
+              size="small"
+              onClick={() => {
+                console.log('edit');
+              }}
+            >
+              Edit invoice
             </Button>
           </>
         )}

@@ -37,6 +37,7 @@
 
 .collapser {
   transition: transform 0.2s;
+  margin-left: auto;
 }
 .flipCollapser {
   transform: scale(-1);

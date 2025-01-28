@@ -14,7 +14,7 @@ export default function InvoiceList({ invoices }: { invoices: Invoice[] }) {
   const { pending, sent } = getActiveInvoices(invoices);
 
   return (
-    <>
+    <div>
       <h2 className="secondary-header">Current Invoices</h2>
       {sent.length > 0 && (
         <div className={styles.invoiceGroup}>
@@ -40,6 +40,6 @@ export default function InvoiceList({ invoices }: { invoices: Invoice[] }) {
           </ul>
         </div>
       )}
-    </>
+    </div>
   );
 }
