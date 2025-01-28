@@ -20,13 +20,14 @@
   margin-bottom: var(--space-m);
 }
 
-.invoiceList {
-  margin-top: var(--space-xl);
-  margin-bottom: var(--space-xl);
+.clientPageGrid {
+  display: grid;
+  margin-top: var(--space-l);
+  gap: var(--space-xl);
 }
 
-.main {
-  margin-top: var(--space-l);
+.invoiceList {
+  margin-bottom: var(--space-xl);
 }
 
 .actions {
@@ -35,16 +36,6 @@
   flex-wrap: wrap;
 }
 
-.invoiceForm,
-.taskList {
-  margin-top: var(--space-l);
-}
-
-.paidInvoices {
-  margin-top: var(--space-xl);
-  padding-top: var(--space-m);
-  border-top: 1px solid var(--c-beige);
-}
 .paidInvoicesHeader {
   margin-bottom: var(--space-m);
 }
@@ -55,9 +46,35 @@
     justify-content: flex-start;
   }
 
-  .invoiceForm,
+  .invoiceForm {
+    max-width: 860px;
+  }
+
   .taskList,
   .paidInvoices {
     max-width: var(--max-component-width);
+  }
+}
+
+@media screen and (max-width: 1459px) {
+  .paidInvoices {
+    padding-top: var(--space-m);
+    border-top: 1px solid var(--c-beige);
+  }
+}
+
+@media screen and (min-width: 1460px) {
+  .clientPageGrid {
+    grid-template-columns: 1fr auto;
+    padding-right: var(--space-xl);
+  }
+
+  .invoiceList {
+    grid-column: span 2;
+  }
+
+  .paidInvoices {
+    grid-column: 2;
+    grid-row: 2;
   }
 }
