@@ -17,7 +17,7 @@ import TaskForm from '@/components/task-form';
 import TaskList from '@/components/task-list';
 import InvoiceForm from '@/components/invoice-form';
 import InvoiceList from '@/components/invoice-list';
-import PaidInvoices from '@/components/paid-invoices';
+import PaidInvoiceList from '@/components/paid-invoice-list';
 import IconArrowLeft from '@/icons/arrow-back';
 import IconSettings from '@/icons/settings';
 import IconPlus from '@/icons/plus';
@@ -103,7 +103,7 @@ function ClientPageMain() {
           <header className={styles.paidInvoicesHeader}>
             <h2 className="secondary-header">Paid Invoices</h2>
           </header>
-          <PaidInvoices invoices={paidInvoices} client={client} />
+          <PaidInvoiceList invoices={paidInvoices} client={client} />
         </div>
       </div>
 

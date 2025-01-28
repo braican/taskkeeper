@@ -16,7 +16,3 @@
   padding: var(--space-xs) 0;
   border-top: 1px solid var(--c-gray-light);
 }
-
-.invoiceCost {
-  margin-left: auto;
-}
