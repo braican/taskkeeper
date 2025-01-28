@@ -6,15 +6,17 @@ export default function Toggle({
   onToggle,
   onLabel = 'On',
   offLabel = 'Off',
+  size = 'normal',
 }: {
   id: string;
   toggled: boolean;
   onToggle: () => void;
   onLabel?: string;
   offLabel?: string;
+  size?: 'normal' | 'small';
 }) {
   return (
-    <div className={styles.toggle}>
+    <div className={`${styles.toggle} ${styles[`toggle_${size}`]}`}>
       <input
         className={`${styles.toggleCheckbox} sr-only`}
         type="checkbox"

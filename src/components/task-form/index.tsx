@@ -17,14 +17,14 @@ export default function TaskForm({
   const { addTask } = useTasks();
   const [description, setDescription] = useState('');
   const [value, setValue] = useState('');
-  const [unit, setUnit] = useState<'hourly' | 'fixed'>('hourly');
+  const [isHourly, setIsHourly] = useState(true);
   const [error, setError] = useState('');
 
   useEffect(() => {
     if (!visible) {
       setDescription('');
       setValue('');
-      setUnit('hourly');
+      setIsHourly(true);
       setError('');
     }
   }, [visible]);
@@ -42,10 +42,12 @@ export default function TaskForm({
         description,
         client: client.id,
         status: 'estimated',
+        isHourly: false,
       };
 
-      if (unit === 'hourly') {
+      if (isHourly) {
         task.hours = Number(value);
+        task.isHourly = true;
       } else {
         task.price = Number(value);
       }
@@ -85,23 +87,23 @@ export default function TaskForm({
         <div className={`form-row flex-fields ${styles.rateRow}`}>
           <Toggle
             id="rate_toggle_indicator"
-            toggled={unit === 'fixed'}
-            onToggle={() => setUnit(unit === 'hourly' ? 'fixed' : 'hourly')}
-            onLabel="Fixed"
-            offLabel="Hourly"
+            toggled={isHourly}
+            onToggle={() => setIsHourly(!isHourly)}
+            onLabel="Hourly"
+            offLabel="Fixed"
           />
 
           <div className={styles.valueField}>
             <label className="form-label" htmlFor="task_value">
-              {unit === 'fixed' ? 'Price' : 'Hours'}
+              {isHourly ? 'Hours' : 'Price'}
             </label>
-            <div className={unit === 'fixed' ? styles.fixedValueInput : ''}>
+            <div className={!isHourly ? styles.fixedValueInput : ''}>
               <input
                 className="form-input"
                 type="number"
                 id="task_value"
                 value={value}
-                min={unit !== 'fixed' ? '0' : undefined}
+                min={isHourly ? '0' : undefined}
                 onChange={(e) => setValue(e.target.value)}
               />
             </div>

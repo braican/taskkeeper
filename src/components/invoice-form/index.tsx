@@ -73,9 +73,10 @@ export default function InvoiceForm({
           id: task.id,
           description: task.description,
           cost: task.price ? task.price : (task.hours || 0) * client.rate,
+          isHourly: task.isHourly,
         };
 
-        if (task.hours) {
+        if (task.isHourly) {
           taskData.hours = task.hours;
         }
 

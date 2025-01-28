@@ -1,47 +1,59 @@
 .toggle {
   display: flex;
+  align-items: center;
 }
 
 .toggleCheckbox:not(:checked) ~ .offLabel,
 .toggleCheckbox:checked ~ .onLabel {
   color: var(--text-color);
 }
-.toggleCheckbox:focus ~ .toggleIndicator {
-  outline: 1px solid blue;
-}
-.toggleCheckbox:checked ~ .toggleIndicator::before {
-  transform: translateX(0.6rem);
-}
 
 .toggleIndicator {
-  color: var(--c-gunmetal);
+  transition: all 0.2s;
+  color: var(--c-lighter-green);
   background-color: currentColor;
-  border: 4px solid currentColor;
+  border: 1px solid var(--c-gray-mid);
   border-radius: 1.2rem;
   box-sizing: initial;
   cursor: pointer;
   display: block;
-  height: 0.6rem;
+  height: 10px;
   margin: 0 0.5rem;
   position: relative;
-  width: 1.2rem;
+  width: 18px;
+  padding: 2px;
+}
+.toggleCheckbox:focus ~ .toggleIndicator {
+  outline: 1px solid blue;
+}
+.toggleCheckbox:checked ~ .toggleIndicator {
+  color: var(--c-gunmetal);
+  border-color: currentColor;
 }
 
 .toggleIndicator::before {
-  background-color: var(--c-beige);
+  background-color: var(--c-gunmetal);
   border-radius: 50%;
   content: '';
   display: block;
-  height: 0.6rem;
-  left: 0;
+  height: 10px;
+  width: 10px;
+  left: 2px;
+  top: 2px;
   position: absolute;
-  top: 0;
   transition: all 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);
-  width: 0.6rem;
+}
+.toggleCheckbox:checked ~ .toggleIndicator::before {
+  transform: translateX(8px);
+  background-color: var(--c-beige);
 }
 
 .label {
   transition: color 0.2s;
   font-weight: var(--weight-semibold);
   color: var(--c-beige);
+}
+
+.toggle_small .label {
+  font-size: var(--step--1);
 }

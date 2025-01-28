@@ -3,15 +3,11 @@
   border-radius: var(--border-radius);
   padding: var(--space-s);
   display: grid;
-  grid-template-columns: fit-content(50%) 1fr fit-content(48%);
+  grid-template-columns: 1fr auto;
   align-items: center;
   gap: var(--space-xs) var(--space-m);
   position: relative;
   overflow: hidden;
-}
-
-.descriptionCell {
-  grid-column: 1 / span 2;
 }
 
 .taskCost {
@@ -21,7 +17,8 @@
 
 .hoursLabel {
   display: inline-block;
-  padding: var(--space-xs);
+  margin-right: var(--space-xs);
+  font-size: var(--step--1);
 }
 
 .costInput,
@@ -73,9 +70,19 @@
   margin: 0;
 }
 
+.costUnitControl {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-s);
+  align-items: center;
+}
+
+.costToggle {
+  padding: 0 var(--space-xs);
+}
+
 .alertCenter {
   position: relative;
-  grid-column: 2 / span 2;
   text-align: right;
   padding: var(--space-xs);
 }
