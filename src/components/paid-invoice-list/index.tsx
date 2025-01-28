@@ -71,7 +71,7 @@ export default function PaidInvoiceList({
             {group.invoices.length > 0 ? (
               <ul className="ul-reset">
                 {group.invoices.map((invoice) => (
-                  <li key={invoice.id} className={styles.invoice}>
+                  <li key={invoice.id}>
                     <PaidInvoice invoice={invoice} />
                   </li>
                 ))}
