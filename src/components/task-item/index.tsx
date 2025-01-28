@@ -157,7 +157,7 @@ export default function TaskItem({ task, rate }: { task: Task; rate: number }) {
       </div>
 
       <p
-        className={`${styles.taskCost} ${(task.price || 0) > 0 ? styles.taskCostHoverable : ''}`}
+        className={`weight-extrabold ${styles.taskCost} ${(task.price || 0) > 0 ? styles.taskCostHoverable : ''}`}
         ref={costInputRef}
       >
         <span className={styles.costDisplay}>
@@ -183,7 +183,9 @@ export default function TaskItem({ task, rate }: { task: Task; rate: number }) {
       <div>
         {!task.price && (
           <p>
-            <span className={styles.hoursLabel}>hours:</span>
+            <span className={`${styles.hoursLabel} weight-semibold`}>
+              hours:
+            </span>
             <input
               ref={hoursInputRef}
               type="number"

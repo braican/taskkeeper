@@ -98,7 +98,7 @@ export default function InvoiceForm({
   return (
     <form onSubmit={handleSubmit}>
       <div className="form-row flex-fields">
-        <span className={styles.invoiceCost}>
+        <span className={`${styles.invoiceCost} weight-semibold`}>
           {moneyFormatter.format(getCost())}
         </span>
       </div>

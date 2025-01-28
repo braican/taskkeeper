@@ -72,18 +72,28 @@ export default function PaidInvoices({
               <ul className="ul-reset">
                 {group.invoices.map((invoice) => (
                   <li key={invoice.id} className={styles.invoice}>
-                    <p>{invoice.number}</p>
                     <div>
                       <p>
-                        <span className="uppercase-header">Issued: </span>
-                        {dateFormatter(invoice.issueDate || '', 'numeric')}
+                        <span className="weight-semibold">
+                          {invoice.number}
+                        </span>
+                        {invoice.description && (
+                          <span>&nbsp;&ndash;&nbsp;{invoice.description}</span>
+                        )}
                       </p>
                       <p>
-                        <span className="uppercase-header">Paid: </span>
-                        {dateFormatter(invoice.paidDate || '', 'numeric')}
+                        <span>
+                          <span className="uppercase-header">Issued: </span>
+                          {dateFormatter(invoice.issueDate || '', 'numeric')}
+                        </span>
+                        &nbsp;&nbsp;
+                        <span>
+                          <span className="uppercase-header">Paid: </span>
+                          {dateFormatter(invoice.paidDate || '', 'numeric')}
+                        </span>
                       </p>
                     </div>
-                    <p className={styles.invoiceCost}>
+                    <p className={`${styles.invoiceCost} weight-bold`}>
                       {invoiceCost(invoice.tasks)}
                     </p>
                   </li>

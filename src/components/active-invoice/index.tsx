@@ -51,7 +51,7 @@ export default function ActiveInvoice({ invoice }: { invoice: Invoice }) {
       className={`${styles.invoice} ${isPending ? styles.invoicePending : ''}`}
     >
       <div>
-        <p className={styles.number}>{invoice.number}</p>
+        <p className="weight-semibold">{invoice.number}</p>
         {!isPending && (
           <p>
             <span className="uppercase-header">Issued</span>{' '}
@@ -64,7 +64,9 @@ export default function ActiveInvoice({ invoice }: { invoice: Invoice }) {
         </p>
       </div>
       <div>
-        <p className={styles.total}>{invoiceCost(invoice.tasks)}</p>
+        <p className={`${styles.total} weight-extrabold`}>
+          {invoiceCost(invoice.tasks)}
+        </p>
         {client && user?.email === 'nick.braica@gmail.com' && (
           <Button onClick={() => {}} style="inline" icon={IconDownload}>
             <PDFDownloadLink
@@ -144,7 +146,7 @@ export default function ActiveInvoice({ invoice }: { invoice: Invoice }) {
         ) : (
           <>
             {isPending ? (
-              <p className={styles.toIssueWarning}>
+              <p className="weight-bold">
                 To issue on {dateFormatter(invoice.issueDate)}
               </p>
             ) : (

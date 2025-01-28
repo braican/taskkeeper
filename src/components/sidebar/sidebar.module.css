@@ -31,7 +31,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: var(--weight-bold);
   color: var(--bg);
   background-color: var(--c-gray-dark);
   height: 100%;

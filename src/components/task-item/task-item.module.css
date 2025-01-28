@@ -16,13 +16,11 @@
 
 .taskCost {
   position: relative;
-  font-weight: var(--weight-extrabold);
   min-width: 6ch;
 }
 
 .hoursLabel {
   display: inline-block;
-  font-weight: var(--weight-semibold);
   padding: var(--space-xs);
 }
 

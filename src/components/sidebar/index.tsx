@@ -70,7 +70,7 @@ export default function Sidebar() {
                     alt="User avatar"
                   />
                 ) : (
-                  <span className={styles.avatarPlaceholder}>
+                  <span className={`${styles.avatarPlaceholder} weight-bold`}>
                     {user.name.charAt(0)}
                   </span>
                 )}
