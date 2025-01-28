@@ -31,16 +31,16 @@
   border-radius: var(--border-radius-small);
 }
 
-.task:hover .description,
-.task:hover .taskCostHoverable .costDisplay,
-.task:hover .hours,
-.task:hover .costInput {
+.task:not(.invoicingActive):hover .description,
+.task:not(.invoicingActive):hover .taskCostHoverable .costDisplay,
+.task:not(.invoicingActive):hover .hours,
+.task:not(.invoicingActive):hover .costInput {
   border-color: var(--c-beige);
 }
 
-.task .description:focus,
-.task .hours:focus,
-.task .costInput:focus {
+.task:not(.invoicingActive) .description:focus,
+.task:not(.invoicingActive) .hours:focus,
+.task:not(.invoicingActive) .costInput:focus {
   border-color: var(--c-midnight-green);
   border-style: solid;
   outline: none;

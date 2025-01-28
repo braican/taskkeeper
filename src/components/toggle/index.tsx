@@ -7,6 +7,7 @@ export default function Toggle({
   onLabel = 'On',
   offLabel = 'Off',
   size = 'normal',
+  disabled = false,
 }: {
   id: string;
   toggled: boolean;
@@ -14,6 +15,7 @@ export default function Toggle({
   onLabel?: string;
   offLabel?: string;
   size?: 'normal' | 'small';
+  disabled?: boolean;
 }) {
   return (
     <div className={`${styles.toggle} ${styles[`toggle_${size}`]}`}>
@@ -23,6 +25,7 @@ export default function Toggle({
         id={id}
         checked={toggled}
         onChange={onToggle}
+        disabled={disabled}
       />
       <button
         type="button"

@@ -167,11 +167,13 @@ export default function TaskItem({ task, rate }: { task: Task; rate: number }) {
   };
 
   return (
-    <div className={styles.task}>
+    <div
+      className={`${styles.task} ${isInvoicing ? styles.invoicingActive : ''}`}
+    >
       <div>
         <p
           className={styles.description}
-          contentEditable={!isSaving}
+          contentEditable={!isSaving && !isInvoicing}
           onFocus={() => setStatusMessage('Editing...')}
           onBlur={onDescriptionBlur}
           dangerouslySetInnerHTML={{ __html: description }}
@@ -192,6 +194,7 @@ export default function TaskItem({ task, rate }: { task: Task; rate: number }) {
             defaultValue={price}
             className={styles.costInput}
             onFocus={() => setStatusMessage('Editing...')}
+            disabled={isInvoicing}
             onBlur={onPriceBlur}
             onChange={(e) => {
               if (costInputRef.current) {
@@ -205,6 +208,7 @@ export default function TaskItem({ task, rate }: { task: Task; rate: number }) {
       <div className={styles.costUnitControl}>
         <div className={styles.costToggle}>
           <Toggle
+            disabled={isSaving || isInvoicing}
             id={`rate_toggle_indicator-${task.id}`}
             toggled={isHourly}
             onToggle={handleUnitToggle}
@@ -223,6 +227,7 @@ export default function TaskItem({ task, rate }: { task: Task; rate: number }) {
               ref={hoursInputRef}
               type="number"
               min="0"
+              disabled={isSaving || isInvoicing}
               defaultValue={hours || 0}
               className={styles.hours}
               style={{ width: `${(hours || 0)?.toString().length + 5}ch` }}

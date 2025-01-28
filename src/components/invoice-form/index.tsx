@@ -77,7 +77,7 @@ export default function InvoiceForm({
         };
 
         if (task.isHourly) {
-          taskData.hours = task.hours;
+          taskData.hours = task.hours || 0;
         }
 
         return taskData;
