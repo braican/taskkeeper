@@ -144,6 +144,16 @@ a {
   opacity: 1;
 }
 
+.weight-semibold {
+  font-weight: var(--weight-semibold);
+}
+.weight-bold {
+  font-weight: var(--weight-bold);
+}
+.weight-extrabold {
+  font-weight: var(--weight-extrabold);
+}
+
 /** Forms **/
 input,
 textarea {

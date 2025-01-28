@@ -3,9 +3,11 @@ import styles from './button.module.css';
 export default function Button({
   children,
   className,
+  iconClassName,
   onClick = () => {},
   type = 'button',
   icon: Icon = null,
+  iconPosition = 'before',
   style = 'primary',
   size = 'regular',
   disabled = false,
@@ -13,9 +15,11 @@ export default function Button({
 }: {
   children: React.ReactNode;
   className?: string;
+  iconClassName?: string;
   onClick?: () => void;
   type?: 'button' | 'submit' | 'reset';
   icon?: React.ElementType | null;
+  iconPosition?: 'before' | 'after';
   style?: 'primary' | 'secondary' | 'inline' | 'outlined';
   size?: 'regular' | 'small';
   disabled?: boolean;
@@ -45,12 +49,18 @@ export default function Button({
       onClick={onClick}
       disabled={disabled}
     >
-      {Icon && (
-        <span className={styles.icon}>
+      {Icon && iconPosition === 'before' && (
+        <span className={`${styles.icon} ${iconClassName}`}>
           <Icon />
         </span>
       )}
       <span className={iconOnly ? 'sr-only' : ''}>{children}</span>
+
+      {Icon && iconPosition === 'after' && (
+        <span className={`${styles.icon} ${iconClassName}`}>
+          <Icon />
+        </span>
+      )}
     </button>
   );
 }

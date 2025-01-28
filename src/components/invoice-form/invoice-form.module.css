@@ -1,6 +1,17 @@
+.form {
+  padding: var(--space-m);
+  border: 1px solid var(--c-beige);
+  border-radius: var(--border-radius);
+  background-color: rgba(255, 255, 255, 0.6);
+}
+
+.formHeader {
+  align-items: center;
+  justify-content: space-between;
+}
+
 .invoiceCost {
   font-size: var(--step-3);
-  font-weight: var(--weight-semibold);
 }
 
 .invoiceGrid {

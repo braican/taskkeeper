@@ -13,11 +13,7 @@
   background-color: var(--c-gray-light);
 }
 
-.number {
-  font-weight: var(--weight-semibold);
-}
 .total {
-  font-weight: var(--weight-extrabold);
   font-size: var(--step-1);
   text-align: right;
   display: block;
@@ -41,14 +37,12 @@
 
 .collapser {
   transition: transform 0.2s;
+  margin-left: auto;
 }
 .flipCollapser {
   transform: scale(-1);
 }
 
-.toIssueWarning {
-  font-weight: var(--weight-bold);
-}
 .payButton {
   flex: 1;
 }

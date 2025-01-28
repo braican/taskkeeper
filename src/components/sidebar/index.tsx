@@ -70,7 +70,7 @@ export default function Sidebar() {
                     alt="User avatar"
                   />
                 ) : (
-                  <span className={styles.avatarPlaceholder}>
+                  <span className={`${styles.avatarPlaceholder} weight-bold`}>
                     {user.name.charAt(0)}
                   </span>
                 )}
@@ -122,7 +122,7 @@ export default function Sidebar() {
                   <li key={client.id} className={styles.clientItem}>
                     <Link
                       href={`/client/${client.id}`}
-                      className={`${styles.clientLink} ${
+                      className={`weight-semibold ${styles.clientLink} ${
                         pathname === `/client/${client.id}`
                           ? styles.activeClientLink
                           : ''

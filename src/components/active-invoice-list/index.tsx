@@ -27,7 +27,7 @@ export default function ActiveInvoiceList({
               href={invoice.client ? `/client/${invoice.client}` : '#'}
             >
               <p>{invoice.number}</p>
-              <p className={styles.invoiceCost}>{invoiceCost(invoice.tasks)}</p>
+              <p className="weight-extrabold">{invoiceCost(invoice.tasks)}</p>
               <p className={styles.invoiceDate}>
                 <span className="uppercase-header">
                   {type === 'sent' ? 'Due on' : 'Send on'}

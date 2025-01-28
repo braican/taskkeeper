@@ -1,5 +1,6 @@
 .invoiceList {
   margin-bottom: var(--space-m);
+  max-width: var(--max-component-width);
 }
 
 .year {
@@ -11,12 +12,11 @@
 
 .invoice {
   display: flex;
-  gap: var(--space-xs);
+  gap: var(--space-s);
   padding: var(--space-xs) 0;
   border-top: 1px solid var(--c-gray-light);
 }
 
 .invoiceCost {
   margin-left: auto;
-  font-weight: var(--weight-bold);
 }

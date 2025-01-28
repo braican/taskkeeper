@@ -38,8 +38,8 @@ export const NewInvoiceProvider = ({
 
   const getCost = () => {
     return tasks.reduce((prev, curr) => {
-      if (curr.hours && curr.hours > 0) {
-        return prev + curr.hours * rate;
+      if (curr.isHourly) {
+        return prev + (curr.hours || 0) * rate;
       }
 
       const price = Number(curr.price);

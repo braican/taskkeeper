@@ -31,7 +31,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: var(--weight-bold);
   color: var(--bg);
   background-color: var(--c-gray-dark);
   height: 100%;
@@ -81,6 +80,7 @@
 .clientLink span {
   transition: all 0.2s;
   display: block;
+  color: var(--c-gray-dark);
 }
 .clientLink:not(.activeClientLink):hover span {
   transform: translate3d(8px, 0, 0);
@@ -100,8 +100,8 @@
   margin-top: -4px;
 }
 .activeClientLink span {
-  font-weight: var(--weight-semibold);
-  padding-left: 12px;
+  transform: translate3d(12px, 0, 0);
+  color: var(--c-black);
 }
 .activeClientLink::before {
   opacity: 1;

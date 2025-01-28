@@ -24,10 +24,6 @@
   background-color: rgb(255, 255, 255, 0.5);
 }
 
-.invoiceCost {
-  font-weight: var(--weight-extrabold);
-}
-
 .invoiceDate {
   grid-row: 2;
   grid-column: span 2;

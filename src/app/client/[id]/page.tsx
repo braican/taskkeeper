@@ -57,49 +57,54 @@ function ClientPageMain() {
         {client.address && <p>{client.address}</p>}
       </header>
 
-      {activeInvoices.length > 0 && (
-        <div className={styles.invoiceList}>
-          <InvoiceList invoices={activeInvoices} />
-        </div>
-      )}
-
-      <div className={styles.main}>
-        {isInvoicing ? (
-          <div className={styles.invoiceForm}>
-            <InvoiceForm
-              client={client}
-              onCancel={() => setIsInvoicing(false)}
-            />
-          </div>
-        ) : (
-          <div className={styles.actions}>
-            <Button
-              disabled={isInvoicing}
-              onClick={() => setIsTaskFormVisible(true)}
-              icon={IconPlus}
-            >
-              Add task
-            </Button>
-            <Button
-              onClick={() => setIsInvoicing(true)}
-              icon={IconAddInvoice}
-              style="secondary"
-            >
-              Create invoice
-            </Button>
+      <div className={styles.clientPageGrid}>
+        {activeInvoices.length > 0 && (
+          <div className={styles.invoiceList}>
+            <InvoiceList invoices={activeInvoices} />
           </div>
         )}
 
-        <div className={styles.taskList}>
-          <TaskList client={client} tasks={tasks} />
-        </div>
-      </div>
+        <div className={styles.main}>
+          {isInvoicing ? (
+            <div className={styles.invoiceForm}>
+              <InvoiceForm
+                client={client}
+                onCancel={() => setIsInvoicing(false)}
+              />
+            </div>
+          ) : (
+            <div className={styles.actions}>
+              <Button
+                disabled={isInvoicing}
+                onClick={() => setIsTaskFormVisible(true)}
+                icon={IconPlus}
+              >
+                Add task
+              </Button>
 
-      <div className={styles.paidInvoices}>
-        <header className={styles.paidInvoicesHeader}>
-          <h2 className="secondary-header">Paid Invoices</h2>
-        </header>
-        <PaidInvoices invoices={paidInvoices} client={client} />
+              {tasks.length > 0 && (
+                <Button
+                  onClick={() => setIsInvoicing(true)}
+                  icon={IconAddInvoice}
+                  style="secondary"
+                >
+                  Create invoice
+                </Button>
+              )}
+            </div>
+          )}
+
+          <div className={styles.taskList}>
+            <TaskList client={client} tasks={tasks} />
+          </div>
+        </div>
+
+        <div className={styles.paidInvoices}>
+          <header className={styles.paidInvoicesHeader}>
+            <h2 className="secondary-header">Paid Invoices</h2>
+          </header>
+          <PaidInvoices invoices={paidInvoices} client={client} />
+        </div>
       </div>
 
       <TaskForm
