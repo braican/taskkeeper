@@ -19,6 +19,7 @@ interface InvoiceContextType {
   areInvoicedLoaded: boolean;
   invoices: Invoice[];
   addInvoice: (invoiceData: Omit<Invoice, 'id'>) => Promise<void>;
+  updateInvoice: (invoiceData: Invoice) => Promise<void>;
   getActiveInvoices: (invoiceList?: Invoice[]) => {
     pending: Invoice[];
     sent: Invoice[];
@@ -102,6 +103,29 @@ export const InvoiceProvider = ({ children }: { children: ReactNode }) => {
       );
     } catch (error) {
       console.error('Error adding invoice:', error);
+      throw error;
+    }
+  };
+
+  const updateInvoice = async (invoiceData: Invoice) => {
+    if (!invoiceData.id) {
+      return;
+    }
+
+    try {
+      await pb.collection('invoices').update(invoiceData.id, invoiceData);
+
+      setInvoices((oldInvoices) =>
+        oldInvoices.map((invoice) => {
+          if (invoice.id !== invoiceData.id) {
+            return invoice;
+          }
+
+          return { ...invoice, ...invoiceData };
+        }),
+      );
+    } catch (error) {
+      console.error('Error updating invoice: ', error);
       throw error;
     }
   };
@@ -230,6 +254,7 @@ export const InvoiceProvider = ({ children }: { children: ReactNode }) => {
         areInvoicedLoaded,
         invoices,
         addInvoice,
+        updateInvoice,
         getActiveInvoices,
         getClientInvoices,
         getNextInvoiceNumber,

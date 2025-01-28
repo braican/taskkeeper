@@ -1,12 +1,14 @@
 import { useState, useCallback } from 'react';
 import { useClients } from '@/contexts/ClientContext';
+import { useInvoices } from '@/contexts/InvoiceContext';
 import SlideUpModalForm from '@/components/slide-up-modal-form';
 import InvoiceTaskItem from '@/components/invoice-task-item';
+import Collapsible from '@/components/collapsible';
 import Button from '@/components/button';
 import IconPlus from '@/icons/plus';
+import { invoiceCost } from '@/utils';
 import { Invoice, InvoicedTask } from '@/types';
 import styles from './edit-invoice-form.module.css';
-import Collapsible from '../collapsible';
 
 export default function EditInvoiceForm({
   invoice,
@@ -18,6 +20,7 @@ export default function EditInvoiceForm({
   onCancel: () => void;
 }) {
   const { getClientById } = useClients();
+  const { updateInvoice } = useInvoices();
   const [invoiceNumber, setInvoiceNumber] = useState(invoice.number);
   const [issueDate, setIssueDate] = useState(
     invoice.issueDate.substring(0, 10),
@@ -28,9 +31,9 @@ export default function EditInvoiceForm({
   const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleTaskUpdate = useCallback((updatedTask: InvoicedTask) => {
-    console.log(updatedTask);
+  const rate = getClientById(invoice.client)?.rate || 0;
 
+  const handleTaskUpdate = useCallback((updatedTask: InvoicedTask) => {
     setTasks((prevTasks) =>
       prevTasks.map((task) =>
         task.id === updatedTask.id ? updatedTask : task,
@@ -56,7 +59,29 @@ export default function EditInvoiceForm({
   };
 
   const handleEdit = async () => {
-    console.log(tasks);
+    setError('');
+    setIsSubmitting(true);
+
+    try {
+      const newData: Invoice = {
+        ...invoice,
+        issueDate,
+        dueDate,
+        description,
+        tasks,
+      };
+
+      await updateInvoice(newData);
+
+      if (typeof onCancel === 'function') {
+        onCancel();
+      }
+    } catch (err) {
+      console.error(err);
+      setError('Failed to update invoice.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -119,38 +144,41 @@ export default function EditInvoiceForm({
             onChange={(e) => setDescription(e.target.value)}
           ></textarea>
         </div>
-        <div className="form-row">
-          <Collapsible label="Tasks">
-            <>
-              <div className="form-row">
-                <ul className="ul-reset">
-                  {tasks.map((task) => (
-                    <li key={task.id}>
-                      <InvoiceTaskItem
-                        rate={getClientById(invoice.client)?.rate || 0}
-                        task={task}
-                        onUpdate={handleTaskUpdate}
-                        onDelete={handleDeleteTask}
-                        id={task.id}
-                      />
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div className="form-row">
-                <Button
-                  disabled={isSubmitting}
-                  size="small"
-                  style="secondary"
-                  onClick={handleAddNewTask}
-                  icon={IconPlus}
-                >
-                  Add task
-                </Button>
-              </div>
-            </>
-          </Collapsible>
+        <div className={`form-row ${styles.costRow}`}>
+          <p>${rate}/hour</p>
+          <p className={`weight-bold ${styles.total}`}>{invoiceCost(tasks)}</p>
         </div>
+
+        <Collapsible label="Tasks">
+          <>
+            <div className="form-row">
+              <ul className="ul-reset">
+                {tasks.map((task) => (
+                  <li key={task.id}>
+                    <InvoiceTaskItem
+                      rate={rate}
+                      task={task}
+                      onUpdate={handleTaskUpdate}
+                      onDelete={handleDeleteTask}
+                      id={task.id}
+                    />
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="form-row">
+              <Button
+                disabled={isSubmitting}
+                size="small"
+                style="secondary"
+                onClick={handleAddNewTask}
+                icon={IconPlus}
+              >
+                Add task
+              </Button>
+            </div>
+          </>
+        </Collapsible>
       </>
     </SlideUpModalForm>
   );

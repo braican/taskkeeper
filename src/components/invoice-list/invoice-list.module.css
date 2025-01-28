@@ -5,7 +5,7 @@
 .invoiceGrid {
   display: grid;
   gap: var(--space-m);
-  margin-top: var(--space-s);
+  margin-top: var(--space-xs);
 }
 
 @media screen and (min-width: 400px) {
