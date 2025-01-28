@@ -34,4 +34,5 @@ export interface Invoice {
   paidDate?: string;
   description?: string;
   tasks: InvoicedTask[];
+  rate?: number;
 }

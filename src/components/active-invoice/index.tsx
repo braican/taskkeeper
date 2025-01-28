@@ -38,7 +38,7 @@ export default function ActiveInvoice({ invoice }: { invoice: Invoice }) {
     setIsSaving(true);
 
     try {
-      await setInvoicePaid(invoice.id, paidDate);
+      await setInvoicePaid(invoice.id, paidDate, client?.rate);
     } finally {
       setIsSaving(false);
     }
