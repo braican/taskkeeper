@@ -52,6 +52,9 @@
 .button_sizesmall {
   padding: var(--space-xs) var(--space-s);
 }
+.button_sizexsmall {
+  padding: var(--space-xs) 0;
+}
 
 .buttoninline {
   transition:
@@ -75,6 +78,10 @@
 
 .hasIcon.iconOnly {
   padding: var(--space-xs);
+}
+.hasIcon.iconOnly.button_sizexsmall {
+  padding-left: 0;
+  padding-right: 0;
 }
 
 .icon {

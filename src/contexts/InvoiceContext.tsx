@@ -29,7 +29,11 @@ interface InvoiceContextType {
     paidInvoices: Invoice[];
   };
   getNextInvoiceNumber: (client: Client) => Promise<string>;
-  setInvoicePaid: (invoiceId: string, paidDate?: string) => Promise<void>;
+  setInvoicePaid: (
+    invoiceId: string,
+    paidDate?: string,
+    rate?: number,
+  ) => Promise<void>;
   fetchAllPaidClientInvoices: (clientId: string) => Promise<Invoice[]>;
 }
 
@@ -45,6 +49,7 @@ export const recordToInvoice = (record: RecordModel): Invoice => ({
   dueDate: record.dueDate,
   paidDate: record.paidDate,
   tasks: record.tasks,
+  rate: record.rate,
 });
 
 export const InvoiceProvider = ({ children }: { children: ReactNode }) => {
@@ -208,15 +213,20 @@ export const InvoiceProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  const setInvoicePaid = async (invoiceId: string, paidDate?: string) => {
+  const setInvoicePaid = async (
+    invoiceId: string,
+    paidDate?: string,
+    rate?: number,
+  ) => {
     if (!invoiceId) {
       return;
     }
 
     try {
-      const newInvoiceData: Pick<Invoice, 'status' | 'paidDate'> = {
+      const newInvoiceData: Pick<Invoice, 'status' | 'paidDate' | 'rate'> = {
         status: 'paid',
         paidDate,
+        rate,
       };
       await pb.collection('invoices').update(invoiceId, newInvoiceData);
 

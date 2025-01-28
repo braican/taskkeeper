@@ -21,7 +21,7 @@ export default function Button({
   icon?: React.ElementType | null;
   iconPosition?: 'before' | 'after';
   style?: 'primary' | 'secondary' | 'inline' | 'outlined';
-  size?: 'regular' | 'small';
+  size?: 'regular' | 'small' | 'xsmall';
   disabled?: boolean;
   iconOnly?: boolean;
 }) {

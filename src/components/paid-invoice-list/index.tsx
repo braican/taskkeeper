@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
-import { dateFormatter, invoiceCost } from '@/utils';
 import { useInvoices } from '@/contexts/InvoiceContext';
 import Button from '@/components//button';
+import PaidInvoice from '@/components/paid-invoice';
 import { Client, Invoice } from '@/types';
 
-import styles from './paid-invoices.module.css';
+import styles from './paid-invoice-list.module.css';
 
-export default function PaidInvoices({
+export default function PaidInvoiceList({
   invoices = [],
   client,
 }: {
@@ -71,31 +71,8 @@ export default function PaidInvoices({
             {group.invoices.length > 0 ? (
               <ul className="ul-reset">
                 {group.invoices.map((invoice) => (
-                  <li key={invoice.id} className={styles.invoice}>
-                    <div>
-                      <p>
-                        <span className="weight-semibold">
-                          {invoice.number}
-                        </span>
-                        {invoice.description && (
-                          <span>&nbsp;&ndash;&nbsp;{invoice.description}</span>
-                        )}
-                      </p>
-                      <p>
-                        <span>
-                          <span className="uppercase-header">Issued: </span>
-                          {dateFormatter(invoice.issueDate || '', 'numeric')}
-                        </span>
-                        &nbsp;&nbsp;
-                        <span>
-                          <span className="uppercase-header">Paid: </span>
-                          {dateFormatter(invoice.paidDate || '', 'numeric')}
-                        </span>
-                      </p>
-                    </div>
-                    <p className={`${styles.invoiceCost} weight-bold`}>
-                      {invoiceCost(invoice.tasks)}
-                    </p>
+                  <li key={invoice.id}>
+                    <PaidInvoice invoice={invoice} />
                   </li>
                 ))}
               </ul>
