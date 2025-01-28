@@ -26,8 +26,9 @@
   gap: var(--space-xl);
 }
 
-.invoiceList {
-  margin-bottom: var(--space-xl);
+.paidInvoices {
+  padding-top: var(--space-s);
+  border-top: 8px solid var(--c-midnight-green-transparent);
 }
 
 .actions {
@@ -41,6 +42,10 @@
 }
 
 @media screen and (min-width: 862px) {
+  .clientPageGrid {
+    padding-right: var(--space-l);
+  }
+
   .breadcrumbs {
     height: 48px;
     justify-content: flex-start;
@@ -50,16 +55,8 @@
     max-width: 860px;
   }
 
-  .taskList,
-  .paidInvoices {
+  .taskList {
     max-width: var(--max-component-width);
-  }
-}
-
-@media screen and (max-width: 1459px) {
-  .paidInvoices {
-    padding-top: var(--space-m);
-    border-top: 1px solid var(--c-beige);
   }
 }
 
