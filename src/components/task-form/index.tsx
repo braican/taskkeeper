@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useTasks } from '@/contexts/TaskContext';
 import SlideUpModalForm from '@/components/slide-up-modal-form';
+import Toggle from '@/components/toggle';
 import { Client, Task } from '@/types';
 import styles from './task-form.module.css';
 
@@ -16,14 +17,14 @@ export default function TaskForm({
   const { addTask } = useTasks();
   const [description, setDescription] = useState('');
   const [value, setValue] = useState('');
-  const [unit, setUnit] = useState<'hourly' | 'fixed'>('hourly');
+  const [isHourly, setIsHourly] = useState(true);
   const [error, setError] = useState('');
 
   useEffect(() => {
     if (!visible) {
       setDescription('');
       setValue('');
-      setUnit('hourly');
+      setIsHourly(true);
       setError('');
     }
   }, [visible]);
@@ -41,10 +42,12 @@ export default function TaskForm({
         description,
         client: client.id,
         status: 'estimated',
+        isHourly: false,
       };
 
-      if (unit === 'hourly') {
+      if (isHourly) {
         task.hours = Number(value);
+        task.isHourly = true;
       } else {
         task.price = Number(value);
       }
@@ -82,44 +85,25 @@ export default function TaskForm({
         </div>
 
         <div className={`form-row flex-fields ${styles.rateRow}`}>
-          <div className={styles.rateToggle}>
-            <input
-              className={`${styles.rateCheckbox} sr-only`}
-              type="checkbox"
-              id="rate_toggle_indicator"
-              checked={unit === 'fixed'}
-              onChange={() => setUnit(unit === 'hourly' ? 'fixed' : 'hourly')}
-            />
-            <button
-              type="button"
-              onClick={() => setUnit('hourly')}
-              className={styles.hourlyLabel}
-            >
-              Hourly
-            </button>
-            <label
-              htmlFor="rate_toggle_indicator"
-              className={styles.toggleIndicator}
-            ></label>
-            <button
-              type="button"
-              onClick={() => setUnit('fixed')}
-              className={styles.fixedLabel}
-            >
-              Fixed
-            </button>
-          </div>
+          <Toggle
+            id="rate_toggle_indicator"
+            toggled={isHourly}
+            onToggle={() => setIsHourly(!isHourly)}
+            onLabel="Hourly"
+            offLabel="Fixed"
+          />
+
           <div className={styles.valueField}>
             <label className="form-label" htmlFor="task_value">
-              {unit === 'fixed' ? 'Price' : 'Hours'}
+              {isHourly ? 'Hours' : 'Price'}
             </label>
-            <div className={unit === 'fixed' ? styles.fixedValueInput : ''}>
+            <div className={!isHourly ? styles.fixedValueInput : ''}>
               <input
                 className="form-input"
                 type="number"
                 id="task_value"
                 value={value}
-                min={unit !== 'fixed' ? '0' : undefined}
+                min={isHourly ? '0' : undefined}
                 onChange={(e) => setValue(e.target.value)}
               />
             </div>

@@ -1,0 +1,61 @@
+.invoice {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  padding: var(--space-xs) 0;
+  gap: var(--space-s);
+  border-top: 1px solid var(--c-gray-light);
+}
+
+.taskList {
+  grid-column: 2 / span 2;
+}
+
+.expander {
+  transition: transform 0.2s;
+}
+.flipExpander {
+  transform: scale(-1);
+}
+
+.description {
+  grid-column: span 2;
+}
+.cost {
+  grid-column: 2;
+}
+.rate {
+  font-size: var(--step--1);
+}
+.total {
+  font-size: var(--step-0);
+}
+
+.taskItem {
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  display: grid;
+  grid-template-columns: 1fr 6ch 6ch;
+  gap: var(--space-s);
+}
+.taskDescription {
+  flex: 1;
+}
+.taskCost {
+  text-align: right;
+}
+
+@media screen and (min-width: 520px) {
+  .dates {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-s);
+  }
+
+  .description {
+    grid-column: span 1;
+  }
+  .cost {
+    grid-column: 3;
+    text-align: right;
+  }
+}

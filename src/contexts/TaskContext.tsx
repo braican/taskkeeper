@@ -33,6 +33,7 @@ const recordToTask = (record: RecordModel): Task => ({
   client: record.client,
   description: record.description,
   status: record.status,
+  isHourly: record.isHourly,
   hours: record.hours,
   price: record.price,
 });

@@ -73,10 +73,11 @@ export default function InvoiceForm({
           id: task.id,
           description: task.description,
           cost: task.price ? task.price : (task.hours || 0) * client.rate,
+          isHourly: task.isHourly,
         };
 
-        if (task.hours) {
-          taskData.hours = task.hours;
+        if (task.isHourly) {
+          taskData.hours = task.hours || 0;
         }
 
         return taskData;
@@ -96,9 +97,12 @@ export default function InvoiceForm({
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div className="form-row flex-fields">
-        <span className={styles.invoiceCost}>
+    <form onSubmit={handleSubmit} className={styles.form}>
+      <div className={`form-row flex-fields ${styles.formHeader}`}>
+        <span>
+          <h2 className="secondary-header">New invoice</h2>
+        </span>
+        <span className={`${styles.invoiceCost} weight-semibold`}>
           {moneyFormatter.format(getCost())}
         </span>
       </div>

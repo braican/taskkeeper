@@ -1,0 +1,7 @@
+.expanderIcon {
+  transition: transform 0.2s;
+}
+
+.flipExpanderIcon {
+  transform: scale(-1);
+}

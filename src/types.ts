@@ -11,13 +11,15 @@ export interface Task {
   client: string;
   description: string;
   status: 'estimated' | 'approved' | 'done';
-  hours?: number;
-  price?: number;
+  isHourly: boolean;
+  hours?: number | null;
+  price?: number | null;
 }
 
 export interface InvoicedTask {
   id: string;
   description: string;
+  isHourly: boolean;
   cost: number;
   hours?: number;
 }
@@ -32,4 +34,5 @@ export interface Invoice {
   paidDate?: string;
   description?: string;
   tasks: InvoicedTask[];
+  rate?: number;
 }

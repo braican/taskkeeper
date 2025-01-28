@@ -3,11 +3,12 @@ import sanitizeHtml from 'sanitize-html';
 import { useTasks } from '@/contexts/TaskContext';
 import { useNewInvoice } from '@/contexts/NewInvoiceContext';
 import Button from '@/components/button';
+import Toggle from '@/components/toggle';
 import IconTrash from '@/icons/trash';
 import IconCheckmark from '@/icons/checkmark';
+import { moneyFormatter, taskCost } from '@/utils';
 import { Task } from '@/types';
 import styles from './task-item.module.css';
-import { moneyFormatter, taskCost } from '@/utils';
 
 export default function TaskItem({ task, rate }: { task: Task; rate: number }) {
   const { isInvoicing, addTask, removeTask } = useNewInvoice();
@@ -20,14 +21,15 @@ export default function TaskItem({ task, rate }: { task: Task; rate: number }) {
   const [description, setDescription] = useState(task.description);
   const [hours, setHours] = useState(task.hours);
   const [price, setPrice] = useState(taskCost(task, rate));
+  const [isHourly, setIsHourly] = useState(task.isHourly);
   const hoursInputRef = useRef<HTMLInputElement>(null);
   const costInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    if (hours && hours > 0) {
-      setPrice(hours * rate);
+    if (isHourly) {
+      setPrice((hours || 0) * rate);
     }
-  }, [hours, rate]);
+  }, [hours, rate, isHourly]);
 
   useEffect(() => {
     if (!isInvoicing) {
@@ -126,6 +128,26 @@ export default function TaskItem({ task, rate }: { task: Task; rate: number }) {
     [price, task, triggerTaskSave],
   );
 
+  const handleUnitToggle = async () => {
+    const newIsHourly = !isHourly;
+    setIsHourly(newIsHourly);
+
+    const newTaskData = { ...task, isHourly: newIsHourly };
+
+    if (newIsHourly) {
+      newTaskData.hours = hours;
+      newTaskData.price = null;
+    } else {
+      newTaskData.price = price;
+      newTaskData.hours = null;
+    }
+
+    try {
+      await triggerTaskSave(newTaskData);
+      // eslint-disable-next-line
+    } catch (error) {}
+  };
+
   const handleDelete = async () => {
     setIsDeleting(true);
     try {
@@ -145,11 +167,13 @@ export default function TaskItem({ task, rate }: { task: Task; rate: number }) {
   };
 
   return (
-    <div className={styles.task}>
-      <div className={styles.descriptionCell}>
+    <div
+      className={`${styles.task} ${isInvoicing ? styles.invoicingActive : ''}`}
+    >
+      <div>
         <p
           className={styles.description}
-          contentEditable={!isSaving}
+          contentEditable={!isSaving && !isInvoicing}
           onFocus={() => setStatusMessage('Editing...')}
           onBlur={onDescriptionBlur}
           dangerouslySetInnerHTML={{ __html: description }}
@@ -157,19 +181,20 @@ export default function TaskItem({ task, rate }: { task: Task; rate: number }) {
       </div>
 
       <p
-        className={`${styles.taskCost} ${(task.price || 0) > 0 ? styles.taskCostHoverable : ''}`}
+        className={`weight-extrabold ${styles.taskCost} ${!isHourly ? styles.taskCostHoverable : ''}`}
         ref={costInputRef}
       >
         <span className={styles.costDisplay}>
           {moneyFormatter.format(price || 0)}
         </span>
 
-        {(task.price || 0) > 0 && (
+        {!isHourly && (
           <input
             type="number"
             defaultValue={price}
             className={styles.costInput}
             onFocus={() => setStatusMessage('Editing...')}
+            disabled={isInvoicing}
             onBlur={onPriceBlur}
             onChange={(e) => {
               if (costInputRef.current) {
@@ -180,15 +205,30 @@ export default function TaskItem({ task, rate }: { task: Task; rate: number }) {
         )}
       </p>
 
-      <div>
-        {!task.price && (
+      <div className={styles.costUnitControl}>
+        <div className={styles.costToggle}>
+          <Toggle
+            disabled={isSaving || isInvoicing}
+            id={`rate_toggle_indicator-${task.id}`}
+            toggled={isHourly}
+            onToggle={handleUnitToggle}
+            onLabel="Hourly"
+            offLabel="Fixed"
+            size="small"
+          />
+        </div>
+
+        {isHourly && (
           <p>
-            <span className={styles.hoursLabel}>hours:</span>
+            <span className={`${styles.hoursLabel} weight-semibold`}>
+              hours:
+            </span>
             <input
               ref={hoursInputRef}
               type="number"
               min="0"
-              defaultValue={hours}
+              disabled={isSaving || isInvoicing}
+              defaultValue={hours || 0}
               className={styles.hours}
               style={{ width: `${(hours || 0)?.toString().length + 5}ch` }}
               onFocus={() => setStatusMessage('Editing...')}

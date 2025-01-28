@@ -14,11 +14,11 @@ export default function InvoiceList({ invoices }: { invoices: Invoice[] }) {
   const { pending, sent } = getActiveInvoices(invoices);
 
   return (
-    <>
+    <div>
       <h2 className="secondary-header">Current Invoices</h2>
       {sent.length > 0 && (
         <div className={styles.invoiceGroup}>
-          <h3 className="uppercase-header">Sent</h3>
+          <h3 className="uppercase-header">Awaiting payment</h3>
           <ul className={`ul-reset ${styles.invoiceGrid}`}>
             {sent.map((invoice) => (
               <li key={invoice.id}>
@@ -40,6 +40,6 @@ export default function InvoiceList({ invoices }: { invoices: Invoice[] }) {
           </ul>
         </div>
       )}
-    </>
+    </div>
   );
 }

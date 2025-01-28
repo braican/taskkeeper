@@ -13,8 +13,10 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useInvoices } from '@/contexts/InvoiceContext';
 import Button from '@/components/button';
 import InvoicePdf from '@/components/invoice-pdf';
+import EditInvoiceForm from '@/components/edit-invoice-form';
 import IconChevronDown from '@/icons/chevron-down';
 import IconDownload from '@/icons/download';
+import IconEdit from '@/icons/edit';
 import styles from './active-invoice.module.css';
 
 export default function ActiveInvoice({ invoice }: { invoice: Invoice }) {
@@ -25,6 +27,7 @@ export default function ActiveInvoice({ invoice }: { invoice: Invoice }) {
   const [isSetPaidConfirmation, setIsPaidConfirmation] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [paidDate, setPaidDate] = useState(todaysDate);
+  const [isEditing, setIsEditing] = useState(false);
   const client = getClientById(invoice.client);
 
   const issueDate = new Date(invoice.issueDate);
@@ -35,7 +38,7 @@ export default function ActiveInvoice({ invoice }: { invoice: Invoice }) {
     setIsSaving(true);
 
     try {
-      await setInvoicePaid(invoice.id, paidDate);
+      await setInvoicePaid(invoice.id, paidDate, client?.rate);
     } finally {
       setIsSaving(false);
     }
@@ -51,7 +54,7 @@ export default function ActiveInvoice({ invoice }: { invoice: Invoice }) {
       className={`${styles.invoice} ${isPending ? styles.invoicePending : ''}`}
     >
       <div>
-        <p className={styles.number}>{invoice.number}</p>
+        <p className="weight-semibold">{invoice.number}</p>
         {!isPending && (
           <p>
             <span className="uppercase-header">Issued</span>{' '}
@@ -64,7 +67,9 @@ export default function ActiveInvoice({ invoice }: { invoice: Invoice }) {
         </p>
       </div>
       <div>
-        <p className={styles.total}>{invoiceCost(invoice.tasks)}</p>
+        <p className={`${styles.total} weight-extrabold`}>
+          {invoiceCost(invoice.tasks)}
+        </p>
         {client && user?.email === 'nick.braica@gmail.com' && (
           <Button onClick={() => {}} style="inline" icon={IconDownload}>
             <PDFDownloadLink
@@ -144,7 +149,7 @@ export default function ActiveInvoice({ invoice }: { invoice: Invoice }) {
         ) : (
           <>
             {isPending ? (
-              <p className={styles.toIssueWarning}>
+              <p className="weight-bold">
                 To issue on {dateFormatter(invoice.issueDate)}
               </p>
             ) : (
@@ -166,9 +171,24 @@ export default function ActiveInvoice({ invoice }: { invoice: Invoice }) {
             >
               {isExpanded ? 'Collapse invoice' : 'Expand invoice'}
             </Button>
+            <Button
+              icon={IconEdit}
+              iconOnly
+              style={isPending ? 'secondary' : 'primary'}
+              size="small"
+              onClick={() => setIsEditing(true)}
+            >
+              Edit invoice
+            </Button>
           </>
         )}
       </div>
+
+      <EditInvoiceForm
+        invoice={invoice}
+        isEditing={isEditing}
+        onCancel={() => setIsEditing(false)}
+      />
     </div>
   );
 }

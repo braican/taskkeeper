@@ -9,7 +9,6 @@
   transition: all 0.2s;
   border: 1px solid transparent;
   border-radius: var(--border-radius-small);
-  font-weight: var(--weight-semibold);
   padding: var(--space-s) var(--space-m);
 }
 
@@ -53,9 +52,14 @@
 .button_sizesmall {
   padding: var(--space-xs) var(--space-s);
 }
+.button_sizexsmall {
+  padding: var(--space-xs) 0;
+}
 
 .buttoninline {
-  font-weight: var(--weight-bold);
+  transition:
+    color 0.2s,
+    opacity 0.2s;
   color: var(--c-midnight-green);
   opacity: 0.8;
 }
@@ -74,6 +78,10 @@
 
 .hasIcon.iconOnly {
   padding: var(--space-xs);
+}
+.hasIcon.iconOnly.button_sizexsmall {
+  padding-left: 0;
+  padding-right: 0;
 }
 
 .icon {

@@ -19,6 +19,7 @@ interface InvoiceContextType {
   areInvoicedLoaded: boolean;
   invoices: Invoice[];
   addInvoice: (invoiceData: Omit<Invoice, 'id'>) => Promise<void>;
+  updateInvoice: (invoiceData: Invoice) => Promise<void>;
   getActiveInvoices: (invoiceList?: Invoice[]) => {
     pending: Invoice[];
     sent: Invoice[];
@@ -28,7 +29,11 @@ interface InvoiceContextType {
     paidInvoices: Invoice[];
   };
   getNextInvoiceNumber: (client: Client) => Promise<string>;
-  setInvoicePaid: (invoiceId: string, paidDate?: string) => Promise<void>;
+  setInvoicePaid: (
+    invoiceId: string,
+    paidDate?: string,
+    rate?: number,
+  ) => Promise<void>;
   fetchAllPaidClientInvoices: (clientId: string) => Promise<Invoice[]>;
 }
 
@@ -44,6 +49,7 @@ export const recordToInvoice = (record: RecordModel): Invoice => ({
   dueDate: record.dueDate,
   paidDate: record.paidDate,
   tasks: record.tasks,
+  rate: record.rate,
 });
 
 export const InvoiceProvider = ({ children }: { children: ReactNode }) => {
@@ -106,6 +112,29 @@ export const InvoiceProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  const updateInvoice = async (invoiceData: Invoice) => {
+    if (!invoiceData.id) {
+      return;
+    }
+
+    try {
+      await pb.collection('invoices').update(invoiceData.id, invoiceData);
+
+      setInvoices((oldInvoices) =>
+        oldInvoices.map((invoice) => {
+          if (invoice.id !== invoiceData.id) {
+            return invoice;
+          }
+
+          return { ...invoice, ...invoiceData };
+        }),
+      );
+    } catch (error) {
+      console.error('Error updating invoice: ', error);
+      throw error;
+    }
+  };
+
   const getActiveInvoices = (
     invoiceList?: Invoice[],
   ): {
@@ -116,7 +145,7 @@ export const InvoiceProvider = ({ children }: { children: ReactNode }) => {
       invoiceList = invoices.filter((invoice) => invoice.status === 'active');
     }
 
-    return invoiceList.reduce(
+    const { pending, sent } = invoiceList.reduce(
       (acc, invoice) => {
         const issueDate = new Date(invoice.issueDate);
         const today = new Date();
@@ -129,6 +158,19 @@ export const InvoiceProvider = ({ children }: { children: ReactNode }) => {
       },
       { pending: [] as Invoice[], sent: [] as Invoice[] },
     );
+
+    // Sort pending invoices by issueDate.
+    pending.sort(
+      (a, b) =>
+        new Date(a.issueDate).getTime() - new Date(b.issueDate).getTime(),
+    );
+
+    // Sort sent invoices by dueDate.
+    sent.sort(
+      (a, b) => new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime(),
+    );
+
+    return { pending, sent };
   };
 
   const getClientInvoices = (
@@ -171,15 +213,20 @@ export const InvoiceProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  const setInvoicePaid = async (invoiceId: string, paidDate?: string) => {
+  const setInvoicePaid = async (
+    invoiceId: string,
+    paidDate?: string,
+    rate?: number,
+  ) => {
     if (!invoiceId) {
       return;
     }
 
     try {
-      const newInvoiceData: Pick<Invoice, 'status' | 'paidDate'> = {
+      const newInvoiceData: Pick<Invoice, 'status' | 'paidDate' | 'rate'> = {
         status: 'paid',
         paidDate,
+        rate,
       };
       await pb.collection('invoices').update(invoiceId, newInvoiceData);
 
@@ -217,6 +264,7 @@ export const InvoiceProvider = ({ children }: { children: ReactNode }) => {
         areInvoicedLoaded,
         invoices,
         addInvoice,
+        updateInvoice,
         getActiveInvoices,
         getClientInvoices,
         getNextInvoiceNumber,

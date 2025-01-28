@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
-import { dateFormatter, invoiceCost } from '@/utils';
 import { useInvoices } from '@/contexts/InvoiceContext';
 import Button from '@/components//button';
+import PaidInvoice from '@/components/paid-invoice';
 import { Client, Invoice } from '@/types';
 
-import styles from './paid-invoices.module.css';
+import styles from './paid-invoice-list.module.css';
 
-export default function PaidInvoices({
+export default function PaidInvoiceList({
   invoices = [],
   client,
 }: {
@@ -71,21 +71,8 @@ export default function PaidInvoices({
             {group.invoices.length > 0 ? (
               <ul className="ul-reset">
                 {group.invoices.map((invoice) => (
-                  <li key={invoice.id} className={styles.invoice}>
-                    <p>{invoice.number}</p>
-                    <div>
-                      <p>
-                        <span className="uppercase-header">Issued: </span>
-                        {dateFormatter(invoice.issueDate || '', 'numeric')}
-                      </p>
-                      <p>
-                        <span className="uppercase-header">Paid: </span>
-                        {dateFormatter(invoice.paidDate || '', 'numeric')}
-                      </p>
-                    </div>
-                    <p className={styles.invoiceCost}>
-                      {invoiceCost(invoice.tasks)}
-                    </p>
+                  <li key={invoice.id}>
+                    <PaidInvoice invoice={invoice} />
                   </li>
                 ))}
               </ul>
