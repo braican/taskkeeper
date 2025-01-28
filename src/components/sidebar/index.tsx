@@ -122,7 +122,7 @@ export default function Sidebar() {
                   <li key={client.id} className={styles.clientItem}>
                     <Link
                       href={`/client/${client.id}`}
-                      className={`${styles.clientLink} ${
+                      className={`weight-semibold ${styles.clientLink} ${
                         pathname === `/client/${client.id}`
                           ? styles.activeClientLink
                           : ''
