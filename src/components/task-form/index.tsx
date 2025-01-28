@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useTasks } from '@/contexts/TaskContext';
 import SlideUpModalForm from '@/components/slide-up-modal-form';
+import Toggle from '@/components/toggle';
 import { Client, Task } from '@/types';
 import styles from './task-form.module.css';
 
@@ -82,33 +83,14 @@ export default function TaskForm({
         </div>
 
         <div className={`form-row flex-fields ${styles.rateRow}`}>
-          <div className={styles.rateToggle}>
-            <input
-              className={`${styles.rateCheckbox} sr-only`}
-              type="checkbox"
-              id="rate_toggle_indicator"
-              checked={unit === 'fixed'}
-              onChange={() => setUnit(unit === 'hourly' ? 'fixed' : 'hourly')}
-            />
-            <button
-              type="button"
-              onClick={() => setUnit('hourly')}
-              className={styles.hourlyLabel}
-            >
-              Hourly
-            </button>
-            <label
-              htmlFor="rate_toggle_indicator"
-              className={styles.toggleIndicator}
-            ></label>
-            <button
-              type="button"
-              onClick={() => setUnit('fixed')}
-              className={styles.fixedLabel}
-            >
-              Fixed
-            </button>
-          </div>
+          <Toggle
+            id="rate_toggle_indicator"
+            toggled={unit === 'fixed'}
+            onToggle={() => setUnit(unit === 'hourly' ? 'fixed' : 'hourly')}
+            onLabel="Fixed"
+            offLabel="Hourly"
+          />
+
           <div className={styles.valueField}>
             <label className="form-label" htmlFor="task_value">
               {unit === 'fixed' ? 'Price' : 'Hours'}
