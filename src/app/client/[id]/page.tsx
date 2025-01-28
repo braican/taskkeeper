@@ -80,13 +80,16 @@ function ClientPageMain() {
             >
               Add task
             </Button>
-            <Button
-              onClick={() => setIsInvoicing(true)}
-              icon={IconAddInvoice}
-              style="secondary"
-            >
-              Create invoice
-            </Button>
+
+            {tasks.length > 0 && (
+              <Button
+                onClick={() => setIsInvoicing(true)}
+                icon={IconAddInvoice}
+                style="secondary"
+              >
+                Create invoice
+              </Button>
+            )}
           </div>
         )}
 
