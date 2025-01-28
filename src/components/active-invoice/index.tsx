@@ -13,6 +13,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useInvoices } from '@/contexts/InvoiceContext';
 import Button from '@/components/button';
 import InvoicePdf from '@/components/invoice-pdf';
+import EditInvoiceForm from '@/components/edit-invoice-form';
 import IconChevronDown from '@/icons/chevron-down';
 import IconDownload from '@/icons/download';
 import IconEdit from '@/icons/edit';
@@ -26,6 +27,7 @@ export default function ActiveInvoice({ invoice }: { invoice: Invoice }) {
   const [isSetPaidConfirmation, setIsPaidConfirmation] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [paidDate, setPaidDate] = useState(todaysDate);
+  const [isEditing, setIsEditing] = useState(false);
   const client = getClientById(invoice.client);
 
   const issueDate = new Date(invoice.issueDate);
@@ -174,15 +176,19 @@ export default function ActiveInvoice({ invoice }: { invoice: Invoice }) {
               iconOnly
               style={isPending ? 'secondary' : 'primary'}
               size="small"
-              onClick={() => {
-                console.log('edit');
-              }}
+              onClick={() => setIsEditing(true)}
             >
               Edit invoice
             </Button>
           </>
         )}
       </div>
+
+      <EditInvoiceForm
+        invoice={invoice}
+        isEditing={isEditing}
+        onCancel={() => setIsEditing(false)}
+      />
     </div>
   );
 }

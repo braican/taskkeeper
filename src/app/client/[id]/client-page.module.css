@@ -26,6 +26,10 @@
   gap: var(--space-xl);
 }
 
+.taskList {
+  margin-top: var(--space-l);
+}
+
 .paidInvoices {
   padding-top: var(--space-s);
   border-top: 8px solid var(--c-midnight-green-transparent);

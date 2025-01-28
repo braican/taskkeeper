@@ -54,6 +54,9 @@
 }
 
 .buttoninline {
+  transition:
+    color 0.2s,
+    opacity 0.2s;
   color: var(--c-midnight-green);
   opacity: 0.8;
 }
