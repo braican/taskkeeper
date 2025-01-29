@@ -30,7 +30,7 @@ export default function Toggle({
       <button
         type="button"
         onClick={() => (toggled ? onToggle() : null)}
-        className={`${styles.label} ${styles.offLabel}`}
+        className={`fs--1 ${styles.offLabel}`}
         tabIndex={-1}
       >
         {offLabel}
@@ -39,7 +39,7 @@ export default function Toggle({
       <button
         type="button"
         onClick={() => (!toggled ? onToggle() : null)}
-        className={`${styles.label} ${styles.onLabel}`}
+        className={`fs--1 ${styles.onLabel}`}
         tabIndex={-1}
       >
         {onLabel}

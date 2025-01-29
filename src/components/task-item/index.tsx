@@ -180,13 +180,11 @@ export default function TaskItem({ task, rate }: { task: Task; rate: number }) {
         />
       </div>
 
-      <p
+      <div
         className={`weight-extrabold ${styles.taskCost} ${!isHourly ? styles.taskCostHoverable : ''}`}
         ref={costInputRef}
       >
-        <span className={styles.costDisplay}>
-          {moneyFormatter.format(price || 0)}
-        </span>
+        <div className="align-right">{moneyFormatter.format(price || 0)}</div>
 
         {!isHourly && (
           <input
@@ -203,7 +201,7 @@ export default function TaskItem({ task, rate }: { task: Task; rate: number }) {
             }}
           />
         )}
-      </p>
+      </div>
 
       <div className={styles.costUnitControl}>
         <div className={styles.costToggle}>
@@ -220,7 +218,7 @@ export default function TaskItem({ task, rate }: { task: Task; rate: number }) {
 
         {isHourly && (
           <p>
-            <span className={`${styles.hoursLabel} weight-semibold`}>
+            <span className={`${styles.hoursLabel} fs--1 weight-semibold`}>
               hours:
             </span>
             <input
@@ -244,7 +242,7 @@ export default function TaskItem({ task, rate }: { task: Task; rate: number }) {
       </div>
 
       <div
-        className={`${styles.alertCenter} ${statusMessage ? styles.hasStatusMessage : ''}`}
+        className={`align-right ${styles.alertCenter} ${statusMessage ? styles.hasStatusMessage : ''}`}
       >
         {statusMessage && (
           <p className={styles.statusMessage}>{statusMessage}</p>
@@ -277,7 +275,7 @@ export default function TaskItem({ task, rate }: { task: Task; rate: number }) {
       {isConfirmingDeletion && (
         <div className={styles.deleteModal}>
           <p>Do you really want to delete this task?</p>
-          <div className={styles.deleteOptions}>
+          <div className={`${styles.deleteOptions} mt-s`}>
             <Button onClick={() => setConfirmDelettion(false)} style="inline">
               Cancel
             </Button>

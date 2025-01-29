@@ -144,9 +144,9 @@ export default function EditInvoiceForm({
             onChange={(e) => setDescription(e.target.value)}
           ></textarea>
         </div>
-        <div className={`form-row ${styles.costRow}`}>
+        <div className={`form-row align-right`}>
           <p>${rate}/hour</p>
-          <p className={`weight-bold ${styles.total}`}>{invoiceCost(tasks)}</p>
+          <p className="weight-bold fs-2">{invoiceCost(tasks)}</p>
         </div>
 
         <Collapsible label="Tasks">

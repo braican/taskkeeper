@@ -39,10 +39,8 @@ export default function PaidInvoice({ invoice }: { invoice: Invoice }) {
         </div>
       </div>
       <div className={styles.cost}>
-        {invoice.rate && <p className={styles.rate}>${invoice.rate}/hour</p>}
-        <p className={`${styles.total} weight-bold`}>
-          {invoiceCost(invoice.tasks)}
-        </p>
+        {invoice.rate && <p className="fs--1">${invoice.rate}/hour</p>}
+        <p className={`weight-bold`}>{invoiceCost(invoice.tasks)}</p>
       </div>
       {isExpanded && (
         <div className={styles.taskList}>
@@ -51,7 +49,7 @@ export default function PaidInvoice({ invoice }: { invoice: Invoice }) {
               <li key={task.description} className={styles.taskItem}>
                 <p className={styles.taskDescription}>{task.description}</p>
                 <p>{task.hours ? `${task.hours} hrs` : ''}</p>
-                <p className={styles.taskCost}>
+                <p className="align-right">
                   {moneyFormatter.format(task.cost)}
                 </p>
               </li>

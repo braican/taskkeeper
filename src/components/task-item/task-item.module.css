@@ -18,7 +18,6 @@
 .hoursLabel {
   display: inline-block;
   margin-right: var(--space-xs);
-  font-size: var(--step--1);
 }
 
 .costInput,
@@ -46,10 +45,6 @@
   outline: none;
 }
 
-.costDisplay {
-  display: block;
-  text-align: right;
-}
 .costInput {
   position: absolute;
   top: 0;
@@ -83,7 +78,6 @@
 
 .alertCenter {
   position: relative;
-  text-align: right;
   padding: var(--space-xs);
 }
 .statusMessage {
@@ -124,5 +118,4 @@
 .deleteOptions {
   display: flex;
   gap: var(--space-m);
-  margin-top: var(--space-s);
 }

@@ -1,9 +1,4 @@
-.headline {
-  margin-bottom: var(--space-l);
-}
-
 .main {
-  margin-top: var(--space-xl);
   display: grid;
   gap: var(--space-xl);
 }
@@ -12,13 +7,18 @@
   max-width: 600px;
 }
 
-@media screen and (min-width: 862px) {
+.stats {
+  padding-top: var(--space-s);
+  border-top: 8px solid var(--c-midnight-green-transparent);
+}
+
+@media screen and (min-width: 1030px) {
   .dashboard {
     padding-top: calc(48px + var(--space-m));
   }
 
   .main {
-    grid-template-columns: 1fr auto;
+    grid-template-columns: 2fr minmax(260px, 1fr);
     max-width: 1320px;
   }
 

@@ -43,7 +43,6 @@
 .deleteOptions {
   display: flex;
   gap: var(--space-m);
-  margin-top: var(--space-s);
 }
 
 @media screen and (min-width: 360px) {

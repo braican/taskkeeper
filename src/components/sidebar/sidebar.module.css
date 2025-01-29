@@ -66,9 +66,6 @@
   margin-top: var(--space-l);
 }
 
-.clientList {
-  margin-top: var(--space-s);
-}
 .clientItem {
   padding: 1em 0;
   border-top: 1px solid var(--c-beige);
@@ -132,6 +129,7 @@
   .header {
     margin-bottom: var(--space-m);
   }
+
   .mobileMenuToggle {
     display: none;
   }

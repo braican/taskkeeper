@@ -57,7 +57,7 @@ function ClientPageMain() {
         {client.address && <p>{client.address}</p>}
       </header>
 
-      <div className={styles.clientPageGrid}>
+      <div className={`${styles.clientPageGrid} mt-l`}>
         {activeInvoices.length > 0 && (
           <div className={styles.invoiceList}>
             <InvoiceList invoices={activeInvoices} />
@@ -94,13 +94,13 @@ function ClientPageMain() {
             </div>
           )}
 
-          <div className={styles.taskList}>
+          <div className="mt-l">
             <TaskList client={client} tasks={tasks} />
           </div>
         </div>
 
         <div className={styles.paidInvoices}>
-          <header className={styles.paidInvoicesHeader}>
+          <header className="mb-m">
             <h2 className="secondary-header">Paid Invoices</h2>
           </header>
           <PaidInvoiceList invoices={paidInvoices} client={client} />

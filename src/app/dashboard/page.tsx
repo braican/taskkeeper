@@ -29,17 +29,18 @@ export default function Dashboard() {
 
   return (
     <div className={styles.dashboard}>
-      <h1 className={`${styles.headline} page-title`}>Hey, {user.name}</h1>
+      <h1 className={`mb-l page-title`}>Hey, {user.name}</h1>
 
       <Button onClick={() => toggleClientFormVisible()} icon={IconPlus}>
         Add new client
       </Button>
 
-      <div className={styles.main}>
+      <div className={`${styles.main} mt-xl`}>
         <div>
           <ClientList />
         </div>
         <div className={styles.stats}>
+          <h2 className="mb-m secondary-header">Cash flow</h2>
           <Stats />
         </div>
       </div>

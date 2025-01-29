@@ -31,7 +31,7 @@ export default function Home() {
         </span>{' '}
         Taskkeeper
       </h1>
-      <p className={styles.description}>Know what you&apos;re owe.</p>
+      <p className="mb-xl fs-2">Know what you&apos;re owe.</p>
       <Button onClick={handleLogin}>Log in with Google</Button>
       <p className={styles.copyright}>
         Built by{' '}

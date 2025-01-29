@@ -54,7 +54,7 @@ export default function ClientList() {
             <div className={styles.inner}>
               <div className={styles.clientMain}>
                 <div>
-                  <h3 className={styles.name}>{client.name}</h3>
+                  <h3 className="fs-2 ff-display">{client.name}</h3>
                   <p className={styles.key}>&nbsp;&nbsp;{client.key}</p>
                 </div>
                 <p>${client.rate}/hour</p>

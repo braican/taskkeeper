@@ -52,7 +52,7 @@ export default function Sidebar() {
 
   return (
     <div
-      className={`${styles.sidebar} ${sideMenuOpen ? styles.sideMenuOpen : null}`}
+      className={`${styles.sidebar} ${sideMenuOpen ? styles.sideMenuOpen : ''}`}
     >
       <header className={styles.header} ref={menuRef}>
         <p className="sr-only">Taskkeeper</p>
@@ -117,7 +117,7 @@ export default function Sidebar() {
             <h3 className="uppercase-header">clients</h3>
 
             {clients.length ? (
-              <ul className={`ul-reset ${styles.clientList}`}>
+              <ul className={`ul-reset mt-s`}>
                 {clients.map((client) => (
                   <li key={client.id} className={styles.clientItem}>
                     <Link

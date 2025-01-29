@@ -23,7 +23,7 @@ export default function ActiveInvoiceList({
         {invoices.map((invoice) => (
           <li key={invoice.id}>
             <Link
-              className={`${styles.invoice} ${type === 'sent' ? styles.invoiceSent : styles.invoicePending}`}
+              className={`${styles.invoice} mt-xs ${type === 'sent' ? styles.invoiceSent : styles.invoicePending}`}
               href={invoice.client ? `/client/${invoice.client}` : '#'}
             >
               <p>{invoice.number}</p>

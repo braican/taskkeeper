@@ -1,8 +1,6 @@
 import TaskItem from '../task-item';
 import { Client, Task } from '@/types';
 
-import styles from './task-list.module.css';
-
 export default function TaskList({
   client,
   tasks = [],
@@ -17,7 +15,7 @@ export default function TaskList({
   return (
     <ul className="ul-reset">
       {tasks.map((task) => (
-        <li key={task.id} className={styles.item}>
+        <li key={task.id} className="mt-m">
           <TaskItem task={task} rate={Number(client.rate)} />
         </li>
       ))}

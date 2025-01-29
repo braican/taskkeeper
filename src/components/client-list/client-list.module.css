@@ -36,10 +36,6 @@
   transform: translate3d(6px, 0, 0);
 }
 
-.name {
-  font-size: var(--step-2);
-}
-
 .hasStatus .statuses {
   position: relative;
   padding-left: 2ch;
@@ -56,7 +52,7 @@
   top: calc(0.5em * 1.4 - 5px);
 }
 
-@media screen and (min-width: 1078px),
+@media screen and (min-width: 1178px),
   screen and (min-width: 560px) and (max-width: 861px) {
   .inner {
     grid-template-columns: auto 20ch;
