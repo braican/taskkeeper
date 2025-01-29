@@ -54,11 +54,7 @@ export default function SlideUpModalForm({
       <FocusTrap>
         <div ref={elRef} className={styles.modal}>
           <form onSubmit={handleSubmit}>
-            {title && (
-              <h2 className={`${styles.formTitle} secondary-header`}>
-                {title}
-              </h2>
-            )}
+            {title && <h2 className={`mb-m secondary-header`}>{title}</h2>}
             <div>{children}</div>
 
             <div className="form-row form-actions">

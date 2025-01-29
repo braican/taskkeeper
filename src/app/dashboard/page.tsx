@@ -29,13 +29,13 @@ export default function Dashboard() {
 
   return (
     <div className={styles.dashboard}>
-      <h1 className={`${styles.headline} page-title`}>Hey, {user.name}</h1>
+      <h1 className={`mb-l page-title`}>Hey, {user.name}</h1>
 
       <Button onClick={() => toggleClientFormVisible()} icon={IconPlus}>
         Add new client
       </Button>
 
-      <div className={styles.main}>
+      <div className={`${styles.main} mt-xl`}>
         <div>
           <ClientList />
         </div>

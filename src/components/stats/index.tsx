@@ -84,7 +84,7 @@ export default function Stats() {
       </section>
       <section className={styles.section}>
         <h3>{lastYear}</h3>
-        <dl className={styles.statList}>
+        <dl className={`${styles.statList} mt-s`}>
           <dt className="uppercase-header">Paid:</dt>
           <dd className={areClientsLoaded ? '' : styles.placeholder}>
             <span>{moneyFormatter.format(paidLastYear)}</span>

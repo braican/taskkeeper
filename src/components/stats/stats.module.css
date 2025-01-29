@@ -9,7 +9,6 @@
   gap: var(--space-xs);
   grid-template-columns: auto 1fr;
   align-items: center;
-  margin-top: var(--space-s);
 }
 
 .totalLabel {

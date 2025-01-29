@@ -13,13 +13,6 @@
   background-color: var(--c-gray-light);
 }
 
-.total {
-  font-size: var(--step-1);
-  text-align: right;
-  display: block;
-  margin-bottom: var(--space-xs);
-}
-
 .expand {
   justify-self: flex-end;
 }
@@ -68,9 +61,6 @@
 
 .taskDescription {
   flex: 1;
-}
-.taskCost {
-  text-align: right;
 }
 
 .paidDateInput {

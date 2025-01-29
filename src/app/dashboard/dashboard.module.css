@@ -1,9 +1,4 @@
-.headline {
-  margin-bottom: var(--space-l);
-}
-
 .main {
-  margin-top: var(--space-xl);
   display: grid;
   gap: var(--space-xl);
 }
