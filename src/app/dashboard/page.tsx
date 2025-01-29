@@ -40,6 +40,7 @@ export default function Dashboard() {
           <ClientList />
         </div>
         <div className={styles.stats}>
+          <h2 className="mb-m secondary-header">Cash flow</h2>
           <Stats />
         </div>
       </div>

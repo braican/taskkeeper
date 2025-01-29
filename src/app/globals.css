@@ -154,6 +154,12 @@ a {
   font-weight: var(--weight-extrabold);
 }
 
+/** spacing **/
+
+.mb-m {
+  margin-bottom: var(--space-m);
+}
+
 /** Forms **/
 input,
 textarea {

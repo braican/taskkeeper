@@ -4,6 +4,26 @@
   border-top: 1px solid var(--c-gray-light);
 }
 
-.statList dt {
-  margin-top: var(--space-xs);
+.statList {
+  display: grid;
+  gap: var(--space-xs);
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  margin-top: var(--space-s);
+}
+
+.totalLabel {
+  align-self: flex-end;
+}
+.totals span {
+  display: inline-block;
+  border-top: 1px solid var(--c-gray-dark);
+  padding-top: var(--space-xs);
+}
+
+.placeholder span {
+  width: 10ch;
+  background-color: var(--c-beige-transparent);
+  display: inline-block;
+  color: transparent;
 }
