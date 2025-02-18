@@ -1,11 +1,3 @@
 .invoiceList {
-  margin-bottom: var(--space-m);
   max-width: var(--max-component-width);
-}
-
-.year {
-  margin-top: var(--space-s);
-}
-.yearLabel {
-  margin-bottom: var(--space-xs);
 }

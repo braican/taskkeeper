@@ -154,6 +154,60 @@ a {
   font-weight: var(--weight-extrabold);
 }
 
+/** spacing **/
+
+.align-right {
+  text-align: right;
+}
+.mb-xs {
+  margin-bottom: var(--space-xs);
+}
+.mb-s {
+  margin-bottom: var(--space-s);
+}
+.mb-m {
+  margin-bottom: var(--space-m);
+}
+.mb-l {
+  margin-bottom: var(--space-l);
+}
+.mb-xl {
+  margin-bottom: var(--space-xl);
+}
+
+.mt-xs {
+  margin-top: var(--space-xs);
+}
+.mt-s {
+  margin-top: var(--space-s);
+}
+.mt-m {
+  margin-top: var(--space-m);
+}
+.mt-l {
+  margin-top: var(--space-l);
+}
+.mt-xl {
+  margin-top: var(--space-xl);
+}
+
+.fs--1 {
+  font-size: var(--step--1);
+}
+.fs-1 {
+  font-size: var(--step-1);
+}
+.fs-2 {
+  font-size: var(--step-2);
+}
+.fs-3 {
+  font-size: var(--step-3);
+}
+
+.ff-display {
+  font-family: var(--font-display);
+}
+
 /** Forms **/
 input,
 textarea {
