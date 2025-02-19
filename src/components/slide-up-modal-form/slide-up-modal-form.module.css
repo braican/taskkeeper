@@ -11,7 +11,3 @@
   max-height: calc(100svh - var(--space-m));
   overflow: auto;
 }
-
-.formTitle {
-  margin-bottom: var(--space-m);
-}

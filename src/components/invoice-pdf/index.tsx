@@ -154,7 +154,9 @@ export default function InvoicePdf({
             <Text style={[styles.smallheader, { marginTop: client ? 20 : 0 }]}>
               Description
             </Text>
-            <Text style={styles.paragraph}>{invoice.description}</Text>
+            <Text style={[styles.paragraph, { paddingRight: 20 }]}>
+              {invoice.description}
+            </Text>
           </View>
           <View
             style={{

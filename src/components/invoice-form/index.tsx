@@ -102,7 +102,7 @@ export default function InvoiceForm({
         <span>
           <h2 className="secondary-header">New invoice</h2>
         </span>
-        <span className={`${styles.invoiceCost} weight-semibold`}>
+        <span className={`fs-3 weight-semibold`}>
           {moneyFormatter.format(getCost())}
         </span>
       </div>

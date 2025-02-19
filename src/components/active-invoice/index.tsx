@@ -67,7 +67,7 @@ export default function ActiveInvoice({ invoice }: { invoice: Invoice }) {
         </p>
       </div>
       <div>
-        <p className={`${styles.total} weight-extrabold`}>
+        <p className={`fs-1 weight-extrabold mb-xs align-right`}>
           {invoiceCost(invoice.tasks)}
         </p>
         {client && user?.email === 'nick.braica@gmail.com' && (
@@ -96,7 +96,7 @@ export default function ActiveInvoice({ invoice }: { invoice: Invoice }) {
               <li key={task.description} className={styles.taskItem}>
                 <p className={styles.taskDescription}>{task.description}</p>
                 <p>{task.hours ? `${task.hours} hrs` : ''}</p>
-                <p className={styles.taskCost}>
+                <p className="align-right">
                   {moneyFormatter.format(task.cost)}
                 </p>
               </li>

@@ -93,7 +93,7 @@ export default function EditInvoiceTask({
       {isConfirmDelete && (
         <div className={styles.confirmDelete}>
           <p>Do you really want to delete this task?</p>
-          <div className={styles.deleteOptions}>
+          <div className={`${styles.deleteOptions} mt-s`}>
             <Button onClick={() => setConfirmDelete(false)} style="inline">
               Cancel
             </Button>

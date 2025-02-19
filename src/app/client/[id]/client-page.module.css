@@ -22,12 +22,7 @@
 
 .clientPageGrid {
   display: grid;
-  margin-top: var(--space-l);
   gap: var(--space-xl);
-}
-
-.taskList {
-  margin-top: var(--space-l);
 }
 
 .paidInvoices {
@@ -39,10 +34,6 @@
   display: flex;
   gap: var(--space-s);
   flex-wrap: wrap;
-}
-
-.paidInvoicesHeader {
-  margin-bottom: var(--space-m);
 }
 
 @media screen and (min-width: 862px) {
@@ -66,7 +57,7 @@
 
 @media screen and (min-width: 1460px) {
   .clientPageGrid {
-    grid-template-columns: 1fr auto;
+    grid-template-columns: 3fr 2fr;
     padding-right: var(--space-xl);
   }
 

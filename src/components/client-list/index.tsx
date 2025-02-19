@@ -53,9 +53,9 @@ export default function ClientList() {
           >
             <div className={styles.inner}>
               <div className={styles.clientMain}>
-                <div>
-                  <h3 className={styles.name}>{client.name}</h3>
-                  <p className={styles.key}>&nbsp;&nbsp;{client.key}</p>
+                <div className="client-superscript">
+                  <h3 className="fs-2 ff-display">{client.name}</h3>
+                  <p className={styles.key}>{client.key}</p>
                 </div>
                 <p>${client.rate}/hour</p>
               </div>

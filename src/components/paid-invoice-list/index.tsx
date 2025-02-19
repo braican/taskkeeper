@@ -63,10 +63,10 @@ export default function PaidInvoiceList({
 
   return (
     <div>
-      <ul className={`ul-reset ${styles.invoiceList}`}>
+      <ul className={`ul-reset mb-m ${styles.invoiceList}`}>
         {organizedInvoices.map((group) => (
-          <li key={group.year} className={styles.year}>
-            <h3 className={styles.yearLabel}>{group.year}</h3>
+          <li key={group.year} className="mt-s">
+            <h3 className="mb-xs">{group.year}</h3>
 
             {group.invoices.length > 0 ? (
               <ul className="ul-reset">
