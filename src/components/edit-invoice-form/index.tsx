@@ -65,6 +65,7 @@ export default function EditInvoiceForm({
     try {
       const newData: Invoice = {
         ...invoice,
+        number: invoiceNumber,
         issueDate,
         dueDate,
         description,
