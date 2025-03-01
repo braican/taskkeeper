@@ -71,7 +71,14 @@ export default function ActiveInvoice({ invoice }: { invoice: Invoice }) {
           {invoiceCost(invoice.tasks)}
         </p>
         {client && user?.email === 'nick.braica@gmail.com' && (
-          <Button onClick={() => {}} style="inline" icon={IconDownload}>
+          <Button
+            onClick={() => {}}
+            style="inline"
+            icon={IconDownload}
+            key={invoice.tasks
+              .map((task) => task.description.replace(' ', ''))
+              .join('')}
+          >
             <PDFDownloadLink
               document={<InvoicePdf invoice={invoice} client={client} />}
               fileName={`invoice-${invoice.number.toLowerCase()}-${dateFormatterFilename(invoice.issueDate)}.pdf`}
