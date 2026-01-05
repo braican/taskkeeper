@@ -16,28 +16,31 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "eslint ."
   },
   "dependencies": {
     "@react-pdf/renderer": "^4.1.6",
     "focus-trap-react": "^11.0.3",
-    "next": "15.2.4",
+    "next": "16.1.1",
     "pocketbase": "^0.25.0",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
     "react-transition-group": "^4.4.5",
     "sanitize-html": "^2.14.0"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "^3",
     "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
+    "@types/react": "19.2.7",
+    "@types/react-dom": "19.2.3",
     "@types/react-transition-group": "^4.4.12",
     "@types/sanitize-html": "^2.13.0",
     "eslint": "^9",
-    "eslint-config-next": "15.1.4",
+    "eslint-config-next": "16.1.1",
     "prettier": "3.4.2",
     "typescript": "^5"
+  },
+  "overrides": {
+    "@types/react": "19.2.7",
+    "@types/react-dom": "19.2.3"
   }
 }
