@@ -1,7 +1,13 @@
 .section + .section {
   margin-top: var(--space-m);
   padding-top: var(--space-m);
-  border-top: 1px solid var(--c-gray-light);
+  border-top: 2px solid var(--c-gray-light);
+}
+
+.totals {
+  display: flex;
+  gap: var(--space-xs);
+  align-items: center;
 }
 
 .statList {
@@ -9,15 +15,11 @@
   gap: var(--space-xs);
   grid-template-columns: auto 1fr;
   align-items: center;
+  margin-top: var(--space-xs);
 }
 
 .totalLabel {
   align-self: flex-end;
-}
-.totals span {
-  display: inline-block;
-  border-top: 1px solid var(--c-gray-dark);
-  padding-top: var(--space-xs);
 }
 
 .placeholder span {

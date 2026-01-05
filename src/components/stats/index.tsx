@@ -4,6 +4,7 @@ import { useClients } from '@/contexts/ClientContext';
 import { invoiceCost, moneyFormatter, taskCost } from '@/utils';
 
 import styles from './stats.module.css';
+import { Fragment } from 'react';
 
 export default function Stats() {
   const { getClientById, areClientsLoaded } = useClients();
@@ -17,44 +18,55 @@ export default function Stats() {
     return acc + taskCost(task, taskClient?.rate || 0);
   }, 0);
 
-  const { pending, waiting, paid, paidLastYear, total } = invoices.reduce(
-    (acc, invoice) => {
-      const date = invoice.paidDate || invoice.issueDate;
-      const year = new Date(date).getFullYear();
-      const cost = Number(invoiceCost(invoice.tasks, false));
+  const { pending, waiting, paid, paidLastYear, total, lastYearMap } =
+    invoices.reduce(
+      (acc, invoice) => {
+        const date = invoice.paidDate || invoice.issueDate;
+        const year = new Date(date).getFullYear();
+        const cost = Number(invoiceCost(invoice.tasks, false));
 
-      if (year === lastYear && invoice.status === 'paid') {
-        acc.paidLastYear += cost;
-      } else if (year === currentYear) {
-        acc.total += cost;
-        if (invoice.status === 'paid') {
-          acc.paid += cost;
-        } else {
-          const issueDate = new Date(invoice.issueDate);
-          const today = new Date();
-          if (issueDate > today) {
-            acc.pending += cost;
+        if (year === lastYear && invoice.status === 'paid') {
+          acc.paidLastYear += cost;
+
+          if (!acc.lastYearMap[invoice.client]) {
+            acc.lastYearMap[invoice.client] = 0;
+          }
+
+          acc.lastYearMap[invoice.client] += cost;
+        } else if (year === currentYear || !invoice.paidDate) {
+          acc.total += cost;
+          if (invoice.status === 'paid') {
+            acc.paid += cost;
           } else {
-            acc.waiting += cost;
+            const issueDate = new Date(invoice.issueDate);
+            const today = new Date();
+            if (issueDate > today) {
+              acc.pending += cost;
+            } else {
+              acc.waiting += cost;
+            }
           }
         }
-      }
 
-      return acc;
-    },
-    {
-      pending: 0,
-      waiting: 0,
-      paid: 0,
-      paidLastYear: 0,
-      total: 0,
-    },
-  );
+        return acc;
+      },
+      {
+        pending: 0,
+        waiting: 0,
+        paid: 0,
+        total: 0,
+        paidLastYear: 0,
+        lastYearMap: {} as Record<string, number>,
+      },
+    );
 
   return (
     <div>
       <section className={styles.section}>
-        <h3>{currentYear}</h3>
+        <header className={styles.totals}>
+          <h3>{currentYear}</h3>
+          <span>{moneyFormatter.format(total + estimated)}</span>
+        </header>
         <dl className={styles.statList}>
           <dt className="uppercase-header">Estimated:</dt>
           <dd className={areClientsLoaded ? '' : styles.placeholder}>
@@ -72,23 +84,30 @@ export default function Stats() {
           <dd className={areClientsLoaded ? '' : styles.placeholder}>
             <span>{moneyFormatter.format(paid)}</span>
           </dd>
-          <dt className={`uppercase-header ${styles.totalLabel}`}>Total:</dt>
-          <dd
-            className={`${areClientsLoaded ? '' : styles.placeholder} ${styles.totals}`}
-          >
-            <span className="weight-semibold">
-              {moneyFormatter.format(total)}
-            </span>
-          </dd>
         </dl>
       </section>
       <section className={styles.section}>
-        <h3>{lastYear}</h3>
-        <dl className={`${styles.statList} mt-s`}>
-          <dt className="uppercase-header">Paid:</dt>
-          <dd className={areClientsLoaded ? '' : styles.placeholder}>
-            <span>{moneyFormatter.format(paidLastYear)}</span>
-          </dd>
+        <header className={styles.totals}>
+          <h3>{lastYear}</h3>
+          <span>{moneyFormatter.format(paidLastYear)}</span>
+        </header>
+
+        <dl className={styles.statList}>
+          {Object.entries(lastYearMap)
+            .sort((a, b) => b[1] - a[1])
+            .map(([clientId, amount]) => {
+              const client = getClientById(clientId);
+              return (
+                <Fragment key={clientId}>
+                  <dt className="uppercase-header">
+                    {client ? client.name : 'Unknown client'}:
+                  </dt>
+                  <dd className={areClientsLoaded ? '' : styles.placeholder}>
+                    <span>{moneyFormatter.format(amount)}</span>
+                  </dd>
+                </Fragment>
+              );
+            })}
         </dl>
       </section>
     </div>
