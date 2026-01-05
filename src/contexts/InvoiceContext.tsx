@@ -76,7 +76,7 @@ export const InvoiceProvider = ({ children }: { children: ReactNode }) => {
       const currentYear = new Date().getFullYear();
       try {
         const records = await pb.collection('invoices').getFullList({
-          filter: `(status = "active" || issueDate>"${currentYear - 2}-01-01")`,
+          filter: `(status = "active" || issueDate>"${currentYear - 1}-01-01")`,
           sort: '-paidDate, -issueDate',
         });
         const invoices = records.map(recordToInvoice);
@@ -253,6 +253,7 @@ export const InvoiceProvider = ({ children }: { children: ReactNode }) => {
     try {
       const allPaidInvoices = await pb.collection('invoices').getFullList({
         filter: `(client="${clientId}" && status="paid")`,
+        sort: '-paidDate, -issueDate',
       });
 
       return allPaidInvoices.map((record) => recordToInvoice(record));
