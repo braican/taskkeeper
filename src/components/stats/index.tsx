@@ -25,7 +25,7 @@ export default function Stats() {
 
       if (year === lastYear && invoice.status === 'paid') {
         acc.paidLastYear += cost;
-      } else if (year === currentYear) {
+      } else if (year === currentYear || !invoice.paidDate) {
         acc.total += cost;
         if (invoice.status === 'paid') {
           acc.paid += cost;
@@ -54,7 +54,10 @@ export default function Stats() {
   return (
     <div>
       <section className={styles.section}>
-        <h3>{currentYear}</h3>
+        <header className={styles.totals}>
+          <h3>{currentYear}</h3>
+          <span>{moneyFormatter.format(total + estimated)}</span>
+        </header>
         <dl className={styles.statList}>
           <dt className="uppercase-header">Estimated:</dt>
           <dd className={areClientsLoaded ? '' : styles.placeholder}>
@@ -72,24 +75,13 @@ export default function Stats() {
           <dd className={areClientsLoaded ? '' : styles.placeholder}>
             <span>{moneyFormatter.format(paid)}</span>
           </dd>
-          <dt className={`uppercase-header ${styles.totalLabel}`}>Total:</dt>
-          <dd
-            className={`${areClientsLoaded ? '' : styles.placeholder} ${styles.totals}`}
-          >
-            <span className="weight-semibold">
-              {moneyFormatter.format(total)}
-            </span>
-          </dd>
         </dl>
       </section>
       <section className={styles.section}>
-        <h3>{lastYear}</h3>
-        <dl className={`${styles.statList} mt-s`}>
-          <dt className="uppercase-header">Paid:</dt>
-          <dd className={areClientsLoaded ? '' : styles.placeholder}>
-            <span>{moneyFormatter.format(paidLastYear)}</span>
-          </dd>
-        </dl>
+        <header className={styles.totals}>
+          <h3>{lastYear}</h3>
+          <span>{moneyFormatter.format(paidLastYear)}</span>
+        </header>
       </section>
     </div>
   );
