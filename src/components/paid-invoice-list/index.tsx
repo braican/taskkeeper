@@ -5,6 +5,7 @@ import PaidInvoice from '@/components/paid-invoice';
 import { Client, Invoice } from '@/types';
 
 import styles from './paid-invoice-list.module.css';
+import { invoiceCost, moneyFormatter } from '@/utils';
 
 export default function PaidInvoiceList({
   invoices = [],
@@ -17,7 +18,7 @@ export default function PaidInvoiceList({
   const [isFetching, setIsFetching] = useState(false);
   const [hasFetchedAll, setHasFetchedAll] = useState(false);
   const [organizedInvoices, setOrganizedInvoices] = useState<
-    { year: string; invoices: Invoice[] }[]
+    { year: string; invoices: Invoice[]; total: number }[]
   >([]);
 
   const organizeInvoices = (invoices: Invoice[] = []) => {
@@ -38,6 +39,10 @@ export default function PaidInvoiceList({
     const organizedArray = Object.keys(groupedInvoices).map((year) => ({
       year: year,
       invoices: groupedInvoices[year],
+      total: groupedInvoices[year].reduce(
+        (sum, inv) => sum + Number(invoiceCost(inv.tasks, false)),
+        0,
+      ),
     }));
 
     organizedArray.sort((a, b) => Number(b.year) - Number(a.year));
@@ -66,7 +71,10 @@ export default function PaidInvoiceList({
       <ul className={`ul-reset mb-m ${styles.invoiceList}`}>
         {organizedInvoices.map((group) => (
           <li key={group.year} className="mt-s">
-            <h3 className="mb-xs">{group.year}</h3>
+            <header className={styles.groupHeader}>
+              <h3>{group.year}</h3>
+              <span>{moneyFormatter.format(group.total)}</span>
+            </header>
 
             {group.invoices.length > 0 ? (
               <ul className="ul-reset">
