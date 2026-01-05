@@ -77,6 +77,7 @@ export const InvoiceProvider = ({ children }: { children: ReactNode }) => {
       try {
         const records = await pb.collection('invoices').getFullList({
           filter: `(status = "active" || issueDate>"${currentYear - 2}-01-01")`,
+          sort: '-paidDate, -issueDate',
         });
         const invoices = records.map(recordToInvoice);
         setInvoicedLoaded(true);
@@ -179,19 +180,22 @@ export const InvoiceProvider = ({ children }: { children: ReactNode }) => {
     activeInvoices: Invoice[];
     paidInvoices: Invoice[];
   } => {
-    return invoices
-      .filter((invoice) => invoice.client === clientId)
-      .reduce(
-        (acc, invoice) => {
-          if (invoice.status === 'active') {
-            acc.activeInvoices.push(invoice);
-          } else if (invoice.status === 'paid') {
-            acc.paidInvoices.push(invoice);
-          }
-          return acc;
-        },
-        { activeInvoices: [] as Invoice[], paidInvoices: [] as Invoice[] },
-      );
+    const paidInvoices: Invoice[] = [];
+    const activeInvoices: Invoice[] = [];
+
+    const clientInvoices = invoices.filter(
+      (invoice) => invoice.client === clientId,
+    );
+
+    clientInvoices.forEach((invoice) => {
+      if (invoice.status === 'active') {
+        activeInvoices.push(invoice);
+      } else if (invoice.status === 'paid') {
+        paidInvoices.push(invoice);
+      }
+    });
+
+    return { activeInvoices, paidInvoices };
   };
 
   const getNextInvoiceNumber = async (client: Client): Promise<string> => {
