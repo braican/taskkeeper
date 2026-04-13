@@ -1,6 +1,6 @@
 {
   "name": "@braican/taskkeeper",
-  "version": "5.0.0",
+  "version": "5.2.2",
   "description": "",
   "repository": {
     "type": "git",
@@ -21,7 +21,7 @@
   "dependencies": {
     "@react-pdf/renderer": "^4.1.6",
     "focus-trap-react": "^11.0.3",
-    "next": "16.1.7",
+    "next": "16.2.3",
     "pocketbase": "^0.25.0",
     "react": "19.2.3",
     "react-dom": "19.2.3",
