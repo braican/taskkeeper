@@ -29,6 +29,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     const checkAuth = async () => {
+      if (pb.authStore.isValid) {
+        try {
+          await pb.collection('users').authRefresh();
+        } catch {
+          pb.authStore.clear();
+        }
+      }
       setIsAuthenticated(pb.authStore.isValid);
       setUser(pb.authStore.isValid ? pb.authStore.record : null);
     };
