@@ -24,7 +24,6 @@ export default function MainLayout({
             <Sidebar />
           </aside>
         )}
-
         <main
           className={`${styles.main} ${isAuthenticated ? styles.authmain : styles.anonMain}`}
         >

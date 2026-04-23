@@ -5,6 +5,7 @@ import { GlobalProvider } from '@/contexts/GlobalContext';
 import { ClientProvider } from '@/contexts/ClientContext';
 import { TaskProvider } from '@/contexts/TaskContext';
 import { InvoiceProvider } from '@/contexts/InvoiceContext';
+import { ProjectProvider } from '@/contexts/ProjectContext';
 import IconLogo from '@/icons/logo';
 import MainLayout from '@/components/main-layout';
 
@@ -55,9 +56,11 @@ export default function RootLayout({
           <ClientProvider>
             <TaskProvider>
               <InvoiceProvider>
-                <GlobalProvider>
-                  <MainLayout>{children}</MainLayout>
-                </GlobalProvider>
+                <ProjectProvider>
+                  <GlobalProvider>
+                    <MainLayout>{children}</MainLayout>
+                  </GlobalProvider>
+                </ProjectProvider>
               </InvoiceProvider>
             </TaskProvider>
           </ClientProvider>
