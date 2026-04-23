@@ -20,7 +20,7 @@ export default function TaskItem({ task, rate }: { task: Task; rate: number }) {
   const [statusMessage, setStatusMessage] = useState('');
   const [description, setDescription] = useState(task.description);
   const [hours, setHours] = useState(task.hours);
-  const [price, setPrice] = useState(() => isHourly ? 0 : taskCost(task, rate));
+  const [price, setPrice] = useState(() => task.isHourly ? 0 : taskCost(task, rate));
   const [isHourly, setIsHourly] = useState(task.isHourly);
   const hoursInputRef = useRef<HTMLInputElement>(null);
   const costInputRef = useRef<HTMLInputElement>(null);
