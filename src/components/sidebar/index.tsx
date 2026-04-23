@@ -23,11 +23,12 @@ export default function Sidebar() {
   const { user } = useAuth();
   const avatar = user ? pb.files.getURL(user, user.avatar) : null;
   const { pending, sent } = getActiveInvoices();
+  const [prevPathname, setPrevPathname] = useState(pathname);
 
-  // Close the side menu whenever the route changes.
-  useEffect(() => {
+  if (prevPathname !== pathname) {
+    setPrevPathname(pathname);
     setSideMenuOpen(false);
-  }, [pathname]);
+  }
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {

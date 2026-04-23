@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useTasks } from '@/contexts/TaskContext';
 import SlideUpModalForm from '@/components/slide-up-modal-form';
 import Toggle from '@/components/toggle';
@@ -19,15 +19,17 @@ export default function TaskForm({
   const [value, setValue] = useState('');
   const [isHourly, setIsHourly] = useState(true);
   const [error, setError] = useState('');
+  const [prevVisible, setPrevVisible] = useState(visible);
 
-  useEffect(() => {
+  if (prevVisible !== visible) {
+    setPrevVisible(visible);
     if (!visible) {
       setDescription('');
       setValue('');
       setIsHourly(true);
       setError('');
     }
-  }, [visible]);
+  }
 
   const handleSubmit = async () => {
     setError('');
