@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import SlideUpModalForm from '@/components/slide-up-modal-form';
 import { useProjects } from '@/contexts/ProjectContext';
-import { useInvoices } from '@/contexts/InvoiceContext';
 import { Client, Project, ProjectStatus } from '@/types';
 import styles from './project-form.module.css';
 
@@ -24,19 +23,12 @@ export default function ProjectForm({
 }) {
   const isEditing = Boolean(project);
   const { addProject, updateProject } = useProjects();
-  const { getClientInvoices, updateInvoice, invoices: allInvoices } = useInvoices();
-
-  const { activeInvoices, paidInvoices } = getClientInvoices(client.id);
-  const allClientInvoices = [...activeInvoices, ...paidInvoices];
 
   const [title, setTitle] = useState(project?.title ?? '');
   const [status, setStatus] = useState<ProjectStatus>(project?.status ?? 'estimate');
   const [quotedCost, setQuotedCost] = useState(project?.quotedCost?.toString() ?? '');
   const [timeEstimate, setTimeEstimate] = useState(project?.timeEstimate?.toString() ?? '');
   const [accruedTime, setAccruedTime] = useState(project?.accruedTime?.toString() ?? '');
-  const [selectedInvoices, setSelectedInvoices] = useState<string[]>(
-    () => allInvoices.filter((inv) => inv.project === project?.id).map((inv) => inv.id),
-  );
   const [error, setError] = useState('');
   const [prevVisible, setPrevVisible] = useState(visible);
 
@@ -48,37 +40,9 @@ export default function ProjectForm({
       setQuotedCost(project?.quotedCost?.toString() ?? '');
       setTimeEstimate(project?.timeEstimate?.toString() ?? '');
       setAccruedTime(project?.accruedTime?.toString() ?? '');
-      setSelectedInvoices(
-        allInvoices.filter((inv) => inv.project === project?.id).map((inv) => inv.id),
-      );
       setError('');
     }
   }
-
-  const toggleInvoice = (id: string) => {
-    setSelectedInvoices((prev) =>
-      prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id],
-    );
-  };
-
-  const syncInvoices = async (projectId: string) => {
-    const previouslyAttached = allInvoices
-      .filter((inv) => inv.project === projectId)
-      .map((inv) => inv.id);
-    const toAttach = selectedInvoices.filter((id) => !previouslyAttached.includes(id));
-    const toDetach = previouslyAttached.filter((id) => !selectedInvoices.includes(id));
-
-    await Promise.all([
-      ...toAttach.map((id) => {
-        const inv = allClientInvoices.find((i) => i.id === id);
-        return inv ? updateInvoice({ ...inv, project: projectId }) : Promise.resolve();
-      }),
-      ...toDetach.map((id) => {
-        const inv = allClientInvoices.find((i) => i.id === id);
-        return inv ? updateInvoice({ ...inv, project: undefined }) : Promise.resolve();
-      }),
-    ]);
-  };
 
   const handleSubmit = async () => {
     setError('');
@@ -100,10 +64,8 @@ export default function ProjectForm({
     try {
       if (isEditing && project) {
         await updateProject({ ...project, ...fields });
-        await syncInvoices(project.id);
       } else {
-        const newProject = await addProject(fields);
-        await syncInvoices(newProject.id);
+        await addProject(fields);
       }
     } catch {
       setError(`Failed to ${isEditing ? 'update' : 'save'} project.`);
@@ -195,27 +157,6 @@ export default function ProjectForm({
             onChange={(e) => setAccruedTime(e.target.value)}
           />
         </div>
-
-        {allClientInvoices.length > 0 && (
-          <div className="form-row">
-            <p className="form-label">Attach invoices</p>
-            <ul className={`ul-reset ${styles.invoiceOptions}`}>
-              {allClientInvoices.map((inv) => (
-                <li key={inv.id}>
-                  <label className={styles.invoiceOption}>
-                    <input
-                      type="checkbox"
-                      checked={selectedInvoices.includes(inv.id)}
-                      onChange={() => toggleInvoice(inv.id)}
-                    />
-                    <span>{inv.number}</span>
-                    <span className={styles.invoiceStatus}>{inv.status}</span>
-                  </label>
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
       </>
     </SlideUpModalForm>
   );
