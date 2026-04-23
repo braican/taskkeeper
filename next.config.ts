@@ -2,7 +2,12 @@ import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
   images: {
-    domains: ['taskkeeper.pockethost.io'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'taskkeeper.pockethost.io',
+      },
+    ],
   },
   async headers() {
     return [

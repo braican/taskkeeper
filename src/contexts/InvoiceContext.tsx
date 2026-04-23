@@ -58,16 +58,22 @@ export const InvoiceProvider = ({ children }: { children: ReactNode }) => {
   const [areInvoicedLoaded, setInvoicedLoaded] = useState(false);
   const [invoices, setInvoices] = useState<Invoice[]>([]);
   const hasFetchedRef = useRef(false);
+  const [prevUser, setPrevUser] = useState(user);
 
-  // Fetch invoices on component mount
-  useEffect(() => {
+  if (prevUser !== user) {
+    setPrevUser(user);
     if (!user) {
-      hasFetchedRef.current = false;
       setInvoices([]);
       setInvoicedLoaded(false);
     }
+  }
 
-    if (hasFetchedRef.current || !user) return;
+  useEffect(() => {
+    if (!user) {
+      hasFetchedRef.current = false;
+      return;
+    }
+    if (hasFetchedRef.current) return;
     hasFetchedRef.current = true;
 
     async function fetchInvoices() {

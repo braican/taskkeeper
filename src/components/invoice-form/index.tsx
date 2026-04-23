@@ -17,13 +17,23 @@ export default function InvoiceForm({
   const { getCost, clearTasks, tasks, setIsInvoicing } = useNewInvoice();
   const [invoiceNumber, setInvoiceNumber] = useState<string | undefined>();
   const [issueDate, setIssueDate] = useState(todaysDate);
-  const [dueDate, setDueDate] = useState('');
+  const [dueDate, setDueDate] = useState(() => {
+    try {
+      const d = new Date(todaysDate());
+      d.setDate(d.getDate() + 30);
+      return d.toISOString().split('T')[0];
+    } catch {
+      return '';
+    }
+  });
+  const [prevIssueDate, setPrevIssueDate] = useState(issueDate);
   const [description, setDescription] = useState('');
   const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const hasFetchedNextInvoiceNumber = useRef(false);
 
-  useEffect(() => {
+  if (prevIssueDate !== issueDate) {
+    setPrevIssueDate(issueDate);
     try {
       const newDueDate = new Date(issueDate);
       newDueDate.setDate(newDueDate.getDate() + 30);
@@ -31,7 +41,7 @@ export default function InvoiceForm({
     } catch (e) {
       console.warn('Invalid date input.', e);
     }
-  }, [issueDate]);
+  }
 
   useEffect(() => {
     if (hasFetchedNextInvoiceNumber.current) return;

@@ -43,16 +43,22 @@ export const TaskProvider = ({ children }: { children: ReactNode }) => {
   const [tasks, setTasks] = useState<Task[]>([]);
   const { user } = useAuth();
   const hasFetchedRef = useRef(false);
+  const [prevUser, setPrevUser] = useState(user);
 
-  // Fetch tasks on component mount
-  useEffect(() => {
+  if (prevUser !== user) {
+    setPrevUser(user);
     if (!user) {
-      hasFetchedRef.current = false;
       setTasks([]);
       setTasksLoaded(false);
     }
+  }
 
-    if (hasFetchedRef.current || !user) return;
+  useEffect(() => {
+    if (!user) {
+      hasFetchedRef.current = false;
+      return;
+    }
+    if (hasFetchedRef.current) return;
     hasFetchedRef.current = true;
 
     async function fetchTasks() {
