@@ -25,10 +25,18 @@ export default function ProjectForm({
   const { addProject, updateProject } = useProjects();
 
   const [title, setTitle] = useState(project?.title ?? '');
-  const [status, setStatus] = useState<ProjectStatus>(project?.status ?? 'estimate');
-  const [quotedCost, setQuotedCost] = useState(project?.quotedCost?.toString() ?? '');
-  const [timeEstimate, setTimeEstimate] = useState(project?.timeEstimate?.toString() ?? '');
-  const [accruedTime, setAccruedTime] = useState(project?.accruedTime?.toString() ?? '');
+  const [status, setStatus] = useState<ProjectStatus>(
+    project?.status ?? 'estimate',
+  );
+  const [quotedCost, setQuotedCost] = useState(
+    project?.quotedCost?.toString() ?? '',
+  );
+  const [timeEstimate, setTimeEstimate] = useState(
+    project?.timeEstimate?.toString() ?? '',
+  );
+  const [accruedTime, setAccruedTime] = useState(
+    project?.accruedTime?.toString() ?? '',
+  );
   const [error, setError] = useState('');
   const [prevVisible, setPrevVisible] = useState(visible);
 
@@ -142,20 +150,6 @@ export default function ProjectForm({
               onChange={(e) => setTimeEstimate(e.target.value)}
             />
           </div>
-        </div>
-
-        <div className="form-row">
-          <label className="form-label" htmlFor="project_accrued_time">
-            Accrued time (hrs)
-          </label>
-          <input
-            className="form-input"
-            type="number"
-            id="project_accrued_time"
-            min="0"
-            value={accruedTime}
-            onChange={(e) => setAccruedTime(e.target.value)}
-          />
         </div>
       </>
     </SlideUpModalForm>

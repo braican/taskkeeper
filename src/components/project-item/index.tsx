@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Client, Project } from '@/types';
 import { moneyFormatter } from '@/utils';
 import { useInvoices } from '@/contexts/InvoiceContext';
+import { useProjects } from '@/contexts/ProjectContext';
 import ProjectForm from '@/components/project-form';
 import Button from '@/components/button';
 import IconEdit from '@/icons/edit';
@@ -41,30 +42,41 @@ export default function ProjectItem({
   client: Client;
 }) {
   const { invoices: allInvoices } = useInvoices();
+  const { updateProject } = useProjects();
   const [isEditing, setIsEditing] = useState(false);
+  const [localAccrued, setLocalAccrued] = useState(
+    project.accruedTime?.toString() ?? '',
+  );
+  const [prevProject, setPrevProject] = useState(project);
 
+  if (prevProject !== project) {
+    setPrevProject(project);
+    setLocalAccrued(project.accruedTime?.toString() ?? '');
+  }
+
+  const accruedNum = localAccrued !== '' ? Number(localAccrued) : undefined;
   const hasQuote = project.quotedCost != null && project.quotedCost > 0;
   const hasEstimate = project.timeEstimate != null && project.timeEstimate > 0;
-  const hasAccrued = project.accruedTime != null && project.accruedTime > 0;
   const showRate = hasQuote && hasEstimate;
-  const showProgress = hasEstimate && hasAccrued;
-  const calculatedRate = showRate
-    ? project.quotedCost! / project.timeEstimate!
-    : null;
+  const showProgress = hasEstimate && accruedNum != null && accruedNum > 0;
+  const calculatedRate = showRate ? project.quotedCost! / project.timeEstimate! : null;
 
-  const attachedInvoices = allInvoices.filter(
-    (inv) => inv.project === project.id,
-  );
+  const attachedInvoices = allInvoices.filter((inv) => inv.project === project.id);
+
+  const handleAccruedBlur = () => {
+    const newValue = localAccrued !== '' ? Number(localAccrued) : undefined;
+    if (newValue !== project.accruedTime) {
+      updateProject({ ...project, accruedTime: newValue });
+    }
+  };
 
   return (
     <>
-      <div className={`${styles.card} ${styles[`status_${project.status}`]}`}>
+      <div className={styles.card}>
         <div className={styles.cardHeader}>
           <h3 className={styles.title}>{project.title}</h3>
           <div className={styles.cardHeaderRight}>
-            <span
-              className={`${styles.badge} ${styles[`badge_${project.status}`]}`}
-            >
+            <span className={`${styles.badge} ${styles[`badge_${project.status}`]}`}>
               {STATUS_LABELS[project.status]}
             </span>
             <Button
@@ -101,26 +113,38 @@ export default function ProjectItem({
 
             {hasEstimate && (
               <div className={styles.stat}>
-                <dt className={styles.statLabel}>Time</dt>
-                <dd className={styles.statValue}>
-                  {hasAccrued ? `${project.accruedTime}` : '—'}
-                  <span className={styles.statDivider}>/</span>
-                  {project.timeEstimate} hrs
-                </dd>
+                <dt className={styles.statLabel}>Estimated</dt>
+                <dd className={styles.statValue}>{project.timeEstimate} hrs</dd>
               </div>
             )}
           </dl>
         )}
 
+        <div className={styles.accruedControl}>
+          <label className={styles.accruedLabel} htmlFor={`accrued-${project.id}`}>
+            Accrued
+          </label>
+          <div className={styles.accruedRow}>
+            <input
+              id={`accrued-${project.id}`}
+              className={styles.accruedInput}
+              type="number"
+              min="0"
+              step="0.25"
+              value={localAccrued}
+              onChange={(e) => setLocalAccrued(e.target.value)}
+              onBlur={handleAccruedBlur}
+              placeholder="0"
+            />
+            <span className={styles.accruedUnit}>hrs</span>
+          </div>
+        </div>
+
         {showProgress && (
           <div className={styles.progressWrapper}>
-            <ProgressBar
-              accrued={project.accruedTime!}
-              estimate={project.timeEstimate!}
-            />
+            <ProgressBar accrued={accruedNum!} estimate={project.timeEstimate!} />
             <span className={styles.progressLabel}>
-              {Math.round((project.accruedTime! / project.timeEstimate!) * 100)}
-              %
+              {Math.round((accruedNum! / project.timeEstimate!) * 100)}%
             </span>
           </div>
         )}

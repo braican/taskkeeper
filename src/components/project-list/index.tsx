@@ -1,6 +1,5 @@
 import { Client, Project } from '@/types';
 import ProjectItem from '@/components/project-item';
-import styles from './project-list.module.css';
 
 export default function ProjectList({
   projects,
@@ -14,7 +13,7 @@ export default function ProjectList({
   }
 
   return (
-    <ul className={`ul-reset ${styles.grid}`}>
+    <ul className="ul-reset">
       {projects.map((project) => (
         <li key={project.id}>
           <ProjectItem project={project} client={client} />
