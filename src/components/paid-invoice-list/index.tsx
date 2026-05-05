@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useInvoices } from '@/contexts/InvoiceContext';
 import Button from '@/components//button';
 import PaidInvoice from '@/components/paid-invoice';
@@ -6,6 +6,34 @@ import { Client, Invoice } from '@/types';
 
 import styles from './paid-invoice-list.module.css';
 import { invoiceCost, moneyFormatter } from '@/utils';
+
+function organizeInvoices(invoices: Invoice[] = []) {
+  const defaultGrouping = { [new Date().getFullYear()]: [] };
+  const groupedInvoices = invoices.reduce(
+    (acc, invoice) => {
+      const year = new Date(invoice.paidDate || '').getFullYear();
+      if (!acc[year]) {
+        acc[year] = [];
+      }
+      acc[year].push(invoice);
+      return acc;
+    },
+    defaultGrouping as Record<string, Invoice[]>,
+  );
+
+  const organizedArray = Object.keys(groupedInvoices).map((year) => ({
+    year: year,
+    invoices: groupedInvoices[year],
+    total: groupedInvoices[year].reduce(
+      (sum, inv) => sum + Number(invoiceCost(inv.tasks, false)),
+      0,
+    ),
+  }));
+
+  organizedArray.sort((a, b) => Number(b.year) - Number(a.year));
+
+  return organizedArray;
+}
 
 export default function PaidInvoiceList({
   invoices = [],
@@ -17,42 +45,11 @@ export default function PaidInvoiceList({
   const { fetchAllPaidClientInvoices } = useInvoices();
   const [isFetching, setIsFetching] = useState(false);
   const [hasFetchedAll, setHasFetchedAll] = useState(false);
-  const [organizedInvoices, setOrganizedInvoices] = useState<
-    { year: string; invoices: Invoice[]; total: number }[]
-  >([]);
-
-  const organizeInvoices = (invoices: Invoice[] = []) => {
-    // Always list the current year.
-    const defaultGrouping = { [new Date().getFullYear()]: [] };
-    const groupedInvoices = invoices.reduce(
-      (acc, invoice) => {
-        const year = new Date(invoice.paidDate || '').getFullYear();
-        if (!acc[year]) {
-          acc[year] = [];
-        }
-        acc[year].push(invoice);
-        return acc;
-      },
-      defaultGrouping as Record<string, Invoice[]>,
-    );
-
-    const organizedArray = Object.keys(groupedInvoices).map((year) => ({
-      year: year,
-      invoices: groupedInvoices[year],
-      total: groupedInvoices[year].reduce(
-        (sum, inv) => sum + Number(invoiceCost(inv.tasks, false)),
-        0,
-      ),
-    }));
-
-    organizedArray.sort((a, b) => Number(b.year) - Number(a.year));
-
-    return organizedArray;
-  };
-
-  useEffect(() => {
-    setOrganizedInvoices(organizeInvoices(invoices));
-  }, [invoices]);
+  const [fetchedInvoices, setFetchedInvoices] = useState<Invoice[] | null>(null);
+  const organizedInvoices = useMemo(
+    () => organizeInvoices(fetchedInvoices ?? invoices),
+    [fetchedInvoices, invoices],
+  );
 
   const fetchMoreInvoices = async () => {
     if (!client) {
@@ -61,7 +58,7 @@ export default function PaidInvoiceList({
 
     setIsFetching(true);
     const newInvoices = await fetchAllPaidClientInvoices(client.id);
-    setOrganizedInvoices(organizeInvoices(newInvoices));
+    setFetchedInvoices(newInvoices);
     setIsFetching(false);
     setHasFetchedAll(true);
   };

@@ -110,6 +110,7 @@ export default function InvoicePdf({
     <Document>
       <Page size="LETTER" style={styles.page}>
         <View>
+          {/* eslint-disable-next-line jsx-a11y/alt-text */}
           <Image style={{ width: 22 }} src="/img/logo.png" />
         </View>
         <View

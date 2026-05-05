@@ -1,0 +1,194 @@
+.card {
+  background: var(--c-white);
+  border: 1px solid var(--c-gray-light);
+  border-radius: var(--border-radius);
+  padding: var(--space-m);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-s);
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-s);
+}
+
+.cardHeaderRight {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  flex-shrink: 0;
+}
+
+.title {
+  font-size: var(--step-1);
+  font-weight: var(--weight-extrabold);
+  font-family: var(--font-display);
+  line-height: 1.2;
+}
+
+/* Status badge */
+.badge {
+  flex-shrink: 0;
+  font-size: var(--step--1);
+  font-weight: var(--weight-semibold);
+  padding: 0.2em 0.75em;
+  border-radius: 100px;
+  white-space: nowrap;
+}
+
+.badge_estimate {
+  background: var(--c-beige);
+  color: var(--c-black);
+}
+
+.badge_approved {
+  background: var(--c-lighter-green);
+  color: var(--c-gunmetal);
+}
+
+.badge_completed {
+  background: var(--c-midnight-green);
+  color: var(--c-white);
+}
+
+/* Stats */
+.stats {
+  display: flex;
+  gap: var(--space-m);
+  flex-wrap: wrap;
+  padding-top: var(--space-xs);
+  border-top: 1px solid var(--c-gray-light);
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.statLabel {
+  font-size: var(--step--1);
+  font-weight: var(--weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--c-gray-dark);
+}
+
+.statValue {
+  font-weight: var(--weight-bold);
+}
+
+.statDivider {
+  margin: 0 0.2em;
+  opacity: 0.4;
+}
+
+/* Progress bar */
+.progressWrapper {
+  display: flex;
+  align-items: center;
+  gap: var(--space-s);
+}
+
+.progressTrack {
+  flex: 1;
+  height: 6px;
+  background: var(--c-gray-light);
+  border-radius: 100px;
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  background: var(--c-midnight-green);
+  border-radius: 100px;
+  transition: width 0.3s ease;
+}
+
+.progressOver {
+  background: var(--c-orange);
+}
+
+.progressLabel {
+  font-size: var(--step--1);
+  font-weight: var(--weight-semibold);
+  color: var(--c-gray-dark);
+  min-width: 3ch;
+  text-align: right;
+}
+
+/* Accrued time inline control */
+.accruedControl {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-s);
+  padding-top: var(--space-xs);
+  border-top: 1px solid var(--c-gray-light);
+}
+
+.accruedLabel {
+  font-size: var(--step--1);
+  font-weight: var(--weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--c-gray-dark);
+}
+
+.accruedRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.accruedInput {
+  width: 5ch;
+  font-size: var(--step-0);
+  font-weight: var(--weight-bold);
+  font-family: inherit;
+  border: 1px solid var(--c-gray-light);
+  border-radius: var(--border-radius-small);
+  padding: 0.15em 0.4em;
+  text-align: right;
+  background: transparent;
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+.accruedInput::-webkit-outer-spin-button,
+.accruedInput::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+.accruedInput:focus {
+  outline: 2px solid var(--c-midnight-green);
+  outline-offset: 1px;
+  border-color: transparent;
+}
+
+.accruedUnit {
+  font-size: var(--step--1);
+  color: var(--c-gray-dark);
+  font-weight: var(--weight-semibold);
+}
+
+/* Attached invoices */
+.invoiceList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  padding-top: var(--space-xs);
+  border-top: 1px solid var(--c-gray-light);
+}
+
+.invoiceChip {
+  font-size: var(--step--1);
+  font-weight: var(--weight-semibold);
+  background: var(--c-beige-transparent);
+  border: 1px solid var(--c-beige);
+  border-radius: var(--border-radius-small);
+  padding: 0.2em 0.6em;
+}

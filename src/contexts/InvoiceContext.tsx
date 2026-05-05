@@ -42,6 +42,7 @@ const InvoiceContext = createContext<InvoiceContextType | undefined>(undefined);
 export const recordToInvoice = (record: RecordModel): Invoice => ({
   id: record.id,
   client: record.client,
+  project: record.project || undefined,
   number: record.number,
   description: record.description,
   status: record.status,
@@ -58,16 +59,22 @@ export const InvoiceProvider = ({ children }: { children: ReactNode }) => {
   const [areInvoicedLoaded, setInvoicedLoaded] = useState(false);
   const [invoices, setInvoices] = useState<Invoice[]>([]);
   const hasFetchedRef = useRef(false);
+  const [prevUser, setPrevUser] = useState(user);
 
-  // Fetch invoices on component mount
-  useEffect(() => {
+  if (prevUser !== user) {
+    setPrevUser(user);
     if (!user) {
-      hasFetchedRef.current = false;
       setInvoices([]);
       setInvoicedLoaded(false);
     }
+  }
 
-    if (hasFetchedRef.current || !user) return;
+  useEffect(() => {
+    if (!user) {
+      hasFetchedRef.current = false;
+      return;
+    }
+    if (hasFetchedRef.current) return;
     hasFetchedRef.current = true;
 
     async function fetchInvoices() {

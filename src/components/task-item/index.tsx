@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState, useRef } from 'react';
+import { useCallback, useState, useRef } from 'react';
 import sanitizeHtml from 'sanitize-html';
 import { useTasks } from '@/contexts/TaskContext';
 import { useNewInvoice } from '@/contexts/NewInvoiceContext';
@@ -20,22 +20,20 @@ export default function TaskItem({ task, rate }: { task: Task; rate: number }) {
   const [statusMessage, setStatusMessage] = useState('');
   const [description, setDescription] = useState(task.description);
   const [hours, setHours] = useState(task.hours);
-  const [price, setPrice] = useState(taskCost(task, rate));
+  const [price, setPrice] = useState(() => task.isHourly ? 0 : taskCost(task, rate));
   const [isHourly, setIsHourly] = useState(task.isHourly);
   const hoursInputRef = useRef<HTMLInputElement>(null);
   const costInputRef = useRef<HTMLInputElement>(null);
+  const [prevIsInvoicing, setPrevIsInvoicing] = useState(isInvoicing);
 
-  useEffect(() => {
-    if (isHourly) {
-      setPrice((hours || 0) * rate);
-    }
-  }, [hours, rate, isHourly]);
+  const displayedPrice = isHourly ? (hours || 0) * rate : price;
 
-  useEffect(() => {
+  if (prevIsInvoicing !== isInvoicing) {
+    setPrevIsInvoicing(isInvoicing);
     if (!isInvoicing) {
       setIsSelected(false);
     }
-  }, [isInvoicing]);
+  }
 
   const triggerTaskSave = useCallback(
     async (newTask: Task) => {
@@ -103,30 +101,27 @@ export default function TaskItem({ task, rate }: { task: Task; rate: number }) {
     [hours, task, triggerTaskSave],
   );
 
-  const onPriceBlur = useCallback(
-    async (e: React.FocusEvent<HTMLInputElement>) => {
-      const oldPrice = price;
-      const newPrice = Number(e.currentTarget.value);
+  const onPriceBlur = async (e: React.FocusEvent<HTMLInputElement>) => {
+    const oldPrice = price;
+    const newPrice = Number(e.currentTarget.value);
 
-      if (costInputRef.current) {
-        costInputRef.current.style.width = '';
-      }
+    if (costInputRef.current) {
+      costInputRef.current.style.width = '';
+    }
 
-      if (oldPrice === newPrice || isNaN(newPrice)) {
-        setStatusMessage('');
-        return;
-      }
+    if (oldPrice === newPrice || isNaN(newPrice)) {
+      setStatusMessage('');
+      return;
+    }
 
-      setPrice(newPrice);
-      try {
-        await triggerTaskSave({ ...task, price: newPrice });
-        // eslint-disable-next-line
-      } catch (error) {
-        setPrice(oldPrice);
-      }
-    },
-    [price, task, triggerTaskSave],
-  );
+    setPrice(newPrice);
+    try {
+      await triggerTaskSave({ ...task, price: newPrice });
+      // eslint-disable-next-line
+    } catch (error) {
+      setPrice(oldPrice);
+    }
+  };
 
   const handleUnitToggle = async () => {
     const newIsHourly = !isHourly;
@@ -138,7 +133,9 @@ export default function TaskItem({ task, rate }: { task: Task; rate: number }) {
       newTaskData.hours = hours;
       newTaskData.price = null;
     } else {
-      newTaskData.price = price;
+      const carried = (hours || 0) * rate;
+      setPrice(carried);
+      newTaskData.price = carried;
       newTaskData.hours = null;
     }
 
@@ -184,12 +181,12 @@ export default function TaskItem({ task, rate }: { task: Task; rate: number }) {
         className={`weight-extrabold ${styles.taskCost} ${!isHourly ? styles.taskCostHoverable : ''}`}
         ref={costInputRef}
       >
-        <div className="align-right">{moneyFormatter.format(price || 0)}</div>
+        <div className="align-right">{moneyFormatter.format(displayedPrice || 0)}</div>
 
         {!isHourly && (
           <input
             type="number"
-            defaultValue={price}
+            defaultValue={displayedPrice}
             className={styles.costInput}
             onFocus={() => setStatusMessage('Editing...')}
             disabled={isInvoicing}
