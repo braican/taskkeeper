@@ -19,34 +19,34 @@ interface AuthContextType {
   logout: () => void;
 }
 
+type AuthState = {
+  isAuthenticated: boolean;
+  user: AuthRecord | null;
+} | null;
+
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null); // null means loading.
-  const [user, setUser] = useState<AuthRecord | null>(null);
+  const [auth, setAuth] = useState<AuthState>(null);
   const router = useRouter();
   const pathname = usePathname();
 
   useEffect(() => {
-    const checkAuth = async () => {
-      if (pb.authStore.isValid) {
-        try {
-          await pb.collection('users').authRefresh();
-        } catch {
+    const isValid = pb.authStore.isValid;
+    setAuth({
+      isAuthenticated: isValid,
+      user: isValid ? pb.authStore.record : null,
+    });
+
+    if (isValid) {
+      pb.collection('users')
+        .authRefresh()
+        .catch(() => {
           pb.authStore.clear();
-        }
-      }
-      setIsAuthenticated(pb.authStore.isValid);
-      setUser(pb.authStore.isValid ? pb.authStore.record : null);
-    };
-
-    checkAuth();
-  }, [pathname, router]);
-
-  // While checking auth status, show loading state
-  if (isAuthenticated === null) {
-    return;
-  }
+          setAuth({ isAuthenticated: false, user: null });
+        });
+    }
+  }, [pathname]);
 
   const login = async () => {
     try {
@@ -59,13 +59,16 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const logout = () => {
     pb.authStore.clear();
-    setUser(null);
-    setIsAuthenticated(false);
+    setAuth({ isAuthenticated: false, user: null });
     router.push('/');
   };
 
+  if (auth === null) {
+    return null;
+  }
+
   return (
-    <AuthContext.Provider value={{ isAuthenticated, user, login, logout }}>
+    <AuthContext.Provider value={{ ...auth, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

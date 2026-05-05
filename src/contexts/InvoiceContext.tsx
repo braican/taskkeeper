@@ -42,6 +42,7 @@ const InvoiceContext = createContext<InvoiceContextType | undefined>(undefined);
 export const recordToInvoice = (record: RecordModel): Invoice => ({
   id: record.id,
   client: record.client,
+  project: record.project || undefined,
   number: record.number,
   description: record.description,
   status: record.status,

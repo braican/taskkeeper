@@ -12,12 +12,15 @@ import {
 import { useAuth } from '@/contexts/AuthContext';
 import { useInvoices } from '@/contexts/InvoiceContext';
 import { useTasks } from '@/contexts/TaskContext';
+import { useProjects } from '@/contexts/ProjectContext';
 import Button from '@/components/button';
 import TaskForm from '@/components/task-form';
 import TaskList from '@/components/task-list';
 import InvoiceForm from '@/components/invoice-form';
 import InvoiceList from '@/components/invoice-list';
 import PaidInvoiceList from '@/components/paid-invoice-list';
+import ProjectList from '@/components/project-list';
+import ProjectForm from '@/components/project-form';
 import IconArrowLeft from '@/icons/arrow-back';
 import IconSettings from '@/icons/settings';
 import IconPlus from '@/icons/plus';
@@ -25,13 +28,18 @@ import IconAddInvoice from '@/icons/add-invoice';
 
 import styles from './client-page.module.css';
 
+type View = 'tasks' | 'projects';
+
 function ClientPageMain() {
   const { id }: { id: string } = useParams();
   const { setIsInvoicing, isInvoicing } = useNewInvoice();
   const { getClientTasks } = useTasks();
   const { getClientInvoices } = useInvoices();
+  const { getClientProjects } = useProjects();
   const { getClientById, areClientsLoaded } = useClients();
   const [isTaskFormVisible, setIsTaskFormVisible] = useState(false);
+  const [isProjectFormVisible, setIsProjectFormVisible] = useState(false);
+  const [view, setView] = useState<View>('tasks');
   const client = getClientById(id);
 
   if (!areClientsLoaded) {
@@ -44,6 +52,7 @@ function ClientPageMain() {
 
   const tasks = getClientTasks(client.id);
   const { activeInvoices, paidInvoices } = getClientInvoices(client.id);
+  const projects = getClientProjects(client.id);
 
   return (
     <>
@@ -57,61 +66,102 @@ function ClientPageMain() {
         {client.address && <p>{client.address}</p>}
       </header>
 
-      <div className={`${styles.clientPageGrid} mt-l`}>
-        {activeInvoices.length > 0 && (
-          <div className={styles.invoiceList}>
-            <InvoiceList invoices={activeInvoices} />
-          </div>
-        )}
+      <nav className={styles.viewTabs}>
+        <button
+          className={`${styles.viewTab} ${view === 'tasks' ? styles.viewTabActive : ''}`}
+          onClick={() => setView('tasks')}
+        >
+          Tasks
+        </button>
+        <button
+          className={`${styles.viewTab} ${view === 'projects' ? styles.viewTabActive : ''}`}
+          onClick={() => setView('projects')}
+        >
+          Projects
+        </button>
+      </nav>
 
-        <div className={styles.main}>
-          {isInvoicing ? (
-            <div className={styles.invoiceForm}>
-              <InvoiceForm
-                client={client}
-                onCancel={() => setIsInvoicing(false)}
-              />
-            </div>
-          ) : (
-            <div className={styles.actions}>
-              <Button
-                disabled={isInvoicing}
-                onClick={() => setIsTaskFormVisible(true)}
-                icon={IconPlus}
-              >
-                Add task
-              </Button>
+      {view === 'tasks' && (
+        <>
+          <div className={`${styles.clientPageGrid} mt-l`}>
+            {activeInvoices.length > 0 && (
+              <div className={styles.invoiceList}>
+                <InvoiceList invoices={activeInvoices} />
+              </div>
+            )}
 
-              {tasks.length > 0 && (
-                <Button
-                  onClick={() => setIsInvoicing(true)}
-                  icon={IconAddInvoice}
-                  style="secondary"
-                >
-                  Create invoice
-                </Button>
+            <div className={styles.main}>
+              {isInvoicing ? (
+                <div className={styles.invoiceForm}>
+                  <InvoiceForm
+                    client={client}
+                    onCancel={() => setIsInvoicing(false)}
+                  />
+                </div>
+              ) : (
+                <div className={styles.actions}>
+                  <Button
+                    disabled={isInvoicing}
+                    onClick={() => setIsTaskFormVisible(true)}
+                    icon={IconPlus}
+                  >
+                    Add task
+                  </Button>
+
+                  {tasks.length > 0 && (
+                    <Button
+                      onClick={() => setIsInvoicing(true)}
+                      icon={IconAddInvoice}
+                      style="secondary"
+                    >
+                      Create invoice
+                    </Button>
+                  )}
+                </div>
               )}
+
+              <div className="mt-l">
+                <TaskList client={client} tasks={tasks} />
+              </div>
             </div>
-          )}
 
-          <div className="mt-l">
-            <TaskList client={client} tasks={tasks} />
+            <div className={styles.paidInvoices}>
+              <header className="mb-m">
+                <h2 className="secondary-header">Paid Invoices</h2>
+              </header>
+              <PaidInvoiceList invoices={paidInvoices} client={client} />
+            </div>
           </div>
-        </div>
 
-        <div className={styles.paidInvoices}>
-          <header className="mb-m">
-            <h2 className="secondary-header">Paid Invoices</h2>
-          </header>
-          <PaidInvoiceList invoices={paidInvoices} client={client} />
-        </div>
-      </div>
+          <TaskForm
+            client={client}
+            visible={isTaskFormVisible}
+            setVisibility={setIsTaskFormVisible}
+          />
+        </>
+      )}
 
-      <TaskForm
-        client={client}
-        visible={isTaskFormVisible}
-        setVisibility={setIsTaskFormVisible}
-      />
+      {view === 'projects' && (
+        <>
+          <div className={`${styles.projectsView} mt-l`}>
+            <div className={styles.actions}>
+              <Button onClick={() => setIsProjectFormVisible(true)} icon={IconPlus}>
+                Add project
+              </Button>
+            </div>
+
+            <div className="mt-l">
+              <ProjectList projects={projects} client={client} />
+            </div>
+          </div>
+
+          <ProjectForm
+            client={client}
+            visible={isProjectFormVisible}
+            setVisibility={setIsProjectFormVisible}
+          />
+        </>
+      )}
     </>
   );
 }

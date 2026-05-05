@@ -24,9 +24,22 @@ export interface InvoicedTask {
   hours?: number;
 }
 
+export type ProjectStatus = 'estimate' | 'approved' | 'completed';
+
+export interface Project {
+  id: string;
+  client: string;
+  title: string;
+  status: ProjectStatus;
+  quotedCost?: number;
+  timeEstimate?: number;
+  accruedTime?: number;
+}
+
 export interface Invoice {
   id: string;
   client: string;
+  project?: string;
   number: string;
   status: 'active' | 'paid';
   issueDate: string;

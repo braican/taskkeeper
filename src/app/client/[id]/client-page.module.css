@@ -36,6 +36,41 @@
   flex-wrap: wrap;
 }
 
+.viewTabs {
+  display: flex;
+  gap: 2px;
+  margin-top: var(--space-l);
+  border-bottom: 2px solid var(--c-midnight-green-transparent);
+}
+
+.viewTab {
+  padding: var(--space-xs) var(--space-m);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: var(--fs--1);
+  font-weight: var(--weight-semibold);
+  color: var(--c-text-secondary, currentColor);
+  opacity: 0.5;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  transition: opacity 0.15s;
+}
+
+.viewTab:hover {
+  opacity: 0.8;
+}
+
+.viewTabActive {
+  opacity: 1;
+  border-bottom-color: currentColor;
+}
+
+.projectsView {
+  max-width: var(--max-component-width);
+}
+
 @media screen and (min-width: 862px) {
   .clientPageGrid {
     padding-right: var(--space-l);

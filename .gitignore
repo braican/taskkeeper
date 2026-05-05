@@ -12,5 +12,6 @@
 /out/
 /build
 next-env.d.ts
+tsconfig.tsbuildinfo
 
 certificates
