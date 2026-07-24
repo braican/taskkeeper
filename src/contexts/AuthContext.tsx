@@ -8,9 +8,9 @@ import {
   useEffect,
   ReactNode,
 } from 'react';
-import { useRouter, usePathname } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import pb from '../lib/pocketbase';
-import { AuthRecord } from 'pocketbase';
+import { AuthRecord, ClientResponseError } from 'pocketbase';
 
 interface AuthContextType {
   isAuthenticated: boolean;
@@ -29,34 +29,51 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [auth, setAuth] = useState<AuthState>(null);
   const router = useRouter();
-  const pathname = usePathname();
 
   useEffect(() => {
-    const isValid = pb.authStore.isValid;
+    const syncAuth = () => {
+      const isValid = pb.authStore.isValid;
+      setAuth({
+        isAuthenticated: isValid,
+        user: isValid ? pb.authStore.record : null,
+      });
+    };
+
+    // Reacting to the store directly (rather than to route changes) means
+    // login/logout are reflected the instant they happen, before any
+    // navigation triggered by them runs. Deriving this from `pathname`
+    // instead left a window where a just-completed login/logout hadn't been
+    // picked up yet by the time a newly-mounted route's components (e.g.
+    // ProtectedGuard) read `isAuthenticated`, causing spurious redirects.
+    const unsubscribe = pb.authStore.onChange(syncAuth);
 
     // A token can be expired on arrival (e.g. after 30 days), in which case
     // authRefresh() below is never attempted and never gets a chance to clear
     // it. Without this, the stale pb_auth cookie keeps telling the proxy the
     // user is authenticated, which fights with the client's own logged-out
     // state and produces a redirect loop between "/" and "/dashboard".
-    if (!isValid && pb.authStore.token) {
+    if (!pb.authStore.isValid && pb.authStore.token) {
       pb.authStore.clear();
+    } else {
+      syncAuth();
     }
 
-    setAuth({
-      isAuthenticated: isValid,
-      user: isValid ? pb.authStore.record : null,
-    });
-
-    if (isValid) {
+    if (pb.authStore.isValid) {
       pb.collection('users')
         .authRefresh()
-        .catch(() => {
+        .catch((err) => {
+          // PocketBase auto-cancels a duplicate in-flight request to the
+          // same endpoint when another one is made; that's not a real auth
+          // failure and must not be treated as one.
+          if (err instanceof ClientResponseError && err.isAbort) {
+            return;
+          }
           pb.authStore.clear();
-          setAuth({ isAuthenticated: false, user: null });
         });
     }
-  }, [pathname]);
+
+    return unsubscribe;
+  }, []);
 
   const login = async () => {
     try {
@@ -68,9 +85,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const logout = () => {
+    // ProtectedGuard reacts to the resulting isAuthenticated:false and
+    // navigates away; a second explicit navigation here raced with it.
     pb.authStore.clear();
-    setAuth({ isAuthenticated: false, user: null });
-    router.push('/');
   };
 
   if (auth === null) {
