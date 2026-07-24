@@ -29,6 +29,7 @@ export default function TaskItem({ task, rate }: { task: Task; rate: number }) {
   );
   const [isHourly, setIsHourly] = useState(task.isHourly);
   const [date, setDate] = useState(task.date || '');
+  const [isAddingDate, setIsAddingDate] = useState(false);
   const [categoryIds, setCategoryIds] = useState<string[]>(
     task.categories || [],
   );
@@ -136,23 +137,33 @@ export default function TaskItem({ task, rate }: { task: Task; rate: number }) {
 
   const onDateBlur = useCallback(
     async (e: React.FocusEvent<HTMLInputElement>) => {
-      const oldDate = date;
+      // Compare against task.date (the last-persisted value) rather than
+      // the local `date` state -- onChange already updated `date` to match
+      // the newly picked value before blur fires, so comparing against it
+      // here would always see them as equal and skip the save.
+      const previousDate = task.date || '';
       const newDate = e.currentTarget.value;
 
-      if (oldDate === newDate) {
+      if (previousDate === newDate) {
         setStatusMessage('');
+        if (!newDate) {
+          setIsAddingDate(false);
+        }
         return;
       }
 
       setDate(newDate);
       try {
         await triggerTaskSave({ ...task, date: newDate || null });
+        if (!newDate) {
+          setIsAddingDate(false);
+        }
         // eslint-disable-next-line
       } catch (error) {
-        setDate(oldDate);
+        setDate(previousDate);
       }
     },
-    [date, task, triggerTaskSave],
+    [task, triggerTaskSave],
   );
 
   const handleAddCategory = useCallback(
@@ -250,9 +261,7 @@ export default function TaskItem({ task, rate }: { task: Task; rate: number }) {
         className={`weight-extrabold ${styles.taskCost} ${!isHourly ? styles.taskCostHoverable : ''}`}
         ref={costInputRef}
       >
-        <div
-          className={`align-right ${!isHourly ? styles.costDisplay : ''}`}
-        >
+        <div className={`align-right ${!isHourly ? styles.costDisplay : ''}`}>
           {moneyFormatter.format(displayedPrice || 0)}
         </div>
 
@@ -343,22 +352,32 @@ export default function TaskItem({ task, rate }: { task: Task; rate: number }) {
       </div>
 
       <div className={styles.taskMeta}>
-        <p className={styles.metaWrapper}>
-          <span className={`${styles.hoursLabel} fs--1 weight-semibold`}>
-            date:
-          </span>
-          <input
-            type="date"
-            disabled={isSaving || isInvoicing}
-            value={date}
-            className={styles.dateInput}
-            onFocus={() => setStatusMessage('Editing...')}
-            onChange={(e) => setDate(e.target.value)}
-            onBlur={onDateBlur}
-          />
+        <p>
+          <span className="sr-only">Date</span>
+          {date || isAddingDate ? (
+            <input
+              type="date"
+              autoFocus={isAddingDate}
+              disabled={isSaving || isInvoicing}
+              value={date}
+              className={styles.dateInput}
+              onFocus={() => setStatusMessage('Editing...')}
+              onChange={(e) => setDate(e.target.value)}
+              onBlur={onDateBlur}
+            />
+          ) : (
+            <button
+              type="button"
+              className={[styles.addButton, styles.addDateButton].join(' ')}
+              onClick={() => setIsAddingDate(true)}
+            >
+              <IconPlus />
+              Add date
+            </button>
+          )}
         </p>
 
-        <div className={styles.metaWrapper}>
+        <div className={styles.categoryWrapper}>
           {isCategoryPickerOpen ? (
             <>
               <span className={`${styles.hoursLabel} fs--1 weight-semibold`}>
@@ -409,7 +428,7 @@ export default function TaskItem({ task, rate }: { task: Task; rate: number }) {
           ) : (
             <button
               type="button"
-              className={styles.addCategoriesButton}
+              className={styles.addButton}
               onClick={() => setIsCategoryPickerOpen(true)}
             >
               <IconPlus />

@@ -36,7 +36,11 @@ const recordToTask = (record: RecordModel): Task => ({
   isHourly: record.isHourly,
   hours: record.hours,
   price: record.price,
-  date: record.date,
+  // PocketBase returns Date fields as a full timestamp (e.g.
+  // "2026-07-24 00:00:00.000Z"), but <input type="date"> only accepts an
+  // exact YYYY-MM-DD value -- anything else is silently rejected and shown
+  // as blank, which looks like the date never saved even though it did.
+  date: record.date ? record.date.slice(0, 10) : null,
   categories: record.categories,
 });
 

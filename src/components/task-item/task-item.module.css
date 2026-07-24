@@ -142,8 +142,12 @@
   grid-column: 1 / -1;
 }
 
-.metaWrapper {
+.categoryWrapper {
   padding-left: var(--space-xs);
+}
+
+.addDateButton {
+  margin-left: var(--space-xs);
 }
 
 .categoriesDisplay {
@@ -205,7 +209,7 @@
   color: var(--c-black);
 }
 
-.addCategoriesButton {
+.addButton {
   display: inline-flex;
   align-items: center;
   gap: 0.35em;
@@ -214,11 +218,11 @@
   transition: color 0.2s;
 }
 
-.addCategoriesButton:hover {
+.addButton:hover {
   color: var(--c-black);
 }
 
-.addCategoriesButton svg {
+.addButton svg {
   width: 0.9em;
   height: 0.9em;
 }
