@@ -2,8 +2,10 @@ import { useCallback, useState, useRef } from 'react';
 import sanitizeHtml from 'sanitize-html';
 import { useTasks } from '@/contexts/TaskContext';
 import { useNewInvoice } from '@/contexts/NewInvoiceContext';
+import { useCategories } from '@/contexts/CategoryContext';
 import Button from '@/components/button';
 import Toggle from '@/components/toggle';
+import CategoryPicker from '@/components/category-picker';
 import IconTrash from '@/icons/trash';
 import IconCheckmark from '@/icons/checkmark';
 import { moneyFormatter, taskCost } from '@/utils';
@@ -13,6 +15,7 @@ import styles from './task-item.module.css';
 export default function TaskItem({ task, rate }: { task: Task; rate: number }) {
   const { isInvoicing, addTask, removeTask } = useNewInvoice();
   const { updateTask, deleteTask } = useTasks();
+  const { categories, getOrCreateCategory } = useCategories();
   const [isSaving, setIsSaving] = useState(false);
   const [isConfirmingDeletion, setConfirmDelettion] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -20,8 +23,12 @@ export default function TaskItem({ task, rate }: { task: Task; rate: number }) {
   const [statusMessage, setStatusMessage] = useState('');
   const [description, setDescription] = useState(task.description);
   const [hours, setHours] = useState(task.hours);
-  const [price, setPrice] = useState(() => task.isHourly ? 0 : taskCost(task, rate));
+  const [price, setPrice] = useState(() =>
+    task.isHourly ? 0 : taskCost(task, rate),
+  );
   const [isHourly, setIsHourly] = useState(task.isHourly);
+  const [date, setDate] = useState(task.date || '');
+  const [categoryIds, setCategoryIds] = useState<string[]>(task.category || []);
   const hoursInputRef = useRef<HTMLInputElement>(null);
   const costInputRef = useRef<HTMLInputElement>(null);
   const [prevIsInvoicing, setPrevIsInvoicing] = useState(isInvoicing);
@@ -123,6 +130,64 @@ export default function TaskItem({ task, rate }: { task: Task; rate: number }) {
     }
   };
 
+  const onDateBlur = useCallback(
+    async (e: React.FocusEvent<HTMLInputElement>) => {
+      const oldDate = date;
+      const newDate = e.currentTarget.value;
+
+      if (oldDate === newDate) {
+        setStatusMessage('');
+        return;
+      }
+
+      setDate(newDate);
+      try {
+        await triggerTaskSave({ ...task, date: newDate || null });
+        // eslint-disable-next-line
+      } catch (error) {
+        setDate(oldDate);
+      }
+    },
+    [date, task, triggerTaskSave],
+  );
+
+  const handleAddCategory = useCallback(
+    async (name: string) => {
+      const oldCategoryIds = categoryIds;
+      const category = await getOrCreateCategory(name);
+
+      if (!category || oldCategoryIds.includes(category.id)) {
+        return;
+      }
+
+      const newCategoryIds = [...oldCategoryIds, category.id];
+      setCategoryIds(newCategoryIds);
+      try {
+        await triggerTaskSave({ ...task, category: newCategoryIds });
+        // eslint-disable-next-line
+      } catch (error) {
+        setCategoryIds(oldCategoryIds);
+      }
+    },
+    [categoryIds, task, triggerTaskSave, getOrCreateCategory],
+  );
+
+  const handleRemoveCategory = useCallback(
+    async (categoryId: string) => {
+      const oldCategoryIds = categoryIds;
+      const newCategoryIds = oldCategoryIds.filter((id) => id !== categoryId);
+
+      setCategoryIds(newCategoryIds);
+      try {
+        await triggerTaskSave({ ...task, category: newCategoryIds });
+        // eslint-disable-next-line
+      } catch (error) {
+        setCategoryIds(oldCategoryIds);
+      }
+    },
+    [categoryIds, task, triggerTaskSave],
+  );
+
   const handleUnitToggle = async () => {
     const newIsHourly = !isHourly;
     setIsHourly(newIsHourly);
@@ -181,7 +246,9 @@ export default function TaskItem({ task, rate }: { task: Task; rate: number }) {
         className={`weight-extrabold ${styles.taskCost} ${!isHourly ? styles.taskCostHoverable : ''}`}
         ref={costInputRef}
       >
-        <div className="align-right">{moneyFormatter.format(displayedPrice || 0)}</div>
+        <div className="align-right">
+          {moneyFormatter.format(displayedPrice || 0)}
+        </div>
 
         {!isHourly && (
           <input
@@ -266,6 +333,39 @@ export default function TaskItem({ task, rate }: { task: Task; rate: number }) {
               Delete
             </Button>
           )}
+        </div>
+      </div>
+
+      <div className={styles.costUnitControl}>
+        <p className={styles.dateWrapper}>
+          <span className={`${styles.hoursLabel} fs--1 weight-semibold`}>
+            date:
+          </span>
+          <input
+            type="date"
+            disabled={isSaving || isInvoicing}
+            value={date}
+            className={styles.dateInput}
+            onFocus={() => setStatusMessage('Editing...')}
+            onChange={(e) => setDate(e.target.value)}
+            onBlur={onDateBlur}
+          />
+        </p>
+
+        <div className={styles.dateWrapper}>
+          <span className={`${styles.hoursLabel} fs--1 weight-semibold`}>
+            categories:
+          </span>
+          <CategoryPicker
+            id={`task_category-${task.id}`}
+            selectedIds={categoryIds}
+            categories={categories}
+            disabled={isSaving || isInvoicing}
+            inputClassName={styles.categoryInput}
+            onAdd={handleAddCategory}
+            onRemove={handleRemoveCategory}
+            onFocus={() => setStatusMessage('Editing...')}
+          />
         </div>
       </div>
 

@@ -14,6 +14,13 @@ export interface Task {
   isHourly: boolean;
   hours?: number | null;
   price?: number | null;
+  date?: string | null;
+  category?: string[] | null;
+}
+
+export interface Category {
+  id: string;
+  name: string;
 }
 
 export interface InvoicedTask {

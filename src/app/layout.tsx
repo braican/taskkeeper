@@ -4,6 +4,7 @@ import { AuthProvider } from '@/contexts/AuthContext';
 import { GlobalProvider } from '@/contexts/GlobalContext';
 import { ClientProvider } from '@/contexts/ClientContext';
 import { TaskProvider } from '@/contexts/TaskContext';
+import { CategoryProvider } from '@/contexts/CategoryContext';
 import { InvoiceProvider } from '@/contexts/InvoiceContext';
 import { ProjectProvider } from '@/contexts/ProjectContext';
 import IconLogo from '@/icons/logo';
@@ -55,13 +56,15 @@ export default function RootLayout({
         <AuthProvider>
           <ClientProvider>
             <TaskProvider>
-              <InvoiceProvider>
-                <ProjectProvider>
-                  <GlobalProvider>
-                    <MainLayout>{children}</MainLayout>
-                  </GlobalProvider>
-                </ProjectProvider>
-              </InvoiceProvider>
+              <CategoryProvider>
+                <InvoiceProvider>
+                  <ProjectProvider>
+                    <GlobalProvider>
+                      <MainLayout>{children}</MainLayout>
+                    </GlobalProvider>
+                  </ProjectProvider>
+                </InvoiceProvider>
+              </CategoryProvider>
             </TaskProvider>
           </ClientProvider>
         </AuthProvider>

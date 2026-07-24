@@ -23,7 +23,9 @@
 .costInput,
 .description,
 .costDisplay,
-.hours {
+.hours,
+.dateInput,
+.categoryInput {
   transition: border-color 0.2s;
   padding: var(--space-xs);
   border: 1px dashed transparent;
@@ -33,13 +35,17 @@
 .task:not(.invoicingActive):hover .description,
 .task:not(.invoicingActive):hover .taskCostHoverable .costDisplay,
 .task:not(.invoicingActive):hover .hours,
-.task:not(.invoicingActive):hover .costInput {
+.task:not(.invoicingActive):hover .costInput,
+.task:not(.invoicingActive):hover .dateInput,
+.task:not(.invoicingActive):hover .categoryInput {
   border-color: var(--c-beige);
 }
 
 .task:not(.invoicingActive) .description:focus,
 .task:not(.invoicingActive) .hours:focus,
-.task:not(.invoicingActive) .costInput:focus {
+.task:not(.invoicingActive) .costInput:focus,
+.task:not(.invoicingActive) .dateInput:focus,
+.task:not(.invoicingActive) .categoryInput:focus {
   border-color: var(--c-midnight-green);
   border-style: solid;
   outline: none;
@@ -118,4 +124,8 @@
 .deleteOptions {
   display: flex;
   gap: var(--space-m);
+}
+
+.dateWrapper {
+  padding-left: var(--space-xs);
 }

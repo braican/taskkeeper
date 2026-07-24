@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { useTasks } from '@/contexts/TaskContext';
+import { useCategories } from '@/contexts/CategoryContext';
 import SlideUpModalForm from '@/components/slide-up-modal-form';
 import Toggle from '@/components/toggle';
+import CategoryPicker from '@/components/category-picker';
 import { Client, Task } from '@/types';
 import styles from './task-form.module.css';
 
@@ -15,9 +17,12 @@ export default function TaskForm({
   client: Client;
 }) {
   const { addTask } = useTasks();
+  const { categories, getOrCreateCategory } = useCategories();
   const [description, setDescription] = useState('');
   const [value, setValue] = useState('');
   const [isHourly, setIsHourly] = useState(true);
+  const [date, setDate] = useState('');
+  const [categoryIds, setCategoryIds] = useState<string[]>([]);
   const [error, setError] = useState('');
   const [prevVisible, setPrevVisible] = useState(visible);
 
@@ -27,9 +32,22 @@ export default function TaskForm({
       setDescription('');
       setValue('');
       setIsHourly(true);
+      setDate('');
+      setCategoryIds([]);
       setError('');
     }
   }
+
+  const handleAddCategory = async (name: string) => {
+    const category = await getOrCreateCategory(name);
+    if (category && !categoryIds.includes(category.id)) {
+      setCategoryIds([...categoryIds, category.id]);
+    }
+  };
+
+  const handleRemoveCategory = (categoryId: string) => {
+    setCategoryIds(categoryIds.filter((id) => id !== categoryId));
+  };
 
   const handleSubmit = async () => {
     setError('');
@@ -52,6 +70,14 @@ export default function TaskForm({
         task.isHourly = true;
       } else {
         task.price = Number(value);
+      }
+
+      if (date) {
+        task.date = date;
+      }
+
+      if (categoryIds.length) {
+        task.category = categoryIds;
       }
 
       await addTask(task);
@@ -109,6 +135,34 @@ export default function TaskForm({
                 onChange={(e) => setValue(e.target.value)}
               />
             </div>
+          </div>
+        </div>
+
+        <div className={`form-row flex-fields ${styles.metaRow}`}>
+          <div className={styles.metaField}>
+            <label className="form-label" htmlFor="task_date">
+              Date
+            </label>
+            <input
+              className="form-input"
+              type="date"
+              id="task_date"
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
+            />
+          </div>
+
+          <div className={styles.metaField}>
+            <label className="form-label" htmlFor="task_category">
+              Categories
+            </label>
+            <CategoryPicker
+              id="task_category"
+              selectedIds={categoryIds}
+              categories={categories}
+              onAdd={handleAddCategory}
+              onRemove={handleRemoveCategory}
+            />
           </div>
         </div>
       </>
