@@ -250,7 +250,9 @@ export default function TaskItem({ task, rate }: { task: Task; rate: number }) {
         className={`weight-extrabold ${styles.taskCost} ${!isHourly ? styles.taskCostHoverable : ''}`}
         ref={costInputRef}
       >
-        <div className="align-right">
+        <div
+          className={`align-right ${!isHourly ? styles.costDisplay : ''}`}
+        >
           {moneyFormatter.format(displayedPrice || 0)}
         </div>
 
@@ -276,10 +278,10 @@ export default function TaskItem({ task, rate }: { task: Task; rate: number }) {
           <Toggle
             disabled={isSaving || isInvoicing}
             id={`rate_toggle_indicator-${task.id}`}
-            toggled={isHourly}
+            toggled={!isHourly}
             onToggle={handleUnitToggle}
-            onLabel="Hourly"
-            offLabel="Fixed"
+            onLabel="Fixed"
+            offLabel="Hourly"
             size="small"
           />
         </div>

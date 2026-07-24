@@ -60,10 +60,10 @@ export default function EditInvoiceTask({
         <div className={styles.toggle}>
           <Toggle
             id={`rate_toggle_indicator-${task.id}`}
-            toggled={isHourly}
+            toggled={!isHourly}
             onToggle={() => setIsHourly(!isHourly)}
-            onLabel="Hourly"
-            offLabel="Fixed"
+            onLabel="Fixed"
+            offLabel="Hourly"
             size="small"
           />
         </div>

@@ -31,7 +31,7 @@
 }
 
 .task:not(.invoicingActive):hover .description,
-.task:not(.invoicingActive):hover .taskCostHoverable .costDisplay,
+.task:not(.invoicingActive):hover .costDisplay,
 .task:not(.invoicingActive):hover .hours,
 .task:not(.invoicingActive):hover .costInput,
 .task:not(.invoicingActive):hover .dateInput {
@@ -40,6 +40,7 @@
 
 .task:not(.invoicingActive) .description:focus,
 .task:not(.invoicingActive) .hours:focus,
+.task:not(.invoicingActive) .costDisplay:focus,
 .task:not(.invoicingActive) .costInput:focus,
 .task:not(.invoicingActive) .dateInput:focus {
   border-color: var(--c-midnight-green);

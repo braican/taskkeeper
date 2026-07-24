@@ -115,10 +115,10 @@ export default function TaskForm({
         <div className={`form-row flex-fields ${styles.rateRow}`}>
           <Toggle
             id="rate_toggle_indicator"
-            toggled={isHourly}
+            toggled={!isHourly}
             onToggle={() => setIsHourly(!isHourly)}
-            onLabel="Hourly"
-            offLabel="Fixed"
+            onLabel="Fixed"
+            offLabel="Hourly"
           />
 
           <div className={styles.valueField}>
