@@ -28,7 +28,7 @@ export default function TaskItem({ task, rate }: { task: Task; rate: number }) {
   );
   const [isHourly, setIsHourly] = useState(task.isHourly);
   const [date, setDate] = useState(task.date || '');
-  const [categoryIds, setCategoryIds] = useState<string[]>(task.category || []);
+  const [categoryIds, setCategoryIds] = useState<string[]>(task.categories || []);
   const hoursInputRef = useRef<HTMLInputElement>(null);
   const costInputRef = useRef<HTMLInputElement>(null);
   const [prevIsInvoicing, setPrevIsInvoicing] = useState(isInvoicing);
@@ -163,7 +163,7 @@ export default function TaskItem({ task, rate }: { task: Task; rate: number }) {
       const newCategoryIds = [...oldCategoryIds, category.id];
       setCategoryIds(newCategoryIds);
       try {
-        await triggerTaskSave({ ...task, category: newCategoryIds });
+        await triggerTaskSave({ ...task, categories: newCategoryIds });
         // eslint-disable-next-line
       } catch (error) {
         setCategoryIds(oldCategoryIds);
@@ -179,7 +179,7 @@ export default function TaskItem({ task, rate }: { task: Task; rate: number }) {
 
       setCategoryIds(newCategoryIds);
       try {
-        await triggerTaskSave({ ...task, category: newCategoryIds });
+        await triggerTaskSave({ ...task, categories: newCategoryIds });
         // eslint-disable-next-line
       } catch (error) {
         setCategoryIds(oldCategoryIds);

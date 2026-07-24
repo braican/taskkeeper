@@ -4,7 +4,41 @@
   gap: var(--space-xs);
 }
 
-.pills {
+.comboboxWrapper {
+  position: relative;
+}
+
+.menu {
+  position: absolute;
+  z-index: 1;
+  top: calc(100% + var(--space-xs));
+  left: 0;
+  right: 0;
+  max-height: 6rem;
+  overflow-y: auto;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  background-color: var(--c-white);
+  border-radius: var(--border-radius-small);
+}
+
+.menuOpen {
+  border: 1px solid var(--bg-accent-border);
+}
+
+.menuItem {
+  padding: var(--space-xs) var(--space-s);
+  font-size: var(--step--1);
+  cursor: pointer;
+}
+
+.menuItemHighlighted {
+  background-color: var(--c-off-white);
+}
+
+.tagGroup {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-xs);
@@ -21,6 +55,11 @@
   background: var(--c-beige);
   color: var(--c-black);
   white-space: nowrap;
+}
+
+.pillActive {
+  outline: 2px solid var(--c-midnight-green);
+  outline-offset: 1px;
 }
 
 .remove {

@@ -37,7 +37,7 @@ const recordToTask = (record: RecordModel): Task => ({
   hours: record.hours,
   price: record.price,
   date: record.date,
-  category: record.category,
+  categories: record.categories,
 });
 
 export const TaskProvider = ({ children }: { children: ReactNode }) => {

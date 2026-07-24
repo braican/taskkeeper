@@ -77,7 +77,7 @@ export default function TaskForm({
       }
 
       if (categoryIds.length) {
-        task.category = categoryIds;
+        task.categories = categoryIds;
       }
 
       await addTask(task);

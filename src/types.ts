@@ -15,7 +15,7 @@ export interface Task {
   hours?: number | null;
   price?: number | null;
   date?: string | null;
-  category?: string[] | null;
+  categories?: string[] | null;
 }
 
 export interface Category {
