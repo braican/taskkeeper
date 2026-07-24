@@ -33,6 +33,16 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     const isValid = pb.authStore.isValid;
+
+    // A token can be expired on arrival (e.g. after 30 days), in which case
+    // authRefresh() below is never attempted and never gets a chance to clear
+    // it. Without this, the stale pb_auth cookie keeps telling the proxy the
+    // user is authenticated, which fights with the client's own logged-out
+    // state and produces a redirect loop between "/" and "/dashboard".
+    if (!isValid && pb.authStore.token) {
+      pb.authStore.clear();
+    }
+
     setAuth({
       isAuthenticated: isValid,
       user: isValid ? pb.authStore.record : null,
