@@ -1,8 +1,6 @@
 // app/dashboard/page.tsx
 'use client';
 
-import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
 import Button from '@/components/button';
 import { useAuth } from '@/contexts/AuthContext';
 import { useGlobals } from '@/contexts/GlobalContext';
@@ -14,14 +12,7 @@ import styles from './dashboard.module.css';
 
 export default function Dashboard() {
   const { toggleClientFormVisible } = useGlobals();
-  const { user, isAuthenticated } = useAuth();
-  const router = useRouter();
-
-  useEffect(() => {
-    if (!isAuthenticated) {
-      router.replace('/');
-    }
-  }, [isAuthenticated, router]);
+  const { user } = useAuth();
 
   if (!user) {
     return '';

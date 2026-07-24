@@ -1,15 +1,14 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
-import { useParams, useRouter } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import { useGlobals } from '@/contexts/GlobalContext';
 import { useClients } from '@/contexts/ClientContext';
 import {
   NewInvoiceProvider,
   useNewInvoice,
 } from '@/contexts/NewInvoiceContext';
-import { useAuth } from '@/contexts/AuthContext';
 import { useInvoices } from '@/contexts/InvoiceContext';
 import { useTasks } from '@/contexts/TaskContext';
 import { useProjects } from '@/contexts/ProjectContext';
@@ -170,15 +169,7 @@ export default function ClientPage() {
   const { id }: { id: string } = useParams();
   const { toggleClientFormVisible } = useGlobals();
   const { getClientById } = useClients();
-  const { isAuthenticated } = useAuth();
-  const router = useRouter();
   const client = getClientById(id);
-
-  useEffect(() => {
-    if (!isAuthenticated) {
-      router.replace('/');
-    }
-  }, [isAuthenticated, router]);
 
   return (
     <div>
