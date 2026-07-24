@@ -72,7 +72,7 @@ export default function Sidebar() {
                   />
                 ) : (
                   <span className={`${styles.avatarPlaceholder} weight-bold`}>
-                    {user.name.charAt(0)}
+                    {(user.name || user.email || '?').charAt(0)}
                   </span>
                 )}
               </figure>

@@ -1,9 +1,10 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
+import { isAuthCookieValid } from '@/lib/auth';
 
 export function proxy(request: NextRequest) {
   const pbAuth = request.cookies.get('pb_auth');
-  const isAuthenticated = !!pbAuth?.value;
+  const isAuthenticated = isAuthCookieValid(pbAuth?.value);
 
   const { pathname } = request.nextUrl;
   const url = request.nextUrl.clone();
