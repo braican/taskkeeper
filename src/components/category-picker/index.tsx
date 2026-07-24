@@ -14,6 +14,7 @@ export default function CategoryPicker({
   onAdd,
   onRemove,
   onFocus,
+  onClose,
   disabled = false,
   inputClassName = 'form-input',
 }: {
@@ -23,6 +24,7 @@ export default function CategoryPicker({
   onAdd: (name: string) => void;
   onRemove: (categoryId: string) => void;
   onFocus?: (e: React.FocusEvent<HTMLInputElement>) => void;
+  onClose?: () => void;
   disabled?: boolean;
   inputClassName?: string;
 }) {
@@ -124,7 +126,7 @@ export default function CategoryPicker({
           ...changes,
           inputValue: '',
           highlightedIndex: 0,
-          isOpen: true,
+          isOpen: false,
         };
       }
 
@@ -143,12 +145,26 @@ export default function CategoryPicker({
               onFocus?.(e);
             },
           })}
-          className={inputClassName}
+          className={`${inputClassName} ${styles.input}`}
         />
+
+        {onClose && (
+          <button
+            type="button"
+            className={styles.close}
+            onClick={onClose}
+            aria-label="Close categories"
+          >
+            &times;
+          </button>
+        )}
 
         <ul
           {...getMenuProps()}
-          className={[styles.menu, isOpen ? styles.menuOpen : ''].join(' ')}
+          className={[
+            styles.menu,
+            isOpen && itemsToAdd.length > 0 ? styles.menuOpen : '',
+          ].join(' ')}
         >
           {isOpen &&
             itemsToAdd.map((item, index) => (

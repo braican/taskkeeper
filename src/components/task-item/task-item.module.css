@@ -23,8 +23,7 @@
 .description,
 .costDisplay,
 .hours,
-.dateInput,
-.categoryInput {
+.dateInput {
   transition: border-color 0.2s;
   padding: var(--space-xs);
   border: 1px dashed transparent;
@@ -35,19 +34,28 @@
 .task:not(.invoicingActive):hover .taskCostHoverable .costDisplay,
 .task:not(.invoicingActive):hover .hours,
 .task:not(.invoicingActive):hover .costInput,
-.task:not(.invoicingActive):hover .dateInput,
-.task:not(.invoicingActive):hover .categoryInput {
+.task:not(.invoicingActive):hover .dateInput {
   border-color: var(--c-beige);
 }
 
 .task:not(.invoicingActive) .description:focus,
 .task:not(.invoicingActive) .hours:focus,
 .task:not(.invoicingActive) .costInput:focus,
-.task:not(.invoicingActive) .dateInput:focus,
-.task:not(.invoicingActive) .categoryInput:focus {
+.task:not(.invoicingActive) .dateInput:focus {
   border-color: var(--c-midnight-green);
   border-style: solid;
   outline: none;
+}
+
+.categoryInput {
+  padding: var(--space-xs);
+  border: 1px solid var(--bg-accent-border);
+  border-radius: var(--border-radius-small);
+  outline: none;
+}
+
+.categoryInput:focus {
+  border-color: var(--c-midnight-green);
 }
 
 .costInput {
@@ -125,6 +133,91 @@
   gap: var(--space-m);
 }
 
-.dateWrapper {
+.taskMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-s);
+  align-items: center;
+  grid-column: 1 / -1;
+}
+
+.metaWrapper {
   padding-left: var(--space-xs);
+}
+
+.categoriesDisplay {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  font-size: var(--step--1);
+  font-weight: var(--weight-semibold);
+  padding: 0.2em 0.4em 0.2em 0.75em;
+  border-radius: 100px;
+  background: var(--c-beige);
+  color: var(--c-black);
+  white-space: nowrap;
+}
+
+.remove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.2em;
+  height: 1.2em;
+  border-radius: 50%;
+  line-height: 1;
+  color: inherit;
+  transition: background-color 0.2s;
+}
+
+.remove:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.categoryToggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5em;
+  height: 1.5em;
+  border-radius: 50%;
+  color: var(--c-gray-dark);
+  transition:
+    background-color 0.2s,
+    color 0.2s;
+}
+
+.categoryToggle svg {
+  width: 0.9em;
+  height: 0.9em;
+}
+
+.categoryToggle:hover {
+  background-color: var(--c-beige-transparent);
+  color: var(--c-black);
+}
+
+.addCategoriesButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  font-size: var(--step--1);
+  color: var(--c-gray-dark);
+  transition: color 0.2s;
+}
+
+.addCategoriesButton:hover {
+  color: var(--c-black);
+}
+
+.addCategoriesButton svg {
+  width: 0.9em;
+  height: 0.9em;
 }

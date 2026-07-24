@@ -8,6 +8,7 @@ import Toggle from '@/components/toggle';
 import CategoryPicker from '@/components/category-picker';
 import IconTrash from '@/icons/trash';
 import IconCheckmark from '@/icons/checkmark';
+import IconPlus from '@/icons/plus';
 import { moneyFormatter, taskCost } from '@/utils';
 import { Task } from '@/types';
 import styles from './task-item.module.css';
@@ -28,7 +29,10 @@ export default function TaskItem({ task, rate }: { task: Task; rate: number }) {
   );
   const [isHourly, setIsHourly] = useState(task.isHourly);
   const [date, setDate] = useState(task.date || '');
-  const [categoryIds, setCategoryIds] = useState<string[]>(task.categories || []);
+  const [categoryIds, setCategoryIds] = useState<string[]>(
+    task.categories || [],
+  );
+  const [isCategoryPickerOpen, setIsCategoryPickerOpen] = useState(false);
   const hoursInputRef = useRef<HTMLInputElement>(null);
   const costInputRef = useRef<HTMLInputElement>(null);
   const [prevIsInvoicing, setPrevIsInvoicing] = useState(isInvoicing);
@@ -336,8 +340,8 @@ export default function TaskItem({ task, rate }: { task: Task; rate: number }) {
         </div>
       </div>
 
-      <div className={styles.costUnitControl}>
-        <p className={styles.dateWrapper}>
+      <div className={styles.taskMeta}>
+        <p className={styles.metaWrapper}>
           <span className={`${styles.hoursLabel} fs--1 weight-semibold`}>
             date:
           </span>
@@ -352,20 +356,64 @@ export default function TaskItem({ task, rate }: { task: Task; rate: number }) {
           />
         </p>
 
-        <div className={styles.dateWrapper}>
-          <span className={`${styles.hoursLabel} fs--1 weight-semibold`}>
-            categories:
-          </span>
-          <CategoryPicker
-            id={`task_category-${task.id}`}
-            selectedIds={categoryIds}
-            categories={categories}
-            disabled={isSaving || isInvoicing}
-            inputClassName={styles.categoryInput}
-            onAdd={handleAddCategory}
-            onRemove={handleRemoveCategory}
-            onFocus={() => setStatusMessage('Editing...')}
-          />
+        <div className={styles.metaWrapper}>
+          {isCategoryPickerOpen ? (
+            <>
+              <span className={`${styles.hoursLabel} fs--1 weight-semibold`}>
+                Categories:
+              </span>
+              <CategoryPicker
+                id={`task_category-${task.id}`}
+                selectedIds={categoryIds}
+                categories={categories}
+                disabled={isSaving || isInvoicing}
+                inputClassName={styles.categoryInput}
+                onAdd={handleAddCategory}
+                onRemove={handleRemoveCategory}
+                onClose={() => setIsCategoryPickerOpen(false)}
+              />
+            </>
+          ) : categoryIds.length > 0 ? (
+            <div className={styles.categoriesDisplay}>
+              {categoryIds.map((categoryId) => {
+                const category = categories.find((c) => c.id === categoryId);
+                if (!category) {
+                  return null;
+                }
+                return (
+                  <span key={categoryId} className={styles.pill}>
+                    {category.name}
+                    <button
+                      type="button"
+                      className={styles.remove}
+                      disabled={isSaving || isInvoicing}
+                      onClick={() => handleRemoveCategory(categoryId)}
+                      aria-label={`Remove ${category.name}`}
+                    >
+                      &times;
+                    </button>
+                  </span>
+                );
+              })}
+              <button
+                type="button"
+                className={styles.categoryToggle}
+                onClick={() => setIsCategoryPickerOpen(true)}
+                aria-label="Add categories"
+              >
+                <IconPlus />
+              </button>
+            </div>
+          ) : (
+            <button
+              type="button"
+              className={styles.addCategoriesButton}
+              onClick={() => setIsCategoryPickerOpen(true)}
+            >
+              <IconPlus />
+              Add categories
+            </button>
+          )}
         </div>
       </div>
 

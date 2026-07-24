@@ -6,6 +6,33 @@
 
 .comboboxWrapper {
   position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.input {
+  flex: 1;
+  min-width: 0;
+}
+
+.close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 1.5em;
+  height: 1.5em;
+  border-radius: 50%;
+  color: var(--c-gray-dark);
+  transition:
+    background-color 0.2s,
+    color 0.2s;
+}
+
+.close:hover {
+  background-color: var(--c-beige-transparent);
+  color: var(--c-black);
 }
 
 .menu {
