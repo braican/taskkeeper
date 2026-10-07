@@ -2,10 +2,13 @@ import { useCallback, useState, useRef } from 'react';
 import sanitizeHtml from 'sanitize-html';
 import { useTasks } from '@/contexts/TaskContext';
 import { useNewInvoice } from '@/contexts/NewInvoiceContext';
+import { useCategories } from '@/contexts/CategoryContext';
 import Button from '@/components/button';
 import Toggle from '@/components/toggle';
+import CategoryPicker from '@/components/category-picker';
 import IconTrash from '@/icons/trash';
 import IconCheckmark from '@/icons/checkmark';
+import IconPlus from '@/icons/plus';
 import { moneyFormatter, taskCost } from '@/utils';
 import { Task } from '@/types';
 import styles from './task-item.module.css';
@@ -13,6 +16,7 @@ import styles from './task-item.module.css';
 export default function TaskItem({ task, rate }: { task: Task; rate: number }) {
   const { isInvoicing, addTask, removeTask } = useNewInvoice();
   const { updateTask, deleteTask } = useTasks();
+  const { categories, getOrCreateCategory } = useCategories();
   const [isSaving, setIsSaving] = useState(false);
   const [isConfirmingDeletion, setConfirmDelettion] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -20,8 +24,16 @@ export default function TaskItem({ task, rate }: { task: Task; rate: number }) {
   const [statusMessage, setStatusMessage] = useState('');
   const [description, setDescription] = useState(task.description);
   const [hours, setHours] = useState(task.hours);
-  const [price, setPrice] = useState(() => task.isHourly ? 0 : taskCost(task, rate));
+  const [price, setPrice] = useState(() =>
+    task.isHourly ? 0 : taskCost(task, rate),
+  );
   const [isHourly, setIsHourly] = useState(task.isHourly);
+  const [date, setDate] = useState(task.date || '');
+  const [isAddingDate, setIsAddingDate] = useState(false);
+  const [categoryIds, setCategoryIds] = useState<string[]>(
+    task.categories || [],
+  );
+  const [isCategoryPickerOpen, setIsCategoryPickerOpen] = useState(false);
   const hoursInputRef = useRef<HTMLInputElement>(null);
   const costInputRef = useRef<HTMLInputElement>(null);
   const [prevIsInvoicing, setPrevIsInvoicing] = useState(isInvoicing);
@@ -123,6 +135,74 @@ export default function TaskItem({ task, rate }: { task: Task; rate: number }) {
     }
   };
 
+  const onDateBlur = useCallback(
+    async (e: React.FocusEvent<HTMLInputElement>) => {
+      // Compare against task.date (the last-persisted value) rather than
+      // the local `date` state -- onChange already updated `date` to match
+      // the newly picked value before blur fires, so comparing against it
+      // here would always see them as equal and skip the save.
+      const previousDate = task.date || '';
+      const newDate = e.currentTarget.value;
+
+      if (previousDate === newDate) {
+        setStatusMessage('');
+        if (!newDate) {
+          setIsAddingDate(false);
+        }
+        return;
+      }
+
+      setDate(newDate);
+      try {
+        await triggerTaskSave({ ...task, date: newDate || null });
+        if (!newDate) {
+          setIsAddingDate(false);
+        }
+        // eslint-disable-next-line
+      } catch (error) {
+        setDate(previousDate);
+      }
+    },
+    [task, triggerTaskSave],
+  );
+
+  const handleAddCategory = useCallback(
+    async (name: string) => {
+      const oldCategoryIds = categoryIds;
+      const category = await getOrCreateCategory(name);
+
+      if (!category || oldCategoryIds.includes(category.id)) {
+        return;
+      }
+
+      const newCategoryIds = [...oldCategoryIds, category.id];
+      setCategoryIds(newCategoryIds);
+      try {
+        await triggerTaskSave({ ...task, categories: newCategoryIds });
+        // eslint-disable-next-line
+      } catch (error) {
+        setCategoryIds(oldCategoryIds);
+      }
+    },
+    [categoryIds, task, triggerTaskSave, getOrCreateCategory],
+  );
+
+  const handleRemoveCategory = useCallback(
+    async (categoryId: string) => {
+      const oldCategoryIds = categoryIds;
+      const newCategoryIds = oldCategoryIds.filter((id) => id !== categoryId);
+
+      setCategoryIds(newCategoryIds);
+      try {
+        await triggerTaskSave({ ...task, categories: newCategoryIds });
+        // eslint-disable-next-line
+      } catch (error) {
+        setCategoryIds(oldCategoryIds);
+      }
+    },
+    [categoryIds, task, triggerTaskSave],
+  );
+
   const handleUnitToggle = async () => {
     const newIsHourly = !isHourly;
     setIsHourly(newIsHourly);
@@ -181,7 +261,9 @@ export default function TaskItem({ task, rate }: { task: Task; rate: number }) {
         className={`weight-extrabold ${styles.taskCost} ${!isHourly ? styles.taskCostHoverable : ''}`}
         ref={costInputRef}
       >
-        <div className="align-right">{moneyFormatter.format(displayedPrice || 0)}</div>
+        <div className={`align-right ${!isHourly ? styles.costDisplay : ''}`}>
+          {moneyFormatter.format(displayedPrice || 0)}
+        </div>
 
         {!isHourly && (
           <input
@@ -205,10 +287,10 @@ export default function TaskItem({ task, rate }: { task: Task; rate: number }) {
           <Toggle
             disabled={isSaving || isInvoicing}
             id={`rate_toggle_indicator-${task.id}`}
-            toggled={isHourly}
+            toggled={!isHourly}
             onToggle={handleUnitToggle}
-            onLabel="Hourly"
-            offLabel="Fixed"
+            onLabel="Fixed"
+            offLabel="Hourly"
             size="small"
           />
         </div>
@@ -265,6 +347,93 @@ export default function TaskItem({ task, rate }: { task: Task; rate: number }) {
             >
               Delete
             </Button>
+          )}
+        </div>
+      </div>
+
+      <div className={styles.taskMeta}>
+        <p>
+          <span className="sr-only">Date</span>
+          {date || isAddingDate ? (
+            <input
+              type="date"
+              autoFocus={isAddingDate}
+              disabled={isSaving || isInvoicing}
+              value={date}
+              className={styles.dateInput}
+              onFocus={() => setStatusMessage('Editing...')}
+              onChange={(e) => setDate(e.target.value)}
+              onBlur={onDateBlur}
+            />
+          ) : (
+            <button
+              type="button"
+              className={[styles.addButton, styles.addDateButton].join(' ')}
+              onClick={() => setIsAddingDate(true)}
+            >
+              <IconPlus />
+              Add date
+            </button>
+          )}
+        </p>
+
+        <div className={styles.categoryWrapper}>
+          {isCategoryPickerOpen ? (
+            <>
+              <span className={`${styles.hoursLabel} fs--1 weight-semibold`}>
+                Categories:
+              </span>
+              <CategoryPicker
+                id={`task_category-${task.id}`}
+                selectedIds={categoryIds}
+                categories={categories}
+                disabled={isSaving || isInvoicing}
+                inputClassName={styles.categoryInput}
+                onAdd={handleAddCategory}
+                onRemove={handleRemoveCategory}
+                onClose={() => setIsCategoryPickerOpen(false)}
+              />
+            </>
+          ) : categoryIds.length > 0 ? (
+            <div className={styles.categoriesDisplay}>
+              {categoryIds.map((categoryId) => {
+                const category = categories.find((c) => c.id === categoryId);
+                if (!category) {
+                  return null;
+                }
+                return (
+                  <span key={categoryId} className={styles.pill}>
+                    {category.name}
+                    <button
+                      type="button"
+                      className={styles.remove}
+                      disabled={isSaving || isInvoicing}
+                      onClick={() => handleRemoveCategory(categoryId)}
+                      aria-label={`Remove ${category.name}`}
+                    >
+                      &times;
+                    </button>
+                  </span>
+                );
+              })}
+              <button
+                type="button"
+                className={styles.categoryToggle}
+                onClick={() => setIsCategoryPickerOpen(true)}
+                aria-label="Add categories"
+              >
+                <IconPlus />
+              </button>
+            </div>
+          ) : (
+            <button
+              type="button"
+              className={styles.addButton}
+              onClick={() => setIsCategoryPickerOpen(true)}
+            >
+              <IconPlus />
+              Add categories
+            </button>
           )}
         </div>
       </div>

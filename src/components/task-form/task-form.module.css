@@ -25,3 +25,21 @@
 .fixedValueInput input {
   padding-left: calc(var(--space-s) * 1.8);
 }
+
+.metaRow {
+  flex-direction: column;
+}
+
+.metaField {
+  width: 100%;
+}
+
+@media screen and (min-width: 580px) {
+  .metaRow {
+    flex-direction: row;
+  }
+
+  .metaField {
+    flex: 1;
+  }
+}

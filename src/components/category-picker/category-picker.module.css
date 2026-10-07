@@ -1,0 +1,106 @@
+.picker {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.comboboxWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.input {
+  flex: 1;
+  min-width: 0;
+}
+
+.close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 1.5em;
+  height: 1.5em;
+  border-radius: 50%;
+  color: var(--c-gray-dark);
+  transition:
+    background-color 0.2s,
+    color 0.2s;
+}
+
+.close:hover {
+  background-color: var(--c-beige-transparent);
+  color: var(--c-black);
+}
+
+.menu {
+  position: absolute;
+  z-index: 1;
+  top: calc(100% + var(--space-xs));
+  left: 0;
+  right: 0;
+  max-height: 6rem;
+  overflow-y: auto;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  background-color: var(--c-white);
+  border-radius: var(--border-radius-small);
+}
+
+.menuOpen {
+  border: 1px solid var(--bg-accent-border);
+}
+
+.menuItem {
+  padding: var(--space-xs) var(--space-s);
+  font-size: var(--step--1);
+  cursor: pointer;
+}
+
+.menuItemHighlighted {
+  background-color: var(--c-off-white);
+}
+
+.tagGroup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  font-size: var(--step--1);
+  font-weight: var(--weight-semibold);
+  padding: 0.2em 0.4em 0.2em 0.75em;
+  border-radius: 100px;
+  background: var(--c-beige);
+  color: var(--c-black);
+  white-space: nowrap;
+}
+
+.pillActive {
+  outline: 2px solid var(--c-midnight-green);
+  outline-offset: 1px;
+}
+
+.remove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.2em;
+  height: 1.2em;
+  border-radius: 50%;
+  line-height: 1;
+  color: inherit;
+  transition: background-color 0.2s;
+}
+
+.remove:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}

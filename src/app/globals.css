@@ -213,12 +213,12 @@ textarea {
   font: inherit;
 }
 .form-row + .form-row {
-  margin-top: var(--space-s);
+  margin-top: var(--space-xs);
 }
 
 .form-row.flex-fields {
   display: flex;
-  gap: var(--space-m);
+  gap: var(--space-s);
 }
 
 .form-label {
@@ -232,7 +232,7 @@ textarea {
   border-radius: var(--border-radius-small);
   border: 1px solid var(--c-gray-light);
   background-color: var(--c-beige-transparent);
-  padding: 1em;
+  padding: 0.6em;
   width: 100%;
 }
 .form-input.outlined {
